@@ -1,0 +1,133 @@
+# fastlane/Fastfile
+
+default_platform(:flutter)
+
+platform :flutter do
+  before_all do
+    setup_environment
+  end
+
+  desc "Setup environment"
+  private_lane :setup_environment do
+    sh("flutter pub get")
+    sh("mkdir -p coverage")
+  end
+
+  desc "Run tests and generate coverage"
+  lane :run_tests_with_coverage do
+    UI.message("SONAR_PROJECT_KEY: #{ENV['SONAR_PROJECT_KEY']}")
+    sh("cd .. && flutter test --coverage")
+
+  end
+
+  desc "Run SonarQube analysis for main branch"
+  lane :sonar_main do
+    run_tests_with_coverage
+    Dir.chdir("..")
+#     UI.message("Current directory before sonar_main: #{Dir.pwd}")
+#     UI.message("project_key in sonar_main: #{ENV["SONAR_PROJECT_KEY"]}")
+#     UI.message("SONAR_ORGANIZATION in sonar_main: #{ENV["SONAR_ORGANIZATION"]}")
+#     UI.message("SONAR_HOST_URL in sonar_main: #{ENV["SONAR_HOST_URL"]}")
+#     UI.message("SONAR_TOKEN in sonar_main: #{ENV["SONAR_TOKEN"]}")
+    # Using Fastlane's built-in sonar action
+    sonar(
+      project_key: ENV["SONAR_PROJECT_KEY"],
+      project_name: ENV["SONAR_PROJECT_NAME"],
+      project_version: get_version_name,
+      sources_path: "#{ENV["SONAR_PROJECT_NAME"]}/lib",
+      sonar_organization: ENV["SONAR_ORGANIZATION"],
+      sonar_url: ENV["SONAR_HOST_URL"],
+      sonar_token: ENV["SONAR_TOKEN"],
+      project_language: "dart",
+      source_encoding: "UTF-8",
+      exclusions: "**/*.g.dart,**/*.freezed.dart,**/*.mocks.dart",
+      sonar_runner_args: [
+              "-Dsonar.dart.coverage.reportPaths=coverage/lcov.info",
+              "-Dsonar.verbose=true",
+              "-Dsonar.log.level=DEBUG",
+              "-Dsonar.tests=#{ENV["SONAR_PROJECT_NAME"]}/test",
+              "-X"  # Enable debug mode
+            ].join(" ")
+    )
+
+  end
+
+  desc "Run SonarQube analysis for pull requests"
+  lane :sonar_pr do |options|
+    run_tests_with_coverage
+    
+    pr_number = options[:pr_number] || ENV["PR_NUMBER"]
+    pr_branch = options[:pr_branch] || ENV["PR_BRANCH"] 
+    pr_base = options[:pr_base] || ENV["PR_BASE"] || "main"
+    
+    sonar(
+      project_key: ENV["SONAR_PROJECT_KEY"],
+      project_name: ENV["SONAR_PROJECT_NAME"],
+      project_version: get_version_name,
+      sources_path: "#{ENV["SONAR_PROJECT_NAME"]}/lib",
+      sonar_organization: ENV["SONAR_ORGANIZATION"],
+      sonar_url: ENV["SONAR_HOST_URL"],
+      sonar_token: ENV["SONAR_TOKEN"],
+      project_language: "dart",
+      source_encoding: "UTF-8",
+      exclusions: "**/*.g.dart,**/*.freezed.dart,**/*.mocks.dart",
+      # Add PR-specific properties manually
+      sonar_runner_args: [
+           "-Dsonar.pullrequest.key=#{pr_number}",
+           "-Dsonar.pullrequest.branch=#{pr_branch}",
+           "-Dsonar.pullrequest.base=#{pr_base}",
+           "-Dsonar.dart.coverage.reportPaths=coverage/lcov.info",
+           "-Dsonar.verbose=true",
+           "-Dsonar.log.level=DEBUG",
+           "-Dsonar.tests=#{ENV["SONAR_PROJECT_NAME"]}/test",
+           "-X"  # Enable debug mode
+          ].join(" ")
+    )
+  end
+
+  desc "Complete CI pipeline"
+  lane :ci do
+    sh("cd .. && flutter analyze")
+    run_tests_with_coverage
+    sonar_main
+  end
+
+  # Helper to get version from pubspec.yaml
+  def get_version_name
+    File.read("pubspec.yaml").match(/version:\s*(.+)\+/)[1]
+  end
+
+  desc "Debug SonarQube configuration"
+  lane :debug_sonar_config do
+    UI.header("SonarQube Configuration Debug")
+    Dir.chdir("..")
+    # Check required environment variables
+    required_vars = {
+      'SONAR_PROJECT_KEY' => ENV['SONAR_PROJECT_KEY'],
+      'SONAR_ORGANIZATION' => ENV['SONAR_ORGANIZATION'],
+      'SONAR_HOST_URL' => ENV['SONAR_HOST_URL'],
+      'SONAR_TOKEN' => ENV['SONAR_TOKEN'],
+      'SONAR_PROJECT_NAME' => ENV['SONAR_PROJECT_NAME']
+    }
+    
+    required_vars.each do |key, value|
+      status = value ? "✅ SET" : "❌ MISSING"
+      display_value = value
+      
+      # Mask sensitive values
+      if key == 'SONAR_TOKEN' && value
+        display_value = "#{value[0..8]}..." 
+      end
+      
+      UI.message("#{key}: #{status} #{display_value ? "(#{display_value})" : ''}")
+    end
+    UI.message("current folder: #{Dir.pwd}")
+    # Check if sonar-project.properties exists
+    if File.exist?('sonar-project.properties')
+      UI.message("sonar-project.properties: ✅ EXISTS")
+    else
+      UI.message("sonar-project.properties: ❌ NOT FOUND")
+    end
+  end
+
+end

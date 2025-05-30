@@ -1,0 +1,258 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+analyzer:
+  errors:
+#    dead_code: ignore
+    depend_on_referenced_packages: ignore
+#    unused_field: ignore
+#    unused_local_variable: ignore
+    use_build_context_synchronously: ignore
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  # The lint rules applied to this project can be customized in the
+  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
+  # included above or to enable additional rules. A list of all available lints
+  # and their documentation is published at https://dart.dev/lints.
+  #
+  # Instead of disabling a lint rule for the entire project in the
+  # section below, it can also be suppressed for a single line of code
+  # or a specific dart file by using the `// ignore: name_of_lint` and
+  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
+  # producing the lint.
+  rules:
+    always_declare_return_types: true # Allow omitting return types for functions.
+    always_put_control_body_on_new_line: true # Allow control bodies on the same line.
+    always_put_required_named_parameters_first: true # Allow required named parameters to be placed anywhere.
+    always_specify_types: true # Allow omitting types for variables and parameters.
+    always_use_package_imports: true # Allow relative imports instead of always using package imports.
+    annotate_overrides: true # Do not require @override annotations.
+    annotate_redeclares: true # Do not require annotations for redeclared members.
+    avoid_annotating_with_dynamic: false # Allow using dynamic type annotations.
+    avoid_bool_literals_in_conditional_expressions: false # Allow using boolean literals in conditional expressions.
+    avoid_catches_without_on_clauses: true # Allow catch clauses without specifying exception types.
+    avoid_catching_errors: false # Allow catching errors.
+    avoid_classes_with_only_static_members: false # Allow classes with only static members.
+    avoid_double_and_int_checks: false # Allow checks between double and int types.
+    avoid_dynamic_calls: false # Allow dynamic calls.
+    avoid_empty_else: true # Allow empty else blocks.
+    avoid_equals_and_hash_code_on_mutable_classes: true # Allow equals and hashCode methods on mutable classes.
+    avoid_escaping_inner_quotes: true # Allow escaping inner quotes.
+    avoid_field_initializers_in_const_classes: true # Allow field initializers in const classes.
+    avoid_final_parameters: false # Allow non-final parameters.
+    avoid_function_literals_in_foreach_calls: false # Allow function literals in forEach calls.
+    #    avoid_futureor_void: true # Disallow FutureOr<void> type.
+    avoid_implementing_value_types: true # Allow implementing value types.
+    avoid_init_to_null: true # Allow initializing variables to null.
+    avoid_js_rounded_ints: true # Allow using JavaScript rounded integers.
+    avoid_multiple_declarations_per_line: true # Allow multiple declarations per line.
+    avoid_null_checks_in_equality_operators: true # Allow null checks in equality operators.
+    avoid_positional_boolean_parameters: true # Allow positional boolean parameters.
+    avoid_print: true # Allow print statements.
+    avoid_private_typedef_functions: true # Allow private typedef functions.
+    avoid_redundant_argument_values: true # Allow redundant argument values.
+    avoid_relative_lib_imports: true # Allow relative imports for libraries.
+    avoid_renaming_method_parameters: true # Allow renaming method parameters.
+    avoid_return_types_on_setters: true # Allow return types on setters.
+    avoid_returning_null_for_void: true # Allow returning null for void functions.
+    avoid_returning_this: true # Allow returning this.
+    avoid_setters_without_getters: false # Allow setters without getters.
+    avoid_shadowing_type_parameters: true # Allow shadowing type parameters.
+    avoid_single_cascade_in_expression_statements: true # Allow single cascade in expression statements.
+    avoid_slow_async_io: true # Allow slow async I/O operations.
+    avoid_type_to_string: true # Allow using type.toString().
+    avoid_types_as_parameter_names: true # Allow using types as parameter names.
+#    avoid_types_on_closure_parameters: false # Allow omitting types on closure parameters.
+    avoid_unnecessary_containers: true # Allow unnecessary containers.
+    avoid_unused_constructor_parameters: true # Allow unused constructor parameters.
+    avoid_void_async: true # Allow void async functions.
+    avoid_web_libraries_in_flutter: true # Allow web libraries in Flutter.
+    await_only_futures: true # Allow awaiting non-future values.
+    camel_case_extensions: true # Allow non-camel case extensions.
+    camel_case_types: true # Allow non-camel case types.
+    cancel_subscriptions: true # Allow not canceling subscriptions.
+    cascade_invocations: true # Allow cascade invocations.
+    cast_nullable_to_non_nullable: true # Allow casting nullable to non-nullable types.
+    close_sinks: true # Allow not closing sinks.
+    collection_methods_unrelated_type: true # Allow collection methods with unrelated types.
+    combinators_ordering: true # Allow any order of combinators.
+    comment_references: false # Allow comment references.
+    conditional_uri_does_not_exist: true # Allow conditional URIs that do not exist.
+    constant_identifier_names: true # Allow non-constant identifier names.
+    control_flow_in_finally: true # Allow control flow in finally blocks.
+    curly_braces_in_flow_control_structures: true # Allow omitting curly braces in flow control structures.
+    dangling_library_doc_comments: true # Allow dangling library doc comments.
+    depend_on_referenced_packages: true # Allow depending on referenced packages.
+    deprecated_consistency: true # Allow inconsistent use of deprecated members.
+    deprecated_member_use_from_same_package: true # Allow deprecated member use from the same package.
+    diagnostic_describe_all_properties: true # Allow not describing all properties in diagnostics.
+    directives_ordering: true # Allow any order of directives.
+    discarded_futures: true # Allow discarding futures.
+    do_not_use_environment: true # Allow using environment variables.
+    document_ignores: false # Allow not documenting ignores.
+    empty_catches: true # Allow empty catch blocks.
+    empty_constructor_bodies: true # Allow empty constructor bodies.
+    empty_statements: true # Allow empty statements.
+    eol_at_end_of_file: true # Allow no end-of-line at the end of the file.
+    exhaustive_cases: true # Allow non-exhaustive cases.
+    file_names: true # Allow any file names.
+    flutter_style_todos: false # Allow non-Flutter style TODOs.
+    hash_and_equals: false # Allow not overriding hashCode and equals.
+    implementation_imports: true # Allow implementation imports.
+    implicit_call_tearoffs: true # Allow implicit call tear-offs.
+    implicit_reopen: false # Allow implicit reopen.
+    invalid_case_patterns: true # Allow invalid case patterns.
+    invalid_runtime_check_with_js_interop_types: true # Allow invalid runtime checks with JS interop types.
+    join_return_with_assignment: false # Allow not joining return with assignment.
+    leading_newlines_in_multiline_strings: true # Allow leading newlines in multiline strings.
+    library_annotations: true # Allow not annotating libraries.
+    library_names: true # Allow any library names.
+    library_prefixes: true # Allow any library prefixes.
+    library_private_types_in_public_api: true # Allow library private types in public API.
+    lines_longer_than_80_chars: false # Allow lines longer than 80 characters.
+    literal_only_boolean_expressions: true # Allow non-literal boolean expressions.
+    matching_super_parameters: true # Allow not matching super parameters.
+    missing_code_block_language_in_doc_comment: false # Allow missing code block language in doc comments.
+    missing_whitespace_between_adjacent_strings: false # Allow missing whitespace between adjacent strings.
+    no_adjacent_strings_in_list: false # Allow adjacent strings in list.
+    no_default_cases: false # Allow no default cases.
+    no_duplicate_case_values: true # Allow duplicate case values.
+    no_leading_underscores_for_library_prefixes: true # Allow leading underscores for library prefixes.
+    no_leading_underscores_for_local_identifiers: true # Allow leading underscores for local identifiers.
+    no_literal_bool_comparisons: true # Allow literal boolean comparisons.
+    no_logic_in_create_state: true # Allow logic in createState.
+    no_runtimeType_toString: false # Allow runtimeType.toString().
+    no_self_assignments: true # Allow self-assignments.
+    no_wildcard_variable_uses: true # Allow wildcard variable uses.
+    non_constant_identifier_names: true # Allow non-constant identifier names.
+    noop_primitive_operations: true # Allow no-op primitive operations.
+    null_check_on_nullable_type_parameter: true # Allow null check on nullable type parameter.
+    null_closures: true # Allow null closures.
+    omit_local_variable_types: false # Allow omitting local variable types.
+    #    omit_obvious_local_variable_types: false # Allow omitting obvious local variable types.
+    one_member_abstracts: false # Allow one-member abstracts.
+    only_throw_errors: true # Allow throwing non-errors.
+    overridden_fields: false # Allow overridden fields.
+#    package_api_docs: false # Allow not documenting package API.
+    package_names: true # Allow any package names.
+    package_prefixed_library_names: true # Allow package-prefixed library names.
+    parameter_assignments: true # Allow parameter assignments.
+    prefer_adjacent_string_concatenation: false # Allow non-adjacent string concatenation.
+    prefer_asserts_in_initializer_lists: false # Allow asserts outside initializer lists.
+    prefer_asserts_with_message: false # Allow asserts without messages.
+    prefer_collection_literals: false # Allow non-collection literals.
+    prefer_conditional_assignment: true # Allow non-conditional assignment.
+    prefer_const_constructors: true # Allow non-const constructors.
+    prefer_const_constructors_in_immutables: true # Allow non-const constructors in immutables.
+    prefer_const_declarations: false # Allow non-const declarations.
+    prefer_const_literals_to_create_immutables: false # Allow non-const literals to create immutables.
+    prefer_constructors_over_static_methods: false # Allow static methods over constructors.
+    prefer_contains: true # Allow non-contains methods.
+    prefer_double_quotes: true # Allow single quotes.
+    prefer_expression_function_bodies: false # Allow non-expression function bodies.
+    prefer_final_fields: true # Allow non-final fields.
+    prefer_final_in_for_each: false # Allow non-final variables in forEach.
+    prefer_final_locals: false # Allow non-final local variables.
+    prefer_final_parameters: false # Allow non-final parameters.
+    prefer_for_elements_to_map_fromIterable: true # Allow map from Iterable.
+    prefer_foreach: false # Allow for loops over forEach.
+    prefer_function_declarations_over_variables: true # Allow function variables.
+    prefer_generic_function_type_aliases: true # Allow non-generic function type aliases.
+    prefer_if_elements_to_conditional_expressions: false # Allow conditional expressions over if elements.
+    prefer_if_null_operators: true # Allow non-if-null operators.
+    prefer_initializing_formals: true # Allow non-initializing formals.
+    prefer_inlined_adds: true # Allow non-inlined adds.
+    prefer_int_literals: true # Allow non-int literals.
+    prefer_interpolation_to_compose_strings: true # Allow non-interpolated strings.
+    prefer_is_empty: true # Allow non-isEmpty checks.
+    prefer_is_not_empty: true # Allow non-isNotEmpty checks.
+    prefer_is_not_operator: true # Allow non-isNot operator.
+    prefer_iterable_whereType: true # Allow non-iterable whereType.
+    prefer_mixin: false # Allow non-mixin classes.
+    prefer_null_aware_method_calls: true # Allow non-null-aware method calls.
+    prefer_null_aware_operators: true # Allow non-null-aware operators.
+    prefer_relative_imports: false # Allow non-relative imports.
+    prefer_single_quotes: false # Allow double quotes.
+    prefer_spread_collections: true # Allow non-spread collections.
+    prefer_typing_uninitialized_variables: true # Allow untyped uninitialized variables.
+    prefer_void_to_null: true # Allow null instead of void.
+    provide_deprecation_message: true # Allow no deprecation messages.
+    public_member_api_docs: false # Allow no public member API docs.
+    recursive_getters: true # Allow recursive getters.
+    require_trailing_commas: true # Allow no trailing commas.
+    secure_pubspec_urls: false # Allow non-secure pubspec URLs.
+    sized_box_for_whitespace: true # Allow non-SizedBox for whitespace.
+    sized_box_shrink_expand: true # Allow non-SizedBox shrink/expand.
+    slash_for_doc_comments: false # Allow non-slash doc comments.
+    sort_child_properties_last: true # Allow non-sorted child properties.
+    sort_constructors_first: true # Allow non-sorted constructors.
+    sort_pub_dependencies: false # Allow non-sorted pub dependencies.
+    sort_unnamed_constructors_first: true # Allow non-sorted unnamed constructors.
+    #    specify_nonobvious_local_variable_types: false # Allow non-specified non-obvious local variable types.
+    test_types_in_equals: true # Allow non-tested types in equals.
+    throw_in_finally: true # Allow throw in finally.
+    tighten_type_of_initializing_formals: true # Allow non-tightened type of initializing formals.
+    type_annotate_public_apis: true # Allow non-annotated public APIs.
+    type_init_formals: true # Allow non-typed initializing formals.
+    type_literal_in_constant_pattern: false # Allow non-type literal in constant pattern.
+    unawaited_futures: false # Allow unawaited futures.
+    unintended_html_in_doc_comment: false # Allow unintended HTML in doc comments.
+    unnecessary_await_in_return: true # Allow unnecessary await in return.
+    unnecessary_brace_in_string_interps: true # Allow unnecessary brace in string interpolations.
+    unnecessary_breaks: true # Allow unnecessary breaks.
+    unnecessary_const: true # Allow unnecessary const.
+    unnecessary_constructor_name: true # Allow unnecessary constructor name.
+    unnecessary_final: false # Allow unnecessary final.
+    unnecessary_getters_setters: true # Allow unnecessary getters and setters.
+    unnecessary_lambdas: true # Allow unnecessary lambdas.
+    unnecessary_late: true # Allow unnecessary late.
+    unnecessary_library_directive: false # Allow unnecessary library directive.
+    unnecessary_library_name: false # Allow unnecessary library name.
+    unnecessary_new: true # Allow unnecessary new.
+    unnecessary_null_aware_assignments: true # Allow unnecessary null-aware assignments.
+    unnecessary_null_aware_operator_on_extension_on_nullable: true # Allow unnecessary null-aware operator on extension on nullable.
+    unnecessary_null_checks: false # Allow unnecessary null checks.
+    unnecessary_null_in_if_null_operators: true # Allow unnecessary null in if-null operators.
+    unnecessary_nullable_for_final_variable_declarations: true # Allow unnecessary nullable for final variable declarations.
+    unnecessary_overrides: true # Allow unnecessary overrides.
+    unnecessary_parenthesis: true # Allow unnecessary parenthesis.
+    unnecessary_raw_strings: false # Allow unnecessary raw strings.
+    unnecessary_statements: true # Allow unnecessary statements.
+    unnecessary_string_escapes: true # Allow unnecessary string escapes.
+    unnecessary_string_interpolations: true # Allow unnecessary string interpolations.
+    unnecessary_this: true # Allow unnecessary this.
+    unnecessary_to_list_in_spreads: true # Allow unnecessary toList in spreads.
+    unreachable_from_main: true # Allow unreachable from main.
+    unrelated_type_equality_checks: true # Allow unrelated type equality checks.
+    use_build_context_synchronously: true # Allow using build context synchronously.
+    use_colored_box: true # Allow not using ColoredBox.
+    use_decorated_box: true # Allow not using DecoratedBox.
+    use_enums: true # Allow not using enums.
+    use_full_hex_values_for_flutter_colors: true # Allow not using full hex values for Flutter colors.
+    use_function_type_syntax_for_parameters: true # Allow not using function type syntax for parameters.
+    use_if_null_to_convert_nulls_to_bools: true # Allow not using if-null to convert nulls to bools.
+    use_is_even_rather_than_modulo: true # Allow not using isEven rather than modulo.
+    use_key_in_widget_constructors: true # Allow not using key in widget constructors.
+    use_late_for_private_fields_and_variables: false # Allow not using late for private fields and variables.
+    use_named_constants: true # Allow not using named constants.
+    use_raw_strings: true # Allow not using raw strings.
+    use_rethrow_when_possible: true # Allow not using rethrow when possible.
+    use_setters_to_change_properties: true # Allow not using setters to change properties.
+    use_string_buffers: true # Allow not using string buffers.
+    use_string_in_part_of_directives: true # Allow not using string in part-of directives.
+    use_super_parameters: true # Allow not using super parameters.
+    use_test_throws_matchers: true # Allow not using test throws matchers.
+    use_to_and_as_if_applicable: false # Allow not using to and as if applicable.
+    #    use_truncating_division: false # Allow not using truncating division.
+    valid_regexps: true # Allow invalid regexps.
+    void_checks: true # Allow no void checks.
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options

@@ -1,0 +1,84 @@
+{
+  "name": "SampleApp",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "17955750ac510d65e971b17660e73611",
+      "css": "contact_input",
+      "code": 59392,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M0 0H799.7V1000H0V832.1H78.6V793.6H0V624.1H78.6V584H0V414.5H78.6V376H0V206.5H78.6V166.4H0ZM399.1 505.4A196 196 0 0 0 203.4 696.4H594.8A194 194 0 0 0 399.1 505.4ZM399.1 303.5A93.2 93.2 0 1 0 493 395.9 92.7 92.7 0 0 0 399.1 303.5Z",
+        "width": 800
+      },
+      "search": [
+        "noun_contact_2532196"
+      ]
+    },
+    {
+      "uid": "cdd836ec082da15e51545f2ea1a37015",
+      "css": "account_balance_BaseFlutter",
+      "code": 61448,
+      "src": "material"
+    },
+    {
+      "uid": "58f376c8c60c911e8cd5a65becb0d932",
+      "css": "account_box",
+      "code": 59393,
+      "src": "material"
+    },
+    {
+      "uid": "22a893e7725504a4a3b8905fb20cac53",
+      "css": "account_circle",
+      "code": 59394,
+      "src": "material"
+    },
+    {
+      "uid": "c5dae27e563af547739c37198a00a389",
+      "css": "BaseFlutter",
+      "code": 62805,
+      "src": "fontawesome5"
+    },
+    {
+      "uid": "d58dc0a0927a7dea2992f615f2fbf400",
+      "css": "BaseFlutter-1",
+      "code": 59395,
+      "src": "linecons"
+    },
+    {
+      "uid": "3b309524d24ad4b098b0034d31ee77a5",
+      "css": "apps",
+      "code": 59396,
+      "src": "material"
+    },
+    {
+      "uid": "aa4ded7a2d22e21c3cfe775efe267120",
+      "css": "connectdevelop",
+      "code": 61966,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "8c0ffa714cecbf5144e022d9c3df4a1f",
+      "css": "bank",
+      "code": 61852,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "53a9adc0c3b07ba7ac245381f533b26f",
+      "css": "cubes",
+      "code": 61875,
+      "src": "fontawesome5"
+    },
+    {
+      "uid": "f8e8b267a9b949804f0c9dd7fed8e477",
+      "css": "diamond",
+      "code": 59397,
+      "src": "linecons"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+image: ghcr.io/cirruslabs/flutter:stable
+
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+
+stages:
+  - get-binaries
+  - sonarcloud-check
+
+
+get-binaries:
+  stage: get-binaries
+  cache:
+    policy: push
+    key:  "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - sonar-scanner/
+
+  script:
+    # Download sonar-scanner
+    - curl -sSLo ./sonar-scanner.zip 'https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.0.2.4839-linux-x64.zip'
+    - unzip -o sonar-scanner.zip
+    - mv sonar-scanner-7.0.2.4839-linux-x64 sonar-scanner
+
+sonarcloud-check:
+  stage: sonarcloud-check
+  cache:
+    policy: pull-push
+    key: "${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - sonar-scanner/
+  script:
+    - sonar-scanner/bin/sonar-scanner
+  only:
+    - merge_requests
+    - main

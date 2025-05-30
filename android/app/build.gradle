@@ -1,0 +1,130 @@
+plugins {
+    id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+
+def keyAliasStr = localProperties.getProperty("keyAlias")
+def keyPasswordStr = localProperties.getProperty("keyPassword")
+def storeFilePathStr = localProperties.getProperty("storeFile")
+def storePasswordStr = localProperties.getProperty("storePassword")
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+android {
+    namespace "com.BaseFlutter.BaseFlutter"
+    compileSdk flutter.compileSdkVersion
+    ndkVersion "27.0.11718014"
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keyAliasStr
+            keyPassword keyPasswordStr
+            storeFile file(storeFilePathStr)
+            storePassword storePasswordStr
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+//        applicationId "com.luxe.esim"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+        minSdkVersion 24
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+
+    flavorDimensions "environment"
+    productFlavors {
+        OpenSourceDev {
+            dimension "environment"
+            applicationId ""
+            versionNameSuffix "-dev"
+            resValue "string", "app_name", "White Label Dev"
+            resValue "string", "facebook_app_id", ""
+            resValue "string", "fb_login_protocol_scheme", ""
+            resValue "string", "fb_client_token", ""
+            manifestPlaceholders = [scheme: "iosupabaseflutter", domain: ""]
+        }
+        OpenSourceStaging {
+            dimension "environment"
+            applicationId ""
+            versionNameSuffix "-staging"
+            resValue "string", "app_name", "White Label Stg"
+            resValue "string", "facebook_app_id", ""
+            resValue "string", "fb_login_protocol_scheme", ""
+            resValue "string", "fb_client_token", ""
+            manifestPlaceholders = [scheme: "iosupabaseflutter", domain: ""]
+        }
+        OpenSourceProd {
+            dimension "environment"
+            applicationId ""
+            versionNameSuffix ""
+            resValue "string", "app_name", "White Label"
+            resValue "string", "facebook_app_id", ""
+            resValue "string", "fb_login_protocol_scheme", ""
+            resValue "string", "fb_client_token", ""
+            manifestPlaceholders = [scheme: "iosupabaseflutter", domain: ""]
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+    implementation 'androidx.window:window:1.0.0'
+    implementation 'androidx.window:window-java:1.0.0'
+    implementation 'com.facebook.android:facebook-login:[version]'
+}

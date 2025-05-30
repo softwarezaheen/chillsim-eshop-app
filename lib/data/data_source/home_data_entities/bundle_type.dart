@@ -1,0 +1,4 @@
+enum BundleType {
+  global,
+  cruise;
+}
