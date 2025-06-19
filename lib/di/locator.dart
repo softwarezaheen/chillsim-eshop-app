@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/data_source/esims_local_data_source.dart";
 import "package:esim_open_source/data/data_source/home_local_data_source.dart";
 import "package:esim_open_source/data/data_source/local_storage_service_impl.dart";
@@ -20,6 +21,8 @@ import "package:esim_open_source/data/repository/api_user_repository_impl.dart";
 import "package:esim_open_source/data/services/app_configuration_service_impl.dart";
 import "package:esim_open_source/data/services/connectivity_service_impl.dart";
 import "package:esim_open_source/data/services/device_info_service_impl.dart";
+import "package:esim_open_source/data/services/dynamic_linking_service_impl.dart";
+import "package:esim_open_source/data/services/dynamic_linking_service_empty_impl.dart";
 import "package:esim_open_source/data/services/flutter_channel_handler_service_impl.dart";
 import "package:esim_open_source/data/services/payment_service_impl.dart";
 import "package:esim_open_source/data/services/push_notification_service_impl.dart";
@@ -38,6 +41,7 @@ import "package:esim_open_source/domain/repository/api_user_repository.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
+import "package:esim_open_source/domain/repository/services/dynamic_linking_service.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/payment_service.dart";
@@ -54,6 +58,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:get_it/get_it.dart";
 import "package:stacked_services/stacked_services.dart";
 import "package:stacked_themes/stacked_themes.dart";
@@ -74,6 +79,8 @@ Future<void> setupBaseFlutterLocator() async {
   await appAPIServicesModule();
 
   await viewModelModules();
+
+  await viewModelInjectionModules();
 }
 
 Future<void> appServicesModule() async {
@@ -168,6 +175,14 @@ Future<void> appAPIServicesModule() async {
       () => ApiPromotionRepositoryImpl(
         apiPromotion: locator(),
       ) as ApiPromotionRepository,
+    )
+    ..registerLazySingleton(
+      () {
+        if (AppEnvironment.appEnvironmentHelper.enableBranchIO) {
+          return DynamicLinkingServiceImpl() as DynamicLinkingService;
+        }
+        return DynamicLinkingServiceEmptyImpl() as DynamicLinkingService;
+      },
     );
   // ..registerLazySingleton(() => GetBundlesByRegionUseCase(locator()))
   // ..registerLazySingleton(() => GetBundlesByCountryUseCase(locator()))
@@ -194,6 +209,12 @@ Future<void> viewModelModules() async {
     ..registerLazySingleton(() => (DataPlansViewModel()))
     ..registerLazySingleton(() => (HomePagerViewModel()))
     ..registerLazySingleton(() => (PurchaseLoadingViewModel()));
+}
+
+Future<void> viewModelInjectionModules() async {
+  locator.registerFactory<ContinueWithEmailViewModel>(
+    ContinueWithEmailViewModel.new,
+  );
 }
 
 Future<void> resetLazySingleton<T extends Object>({

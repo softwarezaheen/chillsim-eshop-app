@@ -1,6 +1,7 @@
 import "dart:developer";
 
 import "package:esim_open_source/presentation/shared/haptic_feedback.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/main_base_model.dart";
 import "package:esim_open_source/presentation/widgets/lockable_tab_bar.dart";
 import "package:flutter/material.dart";
@@ -8,6 +9,16 @@ import "package:flutter/material.dart";
 class HomePagerViewModel extends MainBaseModel {
   FocusScopeNode? _currentFocus;
   LockableTabController? _tabController;
+  InAppRedirection? redirection;
+
+  @override
+  void onViewModelReady() {
+    super.onViewModelReady();
+
+    if (redirection != null) {
+      redirectionsHandlerService.redirectToRoute(redirection: redirection!);
+    }
+  }
 
   set tabController(LockableTabController controller) {
     _tabController = controller;

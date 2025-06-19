@@ -69,7 +69,7 @@
   "dataPlans_regionsText": "Regions",
   "dataPlans_globalsText": "Global",
   "dataPlans_countryTripText": "Current Trip",
-  "dataPlans_onCruiseText": "On Cruises & Ferry",
+  "dataPlans_onCruiseText": "At Sea",
   "dataPlans_onLandText": "On Land",
   "dataPlans_liveChatBannerTitle": "Live Chat",
   "dataPlans_referAndEarnBannerTitle": "Refer & Earn",
@@ -203,6 +203,7 @@
   "userGuideView_iosStep17" : "Turn on Data Roaming.",
   "userGuideView_iosStep18" : "Data roaming has been turned on. Return to the Home screen.",
   "userGuideView_stepIndexTitle": "Step {index}",
+
   "userGuideView_androidCameraTitle" : "Scan QR Code through your camera",
   "userGuideView_androidGalleryTitle" : "Scan QR Code from your gallery",
   "userGuideView_androidGuideFirstText" : "Some devices have the built-in ability to scan QR codes automatically from the gallery. Here’s how to do it on Samsung devices running One UI 3.0 or later:",
@@ -217,11 +218,13 @@
   "userGuideView_androidGuideFourthStep" : "A pop-up window should appear at the bottom of the screen, with a button that says “Scan QR code.”",
   "userGuideView_androidGuideFifthStep" : "Tap on the “Scan QR code” button, and the device will scan the image and open the link or information encoded in the QR code.",
   "userGuideView_androidGuideSixthStep" : "Follow the prompts to install the eSIM and activate it for your device.",
+
   "userGuideView_firstDevice" : "Google Pixel devices running Android 11 or later",
   "userGuideView_secondDevice" : "Samsung devices running One UI 3.0 or later",
   "userGuideView_thirdDevice" : "OnePlus devices running OxygenOS 11 or later",
   "userGuideView_fourthDevice" : "Xiaomi devices running MIUI 12 or later",
   "userGuideView_fifthDevice" : "Realme devices running Realme UI 2.0 or later",
+
   "userGuideView_firstAndroidDevice" : "Samsung Galaxy S21 series",
   "userGuideView_secondAndroidDevice" : "Samsung Galaxy Note 20 series",
   "userGuideView_thirdAndroidDevice" : "Samsung Galaxy S20 series",
@@ -230,6 +233,7 @@
   "userGuideView_sixthAndroidDevice" : "Samsung Galaxy Z Fold 2",
   "userGuideView_seventhAndroidDevice" : "Samsung Galaxy Z Flip 5G",
   "userGuideView_eighthAndroidDevice" : "Samsung Galaxy A52 5G",
+
   "common_iAgreeText" : "I agree",
   "choose_payment_method" : "Choose Payment Method",
   "credit_debit_card" : "Credit/Debit Card",
@@ -241,6 +245,7 @@
   "error_generating_qr_code": "Error generating QR code",
   "copied_to_clipboard": "Copied to clipboard",
   "top_up_plan" : "Top Up Plan",
+
   "faq_not_available" : "FAQ are not available",
   "your_message_has_been_sent": "Your message has been sent successfully",
   "second": "second",

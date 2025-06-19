@@ -1,6 +1,7 @@
 import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
@@ -114,7 +115,13 @@ class _MainTabPageState extends State<MainTabPage>
                 );
               },
               child: Container(
-                padding: EdgeInsets.only(bottom: Platform.isIOS ? 60 : 80),
+                padding: EdgeInsets.only(
+                  bottom: Platform.isIOS
+                      ? AppEnvironment.isFromAppClip
+                          ? 20
+                          : 60
+                      : 80,
+                ),
                 child: Lottie.asset(
                   "assets/lottie/whatsappLottie.json",
                   width: 90,
@@ -126,12 +133,14 @@ class _MainTabPageState extends State<MainTabPage>
       body: wrapBodyWithState(
         context: context,
         model: widget.viewModel,
-        child: buildBottomNavigationBar(
-          context: context,
-          model: widget.viewModel,
-          isKeyboardVisible: isKeyboardVisible,
-          tabController: tabController,
-        ),
+        child: AppEnvironment.isFromAppClip
+            ? DataPlansView()
+            : buildBottomNavigationBar(
+                context: context,
+                model: widget.viewModel,
+                isKeyboardVisible: isKeyboardVisible,
+                tabController: tabController,
+              ),
       ),
     );
   }

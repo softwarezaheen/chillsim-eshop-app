@@ -8,13 +8,25 @@ import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
+class ContinueWithEmailViewModelArgs {
+  ContinueWithEmailViewModelArgs({
+    required this.emailAddress,
+    this.redirection,
+  });
+  final String emailAddress;
+  final InAppRedirection? redirection;
+}
+
 class ContinueWithEmailViewModel extends BaseModel {
+  ContinueWithEmailViewModel({this.redirection});
+  InAppRedirection? redirection;
   //#region UseCases
   final LoginUseCase loginUseCase = LoginUseCase(locator<ApiAuthRepository>());
   //#endregion
@@ -96,7 +108,10 @@ class ContinueWithEmailViewModel extends BaseModel {
       onSuccess: (Resource<EmptyResponse?> response) async {
         navigationService.navigateTo(
           VerifyLoginView.routeName,
-          arguments: _state.emailController.text,
+          arguments: ContinueWithEmailViewModelArgs(
+            emailAddress: _state.emailController.text,
+            redirection: redirection,
+          ),
         );
       },
     );

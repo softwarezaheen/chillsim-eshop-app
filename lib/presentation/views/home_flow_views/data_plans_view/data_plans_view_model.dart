@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
@@ -12,6 +13,7 @@ import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_list_screen.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
@@ -204,6 +206,20 @@ class DataPlansViewModel extends BaseModel {
   }
 
   Future<void> navigateToEsimDetail(BundleResponseModel bundle) async {
+    if (!AppEnvironment.appEnvironmentHelper.enableGuestFlowPurchase &&
+        !isUserLoggedIn) {
+      await navigationService.navigateTo(
+        LoginView.routeName,
+        arguments: InAppRedirection.purchase(
+          PurchaseBundleBottomSheetArgs(
+            null,
+            null,
+            bundle,
+          ),
+        ),
+      );
+      return;
+    }
     bottomSheetService.showCustomSheet(
       data: PurchaseBundleBottomSheetArgs(
         null,

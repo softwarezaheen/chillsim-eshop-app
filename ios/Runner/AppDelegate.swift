@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import flutter_local_notifications
+import BranchSDK
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -8,6 +9,8 @@ import flutter_local_notifications
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
+        configureBranchTestMode()
         
         let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
         let simProfilesChannel = FlutterMethodChannel(
@@ -47,6 +50,16 @@ import flutter_local_notifications
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
+    override func application(_ application: UIApplication,
+                              continue userActivity: NSUserActivity,
+                              restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+           let url = userActivity.webpageURL {
+            print("App Clip launched via URL: \(url)")
+            return true
+        }
+        return false
+    }
     
     
     private func openSimProfilesSettings(result: FlutterResult) {
@@ -86,5 +99,22 @@ import flutter_local_notifications
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
+    
+    private func configureBranchTestMode() {
+            // First, try to read from Info.plist (set by build script)
+            if let useTestModeFromPlist = Bundle.main.object(forInfoDictionaryKey: "branch_use_test_instance") as? Bool {
+                if useTestModeFromPlist {
+                    print("🧪 Info.plist: branch_use_test_instance = true - Using TEST key")
+                    Branch.setUseTestBranchKey(true)
+                } else {
+                    print("🚀 Info.plist: branch_use_test_instance = false - Using LIVE key")
+                    Branch.setUseTestBranchKey(false)
+                }
+                return
+            }
+            
+                print("🚀 Fallback: RELEASE build detected - Using LIVE key")
+                Branch.setUseTestBranchKey(false)
+        }
     
 }

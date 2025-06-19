@@ -16,6 +16,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
+import "package:esim_open_source/presentation/views/app_clip_start/app_clip_selection/app_clip_selection_view.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view.dart";
 import "package:firebase_core/firebase_core.dart";
@@ -76,6 +77,10 @@ class StartUpViewModel extends BaseModel {
         !(localStorageService.getBool(LocalStorageKeys.hasPreviouslyStarted) ??
             false)) {
       navigationService.navigateTo(DeviceCompabilityCheckView.routeName);
+      return;
+    }
+    if (AppEnvironment.isFromAppClip) {
+      navigationService.replaceWith(AppClipSelectionView.routeName);
       return;
     }
     navigateToHomePager();

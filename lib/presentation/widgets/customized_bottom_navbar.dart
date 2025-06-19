@@ -225,6 +225,7 @@ class _BaseFlutterBottomNavBarState extends State<BaseFlutterBottomNavBar> {
                     ),
                     Text(
                       tabsText.length > index ? tabsText[index] : "",
+                      textAlign: TextAlign.center,
                       style: captionTwoBoldTextStyle(context: context).copyWith(
                         fontSize: 13,
                         color: index == selectedIndex

@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
@@ -143,7 +144,7 @@ class PurchaseOrderSuccessView extends StatelessWidget {
               LocaleKeys.payment_success.tr(),
               style: headerThreeMediumTextStyle(
                 context: context,
-                fontColor: titleTextColor(context: context),
+                fontColor: mainDarkTextColor(context: context),
               ),
             ),
             verticalSpaceSmall,
@@ -217,7 +218,7 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                 label,
                 style: captionOneMediumTextStyle(
                   context: context,
-                  fontColor: titleTextColor(context: context),
+                  fontColor: mainDarkTextColor(context: context),
                 ),
               ),
               verticalSpaceTiniest,
@@ -259,15 +260,17 @@ class PurchaseOrderSuccessView extends StatelessWidget {
           icon: Icons.share_outlined,
           onPressed: viewModel.onShareClick,
           backgroundColor: myEsimIconButtonColor(context: context),
-          iconColor: titleTextColor(context: context),
+          iconColor: enabledMainButtonTextColor(context: context),
         ),
         horizontalSpaceSmall,
-        CircularIconButton(
-          icon: Icons.file_download_outlined,
-          onPressed: viewModel.onDownloadClick,
-          backgroundColor: myEsimIconButtonColor(context: context),
-          iconColor: titleTextColor(context: context),
-        ),
+        AppEnvironment.isFromAppClip
+            ? Container()
+            : CircularIconButton(
+                icon: Icons.file_download_outlined,
+                onPressed: viewModel.onDownloadClick,
+                backgroundColor: myEsimIconButtonColor(context: context),
+                iconColor: titleTextColor(context: context),
+              ),
       ],
     );
   }

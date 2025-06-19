@@ -1,5 +1,7 @@
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/presentation/helpers/view_state_utils.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
+import "package:esim_open_source/presentation/views/app_clip_start/app_clip_selection/app_clip_selection_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/bundles_list_screen.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view.dart";
@@ -21,6 +23,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view.dart";
@@ -45,6 +48,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         viewToShow: const StartUpView(),
       );
 
+    case AppClipSelectionView.routeName:
+      return _getPageRoute(
+        routeName: settingsName,
+        viewToShow: const AppClipSelectionView(),
+      );
+
     case SkeletonView.routeName:
       return _getPageRoute(
         routeName: settingsName,
@@ -52,24 +61,47 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
 
     case LoginView.routeName:
+      final Object? args = settings.arguments;
+      InAppRedirection? redirection;
+
+      if (args is InAppRedirection) {
+        redirection = args;
+      } else {
+        redirection = null;
+      }
+
       return _getPageRoute(
         routeName: settingsName,
-        viewToShow: const LoginView(),
+        viewToShow: LoginView(
+          redirection: redirection,
+        ),
         transitionsBuilder: TransitionsBuilders.slideBottom,
       );
 
     case ContinueWithEmailView.routeName:
+      final Object? args = settings.arguments;
+      InAppRedirection? redirection;
+
+      if (args is InAppRedirection) {
+        redirection = args;
+      } else {
+        redirection = null;
+      }
       return _getPageRoute(
         routeName: settingsName,
-        viewToShow: const ContinueWithEmailView(),
+        viewToShow: ContinueWithEmailView(
+          redirection: redirection,
+        ),
       );
 
     case VerifyLoginView.routeName:
-      String emailAddress = settings.arguments! as String;
+      ContinueWithEmailViewModelArgs args =
+          settings.arguments! as ContinueWithEmailViewModelArgs;
       return _getPageRoute(
         routeName: settingsName,
         viewToShow: VerifyLoginView(
-          emailAddress: emailAddress,
+          redirection: args.redirection,
+          emailAddress: args.emailAddress,
         ),
       );
 
@@ -81,9 +113,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     // home tab bar
     case HomePager.routeName:
+      final Object? args = settings.arguments;
+      InAppRedirection? redirection;
+
+      if (args is InAppRedirection) {
+        redirection = args;
+      } else {
+        redirection = null;
+      }
+
       return _getPageRoute(
         routeName: settingsName,
-        viewToShow: HomePager(),
+        viewToShow: HomePager(redirection: redirection),
         transitionsBuilder: TransitionsBuilders.noTransition,
       );
 

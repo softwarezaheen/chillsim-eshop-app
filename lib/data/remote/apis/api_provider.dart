@@ -17,7 +17,6 @@ import "package:esim_open_source/domain/repository/services/local_storage_servic
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/utils/generation_helper.dart";
 import "package:http/http.dart" as http;
-import "package:http/http.dart";
 
 /// The KEYS USED in All APIS.
 enum ApiParamsKeys {
@@ -104,7 +103,7 @@ class APIService {
     required APIEndPoint endPoint,
     T Function({dynamic json})? fromJson,
     int? timeoutSeconds,
-    List<MultipartFile>? files,
+    List<http.MultipartFile>? files,
   }) async {
     return HttpRequest.sendRequestMain(
       client: _client,

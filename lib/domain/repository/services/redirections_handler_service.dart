@@ -1,6 +1,7 @@
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
 import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 
 sealed class RedirectionCategoryType {
   const RedirectionCategoryType(this.routes);
@@ -73,8 +74,28 @@ class RegionSelected extends RedirectionCategoryType {
   final RegionsResponseModel regionModel;
 }
 
+// enum InAppRedirection {
+//   cashback,
+//   referral;
+//
+//   String get routeName => StoryViewer.routeName;
+//
+//   dynamic get arguments {
+//     switch (this) {
+//       case InAppRedirection.cashback:
+//         return CashbackStoriesView().storyViewerArgs;
+//       case InAppRedirection.referral:
+//         return ReferalStoriesView().storyViewerArgs;
+//     }
+//   }
+// }
+
 abstract class RedirectionsHandlerService {
   Future<void> handleInitialRedirection(void Function() callBack);
+
+  void redirectToRoute({
+    required InAppRedirection redirection,
+  });
 
   void serialiseAndRedirectNotification({
     required bool isClicked,

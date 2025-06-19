@@ -132,7 +132,8 @@ class DataPlansView extends StatelessWidget {
       selectedLabelColor: titleTextColor(context: context),
       selectedTabTextStyle: captionOneMediumTextStyle(context: context),
       childWidget: DataPlansViewModel.cruiseTabBarSelectedIndex == 0
-          ? AppEnvironment.appEnvironmentHelper.enableBannersView
+          ? (AppEnvironment.appEnvironmentHelper.enableBannersView &&
+                  !AppEnvironment.isFromAppClip)
               ? childWidget
               : null
           : null,
@@ -197,7 +198,8 @@ class DataPlansView extends StatelessWidget {
       isChildCollapsable: true,
       onTabChange: viewModel.onTabBarChange,
       initialIndex: DataPlansViewModel.tabBarSelectedIndex,
-      childWidget: AppEnvironment.appEnvironmentHelper.enableBannersView
+      childWidget: (AppEnvironment.appEnvironmentHelper.enableBannersView &&
+              !AppEnvironment.isFromAppClip)
           ? childWidget
           : null,
       backGroundColor: bodyBackGroundColor(context: context),
@@ -254,7 +256,9 @@ class DataPlansView extends StatelessWidget {
     required BuildContext context,
     required DataPlansViewModel viewModel,
   }) {
-    if (viewModel.isUserLoggedIn) {
+    if (AppEnvironment.isFromAppClip) {
+      return const SizedBox.shrink();
+    } else if (viewModel.isUserLoggedIn) {
       return GestureDetector(
         onTap: () async {
           viewModel.notificationsButtonTapped();

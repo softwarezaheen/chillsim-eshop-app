@@ -29,6 +29,7 @@ import "package:esim_open_source/presentation/reactive_service/user_service.dart
 import "package:esim_open_source/presentation/setup_dialog_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/haptic_feedback.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart"
     as shared;
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -263,7 +264,7 @@ class BaseModel extends ReactiveViewModel implements ConnectionListener {
   //   return null;
   // }
 
-  Future<T> navigateToHomePager<T>() async {
+  Future<void> navigateToHomePager<T>({InAppRedirection? redirection}) async {
     DataPlansViewModel.tabBarSelectedIndex = 0;
     DataPlansViewModel.cruiseTabBarSelectedIndex = 0;
     locator
@@ -271,8 +272,9 @@ class BaseModel extends ReactiveViewModel implements ConnectionListener {
       ..resetLazySingleton(instance: locator<ProfileViewModel>())
       ..resetLazySingleton(instance: locator<HomePagerViewModel>())
       ..resetLazySingleton(instance: locator<DataPlansViewModel>());
-    return await navigationService.pushNamedAndRemoveUntil(
+    await navigationService.pushNamedAndRemoveUntil(
       HomePager.routeName,
+      arguments: redirection,
     );
   }
 

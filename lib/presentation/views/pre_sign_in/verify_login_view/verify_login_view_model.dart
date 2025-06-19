@@ -7,11 +7,13 @@ import "package:esim_open_source/domain/use_case/auth/resend_otp_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/verify_otp_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 
 class VerifyLoginViewModel extends BaseModel {
-  VerifyLoginViewModel({required this.emailAddress});
+  VerifyLoginViewModel({required this.emailAddress, this.redirection});
+  InAppRedirection? redirection;
 
   bool _isVerifyButtonEnabled = false;
   bool get isVerifyButtonEnabled => _isVerifyButtonEnabled;
@@ -56,7 +58,7 @@ class VerifyLoginViewModel extends BaseModel {
     await handleResponse(
       authResponse,
       onSuccess: (Resource<AuthResponseModel> response) async {
-        await navigateToHomePager();
+        await navigateToHomePager(redirection: redirection);
       },
       onFailure: (Resource<AuthResponseModel> response) async {
         _errorMessage = LocaleKeys.verifyLogin_wrongCode.tr();
