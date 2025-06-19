@@ -71,7 +71,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                             LocaleKeys.paymentSelection_titleText.tr(),
                             style: headerThreeMediumTextStyle(
                               context: context,
-                              fontColor: mainDarkTextColor(context: context),
+                              fontColor: titleTextColor(context: context),
                             ),
                           ),
                         ),
@@ -136,7 +136,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                   selection.titleText,
                   style: bodyNormalTextStyle(
                     context: context,
-                    fontColor: titleTextColor(context: context),
+                    fontColor: bubbleCountryTextColor(context: context),
                   ),
                 ),
               ],

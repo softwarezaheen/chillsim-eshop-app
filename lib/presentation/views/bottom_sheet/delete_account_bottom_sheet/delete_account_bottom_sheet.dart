@@ -77,7 +77,7 @@ class DeleteAccountBottomSheet extends StatelessWidget {
                           LocaleKeys.deleteAccount_titleText.tr(),
                           style: headerThreeMediumTextStyle(
                             context: context,
-                            fontColor: mainDarkTextColor(context: context),
+                            fontColor: titleTextColor(context: context),
                           ),
                         ),
                         verticalSpaceMediumLarge,
@@ -147,7 +147,7 @@ class DeleteAccountBottomSheet extends StatelessWidget {
                             SheetResponse<EmptyBottomSheetResponse>(),
                           ),
                           themeColor: themeColor,
-                          enabledTextColor: mainDarkTextColor(context: context),
+                          enabledTextColor: titleTextColor(context: context),
                         ),
                       ],
                     ),

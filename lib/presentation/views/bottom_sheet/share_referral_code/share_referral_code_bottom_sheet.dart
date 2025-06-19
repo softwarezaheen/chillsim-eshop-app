@@ -71,7 +71,7 @@ class ShareReferralCodeBottomSheet extends StatelessWidget {
                       LocaleKeys.shareReferral_titleText.tr(),
                       style: headerThreeMediumTextStyle(
                         context: context,
-                        fontColor: mainDarkTextColor(context: context),
+                        fontColor: titleTextColor(context: context),
                       ),
                     ),
                     verticalSpaceSmall,
@@ -96,7 +96,7 @@ class ShareReferralCodeBottomSheet extends StatelessWidget {
                             LocaleKeys.shareReferral_hintText.tr(),
                             style: bodyMediumTextStyle(
                               context: context,
-                              fontColor: mainDarkTextColor(context: context),
+                              fontColor: titleTextColor(context: context),
                             ),
                           ),
                         ),

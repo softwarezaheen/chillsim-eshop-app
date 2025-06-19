@@ -143,7 +143,7 @@ class PurchaseOrderSuccessView extends StatelessWidget {
               LocaleKeys.payment_success.tr(),
               style: headerThreeMediumTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             verticalSpaceSmall,
@@ -217,7 +217,7 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                 label,
                 style: captionOneMediumTextStyle(
                   context: context,
-                  fontColor: mainDarkTextColor(context: context),
+                  fontColor: titleTextColor(context: context),
                 ),
               ),
               verticalSpaceTiniest,
@@ -259,14 +259,14 @@ class PurchaseOrderSuccessView extends StatelessWidget {
           icon: Icons.share_outlined,
           onPressed: viewModel.onShareClick,
           backgroundColor: myEsimIconButtonColor(context: context),
-          iconColor: enabledMainButtonTextColor(context: context),
+          iconColor: titleTextColor(context: context),
         ),
         horizontalSpaceSmall,
         CircularIconButton(
           icon: Icons.file_download_outlined,
           onPressed: viewModel.onDownloadClick,
           backgroundColor: myEsimIconButtonColor(context: context),
-          iconColor: enabledMainButtonTextColor(context: context),
+          iconColor: titleTextColor(context: context),
         ),
       ],
     );

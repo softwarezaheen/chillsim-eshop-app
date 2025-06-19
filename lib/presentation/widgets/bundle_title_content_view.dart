@@ -29,7 +29,7 @@ class BundleTitleContentView extends StatelessWidget {
             titleText,
             style: captionTwoNormalTextStyle(
               context: context,
-              fontColor: mainDarkTextColor(context: context),
+              fontColor: titleTextColor(context: context),
             ),
           ),
           verticalSpaceTiny,
@@ -37,7 +37,7 @@ class BundleTitleContentView extends StatelessWidget {
             contentText,
             style: captionOneMediumTextStyle(
               context: context,
-              fontColor: contentTextColor(context: context),
+              fontColor: bubbleCountryTextColor(context: context),
             ),
           ).applyShimmer(
             context: context,

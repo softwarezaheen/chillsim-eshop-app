@@ -58,7 +58,7 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
               ),
               style: captionTwoMediumTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: bundleDataPriceTextColor(context: context),
               ),
             ),
           ),
@@ -104,7 +104,7 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
                           country.country ?? "",
                           style: captionTwoMediumTextStyle(
                             context: context,
-                            fontColor: titleTextColor(
+                            fontColor: bubbleCountryTextColor(
                               context: context,
                             ),
                           ),

@@ -70,7 +70,7 @@ class VerifyLoginView extends StatelessWidget {
                 LocaleKeys.verifyLogin_titleText.tr(),
                 style: headerTwoMediumTextStyle(
                   context: context,
-                  fontColor: mainDarkTextColor(context: context),
+                  fontColor: titleTextColor(context: context),
                 ),
               ),
               verticalSpaceSmall,

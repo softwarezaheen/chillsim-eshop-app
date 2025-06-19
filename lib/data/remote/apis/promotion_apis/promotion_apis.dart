@@ -30,8 +30,9 @@ enum PromotionApis implements URlRequestBuilder {
       case PromotionApis.redeemVoucher:
       case PromotionApis.applyReferralCode:
       case PromotionApis.validatePromoCode:
-      case PromotionApis.getRewardsHistory:
         return HttpMethod.POST;
+      case PromotionApis.getRewardsHistory:
+        return HttpMethod.GET;
     }
   }
 

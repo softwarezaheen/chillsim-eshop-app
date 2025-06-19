@@ -36,7 +36,7 @@ class FaqView extends StatelessWidget {
               navigationTitle: LocaleKeys.profile_faq.tr(),
               textStyle: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             verticalSpaceMedium,

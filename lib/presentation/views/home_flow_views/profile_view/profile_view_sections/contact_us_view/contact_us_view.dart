@@ -35,7 +35,7 @@ class ContactUsView extends StatelessWidget {
               navigationTitle: LocaleKeys.contactUs_titleText.tr(),
               textStyle: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             verticalSpaceSmallMedium,

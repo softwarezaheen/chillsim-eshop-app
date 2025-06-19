@@ -18,7 +18,7 @@ class StartUpView extends HookWidget {
           model.handleStartUpLogic(context),
       builder: (BuildContext context, StartUpViewModel model, Widget? child) =>
           Scaffold(
-        backgroundColor: context.appColors.baseWhite,
+        backgroundColor: context.appColors.primary_800,
         body: Center(
           child: SizedBox(
             width: screenWidth(context) / 3,

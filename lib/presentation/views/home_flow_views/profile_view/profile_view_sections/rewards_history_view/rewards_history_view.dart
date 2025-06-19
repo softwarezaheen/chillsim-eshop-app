@@ -41,7 +41,7 @@ class RewardsHistoryView extends StatelessWidget {
                 navigationTitle: LocaleKeys.rewardHistory_titleText.tr(),
                 textStyle: headerTwoBoldTextStyle(
                   context: context,
-                  fontColor: mainDarkTextColor(context: context),
+                  fontColor: titleTextColor(context: context),
                 ),
               ),
               verticalSpaceSmall,

@@ -21,14 +21,14 @@ class BundleInfoColumn extends StatelessWidget {
           label,
           style: captionTwoBoldTextStyle(
             context: context,
-            fontColor: mainDarkTextColor(context: context),
+            fontColor: contentTextColor(context: context),
           ),
         ),
         Text(
           value,
           style: captionTwoNormalTextStyle(
             context: context,
-            fontColor: contentTextColor(context: context),
+            fontColor: bubbleCountryTextColor(context: context),
           ),
         ),
       ],

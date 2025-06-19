@@ -117,7 +117,7 @@ class LoginView extends StatelessWidget {
                                   bodyBoldTextStyle(context: context),
                               textColor: mainWhiteTextColor(context: context),
                               buttonColor:
-                                  enabledMainDarkButtonColor(context: context),
+                                  facebookButtonColor(context: context),
                               containerPadding:
                                   const EdgeInsets.only(bottom: 10),
                             )
@@ -147,7 +147,7 @@ class LoginView extends StatelessWidget {
                     image: EnvironmentImages.loginMail.fullImagePath,
                     title: LocaleKeys.loginView_continueWithEmail.tr(),
                     titleTextStyle: bodyBoldTextStyle(context: context),
-                    textColor: mainDarkTextColor(context: context),
+                    textColor: titleTextColor(context: context),
                     buttonColor: enabledMainWhiteButtonColor(context: context),
                     containerPadding: const EdgeInsets.only(bottom: 10),
                   ),

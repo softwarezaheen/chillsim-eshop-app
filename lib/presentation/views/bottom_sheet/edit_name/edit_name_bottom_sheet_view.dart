@@ -61,7 +61,7 @@ class EditNameBottomSheetView extends StatelessWidget {
                     LocaleKeys.edit_name.tr(),
                     style: headerThreeMediumTextStyle(
                       context: context,
-                      fontColor: mainDarkTextColor(context: context),
+                      fontColor: titleTextColor(context: context),
                     ),
                   ),
                 ),
