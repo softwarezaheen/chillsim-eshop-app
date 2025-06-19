@@ -8,6 +8,7 @@ class AppEnvironmentHelper {
     required this.omniConfigApiKey,
     required this.omniConfigAppGuid,
     this.websiteUrl = "",
+    this.enableBranchIO = true,
     this.enablePromoCode = true,
     this.enableWalletView = true,
     this.enableBannersView = true,
@@ -17,6 +18,7 @@ class AppEnvironmentHelper {
     this.enableAppleSignIn = true,
     this.enableGoogleSignIn = true,
     this.enableFacebookSignIn = true,
+    this.enableGuestFlowPurchase = false,
     this.environmentCornerRadius = 25,
     this.environmentFamilyName = "Poppins",
     this.isCruiseEnabled = false,
@@ -37,11 +39,13 @@ class AppEnvironmentHelper {
   String omniConfigAppGuid;
   String websiteUrl;
   //feature flags
+  bool enableBranchIO;
   bool enablePromoCode;
   bool enableWalletView;
   bool enableBannersView;
   bool enableCurrencySelection;
   bool enableLanguageSelection;
+  bool enableGuestFlowPurchase;
   //social media flags
   bool enableAppleSignIn;
   bool enableGoogleSignIn;

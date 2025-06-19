@@ -12,7 +12,6 @@ import "package:esim_open_source/data/remote/responses/base_response_model.dart"
 import "package:esim_open_source/data/remote/unauthorized_access_interface.dart";
 import "package:esim_open_source/utils/log_helper.dart";
 import "package:http/http.dart" as http;
-import "package:http/http.dart";
 
 class HttpRequest {
   static int _defaultTimeoutSeconds = 30;
@@ -41,7 +40,7 @@ class HttpRequest {
 
   // Notify all listeners
   static void notifyUnauthorizedAccessCallBackListeners(
-    BaseResponse? base,
+    http.BaseResponse? base,
     Exception? ex,
   ) {
     _unauthorizedAccessCallBackListeners.removeWhere(
@@ -104,7 +103,7 @@ class HttpRequest {
     T Function({dynamic json})? fromJson,
     HttpClientWrapper? client,
     int? timeoutSeconds,
-    List<MultipartFile>? files,
+    List<http.MultipartFile>? files,
   }) async {
     if (endPoint.method == HttpMethod.MULTIPART) {
       // Assuming multipart handling is unchanged
@@ -170,7 +169,7 @@ class HttpRequest {
     T Function({dynamic json})? fromJson,
     HttpClientWrapper? client,
     int? timeoutSeconds,
-    List<MultipartFile>? files,
+    List<http.MultipartFile>? files,
   }) async {
     // Prepare the multipart request
     http.MultipartRequest request = http.MultipartRequest(

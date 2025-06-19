@@ -41,14 +41,15 @@ Future<void> main() async {
   await ThemeManager.initialise();
 
   late ContinueWithEmailViewModel viewModel;
-  late MockContinueWithEmailViewModel mockViewModel;
 
   setUp(() async {
     await setupTestLocator();
     HapticHelperTest.implementHaptic();
     AppEnvironment.setupEnvironment();
     viewModel = ContinueWithEmailViewModel();
-    mockViewModel = MockContinueWithEmailViewModel();
+    locator.registerFactory<ContinueWithEmailViewModel>(
+      MockContinueWithEmailViewModel.new,
+    );
   });
 
   group("View Model Testing", () {
@@ -145,9 +146,7 @@ Future<void> main() async {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         createTestableWidget(
-          ContinueWithEmailView(
-            overrideViewModel: mockViewModel,
-          ),
+          const ContinueWithEmailView(),
         ),
       );
 
@@ -158,41 +157,43 @@ Future<void> main() async {
 
     testWidgets("Tapping on terms checkbox calls updateTermsSelections",
         (WidgetTester tester) async {
-      when(mockViewModel.state).thenReturn(ContinueWithEmailState());
+      when(locator<ContinueWithEmailViewModel>().state)
+          .thenReturn(ContinueWithEmailState());
 
       await tester.pumpWidget(
         createTestableWidget(
-          ContinueWithEmailView(
-            overrideViewModel: mockViewModel,
-          ),
+          const ContinueWithEmailView(),
         ),
       );
 
-      expect(mockViewModel.state?.isTermsChecked, false);
+      expect(
+        locator<ContinueWithEmailViewModel>().state?.isTermsChecked,
+        false,
+      );
       final Finder gesture = find.byType(GestureDetector).at(2);
       await tester.tap(gesture);
       await tester.pump();
 
-      verify(mockViewModel.updateTermsSelections()).called(1);
+      verify(locator<ContinueWithEmailViewModel>().updateTermsSelections())
+          .called(1);
     });
 
     testWidgets("Pressing MainButton triggers loginButtonTapped",
         (WidgetTester tester) async {
-      when(mockViewModel.state)
+      when(locator<ContinueWithEmailViewModel>().state)
           .thenReturn(ContinueWithEmailState()..isLoginEnabled = true);
 
       await tester.pumpWidget(
         createTestableWidget(
-          ContinueWithEmailView(
-            overrideViewModel: mockViewModel,
-          ),
+          const ContinueWithEmailView(),
         ),
       );
 
       await tester.tap(find.byType(MainButton));
       await tester.pump();
 
-      verify(mockViewModel.loginButtonTapped()).called(1);
+      verify(locator<ContinueWithEmailViewModel>().loginButtonTapped())
+          .called(1);
     });
   });
 

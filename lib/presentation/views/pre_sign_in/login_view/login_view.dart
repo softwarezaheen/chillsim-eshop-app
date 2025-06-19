@@ -5,6 +5,7 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -12,19 +13,20 @@ import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  const LoginView({super.key, this.redirection});
 
   static const String routeName = "LoginViewPage";
-
+  final InAppRedirection? redirection;
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
       routeName: routeName,
-      viewModel: LoginViewModel(),
+      viewModel: LoginViewModel(redirection: redirection),
       hideAppBar: true,
       backGroundImage: EnvironmentImages.onBoardingBackground.fullImagePath,
       builder: (
@@ -194,6 +196,14 @@ class LoginView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+      DiagnosticsProperty<InAppRedirection?>("redirection", redirection),
     );
   }
 }

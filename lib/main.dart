@@ -6,6 +6,7 @@ import "package:chucker_flutter/chucker_flutter.dart";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/domain/repository/services/dynamic_linking_service.dart";
 import "package:esim_open_source/firebase_options_open_source_dev.dart"
     as open_source_dev;
 import "package:esim_open_source/firebase_options_open_source_prod.dart"
@@ -50,7 +51,7 @@ void main() async {
   setupSnackbarUi();
   setupBottomSheetUi();
   FlutterNativeSplash.remove();
-  AppEnvironment.setupEnvironment();
+  await AppEnvironment.setupEnvironment();
   await initializeFirebaseApp();
   await DeepLinkHandler.shared.init(({
     required Uri uri,
@@ -58,6 +59,17 @@ void main() async {
   }) {
     DeepLinkHandler.shared.handleDeepLink(uri: uri, isInitial: isInitial);
   });
+
+  await locator<DynamicLinkingService>().initialize(
+    onDeepLink: ({
+      required Uri uri,
+      required bool isInitial,
+    }) {
+      DeepLinkHandler.shared.handleDeepLink(uri: uri, isInitial: isInitial);
+    },
+  );
+  locator<DynamicLinkingService>().requestTrackingAuthorization();
+
   runApp(const MyFlutterActivity(StartUpView()));
   FlutterNativeSplash.remove();
 }
@@ -156,7 +168,11 @@ class _MyFlutterActivityState extends State<MyFlutterActivity>
       onViewModelReady: (MainViewModel model) async => model.onModelReady(),
       builder: (BuildContext context, MainViewModel model, Widget? child) {
         return EasyLocalization(
-          supportedLocales: const <Locale>[Locale("en"), Locale("ar")],
+          supportedLocales: const <Locale>[
+            Locale("en"),
+            Locale("ar"),
+            Locale("fr"),
+          ],
           path:
               "assets/translations/${AppEnvironment.appEnvironmentHelper.environmentTheme.directoryName}",
           // <-- change the path of the translation files

@@ -93,7 +93,16 @@ android {
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
-            manifestPlaceholders = [scheme: "iosupabaseflutter", domain: ""]
+            manifestPlaceholders = [
+                    scheme: "iosupabaseflutter",
+                    domain: "",
+                    branchScheme: "",
+                    branchDomain: "",
+                    branchTestDomain:"",
+                    branchKeyLive:"",
+                    branchKeyTest:"",
+                    branchUseTest:true
+            ]
         }
         OpenSourceStaging {
             dimension "environment"
@@ -103,7 +112,16 @@ android {
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
-            manifestPlaceholders = [scheme: "iosupabaseflutter", domain: ""]
+            manifestPlaceholders = [
+                    scheme: "iosupabaseflutter",
+                    domain: "",
+                    branchScheme: "",
+                    branchDomain: "",
+                    branchTestDomain:"",
+                    branchKeyLive:"",
+                    branchKeyTest:"",
+                    branchUseTest:true
+            ]
         }
         OpenSourceProd {
             dimension "environment"
@@ -113,7 +131,16 @@ android {
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
-            manifestPlaceholders = [scheme: "iosupabaseflutter", domain: ""]
+            manifestPlaceholders = [
+                    scheme: "iosupabaseflutter",
+                    domain: "",
+                    branchScheme: "",
+                    branchDomain: "",
+                    branchTestDomain:"",
+                    branchKeyLive:"",
+                    branchKeyTest:"",
+                    branchUseTest:true
+            ]
         }
     }
 }

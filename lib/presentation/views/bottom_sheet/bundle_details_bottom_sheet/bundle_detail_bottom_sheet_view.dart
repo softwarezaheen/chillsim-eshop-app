@@ -204,7 +204,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        //horizontalSpaceSmall,
+                                        horizontalSpaceSmall,
                                         termsAndConditionTappableWidget(
                                           context,
                                           viewModel,

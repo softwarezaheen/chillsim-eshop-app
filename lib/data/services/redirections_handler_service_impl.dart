@@ -12,6 +12,7 @@ import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/deep_link_helper.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/shared/redirections_helper.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view_model.dart";
@@ -66,6 +67,25 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
 
       _parseDeepLinkRedirection(uri: _initialLinkData!);
     }
+  }
+
+  @override
+  Future<void> redirectToRoute({
+    required InAppRedirection redirection,
+  }) async {
+    if (redirection.variant != null) {
+      await bottomSheetService.showCustomSheet(
+        data: redirection.arguments,
+        enableDrag: false,
+        isScrollControlled: true,
+        variant: redirection.variant,
+      );
+      return;
+    }
+    navigationService.navigateTo(
+      redirection.routeName,
+      arguments: redirection.arguments,
+    );
   }
 
   @override

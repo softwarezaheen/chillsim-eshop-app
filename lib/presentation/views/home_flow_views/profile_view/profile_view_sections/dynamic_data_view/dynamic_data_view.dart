@@ -33,7 +33,7 @@ class DynamicDataView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             CommonNavigationTitle(
-              navigationTitle: viewModel.viewTitle,
+              navigationTitle: viewModel.viewType.viewTitle,
               textStyle: headerTwoBoldTextStyle(
                 context: context,
                 fontColor: mainDarkTextColor(context: context),

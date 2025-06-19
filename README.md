@@ -60,10 +60,20 @@ dart pub global activate flutterfire_cli
     - for setup refer to (TODO://Raed add links related)
       . supabaseFacebookCallBackScheme: This is a deep link / dynamic link used for Facebook login via Supabase setup.(refer to: "Sign in with Facebook" section)
     - websiteUrl: your website domain for deeplinking to work
-    - enablePromoCode: feature flag for promo code
-    - enableWalletView: feature flag for wallet section
-    - enableBannersView: feature flag for banners view
-    - enableCurrencySelection: feature flag for currency selection
+
+
+
+# Feature flags
+Each flavor can have it's own feature flag where the user can turn on or off from environment variables located in(lib/app/environment/envs)
+1. enablePromoCode: user can use promo code to get discount while purchasing esim
+2. enableWalletView: Show or hide the wallet section where user can top up his wallet and use it to purchase esim
+3. enableBannersView: Show or hide the banners view on the main home page use with enableWalletView turned on
+4. enableCurrencySelection: Show the user section where he can select his preferred currency code
+5. enableLanguageSelection: Show the user section where he can select his preferred language
+6. enableGuestFlowPurchase: When turned of user cannot purchase any esim as guest and has to login before any purchase
+7. enableBranchIO: For dynamic linking support, to integrate branch IO please refer to this document(https://pub.dev/packages/flutter_branch_sdk), after integrating make sure to follow the following steps
+   - Android: Change the following(branchScheme, branchDomain, branchTestDomain, branchKeyLive, branchKeyTest, branchUseTest) located in (android/app/build.gradle)
+   - iOS: Open project with xcode choose your target and navigate to build settings user-defined change the following (BRANCH_DOMAIN, BRANCH_KEY_LIVE, BRANCH_KEY_TEST, BRANCH_SCHEME, BRANCH_USE_TEST_MODE) with your values
 
 
 

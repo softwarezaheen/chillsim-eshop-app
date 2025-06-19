@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
@@ -262,12 +263,14 @@ class PurchaseOrderSuccessView extends StatelessWidget {
           iconColor: enabledMainButtonTextColor(context: context),
         ),
         horizontalSpaceSmall,
-        CircularIconButton(
-          icon: Icons.file_download_outlined,
-          onPressed: viewModel.onDownloadClick,
-          backgroundColor: myEsimIconButtonColor(context: context),
-          iconColor: enabledMainButtonTextColor(context: context),
-        ),
+        AppEnvironment.isFromAppClip
+            ? Container()
+            : CircularIconButton(
+                icon: Icons.file_download_outlined,
+                onPressed: viewModel.onDownloadClick,
+                backgroundColor: myEsimIconButtonColor(context: context),
+                iconColor: enabledMainButtonTextColor(context: context),
+              ),
       ],
     );
   }

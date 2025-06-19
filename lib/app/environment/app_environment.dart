@@ -5,6 +5,7 @@ import "package:esim_open_source/app/environment/envs/env_open_source_dev.dart";
 import "package:esim_open_source/app/environment/envs/env_open_source_release.dart";
 import "package:esim_open_source/app/environment/envs/env_open_source_staging.dart";
 import "package:flutter/services.dart";
+import "package:package_info_plus/package_info_plus.dart";
 
 enum Environment {
   openSourceDev,
@@ -46,17 +47,33 @@ enum Environment {
 }
 
 abstract class AppEnvironment {
+  static late bool isFromAppClip;
+
   static late Environment _environment;
 
   static Environment get environment => _environment;
 
   static late AppEnvironmentHelper appEnvironmentHelper;
 
-  static void setupEnvironment() {
+  static Future<void> setupEnvironment() async {
     String currentFlavor = appFlavor?.toLowerCase() ?? "";
 
     log("current flavor is $currentFlavor");
 
     appEnvironmentHelper = Environment.getAppEnvironmentHelper();
+    isFromAppClip = await isAppClip();
+  }
+
+  static Future<bool> isAppClip() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    log("Package Name: ${info.packageName}");
+
+    if (info.packageName.contains(".Clip")) {
+      log("Likely running as App Clip");
+      return true;
+    } else {
+      log("Running as full app");
+      return false;
+    }
   }
 }

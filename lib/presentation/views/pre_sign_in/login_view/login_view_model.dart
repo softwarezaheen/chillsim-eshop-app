@@ -7,10 +7,13 @@ import "package:esim_open_source/domain/repository/services/social_login_service
 import "package:esim_open_source/domain/use_case/auth/social_media_verify_login_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view.dart";
 
 class LoginViewModel extends BaseModel {
+  LoginViewModel({this.redirection});
+  final InAppRedirection? redirection;
   final SocialLoginService socialLoginService = locator<SocialLoginService>();
 
   bool _redirecting = false;
@@ -62,7 +65,10 @@ class LoginViewModel extends BaseModel {
   }
 
   Future<void> navigateToSignInPage() async {
-    navigationService.navigateTo(ContinueWithEmailView.routeName);
+    navigationService.navigateTo(
+      ContinueWithEmailView.routeName,
+      arguments: redirection,
+    );
   }
 
   Future<void> socialMediaSignInAction(
@@ -118,7 +124,7 @@ class LoginViewModel extends BaseModel {
           socialLoginService.logOut();
           return;
         }
-        await navigateToHomePager();
+        await navigateToHomePager(redirection: redirection);
       },
       onFailure: (Resource<AuthResponseModel> response) async {
         await handleError(response);

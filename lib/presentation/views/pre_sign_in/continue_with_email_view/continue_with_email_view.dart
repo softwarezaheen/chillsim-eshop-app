@@ -1,6 +1,9 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
+import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -15,18 +18,18 @@ import "package:flutter/material.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
 
 class ContinueWithEmailView extends StatelessWidget {
-  const ContinueWithEmailView({super.key, this.overrideViewModel});
-
-  final ContinueWithEmailViewModel? overrideViewModel;
+  const ContinueWithEmailView({super.key, this.redirection});
 
   static const String routeName = "ContinueWithEmailView";
+  final InAppRedirection? redirection;
 
   @override
   Widget build(BuildContext context) {
     return BaseView<ContinueWithEmailViewModel>(
       routeName: routeName,
       hideAppBar: true,
-      viewModel: overrideViewModel ?? ContinueWithEmailViewModel(),
+      viewModel: locator<ContinueWithEmailViewModel>()
+        ..redirection = redirection,
       builder: (
         BuildContext context,
         ContinueWithEmailViewModel viewModel,
@@ -53,7 +56,7 @@ class ContinueWithEmailView extends StatelessWidget {
                         width: 25,
                         height: 25,
                       ),
-                    ),
+                    ).imageSupportsRTL.textSupportsRTL,
                   ),
                   Image.asset(
                     EnvironmentImages.darkAppIcon.fullImagePath,
@@ -121,15 +124,12 @@ class ContinueWithEmailView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            //horizontalSpaceSmall,
+                            horizontalSpaceSmall,
                             Expanded(
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: termsAndConditionTappableWidget(
-                                  context,
-                                  viewModel,
-                                ),
-                              ),
+                              child: termsAndConditionTappableWidget(
+                                context,
+                                viewModel,
+                              ).textSupportsRTL,
                             ),
                           ],
                         ),
@@ -201,10 +201,7 @@ class ContinueWithEmailView extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      DiagnosticsProperty<ContinueWithEmailViewModel?>(
-        "overrideViewModel",
-        overrideViewModel,
-      ),
+      DiagnosticsProperty<InAppRedirection?>("redirection", redirection),
     );
   }
 }

@@ -359,5 +359,7 @@ abstract class  LocaleKeys {
   static const String topUpWallet_success = "topUpWallet_success";
   static const String confirmation_languageTitle = "confirmation_languageTitle";
   static const String confirmation_languageContent = "confirmation_languageContent";
+  static const String appClip_currencyTitle = "appClip_currencyTitle";
+  static const String appClip_languageTitle = "appClip_languageTitle";
 
 }

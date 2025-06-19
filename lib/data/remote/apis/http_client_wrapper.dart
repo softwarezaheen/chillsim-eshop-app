@@ -2,6 +2,8 @@ import "dart:async";
 import "dart:io";
 
 import "package:chucker_flutter/chucker_flutter.dart";
+import "package:cupertino_http/cupertino_http.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/api_end_point.dart";
 import "package:http/http.dart" as http;
 import "package:http/io_client.dart";
@@ -22,20 +24,45 @@ class HttpClientWrapper extends http.BaseClient {
     required TokenRefresher tokenRefresher,
     List<RequestInterceptor>? requestInterceptors,
     List<ResponseInterceptor>? responseInterceptors,
-  })  : _client = ChuckerHttpClient(
-          IOClient(
-            HttpClient(context: securityContext)
-              ..badCertificateCallback =
-                  (X509Certificate cert, String host, int port) => false,
-          ),
-        ),
+  })  : _client = _createClient(securityContext),
         _requestInterceptors = requestInterceptors ?? <RequestInterceptor>[],
         _responseInterceptors = responseInterceptors ?? <ResponseInterceptor>[],
         _tokenRefresher = tokenRefresher;
+
   final ChuckerHttpClient _client;
   final List<RequestInterceptor> _requestInterceptors;
   final List<ResponseInterceptor> _responseInterceptors;
   final TokenRefresher _tokenRefresher;
+
+  static ChuckerHttpClient _createClient(SecurityContext? securityContext) {
+    http.Client baseClient;
+
+    if (AppEnvironment.isFromAppClip) {
+      // Use CupertinoClient for iOS/macOS with App Clips support
+      final URLSessionConfiguration config = URLSessionConfiguration.ephemeralSessionConfiguration()
+        ..allowsCellularAccess = true
+        ..allowsConstrainedNetworkAccess = true
+        ..allowsExpensiveNetworkAccess = true
+        ..httpShouldSetCookies = true
+        ..httpCookieAcceptPolicy =
+            NSHTTPCookieAcceptPolicy.NSHTTPCookieAcceptPolicyAlways
+        ..cache = URLCache.withCapacity(memoryCapacity: 2 * 1024 * 1024);
+
+      // Note: CupertinoClient doesn't support custom certificate validation
+      // If you need custom certificate handling, you'll need to configure
+      // it on the server side or use proper certificates
+      baseClient = CupertinoClient.fromSessionConfiguration(config);
+    } else {
+      // Use IOClient for other platforms
+      baseClient = IOClient(
+        HttpClient(context: securityContext)
+          ..badCertificateCallback =
+              (X509Certificate cert, String host, int port) => false,
+      );
+    }
+
+    return ChuckerHttpClient(baseClient);
+  }
 
   Future<http.StreamedResponse> mySend(
     http.BaseRequest request,

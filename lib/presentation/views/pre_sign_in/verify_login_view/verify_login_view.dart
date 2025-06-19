@@ -1,6 +1,8 @@
-import "package:easy_localization/easy_localization.dart";
+import "package:easy_localization/easy_localization.dart" as loc;
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
+import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
+import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -17,10 +19,12 @@ import "package:flutter/services.dart";
 class VerifyLoginView extends StatelessWidget {
   const VerifyLoginView({
     required this.emailAddress,
+    this.redirection,
     super.key,
   });
   final String emailAddress;
   static const String routeName = "VerifyLoginView";
+  final InAppRedirection? redirection;
 
   double calculateFieldWidth({
     required BuildContext context,
@@ -41,6 +45,7 @@ class VerifyLoginView extends StatelessWidget {
       routeName: routeName,
       hideAppBar: true,
       viewModel: VerifyLoginViewModel(
+        redirection: redirection,
         emailAddress: emailAddress,
       ),
       builder: (
@@ -63,7 +68,7 @@ class VerifyLoginView extends StatelessWidget {
                     width: 25,
                     height: 25,
                   ),
-                ),
+                ).imageSupportsRTL.textSupportsRTL,
               ),
               verticalSpaceMediumLarge,
               Text(
@@ -85,30 +90,33 @@ class VerifyLoginView extends StatelessWidget {
               verticalSpaceLarge,
               Column(
                 children: <Widget>[
-                  OtpTextField(
-                    borderWidth: 1,
-                    numberOfFields: 6,
-                    showFieldAsBox: true,
-                    contentPadding: EdgeInsets.zero,
-                    borderRadius: BorderRadius.circular(8),
-                    fieldWidth: calculateFieldWidth(context: context),
-                    focusedBorderColor: viewModel.errorMessage.isEmpty
-                        ? context.appColors.grey_200!
-                        : context.appColors.error_500!,
-                    enabledBorderColor: viewModel.errorMessage.isEmpty
-                        ? context.appColors.grey_200!
-                        : context.appColors.error_500!,
-                    textStyle:
-                        headerZeroMediumTextStyle(context: context).copyWith(
-                      color: viewModel.errorMessage.isEmpty
-                          ? context.appColors.baseBlack
-                          : context.appColors.error_500,
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: OtpTextField(
+                      borderWidth: 1,
+                      numberOfFields: 6,
+                      showFieldAsBox: true,
+                      contentPadding: EdgeInsets.zero,
+                      borderRadius: BorderRadius.circular(8),
+                      fieldWidth: calculateFieldWidth(context: context),
+                      focusedBorderColor: viewModel.errorMessage.isEmpty
+                          ? context.appColors.grey_200!
+                          : context.appColors.error_500!,
+                      enabledBorderColor: viewModel.errorMessage.isEmpty
+                          ? context.appColors.grey_200!
+                          : context.appColors.error_500!,
+                      textStyle:
+                          headerZeroMediumTextStyle(context: context).copyWith(
+                        color: viewModel.errorMessage.isEmpty
+                            ? context.appColors.baseBlack
+                            : context.appColors.error_500,
+                      ),
+                      onCodeChanged: viewModel.otpFieldChanged,
+                      onSubmit: (String verificationCode) async {
+                        viewModel.otpFieldSubmitted(verificationCode);
+                      },
+                      initialCode: viewModel.initialVerificationCode,
                     ),
-                    onCodeChanged: viewModel.otpFieldChanged,
-                    onSubmit: (String verificationCode) async {
-                      viewModel.otpFieldSubmitted(verificationCode);
-                    },
-                    initialCode: viewModel.initialVerificationCode,
                   ),
                   verticalSpaceSmall,
                   Text(
@@ -182,6 +190,10 @@ class VerifyLoginView extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty("emailAddress", emailAddress));
+    properties
+      ..add(StringProperty("emailAddress", emailAddress))
+      ..add(
+        DiagnosticsProperty<InAppRedirection?>("redirection", redirection),
+      );
   }
 }
