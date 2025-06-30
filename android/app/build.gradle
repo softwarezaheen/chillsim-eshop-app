@@ -84,14 +84,13 @@ android {
         }
     }
 
-
     flavorDimensions "environment"
     productFlavors {
         OpenSourceDev {
             dimension "environment"
             applicationId "zaheen.esim.chillsim"
             versionNameSuffix "-dev"
-            resValue "string", "app_name", "White Label Dev"
+            resValue "string", "app_name", "Chill SIM Dev"
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
@@ -110,7 +109,7 @@ android {
             dimension "environment"
             applicationId "zaheen.esim.chillsim"
             versionNameSuffix "-staging"
-            resValue "string", "app_name", "White Label Stg"
+            resValue "string", "app_name", "Chill SIM"
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""
@@ -129,7 +128,7 @@ android {
             dimension "environment"
             applicationId "zaheen.esim.chillsim"
             versionNameSuffix ""
-            resValue "string", "app_name", "White Label"
+            resValue "string", "app_name", "Chill SIM"
             resValue "string", "facebook_app_id", ""
             resValue "string", "fb_login_protocol_scheme", ""
             resValue "string", "fb_client_token", ""

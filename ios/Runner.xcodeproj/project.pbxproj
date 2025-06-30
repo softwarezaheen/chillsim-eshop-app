@@ -540,6 +540,7 @@
 				45383681A0CC722A30749758 /* [CP] Copy Pods Resources */,
 				8FE355902DA6D0E000497155 /* Set Status Bar Appearance : UIViewControllerBasedStatusBarAppearance true */,
 				8F1ED5DD2DF177DE00729D61 /* BRANCH_USE_TEST_MODE flag */,
+				A4E7018039BCF3702B9214F0 /* FlutterFire: "flutterfire bundle-service-file" */,
 			);
 			buildRules = (
 			);
@@ -832,6 +833,24 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
+		A4E7018039BCF3702B9214F0 /* FlutterFire: "flutterfire bundle-service-file" */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "FlutterFire: \"flutterfire bundle-service-file\"";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n#!/bin/bash\nPATH=\"${PATH}:$FLUTTER_ROOT/bin:${PUB_CACHE}/bin:$HOME/.pub-cache/bin\"\nflutterfire bundle-service-file --plist-destination=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\" --build-configuration=${CONFIGURATION} --platform=ios --apple-project-path=\"${SRCROOT}\"\n";
+		};
 		A999E77731D67D047A4E371C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1058,7 +1077,6 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = true;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1067,22 +1085,22 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.test;
+				PRODUCT_DISPLAY_NAME = "Chill SIM Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1176,29 +1194,28 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = true;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Stg";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim;
+				PRODUCT_DISPLAY_NAME = "Chill SIM";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1291,29 +1308,28 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = luxesim;
 				BRANCH_USE_TEST_MODE = false;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim;
+				PRODUCT_DISPLAY_NAME = "Chill SIM";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1403,7 +1419,6 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = true;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1412,22 +1427,22 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.test;
+				PRODUCT_DISPLAY_NAME = "Chill SIM Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1515,29 +1530,28 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = true;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Stg";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim;
+				PRODUCT_DISPLAY_NAME = "Chill SIM";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1624,29 +1638,28 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = false;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim;
+				PRODUCT_DISPLAY_NAME = "Chill SIM";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1731,7 +1744,6 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = true;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1740,22 +1752,22 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.test;
+				PRODUCT_DISPLAY_NAME = "Chill SIM Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1841,29 +1853,28 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = true;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label Stg";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim;
+				PRODUCT_DISPLAY_NAME = "Chill SIM";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1948,29 +1959,28 @@
 				BRANCH_DOMAIN = "";
 				BRANCH_KEY_LIVE = "";
 				BRANCH_KEY_TEST = "";
-				BRANCH_SCHEME = "";
 				BRANCH_USE_TEST_MODE = false;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEEP_LINK_DOMAIN = "";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
 				FACEBOOK_CALLBACK_DOMAIN = iosupabaseflutter;
 				FACEBOOK_SIGN_IN_APP_ID = "";
-				GOOGLE_SIGN_IN_CLIENT_ID = "";
+				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
-				PRODUCT_DISPLAY_NAME = "White Label";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim;
+				PRODUCT_DISPLAY_NAME = "Chill SIM";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2037,7 +2047,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2073,7 +2083,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.test.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -2127,7 +2137,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2163,7 +2173,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2218,7 +2228,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2254,7 +2264,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2309,7 +2319,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2338,7 +2348,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.test.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2392,7 +2402,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2421,7 +2431,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2476,7 +2486,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2505,7 +2515,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2560,7 +2570,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2589,7 +2599,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.test.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2643,7 +2653,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2672,7 +2682,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2727,7 +2737,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2756,7 +2766,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = zaheen.esim.chillsim.Clip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2808,7 +2818,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -2830,7 +2840,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2893,7 +2903,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -2915,7 +2925,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2978,7 +2988,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -3000,7 +3010,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3064,7 +3074,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -3080,7 +3090,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3142,7 +3152,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -3158,7 +3168,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3220,7 +3230,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -3236,7 +3246,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3299,7 +3309,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -3315,7 +3325,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3377,7 +3387,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -3393,7 +3403,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3455,7 +3465,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = J67F4XX5DM;
+				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -3471,7 +3481,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IOS_APP_BUNDLE_ID = "";
+				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

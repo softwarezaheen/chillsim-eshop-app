@@ -50,19 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCn80uS0cL82TosQca6pSkMY8VFY2nbNvI',
-    appId: '1:566038591872:android:2602567ce80b0828afa965',
-    messagingSenderId: '566038591872',
-    projectId: 'esim-opensource-live',
-    storageBucket: 'esim-opensource-live.firebasestorage.app',
+    apiKey: 'AIzaSyDD2sDO-tzcfzlWlM2uL6TwHBAt9wlb6F0',
+    appId: '1:845206888977:android:09ec98b662d78ce86487b0',
+    messagingSenderId: '845206888977',
+    projectId: 'chill-sim',
+    storageBucket: 'chill-sim.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDT17rrLtKy5q82uRoVQcOhrSj4FrrBNDk',
-    appId: '1:566038591872:ios:01a5098c5188288bafa965',
-    messagingSenderId: '566038591872',
-    projectId: 'esim-opensource-live',
-    storageBucket: 'esim-opensource-live.firebasestorage.app',
-    iosBundleId: 'monty.esim.opensource',
+    apiKey: 'AIzaSyD6d_5rRvN59etYnfO9ERLsFwwUNGd1FMY',
+    appId: '1:845206888977:ios:793eb908e3a195256487b0',
+    messagingSenderId: '845206888977',
+    projectId: 'chill-sim',
+    storageBucket: 'chill-sim.firebasestorage.app',
+    iosClientId: '845206888977-l726soo28mam56qq1s72oi3clqs4abh6.apps.googleusercontent.com',
+    iosBundleId: 'zaheen.esim.chillsim',
   );
+
 }
