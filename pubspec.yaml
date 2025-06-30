@@ -46,7 +46,7 @@ dependencies:
   flutter_native_splash: ^2.4.4
   flutter_launcher_icons: ^0.14.3
   fluttertoast: ^8.2.12
-  share_plus: ^10.1.4
+  share_plus: ^11.0.0
   package_info_plus: ^8.0.2
   stacked_themes: ^0.3.13
   device_info_plus: ^11.3.0
@@ -98,7 +98,7 @@ dependencies:
   safe_device: ^1.2.0
   objectbox: ^4.1.0
   objectbox_flutter_libs: ^4.1.0
-  chucker_flutter: ^1.8.3
+  chucker_flutter: ^1.8.5
   path: ^1.9.0
   flutter_esim: ^0.0.4
   gallery_saver_plus: ^3.2.4
