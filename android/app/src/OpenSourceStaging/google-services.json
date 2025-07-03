@@ -34,7 +34,8 @@
               "client_id": "845206888977-l726soo28mam56qq1s72oi3clqs4abh6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "zaheen.esim.chillsim"
+                "bundle_id": "zaheen.esim.chillsim",
+                "app_store_id": "6747967151"
               }
             }
           ]

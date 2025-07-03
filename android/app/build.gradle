@@ -91,12 +91,12 @@ android {
             applicationId "zaheen.esim.chillsim"
             versionNameSuffix "-dev"
             resValue "string", "app_name", "Chill SIM Dev"
-            resValue "string", "facebook_app_id", ""
-            resValue "string", "fb_login_protocol_scheme", ""
-            resValue "string", "fb_client_token", ""
+            resValue "string", "facebook_app_id", "768593502399966"
+            resValue "string", "fb_login_protocol_scheme", "fb768593502399966"
+            resValue "string", "fb_client_token", "81fcb9d78ec339bcb5be7b21b0a7d924"
             manifestPlaceholders = [
                     scheme          : "iosupabaseflutter",
-                    domain          : "",
+                    domain          : "chillsim-eshop-web.onrender.com",
                     branchScheme    : "",
                     branchDomain    : "",
                     branchTestDomain: "",
@@ -110,12 +110,12 @@ android {
             applicationId "zaheen.esim.chillsim"
             versionNameSuffix "-staging"
             resValue "string", "app_name", "Chill SIM"
-            resValue "string", "facebook_app_id", ""
-            resValue "string", "fb_login_protocol_scheme", ""
-            resValue "string", "fb_client_token", ""
+            resValue "string", "facebook_app_id", "768593502399966"
+            resValue "string", "fb_login_protocol_scheme", "fb768593502399966"
+            resValue "string", "fb_client_token", "81fcb9d78ec339bcb5be7b21b0a7d924"
             manifestPlaceholders = [
                     scheme          : "iosupabaseflutter",
-                    domain          : "",
+                    domain          : "chillsim-eshop-web.onrender.com",
                     branchScheme    : "",
                     branchDomain    : "",
                     branchTestDomain: "",
@@ -129,12 +129,12 @@ android {
             applicationId "zaheen.esim.chillsim"
             versionNameSuffix ""
             resValue "string", "app_name", "Chill SIM"
-            resValue "string", "facebook_app_id", ""
-            resValue "string", "fb_login_protocol_scheme", ""
-            resValue "string", "fb_client_token", ""
+            resValue "string", "facebook_app_id", "768593502399966"
+            resValue "string", "fb_login_protocol_scheme", "fb768593502399966"
+            resValue "string", "fb_client_token", "81fcb9d78ec339bcb5be7b21b0a7d924"
             manifestPlaceholders = [
                     scheme          : "iosupabaseflutter",
-                    domain          : "",
+                    domain          : "chillsim-eshop-web.onrender.com",
                     branchScheme    : "",
                     branchDomain    : "",
                     branchTestDomain: "",
