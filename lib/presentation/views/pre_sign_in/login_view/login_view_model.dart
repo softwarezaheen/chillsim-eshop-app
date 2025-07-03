@@ -48,11 +48,11 @@ class LoginViewModel extends BaseModel {
         return;
       }
 
-      if (errorMessage?.isNotEmpty ?? false) {
+      if (data.errorMessage.isNotEmpty) {
         unawaited(
           showNativeErrorMessage(
             "Authentication error",
-            errorMessage,
+            data.errorMessage,
           ),
         );
         setViewState(ViewState.idle);
