@@ -34,7 +34,7 @@ if (flutterVersionName == null) {
 android {
     namespace "com.BaseFlutter.BaseFlutter"
     compileSdk flutter.compileSdkVersion
-    ndkVersion "27.0.11718014"
+    ndkVersion "27.0.12077973"
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -65,6 +65,7 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
+        print("target sdk version : $flutter.targetSdkVersion")
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
