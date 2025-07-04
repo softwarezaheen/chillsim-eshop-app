@@ -99,7 +99,7 @@ class ContinueWithEmailViewModel extends BaseModel {
 
     Resource<EmptyResponse?> loginResponse = await loginUseCase.execute(
       LoginParams(
-        email: _state.emailController.text,
+        email: _state.emailController.text.trim(),
       ),
     );
 
@@ -109,7 +109,7 @@ class ContinueWithEmailViewModel extends BaseModel {
         navigationService.navigateTo(
           VerifyLoginView.routeName,
           arguments: ContinueWithEmailViewModelArgs(
-            emailAddress: _state.emailController.text,
+            emailAddress: _state.emailController.text.trim(),
             redirection: redirection,
           ),
         );
