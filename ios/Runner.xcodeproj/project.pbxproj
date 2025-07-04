@@ -474,8 +474,8 @@
 				45383681A0CC722A30749758 /* [CP] Copy Pods Resources */,
 				8FE355902DA6D0E000497155 /* Set Status Bar Appearance : UIViewControllerBasedStatusBarAppearance true */,
 				8F1ED5DD2DF177DE00729D61 /* BRANCH_USE_TEST_MODE flag */,
-				A82591BAC9A1414B9318072D /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
 				A38A628B4B5DACD02F922512 /* FlutterFire: "flutterfire bundle-service-file" */,
+				A82591BAC9A1414B9318072D /* FlutterFire: "flutterfire upload-crashlytics-symbols" */,
 			);
 			buildRules = (
 			);
