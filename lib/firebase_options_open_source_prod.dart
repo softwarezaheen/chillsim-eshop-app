@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '845206888977',
     projectId: 'chill-sim',
     storageBucket: 'chill-sim.firebasestorage.app',
+    androidClientId: '845206888977-009i378dtfqiqntcjnp6ek6tdv4bkpvd.apps.googleusercontent.com',
     iosClientId: '845206888977-l726soo28mam56qq1s72oi3clqs4abh6.apps.googleusercontent.com',
     iosBundleId: 'zaheen.esim.chillsim',
   );

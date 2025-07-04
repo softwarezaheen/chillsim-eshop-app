@@ -111,6 +111,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   flutter_branch_sdk: ^8.5.0
   cupertino_http: ^2.2.0
+  firebase_crashlytics: ^4.3.9
 
 dev_dependencies:
   objectbox_generator: ^4.1.0

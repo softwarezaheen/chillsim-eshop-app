@@ -176,9 +176,11 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.grey,
       );
-
+      hideKeyboard();
       return;
     }
+
+    hideKeyboard();
     completer(
       SheetResponse<MainBottomSheetResponse>(
         data: MainBottomSheetResponse(

@@ -83,6 +83,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   //Promo code sub view
   bool isPromoCodeExpanded = false;
   final TextEditingController _promoCodeController = TextEditingController();
+
   TextEditingController get promoCodeController => _promoCodeController;
 
   String promoCodeMessage = "";
@@ -360,10 +361,12 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.grey,
       );
+      hideKeyboard();
       unawaited(cancelOrder(orderID: orderID));
       return;
     }
 
+    hideKeyboard();
     navigateToLoading(orderID, bearerToken);
   }
 

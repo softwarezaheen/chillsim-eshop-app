@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>845206888977-l726soo28mam56qq1s72oi3clqs4abh6.apps.googleusercontent.com</string>
+	<string>845206888977-fd5stlqe7qt2ab2estc0uuv5na7m4sd2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.845206888977-l726soo28mam56qq1s72oi3clqs4abh6</string>
+	<string>com.googleusercontent.apps.845206888977-fd5stlqe7qt2ab2estc0uuv5na7m4sd2</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>845206888977-009i378dtfqiqntcjnp6ek6tdv4bkpvd.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>zaheen.esim.chillsim</string>
+	<string>zaheen.esim.chillsim.test</string>
 	<key>PROJECT_ID</key>
 	<string>chill-sim</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:845206888977:ios:793eb908e3a195256487b0</string>
+	<string>1:845206888977:ios:4b5abd7b41dfc4b66487b0</string>
 </dict>
 </plist>

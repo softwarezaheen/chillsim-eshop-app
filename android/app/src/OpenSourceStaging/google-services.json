@@ -31,11 +31,46 @@
               "client_type": 3
             },
             {
-              "client_id": "845206888977-l726soo28mam56qq1s72oi3clqs4abh6.apps.googleusercontent.com",
+              "client_id": "845206888977-fd5stlqe7qt2ab2estc0uuv5na7m4sd2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "zaheen.esim.chillsim",
-                "app_store_id": "6747967151"
+                "bundle_id": "zaheen.esim.chillsim.test"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845206888977:android:33663d3ada7d9f566487b0",
+        "android_client_info": {
+          "package_name": "zaheen.esim.chillsim.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845206888977-ii501f8csag1j078g76ap7gbpjs0uo28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD2sDO-tzcfzlWlM2uL6TwHBAt9wlb6F0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845206888977-ii501f8csag1j078g76ap7gbpjs0uo28.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "845206888977-fd5stlqe7qt2ab2estc0uuv5na7m4sd2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "zaheen.esim.chillsim.test"
               }
             }
           ]

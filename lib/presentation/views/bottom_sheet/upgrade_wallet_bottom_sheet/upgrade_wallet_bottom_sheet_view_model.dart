@@ -122,10 +122,12 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
         gravity: ToastGravity.BOTTOM,
         toastLength: Toast.LENGTH_LONG,
       );
+      hideKeyboard();
       unawaited(cancelOrder(orderID: orderID));
       return;
     }
 
+    hideKeyboard();
     setViewState(ViewState.busy);
     await getUserInfoUseCase.execute(NoParams());
     setViewState(ViewState.idle);
