@@ -78,6 +78,7 @@ class ConsumptionBottomSheetViewModel extends EsimBaseModel {
         String dataAllocatedDisplay = result.data?.dataAllocatedDisplay ?? "";
         String dataUsedDisplay = result.data?.dataUsedDisplay ?? "";
         double percentage = (dataUsed / dataAllocated) * 100;
+        percentage = double.parse(percentage.toStringAsFixed(2));
         _state
           ..percentageUI = "$percentage %"
           ..consumption = percentage / 100
