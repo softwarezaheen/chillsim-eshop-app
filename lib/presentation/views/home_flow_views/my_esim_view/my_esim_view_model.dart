@@ -41,6 +41,8 @@ class MyESimViewModel extends BaseModel {
 
   ESimState get state => _state;
 
+  bool isInstallationFailed = false;
+
   //#endregion
 
   //#region Functions
@@ -141,6 +143,9 @@ class MyESimViewModel extends BaseModel {
         );
       }
     } on Object catch (ex) {
+      _state.showInstallButton = false;
+      notifyListeners();
+      isInstallationFailed = true;
       showNativeErrorMessage("", ex.toString().replaceAll("Exception:", ""));
     }
   }
@@ -299,7 +304,11 @@ class MyESimViewModel extends BaseModel {
             _state.currentESimList.add(item);
           }
         });
-        _state.showInstallButton = await isInstallButtonEnabled();
+        if (isInstallationFailed) {
+          _state.showInstallButton = false;
+        } else {
+          _state.showInstallButton = await isInstallButtonEnabled();
+        }
         setViewState(ViewState.idle);
       },
       onFailure:
