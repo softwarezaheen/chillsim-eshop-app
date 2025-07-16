@@ -356,5 +356,6 @@
   "confirmation_languageTitle": "Changer de langue",
   "confirmation_languageContent": "Êtes-vous sûr de vouloir changer la langue en",
   "appClip_currencyTitle": "Sélectionnez votre devise préférée pour continuer",
-  "appClip_languageTitle": "Sélectionnez votre langue préférée pour continuer"
+  "appClip_languageTitle": "Sélectionnez votre langue préférée pour continuer",
+  "eSim_installation_error_message" : "L'installation automatique de l'eSIM n'est pas disponible, veuillez l'installer manuellement."
 }
