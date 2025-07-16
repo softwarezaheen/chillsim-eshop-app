@@ -356,5 +356,6 @@
   "confirmation_languageTitle": "Change Language",
   "confirmation_languageContent": "Are you sure you want to change the language to",
   "appClip_currencyTitle": "Select your preferred currency to continue",
-  "appClip_languageTitle": "Select your preferred language to continue"
+  "appClip_languageTitle": "Select your preferred language to continue",
+  "eSim_installation_error_message" : "Auto eSIM installation is not available, Please use manual install"
 }

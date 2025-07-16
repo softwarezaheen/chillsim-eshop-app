@@ -357,5 +357,6 @@
   "confirmation_languageTitle": "تغيير اللغة",
   "confirmation_languageContent": "هل أنت متأكد أنك تريد تغيير اللغة إلى",
   "appClip_currencyTitle": "اختر عملتك المفضلة للمتابعة",
-  "appClip_languageTitle": "اختر لغتك المفضلة للمتابعة"
+  "appClip_languageTitle": "اختر لغتك المفضلة للمتابعة",
+  "eSim_installation_error_message" : "Auto eSIM installation is not available, Please use manual install"
 }
