@@ -42,7 +42,7 @@ class AccountInformationViewModel extends BaseModel {
   final UpdateUserInfoUseCase updateUserInfoUseCase =
       UpdateUserInfoUseCase(locator<ApiAuthRepository>());
   PhoneController phoneController =
-      PhoneController(const PhoneNumber(isoCode: IsoCode.LB, nsn: ""));
+      PhoneController(const PhoneNumber(isoCode: IsoCode.RO, nsn: ""));
 
   @override
   Future<void> onViewModelReady() async {
@@ -62,7 +62,7 @@ class AccountInformationViewModel extends BaseModel {
       _receiveUpdates = isNewsletterSubscribed;
       _emailController.text = userEmailAddress;
       phoneController.value = PhoneNumber(
-        isoCode: parsed?.isoCode ?? IsoCode.LB,
+        isoCode: parsed?.isoCode ?? IsoCode.RO,
         nsn: parsed?.nsn ?? "",
       );
 
@@ -111,6 +111,7 @@ class AccountInformationViewModel extends BaseModel {
     String phoneNumber, {
     required bool isValid,
   }) {
+    debugPrint("validateNumber, code: $countryCode, number: $phoneNumber");
     isPhoneValid = isValid;
     userPhoneNumber = phoneNumber;
     updateButtonState();
