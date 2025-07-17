@@ -19,6 +19,7 @@ class PushNotificationServiceImpl implements PushNotificationService {
   PushNotificationServiceImpl._privateConstructor();
 
   static PushNotificationServiceImpl? _instance;
+
   static PushNotificationServiceImpl getInstance() {
     _instance ??= PushNotificationServiceImpl._privateConstructor();
     return _instance!;
@@ -128,13 +129,15 @@ class PushNotificationServiceImpl implements PushNotificationService {
         _serialiseAndNavigate(payload, false, true);
       });
 
-    FirebaseMessaging.onBackgroundMessage(
-      (RemoteMessage message) => _firebaseMessagingBackgroundHandler(
-        message,
-        false,
-        true,
-      ),
-    );
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage? message) async {
+      if (message != null) {
+        _firebaseMessagingBackgroundHandler(
+          message,
+          false,
+          true,
+        );
+      }
+    });
 
     // Handle when user taps on notification to open app
     FirebaseMessaging.onMessageOpenedApp.listen(

@@ -102,6 +102,11 @@ Future<void> initializeFirebaseApp() async {
   await Firebase.initializeApp(options: firebaseOptions);
 
   FlutterError.onError = (FlutterErrorDetails errorDetails) {
+    // Don't report UI overflow errors to Crashlytics
+    if (errorDetails.exception.toString().contains("overflowed")) {
+      return; // Just ignore these errors
+    }
+
     unawaited(
         FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails));
   };
