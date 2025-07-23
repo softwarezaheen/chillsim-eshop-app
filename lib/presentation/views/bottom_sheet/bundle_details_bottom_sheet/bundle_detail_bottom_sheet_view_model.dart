@@ -7,6 +7,7 @@ import "package:esim_open_source/data/remote/responses/auth/auth_response_model.
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/auth/tmp_login_use_case.dart";
 import "package:esim_open_source/domain/use_case/bundles/get_bundle_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/validate_promo_code_use_case.dart";
@@ -82,6 +83,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 
   //Promo code sub view
   bool isPromoCodeExpanded = false;
+  String get _referralCode =>
+      localStorageService.getString(LocalStorageKeys.referralCode) ?? "";
   final TextEditingController _promoCodeController = TextEditingController();
 
   TextEditingController get promoCodeController => _promoCodeController;
@@ -108,6 +111,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   void onViewModelReady() {
     super.onViewModelReady();
     _emailController.addListener(_validateForm);
+    _promoCodeController.text = _referralCode;
+    isPromoCodeExpanded = _referralCode.isNotEmpty;
     _promoCodeController.addListener(notifyListeners);
 
     // getBundleUseCase.execute(BundleParams(code: bundle?.bundleCode ?? ""));
