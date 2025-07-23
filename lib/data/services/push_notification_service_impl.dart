@@ -129,14 +129,12 @@ class PushNotificationServiceImpl implements PushNotificationService {
         _serialiseAndNavigate(payload, false, true);
       });
 
-    FirebaseMessaging.onBackgroundMessage((RemoteMessage? message) async {
-      if (message != null) {
-        _firebaseMessagingBackgroundHandler(
-          message,
-          false,
-          true,
-        );
-      }
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+      _firebaseMessagingBackgroundHandler(
+        message,
+        false,
+        true,
+      );
     });
 
     // Handle when user taps on notification to open app
