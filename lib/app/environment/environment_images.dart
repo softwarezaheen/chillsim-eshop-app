@@ -102,6 +102,7 @@ enum EnvironmentImages {
   whiteAppIcon,
   copyIcon,
   shareIcon,
+  unlimitedDataBundle,
   //empty state
   emptyEsims,
   emptyNotifications,
@@ -316,6 +317,7 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.whiteAppIcon:
       case EnvironmentImages.copyIcon:
       case EnvironmentImages.shareIcon:
+      case EnvironmentImages.unlimitedDataBundle:
         return "icons/$name";
       case EnvironmentImages.emptyEsims:
       case EnvironmentImages.emptyNotifications:
@@ -342,6 +344,7 @@ extension EnvironmentImagesExtension on EnvironmentImages {
     String rootDirectory = isSharedImage
         ? "shared"
         : AppEnvironment.appEnvironmentHelper.environmentTheme.directoryName;
+
     return "assets/images/$rootDirectory/$imageName.${imageType.name}";
   }
 }
