@@ -15,6 +15,9 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
     return _instance!;
   }
 
+  String errorMessage =
+      "Auto eSIM installation is not available, Please use manual install";
+
   static FlutterChannelHandlerServiceImpl? _instance;
 
   @override
@@ -23,10 +26,10 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
       await flutterToNativePlatform.invokeMethod("openSimProfilesSettings");
     } on PlatformException catch (e) {
       log("openSimProfilesSettings Error : ${e.message}");
-      rethrow;
+      throw Exception(errorMessage);
     } on Object catch (e) {
       log("openSimProfilesSettings Error: $e");
-      rethrow;
+      throw Exception(errorMessage);
     }
   }
 
@@ -43,10 +46,10 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
       );
     } on PlatformException catch (e) {
       log("openEsimSetup Error : ${e.message}");
-      rethrow;
+      throw Exception(errorMessage);
     } on Object catch (e) {
       log("openEsimSetup Error: $e");
-      rethrow;
+      throw Exception(errorMessage);
     }
   }
 
@@ -54,12 +57,16 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
   Future<bool> openEsimSetupForAndroid({
     required String smdpAddress,
     required String activationCode,
+    bool isSHAExist = true,
   }) async {
     try {
       String cardData = "LPA:1\$$smdpAddress\$$activationCode";
       bool result = await flutterToNativePlatform.invokeMethod(
         "openEsimSetup",
-        <String, String>{"cardData": cardData},
+        <String, String>{
+          "cardData": cardData,
+          "isSHAExist": "$isSHAExist",
+        },
       );
       if (!result) {
         throw Exception("eSIM installation not supported");
@@ -67,10 +74,10 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
       return result;
     } on PlatformException catch (e) {
       log("openEsimSetupForAndroid Error : ${e.message}");
-      rethrow;
+      throw Exception(errorMessage);
     } on Object catch (e) {
       log("openEsimSetupForAndroid Error: $e");
-      rethrow;
+      throw Exception(errorMessage);
     }
   }
 }

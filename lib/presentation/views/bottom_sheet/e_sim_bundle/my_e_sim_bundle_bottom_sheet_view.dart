@@ -323,7 +323,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
             ],
           ),
         ),
-        verticalSpaceTiniest,
+        verticalSpaceSmall,
         viewModel.state.showTopUP
             ? Row(
                 children: <Widget>[

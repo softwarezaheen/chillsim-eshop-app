@@ -53,4 +53,6 @@ abstract class SocialLoginService {
   Future<Stream<SocialLoginResult>> signInWithFaceBook();
 
   Future<void> logOut();
+
+  Future<void> onDispose();
 }

@@ -9,6 +9,7 @@ platform :flutter do
 
   desc "Setup environment"
   private_lane :setup_environment do
+    sh("cd .. && ./flutter_run.sh openSourceProd")
     sh("flutter pub get")
     sh("mkdir -p coverage")
   end
@@ -16,7 +17,7 @@ platform :flutter do
   desc "Run tests and generate coverage"
   lane :run_tests_with_coverage do
     UI.message("SONAR_PROJECT_KEY: #{ENV['SONAR_PROJECT_KEY']}")
-    sh("cd .. && flutter test --coverage")
+    sh("cd .. && dart run build_runner build -d && flutter test --coverage")
 
   end
 
@@ -42,10 +43,10 @@ platform :flutter do
       source_encoding: "UTF-8",
       exclusions: "**/*.g.dart,**/*.freezed.dart,**/*.mocks.dart",
       sonar_runner_args: [
-              "-Dsonar.dart.coverage.reportPaths=coverage/lcov.info",
-              "-Dsonar.verbose=true",
-              "-Dsonar.log.level=DEBUG",
-              "-Dsonar.tests=#{ENV["SONAR_PROJECT_NAME"]}/test",
+              "-D sonar.dart.lcov.reportPaths=#{ENV["SONAR_PROJECT_NAME"]}/coverage/lcov.info",
+              "-D sonar.verbose=true",
+              "-D sonar.log.level=DEBUG",
+              "-D sonar.tests=#{ENV["SONAR_PROJECT_NAME"]}/test",
               "-X"  # Enable debug mode
             ].join(" ")
     )
@@ -55,7 +56,7 @@ platform :flutter do
   desc "Run SonarQube analysis for pull requests"
   lane :sonar_pr do |options|
     run_tests_with_coverage
-    
+    Dir.chdir("..")
     pr_number = options[:pr_number] || ENV["PR_NUMBER"]
     pr_branch = options[:pr_branch] || ENV["PR_BRANCH"] 
     pr_base = options[:pr_base] || ENV["PR_BASE"] || "main"
@@ -73,23 +74,16 @@ platform :flutter do
       exclusions: "**/*.g.dart,**/*.freezed.dart,**/*.mocks.dart",
       # Add PR-specific properties manually
       sonar_runner_args: [
-           "-Dsonar.pullrequest.key=#{pr_number}",
-           "-Dsonar.pullrequest.branch=#{pr_branch}",
-           "-Dsonar.pullrequest.base=#{pr_base}",
-           "-Dsonar.dart.coverage.reportPaths=coverage/lcov.info",
-           "-Dsonar.verbose=true",
-           "-Dsonar.log.level=DEBUG",
-           "-Dsonar.tests=#{ENV["SONAR_PROJECT_NAME"]}/test",
+           "-D sonar.pullrequest.key=#{pr_number}",
+           "-D sonar.pullrequest.branch=#{pr_branch}",
+           "-D sonar.pullrequest.base=#{pr_base}",
+           "-D sonar.dart.lcov.reportPaths=#{ENV["SONAR_PROJECT_NAME"]}/coverage/lcov.info",
+           "-D sonar.verbose=true",
+           "-D sonar.log.level=DEBUG",
+           "-D sonar.tests=#{ENV["SONAR_PROJECT_NAME"]}/test",
            "-X"  # Enable debug mode
           ].join(" ")
     )
-  end
-
-  desc "Complete CI pipeline"
-  lane :ci do
-    sh("cd .. && flutter analyze")
-    run_tests_with_coverage
-    sonar_main
   end
 
   # Helper to get version from pubspec.yaml
@@ -111,7 +105,7 @@ platform :flutter do
     }
     
     required_vars.each do |key, value|
-      status = value ? "✅ SET" : "❌ MISSING"
+      status = value ? ">>>>>> SET" : "------ MISSING"
       display_value = value
       
       # Mask sensitive values
@@ -124,9 +118,9 @@ platform :flutter do
     UI.message("current folder: #{Dir.pwd}")
     # Check if sonar-project.properties exists
     if File.exist?('sonar-project.properties')
-      UI.message("sonar-project.properties: ✅ EXISTS")
+      UI.message("sonar-project.properties: >>>>>> EXISTS")
     else
-      UI.message("sonar-project.properties: ❌ NOT FOUND")
+      UI.message("sonar-project.properties: ------ NOT FOUND")
     end
   end
 

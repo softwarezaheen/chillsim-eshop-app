@@ -351,10 +351,21 @@
   "paymentSelection_titleText": "Choose Payment Method",
   "paymentSelection_cardText": "Credit/Debit Card",
   "paymentSelection_walletText": "Wallet",
+  "paymentSelection_dcbText": "Direct Carrier Billing",
   "topUpWallet_error": "Top up wallet failed",
   "topUpWallet_success": "Top up wallet success",
   "confirmation_languageTitle": "Change Language",
   "confirmation_languageContent": "Are you sure you want to change the language to",
   "appClip_currencyTitle": "Select your preferred currency to continue",
-  "appClip_languageTitle": "Select your preferred language to continue"
+  "appClip_languageTitle": "Select your preferred language to continue",
+  "loginView_continueWithPhone": "Continue with Phone Number",
+  "continueWithEmailView_SubTitleTextPhone": "Please enter your phone number to proceed",
+  "verifyLogin_buttonTitleTextPhone": "Verify Phone Number",
+  "verifyLogin_checkPhone": "Didn't receive OTP? ",
+  "deleteAccount_ConfirmTextPhone": "Enter your phone number to confirm deleting your account.",
+  "verifyLogin_titleTextPhone": "Check your inbox",
+  "verifyOrderOtp_titleText": "Please verify your SMS",
+  "verifyOrderOtp_contentText": "You are about to pay using your airtime balance. A verification code was sent by sms",
+  "eSim_installation_error_message" : "Auto eSIM installation is not available, Please use manual install",
+  "cashback_reward_message": "Cash back reward of the bundle price is added back into your eSIM wallet balance"
 }

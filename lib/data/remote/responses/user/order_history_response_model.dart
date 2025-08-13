@@ -12,6 +12,10 @@ class OrderHistoryResponseModel {
     this.orderType,
     this.quantity,
     this.companyName,
+    this.companyAddress,
+    this.companyPhone,
+    this.companyEmail,
+    this.companyWebsite,
     this.orderDisplayPrice,
     this.paymentDetails,
     this.bundleDetails,
@@ -27,6 +31,10 @@ class OrderHistoryResponseModel {
       orderType: json["order_type"],
       quantity: json["quantity"],
       companyName: json["company_name"],
+      companyAddress: json["company_address"],
+      companyPhone: json["company_phone"],
+      companyEmail: json["company_email"],
+      companyWebsite: json["company_website"],
       orderDisplayPrice: json["order_display_price"],
       paymentDetails: json["payment_details"] != null
           ? PaymentDetailsResponseModel.fromJson(json["payment_details"])
@@ -45,6 +53,10 @@ class OrderHistoryResponseModel {
   final String? orderType;
   final int? quantity;
   final String? companyName;
+  final String? companyAddress;
+  final String? companyPhone;
+  final String? companyEmail;
+  final String? companyWebsite;
   final String? orderDisplayPrice;
   final PaymentDetailsResponseModel? paymentDetails;
   final BundleResponseModel? bundleDetails;
@@ -59,6 +71,10 @@ class OrderHistoryResponseModel {
       "order_type": orderType,
       "quantity": quantity,
       "company_name": companyName,
+      "company_address": companyAddress,
+      "company_phone": companyPhone,
+      "company_email": companyEmail,
+      "company_website": companyWebsite,
       "order_display_price": orderDisplayPrice,
       "payment_details": paymentDetails?.toJson(),
       "bundle_details": bundleDetails?.toJson(),

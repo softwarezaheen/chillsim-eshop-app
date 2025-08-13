@@ -8,6 +8,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/top_up_wallet_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
@@ -103,12 +104,14 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
     bool test = false,
   }) async {
     try {
-      await paymentService.initializePaymentKeys(
+      await paymentService.prepareCheckout(
+        paymentType: PaymentType.card,
         publishableKey: publishableKey,
         merchantIdentifier: merchantIdentifier,
       );
 
-      await paymentService.triggerPaymentSheet(
+      await paymentService.processOrderPayment(
+        paymentType: PaymentType.card,
         testEnv: test,
         customerId: customerId,
         billingCountryCode: billingCountryCode,

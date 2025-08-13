@@ -353,10 +353,21 @@
   "paymentSelection_titleText": "اختيار طريقة الدفع",
   "paymentSelection_cardText": "بطاقة الائتمان / الخصم",
   "paymentSelection_walletText": "محفظتي",
+  "paymentSelection_dcbText": "الفوترة عبر مزود الخدمة",
   "topUpWallet_error": "فشل في تعبئة المحفظة",
   "topUpWallet_success": "تم تعبئة المحفظة بنجاح",
   "confirmation_languageTitle": "تغيير اللغة",
   "confirmation_languageContent": "هل أنت متأكد أنك تريد تغيير اللغة إلى",
   "appClip_currencyTitle": "اختر عملتك المفضلة للمتابعة",
-  "appClip_languageTitle": "اختر لغتك المفضلة للمتابعة"
+  "appClip_languageTitle": "اختر لغتك المفضلة للمتابعة",
+  "loginView_continueWithPhone": "المتابعة باستخدام رقم الهاتف",
+  "continueWithEmailView_SubTitleTextPhone": "يرجى إدخال رقم هاتفك للمتابعة",
+  "verifyLogin_buttonTitleTextPhone": "تحقق من رقم الهاتف",
+  "verifyLogin_checkPhone": "لم تستلم رمز التحقق؟",
+  "deleteAccount_ConfirmTextPhone": "أدخل رقم هاتفك لتأكيد حذف حسابك.",
+  "verifyLogin_titleTextPhone": "تحقق من صندوق الوارد",
+  "verifyOrderOtp_titleText": "يرجى التحقق من الرسالة النصية",
+  "verifyOrderOtp_contentText": "أنت على وشك الدفع باستخدام رصيد الخاص بك. تم إرسال رمز التحقق عبر رسالة نصية قصيرة",
+  "eSim_installation_error_message" : "Auto eSIM installation is not available, Please use manual install",
+  "cashback_reward_message": "تُضاف مكافأة الاسترداد النقدي لسعر الباقة مرة أخرى إلى رصيد محفظة eSIM"
 }

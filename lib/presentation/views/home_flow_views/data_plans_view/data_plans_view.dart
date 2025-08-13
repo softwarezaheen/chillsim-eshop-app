@@ -5,6 +5,7 @@ import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -196,7 +197,13 @@ class DataPlansView extends StatelessWidget {
     return DataPlansTabView(
       verticalPadding: 15,
       isChildCollapsable: true,
-      onTabChange: viewModel.onTabBarChange,
+      onTabChange: (int newIndex) async {
+        viewModel.onTabBarChange(newIndex);
+        if (newIndex == 1) {
+          await viewModel.analyticsService
+              .logEvent(event: AnalyticEvent.regionsClicked());
+        }
+      },
       initialIndex: DataPlansViewModel.tabBarSelectedIndex,
       childWidget: (AppEnvironment.appEnvironmentHelper.enableBannersView &&
               !AppEnvironment.isFromAppClip)

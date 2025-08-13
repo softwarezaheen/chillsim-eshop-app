@@ -12,6 +12,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/stories_view
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:stacked_services/stacked_services.dart";
 
 enum RewardHistoryType {
   none,
@@ -123,7 +124,9 @@ class RewardsHistoryViewModel extends BaseModel {
     }
     navigationService.navigateTo(
       StoryViewer.routeName,
-      arguments: ReferalStoriesView().storyViewerArgs,
+      arguments:
+          ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
+              .storyViewerArgs,
     );
   }
 }

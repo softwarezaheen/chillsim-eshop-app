@@ -1,5 +1,3 @@
-import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
-import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
 import "package:esim_open_source/presentation/extensions/navigation_service_extensions.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 
@@ -27,7 +25,8 @@ class RewardAvailable extends RedirectionCategoryType {
 }
 
 class CashbackReward extends RedirectionCategoryType {
-  CashbackReward() : super(<NavigationServiceRoute>[]);
+  CashbackReward(this.cashbackReward) : super(<NavigationServiceRoute>[]);
+  final String cashbackReward;
 }
 
 class ConsumptionBundleDetail extends RedirectionCategoryType {
@@ -65,13 +64,13 @@ class ReferAndEarn extends RedirectionCategoryType {
 }
 
 class CountrySelected extends RedirectionCategoryType {
-  CountrySelected(this.countryModel) : super(<NavigationServiceRoute>[]);
-  final CountryResponseModel countryModel;
+  CountrySelected(this.countryCode) : super(<NavigationServiceRoute>[]);
+  final String countryCode;
 }
 
 class RegionSelected extends RedirectionCategoryType {
-  RegionSelected(this.regionModel) : super(<NavigationServiceRoute>[]);
-  final RegionsResponseModel regionModel;
+  RegionSelected(this.regionCode) : super(<NavigationServiceRoute>[]);
+  final String regionCode;
 }
 
 // enum InAppRedirection {
@@ -109,7 +108,7 @@ abstract class RedirectionsHandlerService {
   });
 
   void notificationInboxRedirections({
-    required String iccid,
+    required String iccID,
     required String category,
     required bool isUnlimitedData,
   });

@@ -1,7 +1,20 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/presentation/theme/my_theme_builder.dart";
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
 import "package:flutter/material.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/mockito.dart";
+import "package:shared_preferences/shared_preferences.dart";
+import "package:stacked_themes/stacked_themes.dart";
+
+import "../locator_test.dart";
+import "firebase_helper.dart";
+import "flutter_esim_helper.dart";
+import "fluttertoast_helper.dart";
+import "haptic_helper.dart";
+import "package_info_helper.dart";
+// ignore_for_file: type=lint
 
 Widget createTestableWidget(Widget child) {
   return EasyLocalization(
@@ -26,3 +39,37 @@ Widget createTestableWidget(Widget child) {
     ),
   );
 }
+
+Future<void> prepareTest() async {
+  // ensure system up
+  TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues(<String, Object>{});
+  await EasyLocalization.ensureInitialized();
+  await ThemeManager.initialise();
+}
+
+Future<void> setupTest() async {
+  await setupTestLocator();
+  HapticHelperTest.implementHaptic();
+  FirebaseHelper.initFirebaseMock();
+  PackageInfoHelperTest.initPackageInfo();
+  AppEnvironment.setupEnvironment();
+  FluttertoastHelperTest.implementFluttertoast();
+  FlutterEsimHelperTest.implementFlutterEsim();
+}
+
+Future<void> tearDownTest() async {
+  await locator.reset();
+  resetMockitoState();
+}
+
+Future<void> tearDownAllTest() async {
+  HapticHelperTest.deInitHaptic();
+  PackageInfoHelperTest.deInitPackageInfo();
+  FirebaseHelper.deInitFirebaseMock();
+  FluttertoastHelperTest.deInitFluttertoast();
+  FlutterEsimHelperTest.deInitFlutterEsim();
+}
+
+// Empty main function to prevent Flutter test runner from treating this as a test file
+void main() {}

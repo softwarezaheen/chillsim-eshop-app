@@ -29,719 +29,854 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(1, 3076150143743805191),
-      name: 'BundleCategoryEntity',
-      lastPropertyId: const obx_int.IdUid(4, 3284999603905649992),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 7929501754072975282),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 1672405852560588229),
-            name: 'type',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 8840884368302461659),
-            name: 'code',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 3284999603905649992),
-            name: 'title',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(1, 3076150143743805191),
+    name: 'BundleCategoryEntity',
+    lastPropertyId: const obx_int.IdUid(4, 3284999603905649992),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 7929501754072975282),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 1672405852560588229),
+        name: 'type',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 8840884368302461659),
+        name: 'code',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 3284999603905649992),
+        name: 'title',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(2, 3904391743835608439),
-      name: 'BundleEntity',
-      lastPropertyId: const obx_int.IdUid(20, 3108433537885829202),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 8115704217999716324),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 5714907322094257872),
-            name: 'displayTitle',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 3765646808703121963),
-            name: 'displaySubtitle',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 7236302587558566371),
-            name: 'bundleCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 3598460045001114232),
-            name: 'bundleMarketingName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 3862240176758741905),
-            name: 'bundleName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 7784876365767255465),
-            name: 'countCountries',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 4667559550573088134),
-            name: 'currencyCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 4350318036458173407),
-            name: 'gprsLimitDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 4887016813596222881),
-            name: 'price',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 4168048364150478570),
-            name: 'priceDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 1740205337607039987),
-            name: 'unlimited',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 7815369294952282273),
-            name: 'validity',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 7931922400127624430),
-            name: 'validityDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 9201633083853427630),
-            name: 'bundleCategoryId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(1, 2207907975271774534),
-            relationTarget: 'BundleCategoryEntity'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(16, 5399768502731405318),
-            name: 'homeDataId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(2, 7941058205647145524),
-            relationTarget: 'HomeDataEntity'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(17, 1903813089768723980),
-            name: 'bundleTypeValue',
-            type: 2,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(18, 7190723833811720573),
-            name: 'icon',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(19, 1204354680022637949),
-            name: 'planType',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(20, 3108433537885829202),
-            name: 'activityPolicy',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(1, 9201578340172743855),
-            name: 'countries',
-            targetId: const obx_int.IdUid(3, 1274828313617314249))
-      ],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(2, 3904391743835608439),
+    name: 'BundleEntity',
+    lastPropertyId: const obx_int.IdUid(20, 3108433537885829202),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 8115704217999716324),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 5714907322094257872),
+        name: 'displayTitle',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 3765646808703121963),
+        name: 'displaySubtitle',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 7236302587558566371),
+        name: 'bundleCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 3598460045001114232),
+        name: 'bundleMarketingName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 3862240176758741905),
+        name: 'bundleName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 7784876365767255465),
+        name: 'countCountries',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 4667559550573088134),
+        name: 'currencyCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 4350318036458173407),
+        name: 'gprsLimitDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 4887016813596222881),
+        name: 'price',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 4168048364150478570),
+        name: 'priceDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 1740205337607039987),
+        name: 'unlimited',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 7815369294952282273),
+        name: 'validity',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 7931922400127624430),
+        name: 'validityDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(15, 9201633083853427630),
+        name: 'bundleCategoryId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(1, 2207907975271774534),
+        relationTarget: 'BundleCategoryEntity',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(16, 5399768502731405318),
+        name: 'homeDataId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(2, 7941058205647145524),
+        relationTarget: 'HomeDataEntity',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(17, 1903813089768723980),
+        name: 'bundleTypeValue',
+        type: 2,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(18, 7190723833811720573),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(19, 1204354680022637949),
+        name: 'planType',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(20, 3108433537885829202),
+        name: 'activityPolicy',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(1, 9201578340172743855),
+        name: 'countries',
+        targetId: const obx_int.IdUid(3, 1274828313617314249),
+      ),
+    ],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(3, 1274828313617314249),
-      name: 'CountryEntity',
-      lastPropertyId: const obx_int.IdUid(9, 8363620567236614472),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 2471240210982179365),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 6187684820664808053),
-            name: 'country',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 8730234567502118208),
-            name: 'iso3Code',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 6368617651460009697),
-            name: 'zoneName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 4839401061600775990),
-            name: 'countryCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 3821352427249503118),
-            name: 'alternativeCountry',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 6371636967087970587),
-            name: 'icon',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 3891049939003968733),
-            name: 'operatorList',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 8363620567236614472),
-            name: 'countryID',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(2, 2901113628036596717),
-            name: 'bundles',
-            targetId: const obx_int.IdUid(2, 3904391743835608439))
-      ],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(3, 1274828313617314249),
+    name: 'CountryEntity',
+    lastPropertyId: const obx_int.IdUid(9, 8363620567236614472),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 2471240210982179365),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 6187684820664808053),
+        name: 'country',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 8730234567502118208),
+        name: 'iso3Code',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 6368617651460009697),
+        name: 'zoneName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 4839401061600775990),
+        name: 'countryCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 3821352427249503118),
+        name: 'alternativeCountry',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 6371636967087970587),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 3891049939003968733),
+        name: 'operatorList',
+        type: 30,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 8363620567236614472),
+        name: 'countryID',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(2, 2901113628036596717),
+        name: 'bundles',
+        targetId: const obx_int.IdUid(2, 3904391743835608439),
+      ),
+    ],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(4, 6854855230257696764),
-      name: 'HomeDataEntity',
-      lastPropertyId: const obx_int.IdUid(3, 5394278519653081832),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 4092385126822781875),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 273533549543895879),
-            name: 'lastUpdated',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 5394278519653081832),
-            name: 'version',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(3, 7530108617604646577),
-            name: 'regions',
-            targetId: const obx_int.IdUid(5, 1069162815258806409)),
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(4, 4027545536698100418),
-            name: 'countries',
-            targetId: const obx_int.IdUid(3, 1274828313617314249))
-      ],
-      backlinks: <obx_int.ModelBacklink>[
-        obx_int.ModelBacklink(
-            name: 'bundles', srcEntity: 'BundleEntity', srcField: 'homeData')
-      ]),
+    id: const obx_int.IdUid(4, 6854855230257696764),
+    name: 'HomeDataEntity',
+    lastPropertyId: const obx_int.IdUid(3, 5394278519653081832),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 4092385126822781875),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 273533549543895879),
+        name: 'lastUpdated',
+        type: 10,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 5394278519653081832),
+        name: 'version',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(3, 7530108617604646577),
+        name: 'regions',
+        targetId: const obx_int.IdUid(5, 1069162815258806409),
+      ),
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(4, 4027545536698100418),
+        name: 'countries',
+        targetId: const obx_int.IdUid(3, 1274828313617314249),
+      ),
+    ],
+    backlinks: <obx_int.ModelBacklink>[
+      obx_int.ModelBacklink(
+        name: 'bundles',
+        srcEntity: 'BundleEntity',
+        srcField: 'homeData',
+      ),
+    ],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(5, 1069162815258806409),
-      name: 'RegionEntity',
-      lastPropertyId: const obx_int.IdUid(5, 7512466805012829841),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 96865718197101554),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7382468627267978483),
-            name: 'icon',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 4524723387083517964),
-            name: 'zoneName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 7569160439004048081),
-            name: 'regionCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 7512466805012829841),
-            name: 'regionName',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(5, 1069162815258806409),
+    name: 'RegionEntity',
+    lastPropertyId: const obx_int.IdUid(5, 7512466805012829841),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 96865718197101554),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 7382468627267978483),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 4524723387083517964),
+        name: 'zoneName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 7569160439004048081),
+        name: 'regionCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 7512466805012829841),
+        name: 'regionName',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(6, 3235132240687106497),
-      name: 'EsimEntity',
-      lastPropertyId: const obx_int.IdUid(33, 163138050007622859),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 5364997630961668986),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 542296301448630702),
-            name: 'isTopupAllowed',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 5198149910860466419),
-            name: 'planStarted',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 1583982389187454432),
-            name: 'bundleExpired',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 4114525032073754206),
-            name: 'labelName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 2531352517561627766),
-            name: 'orderNumber',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 4596723364778706706),
-            name: 'orderStatus',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 404650307251401110),
-            name: 'qrCodeValue',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 1153739427279780365),
-            name: 'activationCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 1206268560949215876),
-            name: 'smdpAddress',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 7078726754962087622),
-            name: 'validityDate',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 6954805434689439792),
-            name: 'iccid',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 6114880520398516727),
-            name: 'paymentDate',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 5694677958378626473),
-            name: 'sharedWith',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 8256466211749607783),
-            name: 'displayTitle',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(16, 1999222167350382890),
-            name: 'displaySubtitle',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(17, 2950390969657779406),
-            name: 'bundleCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(18, 8485315703111222496),
-            name: 'bundleMarketingName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(19, 639447774528815947),
-            name: 'bundleName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(20, 5758112322111416563),
-            name: 'currencyCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(21, 1623097513897470886),
-            name: 'gprsLimitDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(22, 3277590978939460658),
-            name: 'priceDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(23, 5522339313410807510),
-            name: 'unlimited',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(24, 4622000468227374025),
-            name: 'validityDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(25, 1242955461437902803),
-            name: 'planType',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(26, 4869508701904533134),
-            name: 'activityPolicy',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(27, 8150184207376433743),
-            name: 'icon',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(28, 1118622798599475111),
-            name: 'bundleMessage',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(29, 3466792025954289368),
-            name: 'searchedCountries',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(30, 1584521648825019093),
-            name: 'bundleCategoryId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(3, 2111038786350938522),
-            relationTarget: 'EsimBundleCategoryEntity'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(31, 1523905419492805358),
-            name: 'countCountries',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(32, 2203046304327310804),
-            name: 'price',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(33, 163138050007622859),
-            name: 'validity',
-            type: 8,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(5, 5828256837590817927),
-            name: 'countries',
-            targetId: const obx_int.IdUid(10, 3152941530312633510))
-      ],
-      backlinks: <obx_int.ModelBacklink>[
-        obx_int.ModelBacklink(
-            name: 'transactionHistory',
-            srcEntity: 'TransactionHistoryEntity',
-            srcField: 'esimData')
-      ]),
+    id: const obx_int.IdUid(6, 3235132240687106497),
+    name: 'EsimEntity',
+    lastPropertyId: const obx_int.IdUid(33, 163138050007622859),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 5364997630961668986),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 542296301448630702),
+        name: 'isTopupAllowed',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 5198149910860466419),
+        name: 'planStarted',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1583982389187454432),
+        name: 'bundleExpired',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 4114525032073754206),
+        name: 'labelName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 2531352517561627766),
+        name: 'orderNumber',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 4596723364778706706),
+        name: 'orderStatus',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 404650307251401110),
+        name: 'qrCodeValue',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 1153739427279780365),
+        name: 'activationCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 1206268560949215876),
+        name: 'smdpAddress',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 7078726754962087622),
+        name: 'validityDate',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 6954805434689439792),
+        name: 'iccid',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 6114880520398516727),
+        name: 'paymentDate',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 5694677958378626473),
+        name: 'sharedWith',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(15, 8256466211749607783),
+        name: 'displayTitle',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(16, 1999222167350382890),
+        name: 'displaySubtitle',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(17, 2950390969657779406),
+        name: 'bundleCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(18, 8485315703111222496),
+        name: 'bundleMarketingName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(19, 639447774528815947),
+        name: 'bundleName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(20, 5758112322111416563),
+        name: 'currencyCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(21, 1623097513897470886),
+        name: 'gprsLimitDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(22, 3277590978939460658),
+        name: 'priceDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(23, 5522339313410807510),
+        name: 'unlimited',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(24, 4622000468227374025),
+        name: 'validityDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(25, 1242955461437902803),
+        name: 'planType',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(26, 4869508701904533134),
+        name: 'activityPolicy',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(27, 8150184207376433743),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(28, 1118622798599475111),
+        name: 'bundleMessage',
+        type: 30,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(29, 3466792025954289368),
+        name: 'searchedCountries',
+        type: 30,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(30, 1584521648825019093),
+        name: 'bundleCategoryId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(3, 2111038786350938522),
+        relationTarget: 'EsimBundleCategoryEntity',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(31, 1523905419492805358),
+        name: 'countCountries',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(32, 2203046304327310804),
+        name: 'price',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(33, 163138050007622859),
+        name: 'validity',
+        type: 8,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(5, 5828256837590817927),
+        name: 'countries',
+        targetId: const obx_int.IdUid(10, 3152941530312633510),
+      ),
+    ],
+    backlinks: <obx_int.ModelBacklink>[
+      obx_int.ModelBacklink(
+        name: 'transactionHistory',
+        srcEntity: 'TransactionHistoryEntity',
+        srcField: 'esimData',
+      ),
+    ],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(7, 4811212402420489016),
-      name: 'TransactionHistoryEntity',
-      lastPropertyId: const obx_int.IdUid(28, 8191698619578376793),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 1457913558445206275),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(21, 7133025044429977911),
-            name: 'esimDataId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(5, 2011655117619998248),
-            relationTarget: 'EsimEntity'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(22, 7353246431557291472),
-            name: 'userOrderId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(23, 2780404878872142140),
-            name: 'iccid',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(24, 2375796463403532682),
-            name: 'bundleType',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(25, 1999142107801811929),
-            name: 'planStarted',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(26, 7229272225931148363),
-            name: 'bundleExpired',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(27, 7679108811880454195),
-            name: 'createdAt',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(28, 8191698619578376793),
-            name: 'bundleId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(6, 4791991272740744303),
-            relationTarget: 'EsimBundleEntity')
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(7, 4811212402420489016),
+    name: 'TransactionHistoryEntity',
+    lastPropertyId: const obx_int.IdUid(28, 8191698619578376793),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 1457913558445206275),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(21, 7133025044429977911),
+        name: 'esimDataId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(5, 2011655117619998248),
+        relationTarget: 'EsimEntity',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(22, 7353246431557291472),
+        name: 'userOrderId',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(23, 2780404878872142140),
+        name: 'iccid',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(24, 2375796463403532682),
+        name: 'bundleType',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(25, 1999142107801811929),
+        name: 'planStarted',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(26, 7229272225931148363),
+        name: 'bundleExpired',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(27, 7679108811880454195),
+        name: 'createdAt',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(28, 8191698619578376793),
+        name: 'bundleId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(6, 4791991272740744303),
+        relationTarget: 'EsimBundleEntity',
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(8, 2806791666952667131),
-      name: 'EsimBundleCategoryEntity',
-      lastPropertyId: const obx_int.IdUid(4, 3111580258291103915),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 5234207638258075042),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 6141481020105615907),
-            name: 'type',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 3629326016614569393),
-            name: 'code',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 3111580258291103915),
-            name: 'title',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(8, 2806791666952667131),
+    name: 'EsimBundleCategoryEntity',
+    lastPropertyId: const obx_int.IdUid(4, 3111580258291103915),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 5234207638258075042),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 6141481020105615907),
+        name: 'type',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 3629326016614569393),
+        name: 'code',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 3111580258291103915),
+        name: 'title',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(9, 6979901880230801504),
-      name: 'EsimBundleEntity',
-      lastPropertyId: const obx_int.IdUid(19, 3177782989631971089),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 4592346122155590467),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 445584458226812805),
-            name: 'displayTitle',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 8992814457567191589),
-            name: 'displaySubtitle',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 186819076238346633),
-            name: 'bundleCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 4954032735786279794),
-            name: 'bundleMarketingName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 444178055214549490),
-            name: 'bundleName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 5828905495824511275),
-            name: 'countCountries',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 2765496799483229736),
-            name: 'currencyCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 826475921584572622),
-            name: 'gprsLimitDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 6438286411178408661),
-            name: 'price',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 4909664918514285526),
-            name: 'priceDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 8766735947920774519),
-            name: 'unlimited',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 624096152759638706),
-            name: 'validity',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 6351227076116927332),
-            name: 'validityDisplay',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 6802312610444235966),
-            name: 'icon',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(16, 3132470159620124837),
-            name: 'planType',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(17, 3752738271331101229),
-            name: 'activityPolicy',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(18, 8154799682633878051),
-            name: 'bundleCategoryId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(7, 4294559215289422009),
-            relationTarget: 'EsimBundleCategoryEntity'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(19, 3177782989631971089),
-            name: 'bundleTypeValue',
-            type: 2,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(8, 1064166245855025265),
-            name: 'countries',
-            targetId: const obx_int.IdUid(10, 3152941530312633510))
-      ],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(9, 6979901880230801504),
+    name: 'EsimBundleEntity',
+    lastPropertyId: const obx_int.IdUid(19, 3177782989631971089),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 4592346122155590467),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 445584458226812805),
+        name: 'displayTitle',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 8992814457567191589),
+        name: 'displaySubtitle',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 186819076238346633),
+        name: 'bundleCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 4954032735786279794),
+        name: 'bundleMarketingName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 444178055214549490),
+        name: 'bundleName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 5828905495824511275),
+        name: 'countCountries',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 2765496799483229736),
+        name: 'currencyCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 826475921584572622),
+        name: 'gprsLimitDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 6438286411178408661),
+        name: 'price',
+        type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 4909664918514285526),
+        name: 'priceDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 8766735947920774519),
+        name: 'unlimited',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 624096152759638706),
+        name: 'validity',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 6351227076116927332),
+        name: 'validityDisplay',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(15, 6802312610444235966),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(16, 3132470159620124837),
+        name: 'planType',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(17, 3752738271331101229),
+        name: 'activityPolicy',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(18, 8154799682633878051),
+        name: 'bundleCategoryId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(7, 4294559215289422009),
+        relationTarget: 'EsimBundleCategoryEntity',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(19, 3177782989631971089),
+        name: 'bundleTypeValue',
+        type: 2,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(8, 1064166245855025265),
+        name: 'countries',
+        targetId: const obx_int.IdUid(10, 3152941530312633510),
+      ),
+    ],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(10, 3152941530312633510),
-      name: 'EsimCountryEntity',
-      lastPropertyId: const obx_int.IdUid(9, 5721126975266915007),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 840954655970102728),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 8292135110635358260),
-            name: 'countryID',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 9048583935256394171),
-            name: 'country',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 5225342644815461016),
-            name: 'iso3Code',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 4478533705729920770),
-            name: 'zoneName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 600723497342273243),
-            name: 'countryCode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 8699861778499840574),
-            name: 'icon',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 4746845375231627150),
-            name: 'operatorList',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 5721126975266915007),
-            name: 'alternativeCountry',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[])
+    id: const obx_int.IdUid(10, 3152941530312633510),
+    name: 'EsimCountryEntity',
+    lastPropertyId: const obx_int.IdUid(9, 5721126975266915007),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 840954655970102728),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 8292135110635358260),
+        name: 'countryID',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 9048583935256394171),
+        name: 'country',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 5225342644815461016),
+        name: 'iso3Code',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 4478533705729920770),
+        name: 'zoneName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 600723497342273243),
+        name: 'countryCode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 8699861778499840574),
+        name: 'icon',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 4746845375231627150),
+        name: 'operatorList',
+        type: 30,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 5721126975266915007),
+        name: 'alternativeCountry',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -755,1028 +890,1187 @@ final _entities = <obx_int.ModelEntity>[
 /// For Flutter apps, also calls `loadObjectBoxLibraryAndroidCompat()` from
 /// the ObjectBox Flutter library to fix loading the native ObjectBox library
 /// on Android 6 and older.
-Future<obx.Store> openStore(
-    {String? directory,
-    int? maxDBSizeInKB,
-    int? maxDataSizeInKB,
-    int? fileMode,
-    int? maxReaders,
-    bool queriesCaseSensitiveDefault = true,
-    String? macosApplicationGroup}) async {
+Future<obx.Store> openStore({
+  String? directory,
+  int? maxDBSizeInKB,
+  int? maxDataSizeInKB,
+  int? fileMode,
+  int? maxReaders,
+  bool queriesCaseSensitiveDefault = true,
+  String? macosApplicationGroup,
+}) async {
   await loadObjectBoxLibraryAndroidCompat();
-  return obx.Store(getObjectBoxModel(),
-      directory: directory ?? (await defaultStoreDirectory()).path,
-      maxDBSizeInKB: maxDBSizeInKB,
-      maxDataSizeInKB: maxDataSizeInKB,
-      fileMode: fileMode,
-      maxReaders: maxReaders,
-      queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
-      macosApplicationGroup: macosApplicationGroup);
+  return obx.Store(
+    getObjectBoxModel(),
+    directory: directory ?? (await defaultStoreDirectory()).path,
+    maxDBSizeInKB: maxDBSizeInKB,
+    maxDataSizeInKB: maxDataSizeInKB,
+    fileMode: fileMode,
+    maxReaders: maxReaders,
+    queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
+    macosApplicationGroup: macosApplicationGroup,
+  );
 }
 
 /// Returns the ObjectBox model definition for this project for use with
 /// [obx.Store.new].
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
-      entities: _entities,
-      lastEntityId: const obx_int.IdUid(10, 3152941530312633510),
-      lastIndexId: const obx_int.IdUid(7, 4294559215289422009),
-      lastRelationId: const obx_int.IdUid(8, 1064166245855025265),
-      lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [],
-      retiredIndexUids: const [9208819239418557921],
-      retiredPropertyUids: const [
-        4569460999520869534,
-        878321987463682602,
-        1309840922246633413,
-        1903676478724067930,
-        4266693475225592198,
-        5517163663004268982,
-        4094197987661098801,
-        4192070347932607228,
-        7425643884226164998,
-        3075202496486720562,
-        7118729574125885012,
-        7071949977922012236,
-        199041827536051347,
-        1562895160198421117,
-        4571440622259759724,
-        1532183794309650638,
-        562506173441055038,
-        4797506162151186608,
-        6665933154402429895
-      ],
-      retiredRelationUids: const [7567996630856210035, 7128603302950765322],
-      modelVersion: 5,
-      modelVersionParserMinimum: 5,
-      version: 1);
+    entities: _entities,
+    lastEntityId: const obx_int.IdUid(10, 3152941530312633510),
+    lastIndexId: const obx_int.IdUid(7, 4294559215289422009),
+    lastRelationId: const obx_int.IdUid(8, 1064166245855025265),
+    lastSequenceId: const obx_int.IdUid(0, 0),
+    retiredEntityUids: const [],
+    retiredIndexUids: const [9208819239418557921],
+    retiredPropertyUids: const [
+      4569460999520869534,
+      878321987463682602,
+      1309840922246633413,
+      1903676478724067930,
+      4266693475225592198,
+      5517163663004268982,
+      4094197987661098801,
+      4192070347932607228,
+      7425643884226164998,
+      3075202496486720562,
+      7118729574125885012,
+      7071949977922012236,
+      199041827536051347,
+      1562895160198421117,
+      4571440622259759724,
+      1532183794309650638,
+      562506173441055038,
+      4797506162151186608,
+      6665933154402429895,
+    ],
+    retiredRelationUids: const [7567996630856210035, 7128603302950765322],
+    modelVersion: 5,
+    modelVersionParserMinimum: 5,
+    version: 1,
+  );
 
   final bindings = <Type, obx_int.EntityDefinition>{
     BundleCategoryEntity: obx_int.EntityDefinition<BundleCategoryEntity>(
-        model: _entities[0],
-        toOneRelations: (BundleCategoryEntity object) => [],
-        toManyRelations: (BundleCategoryEntity object) => {},
-        getId: (BundleCategoryEntity object) => object.id,
-        setId: (BundleCategoryEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (BundleCategoryEntity object, fb.Builder fbb) {
-          final typeOffset =
-              object.type == null ? null : fbb.writeString(object.type!);
-          final codeOffset =
-              object.code == null ? null : fbb.writeString(object.code!);
-          final titleOffset =
-              object.title == null ? null : fbb.writeString(object.title!);
-          fbb.startTable(5);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, typeOffset);
-          fbb.addOffset(2, codeOffset);
-          fbb.addOffset(3, titleOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final typeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 6);
-          final codeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 8);
-          final titleParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 10);
-          final object = BundleCategoryEntity(
-              type: typeParam, code: codeParam, title: titleParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+      model: _entities[0],
+      toOneRelations: (BundleCategoryEntity object) => [],
+      toManyRelations: (BundleCategoryEntity object) => {},
+      getId: (BundleCategoryEntity object) => object.id,
+      setId: (BundleCategoryEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (BundleCategoryEntity object, fb.Builder fbb) {
+        final typeOffset =
+            object.type == null ? null : fbb.writeString(object.type!);
+        final codeOffset =
+            object.code == null ? null : fbb.writeString(object.code!);
+        final titleOffset =
+            object.title == null ? null : fbb.writeString(object.title!);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, typeOffset);
+        fbb.addOffset(2, codeOffset);
+        fbb.addOffset(3, titleOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final typeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final codeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final titleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final object = BundleCategoryEntity(
+          type: typeParam,
+          code: codeParam,
+          title: titleParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-          return object;
-        }),
+        return object;
+      },
+    ),
     BundleEntity: obx_int.EntityDefinition<BundleEntity>(
-        model: _entities[1],
-        toOneRelations: (BundleEntity object) =>
-            [object.bundleCategory, object.homeData],
-        toManyRelations: (BundleEntity object) => {
-              obx_int.RelInfo<BundleEntity>.toMany(1, object.id):
-                  object.countries
-            },
-        getId: (BundleEntity object) => object.id,
-        setId: (BundleEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (BundleEntity object, fb.Builder fbb) {
-          final displayTitleOffset = object.displayTitle == null
-              ? null
-              : fbb.writeString(object.displayTitle!);
-          final displaySubtitleOffset = object.displaySubtitle == null
-              ? null
-              : fbb.writeString(object.displaySubtitle!);
-          final bundleCodeOffset = object.bundleCode == null
-              ? null
-              : fbb.writeString(object.bundleCode!);
-          final bundleMarketingNameOffset = object.bundleMarketingName == null
-              ? null
-              : fbb.writeString(object.bundleMarketingName!);
-          final bundleNameOffset = object.bundleName == null
-              ? null
-              : fbb.writeString(object.bundleName!);
-          final currencyCodeOffset = object.currencyCode == null
-              ? null
-              : fbb.writeString(object.currencyCode!);
-          final gprsLimitDisplayOffset = object.gprsLimitDisplay == null
-              ? null
-              : fbb.writeString(object.gprsLimitDisplay!);
-          final priceDisplayOffset = object.priceDisplay == null
-              ? null
-              : fbb.writeString(object.priceDisplay!);
-          final validityDisplayOffset = object.validityDisplay == null
-              ? null
-              : fbb.writeString(object.validityDisplay!);
-          final iconOffset =
-              object.icon == null ? null : fbb.writeString(object.icon!);
-          final planTypeOffset = object.planType == null
-              ? null
-              : fbb.writeString(object.planType!);
-          final activityPolicyOffset = object.activityPolicy == null
-              ? null
-              : fbb.writeString(object.activityPolicy!);
-          fbb.startTable(21);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, displayTitleOffset);
-          fbb.addOffset(2, displaySubtitleOffset);
-          fbb.addOffset(3, bundleCodeOffset);
-          fbb.addOffset(4, bundleMarketingNameOffset);
-          fbb.addOffset(5, bundleNameOffset);
-          fbb.addInt64(6, object.countCountries);
-          fbb.addOffset(7, currencyCodeOffset);
-          fbb.addOffset(8, gprsLimitDisplayOffset);
-          fbb.addFloat64(9, object.price);
-          fbb.addOffset(10, priceDisplayOffset);
-          fbb.addBool(11, object.unlimited);
-          fbb.addInt64(12, object.validity);
-          fbb.addOffset(13, validityDisplayOffset);
-          fbb.addInt64(14, object.bundleCategory.targetId);
-          fbb.addInt64(15, object.homeData.targetId);
-          fbb.addInt8(16, object.bundleTypeValue);
-          fbb.addOffset(17, iconOffset);
-          fbb.addOffset(18, planTypeOffset);
-          fbb.addOffset(19, activityPolicyOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final displayTitleParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 6);
-          final displaySubtitleParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8);
-          final bundleCodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 10);
-          final bundleMarketingNameParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12);
-          final bundleNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 14);
-          final countCountriesParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
-          final currencyCodeParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 18);
-          final gprsLimitDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20);
-          final priceParam = const fb.Float64Reader()
-              .vTableGetNullable(buffer, rootOffset, 22);
-          final priceDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 24);
-          final unlimitedParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 26);
-          final validityParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 28);
-          final validityDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 30);
-          final bundleTypeValueParam =
-              const fb.Int8Reader().vTableGet(buffer, rootOffset, 36, 0);
-          final iconParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 38);
-          final planTypeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 40);
-          final activityPolicyParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 42);
-          final object = BundleEntity(
-              displayTitle: displayTitleParam,
-              displaySubtitle: displaySubtitleParam,
-              bundleCode: bundleCodeParam,
-              bundleMarketingName: bundleMarketingNameParam,
-              bundleName: bundleNameParam,
-              countCountries: countCountriesParam,
-              currencyCode: currencyCodeParam,
-              gprsLimitDisplay: gprsLimitDisplayParam,
-              price: priceParam,
-              priceDisplay: priceDisplayParam,
-              unlimited: unlimitedParam,
-              validity: validityParam,
-              validityDisplay: validityDisplayParam,
-              bundleTypeValue: bundleTypeValueParam,
-              icon: iconParam,
-              planType: planTypeParam,
-              activityPolicy: activityPolicyParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          object.bundleCategory.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
-          object.bundleCategory.attach(store);
-          object.homeData.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
-          object.homeData.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<BundleEntity>(
-              object.countries,
-              store,
-              obx_int.RelInfo<BundleEntity>.toMany(1, object.id));
-          return object;
-        }),
+      model: _entities[1],
+      toOneRelations: (BundleEntity object) => [
+        object.bundleCategory,
+        object.homeData,
+      ],
+      toManyRelations: (BundleEntity object) => {
+        obx_int.RelInfo<BundleEntity>.toMany(1, object.id): object.countries,
+      },
+      getId: (BundleEntity object) => object.id,
+      setId: (BundleEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (BundleEntity object, fb.Builder fbb) {
+        final displayTitleOffset = object.displayTitle == null
+            ? null
+            : fbb.writeString(object.displayTitle!);
+        final displaySubtitleOffset = object.displaySubtitle == null
+            ? null
+            : fbb.writeString(object.displaySubtitle!);
+        final bundleCodeOffset = object.bundleCode == null
+            ? null
+            : fbb.writeString(object.bundleCode!);
+        final bundleMarketingNameOffset = object.bundleMarketingName == null
+            ? null
+            : fbb.writeString(object.bundleMarketingName!);
+        final bundleNameOffset = object.bundleName == null
+            ? null
+            : fbb.writeString(object.bundleName!);
+        final currencyCodeOffset = object.currencyCode == null
+            ? null
+            : fbb.writeString(object.currencyCode!);
+        final gprsLimitDisplayOffset = object.gprsLimitDisplay == null
+            ? null
+            : fbb.writeString(object.gprsLimitDisplay!);
+        final priceDisplayOffset = object.priceDisplay == null
+            ? null
+            : fbb.writeString(object.priceDisplay!);
+        final validityDisplayOffset = object.validityDisplay == null
+            ? null
+            : fbb.writeString(object.validityDisplay!);
+        final iconOffset =
+            object.icon == null ? null : fbb.writeString(object.icon!);
+        final planTypeOffset =
+            object.planType == null ? null : fbb.writeString(object.planType!);
+        final activityPolicyOffset = object.activityPolicy == null
+            ? null
+            : fbb.writeString(object.activityPolicy!);
+        fbb.startTable(21);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, displayTitleOffset);
+        fbb.addOffset(2, displaySubtitleOffset);
+        fbb.addOffset(3, bundleCodeOffset);
+        fbb.addOffset(4, bundleMarketingNameOffset);
+        fbb.addOffset(5, bundleNameOffset);
+        fbb.addInt64(6, object.countCountries);
+        fbb.addOffset(7, currencyCodeOffset);
+        fbb.addOffset(8, gprsLimitDisplayOffset);
+        fbb.addFloat64(9, object.price);
+        fbb.addOffset(10, priceDisplayOffset);
+        fbb.addBool(11, object.unlimited);
+        fbb.addInt64(12, object.validity);
+        fbb.addOffset(13, validityDisplayOffset);
+        fbb.addInt64(14, object.bundleCategory.targetId);
+        fbb.addInt64(15, object.homeData.targetId);
+        fbb.addInt8(16, object.bundleTypeValue);
+        fbb.addOffset(17, iconOffset);
+        fbb.addOffset(18, planTypeOffset);
+        fbb.addOffset(19, activityPolicyOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final displayTitleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final displaySubtitleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final bundleCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final bundleMarketingNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final bundleNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
+        final countCountriesParam = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          16,
+        );
+        final currencyCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
+        final gprsLimitDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final priceParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          22,
+        );
+        final priceDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 24);
+        final unlimitedParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          26,
+        );
+        final validityParam = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          28,
+        );
+        final validityDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 30);
+        final bundleTypeValueParam = const fb.Int8Reader().vTableGet(
+          buffer,
+          rootOffset,
+          36,
+          0,
+        );
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 38);
+        final planTypeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 40);
+        final activityPolicyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 42);
+        final object = BundleEntity(
+          displayTitle: displayTitleParam,
+          displaySubtitle: displaySubtitleParam,
+          bundleCode: bundleCodeParam,
+          bundleMarketingName: bundleMarketingNameParam,
+          bundleName: bundleNameParam,
+          countCountries: countCountriesParam,
+          currencyCode: currencyCodeParam,
+          gprsLimitDisplay: gprsLimitDisplayParam,
+          price: priceParam,
+          priceDisplay: priceDisplayParam,
+          unlimited: unlimitedParam,
+          validity: validityParam,
+          validityDisplay: validityDisplayParam,
+          bundleTypeValue: bundleTypeValueParam,
+          icon: iconParam,
+          planType: planTypeParam,
+          activityPolicy: activityPolicyParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        object.bundleCategory.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          32,
+          0,
+        );
+        object.bundleCategory.attach(store);
+        object.homeData.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          34,
+          0,
+        );
+        object.homeData.attach(store);
+        obx_int.InternalToManyAccess.setRelInfo<BundleEntity>(
+          object.countries,
+          store,
+          obx_int.RelInfo<BundleEntity>.toMany(1, object.id),
+        );
+        return object;
+      },
+    ),
     CountryEntity: obx_int.EntityDefinition<CountryEntity>(
-        model: _entities[2],
-        toOneRelations: (CountryEntity object) => [],
-        toManyRelations: (CountryEntity object) => {
-              obx_int.RelInfo<CountryEntity>.toMany(2, object.id):
-                  object.bundles
-            },
-        getId: (CountryEntity object) => object.id,
-        setId: (CountryEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (CountryEntity object, fb.Builder fbb) {
-          final countryOffset =
-              object.country == null ? null : fbb.writeString(object.country!);
-          final iso3CodeOffset = object.iso3Code == null
-              ? null
-              : fbb.writeString(object.iso3Code!);
-          final zoneNameOffset = object.zoneName == null
-              ? null
-              : fbb.writeString(object.zoneName!);
-          final countryCodeOffset = object.countryCode == null
-              ? null
-              : fbb.writeString(object.countryCode!);
-          final alternativeCountryOffset = object.alternativeCountry == null
-              ? null
-              : fbb.writeString(object.alternativeCountry!);
-          final iconOffset =
-              object.icon == null ? null : fbb.writeString(object.icon!);
-          final operatorListOffset = object.operatorList == null
-              ? null
-              : fbb.writeList(object.operatorList!
-                  .map(fbb.writeString)
-                  .toList(growable: false));
-          final countryIDOffset = object.countryID == null
-              ? null
-              : fbb.writeString(object.countryID!);
-          fbb.startTable(10);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, countryOffset);
-          fbb.addOffset(2, iso3CodeOffset);
-          fbb.addOffset(3, zoneNameOffset);
-          fbb.addOffset(4, countryCodeOffset);
-          fbb.addOffset(5, alternativeCountryOffset);
-          fbb.addOffset(6, iconOffset);
-          fbb.addOffset(7, operatorListOffset);
-          fbb.addOffset(8, countryIDOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final countryIDParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 20);
-          final countryParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 6);
-          final iso3CodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 8);
-          final zoneNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 10);
-          final countryCodeParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12);
-          final alternativeCountryParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 14);
-          final iconParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 16);
-          final operatorListParam = const fb.ListReader<String>(
-                  fb.StringReader(asciiOptimization: true),
-                  lazy: false)
-              .vTableGetNullable(buffer, rootOffset, 18);
-          final object = CountryEntity(
-              countryID: countryIDParam,
-              country: countryParam,
-              iso3Code: iso3CodeParam,
-              zoneName: zoneNameParam,
-              countryCode: countryCodeParam,
-              alternativeCountry: alternativeCountryParam,
-              icon: iconParam,
-              operatorList: operatorListParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          obx_int.InternalToManyAccess.setRelInfo<CountryEntity>(object.bundles,
-              store, obx_int.RelInfo<CountryEntity>.toMany(2, object.id));
-          return object;
-        }),
+      model: _entities[2],
+      toOneRelations: (CountryEntity object) => [],
+      toManyRelations: (CountryEntity object) => {
+        obx_int.RelInfo<CountryEntity>.toMany(2, object.id): object.bundles,
+      },
+      getId: (CountryEntity object) => object.id,
+      setId: (CountryEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (CountryEntity object, fb.Builder fbb) {
+        final countryOffset =
+            object.country == null ? null : fbb.writeString(object.country!);
+        final iso3CodeOffset =
+            object.iso3Code == null ? null : fbb.writeString(object.iso3Code!);
+        final zoneNameOffset =
+            object.zoneName == null ? null : fbb.writeString(object.zoneName!);
+        final countryCodeOffset = object.countryCode == null
+            ? null
+            : fbb.writeString(object.countryCode!);
+        final alternativeCountryOffset = object.alternativeCountry == null
+            ? null
+            : fbb.writeString(object.alternativeCountry!);
+        final iconOffset =
+            object.icon == null ? null : fbb.writeString(object.icon!);
+        final operatorListOffset = object.operatorList == null
+            ? null
+            : fbb.writeList(
+                object.operatorList!
+                    .map(fbb.writeString)
+                    .toList(growable: false),
+              );
+        final countryIDOffset = object.countryID == null
+            ? null
+            : fbb.writeString(object.countryID!);
+        fbb.startTable(10);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, countryOffset);
+        fbb.addOffset(2, iso3CodeOffset);
+        fbb.addOffset(3, zoneNameOffset);
+        fbb.addOffset(4, countryCodeOffset);
+        fbb.addOffset(5, alternativeCountryOffset);
+        fbb.addOffset(6, iconOffset);
+        fbb.addOffset(7, operatorListOffset);
+        fbb.addOffset(8, countryIDOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final countryIDParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final countryParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final iso3CodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final zoneNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final countryCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final alternativeCountryParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 16);
+        final operatorListParam = const fb.ListReader<String>(
+          fb.StringReader(asciiOptimization: true),
+          lazy: false,
+        ).vTableGetNullable(buffer, rootOffset, 18);
+        final object = CountryEntity(
+          countryID: countryIDParam,
+          country: countryParam,
+          iso3Code: iso3CodeParam,
+          zoneName: zoneNameParam,
+          countryCode: countryCodeParam,
+          alternativeCountry: alternativeCountryParam,
+          icon: iconParam,
+          operatorList: operatorListParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        obx_int.InternalToManyAccess.setRelInfo<CountryEntity>(
+          object.bundles,
+          store,
+          obx_int.RelInfo<CountryEntity>.toMany(2, object.id),
+        );
+        return object;
+      },
+    ),
     HomeDataEntity: obx_int.EntityDefinition<HomeDataEntity>(
-        model: _entities[3],
-        toOneRelations: (HomeDataEntity object) => [],
-        toManyRelations: (HomeDataEntity object) => {
-              obx_int.RelInfo<HomeDataEntity>.toMany(3, object.id):
-                  object.regions,
-              obx_int.RelInfo<HomeDataEntity>.toMany(4, object.id):
-                  object.countries,
-              obx_int.RelInfo<BundleEntity>.toOneBacklink(16, object.id,
-                      (BundleEntity srcObject) => srcObject.homeData):
-                  object.bundles
-            },
-        getId: (HomeDataEntity object) => object.id,
-        setId: (HomeDataEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (HomeDataEntity object, fb.Builder fbb) {
-          final versionOffset =
-              object.version == null ? null : fbb.writeString(object.version!);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.lastUpdated?.millisecondsSinceEpoch);
-          fbb.addOffset(2, versionOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final lastUpdatedValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
-          final lastUpdatedParam = lastUpdatedValue == null
-              ? null
-              : DateTime.fromMillisecondsSinceEpoch(lastUpdatedValue);
-          final object = HomeDataEntity(lastUpdated: lastUpdatedParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..version = const fb.StringReader(asciiOptimization: true)
-                .vTableGetNullable(buffer, rootOffset, 8);
-          obx_int.InternalToManyAccess.setRelInfo<HomeDataEntity>(
-              object.regions,
-              store,
-              obx_int.RelInfo<HomeDataEntity>.toMany(3, object.id));
-          obx_int.InternalToManyAccess.setRelInfo<HomeDataEntity>(
-              object.countries,
-              store,
-              obx_int.RelInfo<HomeDataEntity>.toMany(4, object.id));
-          obx_int.InternalToManyAccess.setRelInfo<HomeDataEntity>(
-              object.bundles,
-              store,
-              obx_int.RelInfo<BundleEntity>.toOneBacklink(16, object.id,
-                  (BundleEntity srcObject) => srcObject.homeData));
-          return object;
-        }),
+      model: _entities[3],
+      toOneRelations: (HomeDataEntity object) => [],
+      toManyRelations: (HomeDataEntity object) => {
+        obx_int.RelInfo<HomeDataEntity>.toMany(3, object.id): object.regions,
+        obx_int.RelInfo<HomeDataEntity>.toMany(4, object.id): object.countries,
+        obx_int.RelInfo<BundleEntity>.toOneBacklink(
+          16,
+          object.id,
+          (BundleEntity srcObject) => srcObject.homeData,
+        ): object.bundles,
+      },
+      getId: (HomeDataEntity object) => object.id,
+      setId: (HomeDataEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (HomeDataEntity object, fb.Builder fbb) {
+        final versionOffset =
+            object.version == null ? null : fbb.writeString(object.version!);
+        fbb.startTable(4);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.lastUpdated?.millisecondsSinceEpoch);
+        fbb.addOffset(2, versionOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final lastUpdatedValue = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          6,
+        );
+        final lastUpdatedParam = lastUpdatedValue == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(lastUpdatedValue);
+        final object = HomeDataEntity(lastUpdated: lastUpdatedParam)
+          ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+          ..version = const fb.StringReader(
+            asciiOptimization: true,
+          ).vTableGetNullable(buffer, rootOffset, 8);
+        obx_int.InternalToManyAccess.setRelInfo<HomeDataEntity>(
+          object.regions,
+          store,
+          obx_int.RelInfo<HomeDataEntity>.toMany(3, object.id),
+        );
+        obx_int.InternalToManyAccess.setRelInfo<HomeDataEntity>(
+          object.countries,
+          store,
+          obx_int.RelInfo<HomeDataEntity>.toMany(4, object.id),
+        );
+        obx_int.InternalToManyAccess.setRelInfo<HomeDataEntity>(
+          object.bundles,
+          store,
+          obx_int.RelInfo<BundleEntity>.toOneBacklink(
+            16,
+            object.id,
+            (BundleEntity srcObject) => srcObject.homeData,
+          ),
+        );
+        return object;
+      },
+    ),
     RegionEntity: obx_int.EntityDefinition<RegionEntity>(
-        model: _entities[4],
-        toOneRelations: (RegionEntity object) => [],
-        toManyRelations: (RegionEntity object) => {},
-        getId: (RegionEntity object) => object.id,
-        setId: (RegionEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (RegionEntity object, fb.Builder fbb) {
-          final iconOffset =
-              object.icon == null ? null : fbb.writeString(object.icon!);
-          final zoneNameOffset = object.zoneName == null
-              ? null
-              : fbb.writeString(object.zoneName!);
-          final regionCodeOffset = object.regionCode == null
-              ? null
-              : fbb.writeString(object.regionCode!);
-          final regionNameOffset = object.regionName == null
-              ? null
-              : fbb.writeString(object.regionName!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, iconOffset);
-          fbb.addOffset(2, zoneNameOffset);
-          fbb.addOffset(3, regionCodeOffset);
-          fbb.addOffset(4, regionNameOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final iconParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 6);
-          final zoneNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 8);
-          final regionCodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 10);
-          final regionNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 12);
-          final object = RegionEntity(
-              icon: iconParam,
-              zoneName: zoneNameParam,
-              regionCode: regionCodeParam,
-              regionName: regionNameParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+      model: _entities[4],
+      toOneRelations: (RegionEntity object) => [],
+      toManyRelations: (RegionEntity object) => {},
+      getId: (RegionEntity object) => object.id,
+      setId: (RegionEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (RegionEntity object, fb.Builder fbb) {
+        final iconOffset =
+            object.icon == null ? null : fbb.writeString(object.icon!);
+        final zoneNameOffset =
+            object.zoneName == null ? null : fbb.writeString(object.zoneName!);
+        final regionCodeOffset = object.regionCode == null
+            ? null
+            : fbb.writeString(object.regionCode!);
+        final regionNameOffset = object.regionName == null
+            ? null
+            : fbb.writeString(object.regionName!);
+        fbb.startTable(6);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, iconOffset);
+        fbb.addOffset(2, zoneNameOffset);
+        fbb.addOffset(3, regionCodeOffset);
+        fbb.addOffset(4, regionNameOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final zoneNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final regionCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final regionNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final object = RegionEntity(
+          icon: iconParam,
+          zoneName: zoneNameParam,
+          regionCode: regionCodeParam,
+          regionName: regionNameParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-          return object;
-        }),
+        return object;
+      },
+    ),
     EsimEntity: obx_int.EntityDefinition<EsimEntity>(
-        model: _entities[5],
-        toOneRelations: (EsimEntity object) => [object.bundleCategory],
-        toManyRelations: (EsimEntity object) => {
-              obx_int.RelInfo<EsimEntity>.toMany(5, object.id):
-                  object.countries,
-              obx_int.RelInfo<TransactionHistoryEntity>.toOneBacklink(
-                  21,
-                  object.id,
-                  (TransactionHistoryEntity srcObject) =>
-                      srcObject.esimData): object.transactionHistory
-            },
-        getId: (EsimEntity object) => object.id,
-        setId: (EsimEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (EsimEntity object, fb.Builder fbb) {
-          final labelNameOffset = object.labelName == null
-              ? null
-              : fbb.writeString(object.labelName!);
-          final orderNumberOffset = object.orderNumber == null
-              ? null
-              : fbb.writeString(object.orderNumber!);
-          final orderStatusOffset = object.orderStatus == null
-              ? null
-              : fbb.writeString(object.orderStatus!);
-          final qrCodeValueOffset = object.qrCodeValue == null
-              ? null
-              : fbb.writeString(object.qrCodeValue!);
-          final activationCodeOffset = object.activationCode == null
-              ? null
-              : fbb.writeString(object.activationCode!);
-          final smdpAddressOffset = object.smdpAddress == null
-              ? null
-              : fbb.writeString(object.smdpAddress!);
-          final validityDateOffset = object.validityDate == null
-              ? null
-              : fbb.writeString(object.validityDate!);
-          final iccidOffset =
-              object.iccid == null ? null : fbb.writeString(object.iccid!);
-          final paymentDateOffset = object.paymentDate == null
-              ? null
-              : fbb.writeString(object.paymentDate!);
-          final sharedWithOffset = object.sharedWith == null
-              ? null
-              : fbb.writeString(object.sharedWith!);
-          final displayTitleOffset = object.displayTitle == null
-              ? null
-              : fbb.writeString(object.displayTitle!);
-          final displaySubtitleOffset = object.displaySubtitle == null
-              ? null
-              : fbb.writeString(object.displaySubtitle!);
-          final bundleCodeOffset = object.bundleCode == null
-              ? null
-              : fbb.writeString(object.bundleCode!);
-          final bundleMarketingNameOffset = object.bundleMarketingName == null
-              ? null
-              : fbb.writeString(object.bundleMarketingName!);
-          final bundleNameOffset = object.bundleName == null
-              ? null
-              : fbb.writeString(object.bundleName!);
-          final currencyCodeOffset = object.currencyCode == null
-              ? null
-              : fbb.writeString(object.currencyCode!);
-          final gprsLimitDisplayOffset = object.gprsLimitDisplay == null
-              ? null
-              : fbb.writeString(object.gprsLimitDisplay!);
-          final priceDisplayOffset = object.priceDisplay == null
-              ? null
-              : fbb.writeString(object.priceDisplay!);
-          final validityDisplayOffset = object.validityDisplay == null
-              ? null
-              : fbb.writeString(object.validityDisplay!);
-          final planTypeOffset = object.planType == null
-              ? null
-              : fbb.writeString(object.planType!);
-          final activityPolicyOffset = object.activityPolicy == null
-              ? null
-              : fbb.writeString(object.activityPolicy!);
-          final iconOffset =
-              object.icon == null ? null : fbb.writeString(object.icon!);
-          final bundleMessageOffset = object.bundleMessage == null
-              ? null
-              : fbb.writeList(object.bundleMessage!
-                  .map(fbb.writeString)
-                  .toList(growable: false));
-          final searchedCountriesOffset = object.searchedCountries == null
-              ? null
-              : fbb.writeList(object.searchedCountries!
-                  .map(fbb.writeString)
-                  .toList(growable: false));
-          fbb.startTable(34);
-          fbb.addInt64(0, object.id);
-          fbb.addBool(1, object.isTopupAllowed);
-          fbb.addBool(2, object.planStarted);
-          fbb.addBool(3, object.bundleExpired);
-          fbb.addOffset(4, labelNameOffset);
-          fbb.addOffset(5, orderNumberOffset);
-          fbb.addOffset(6, orderStatusOffset);
-          fbb.addOffset(7, qrCodeValueOffset);
-          fbb.addOffset(8, activationCodeOffset);
-          fbb.addOffset(9, smdpAddressOffset);
-          fbb.addOffset(10, validityDateOffset);
-          fbb.addOffset(11, iccidOffset);
-          fbb.addOffset(12, paymentDateOffset);
-          fbb.addOffset(13, sharedWithOffset);
-          fbb.addOffset(14, displayTitleOffset);
-          fbb.addOffset(15, displaySubtitleOffset);
-          fbb.addOffset(16, bundleCodeOffset);
-          fbb.addOffset(17, bundleMarketingNameOffset);
-          fbb.addOffset(18, bundleNameOffset);
-          fbb.addOffset(19, currencyCodeOffset);
-          fbb.addOffset(20, gprsLimitDisplayOffset);
-          fbb.addOffset(21, priceDisplayOffset);
-          fbb.addBool(22, object.unlimited);
-          fbb.addOffset(23, validityDisplayOffset);
-          fbb.addOffset(24, planTypeOffset);
-          fbb.addOffset(25, activityPolicyOffset);
-          fbb.addOffset(26, iconOffset);
-          fbb.addOffset(27, bundleMessageOffset);
-          fbb.addOffset(28, searchedCountriesOffset);
-          fbb.addInt64(29, object.bundleCategory.targetId);
-          fbb.addFloat64(30, object.countCountries);
-          fbb.addFloat64(31, object.price);
-          fbb.addFloat64(32, object.validity);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final isTopupAllowedParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 6);
-          final planStartedParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 8);
-          final bundleExpiredParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 10);
-          final labelNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 12);
-          final orderNumberParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 14);
-          final orderStatusParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16);
-          final qrCodeValueParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 18);
-          final activationCodeParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20);
-          final smdpAddressParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 22);
-          final validityDateParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 24);
-          final iccidParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 26);
-          final paymentDateParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 28);
-          final sharedWithParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 30);
-          final displayTitleParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 32);
-          final displaySubtitleParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 34);
-          final bundleCodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 36);
-          final bundleMarketingNameParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 38);
-          final bundleNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 40);
-          final countCountriesParam = const fb.Float64Reader()
-              .vTableGetNullable(buffer, rootOffset, 64);
-          final currencyCodeParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 42);
-          final gprsLimitDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 44);
-          final priceParam = const fb.Float64Reader()
-              .vTableGetNullable(buffer, rootOffset, 66);
-          final priceDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 46);
-          final unlimitedParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 48);
-          final validityParam = const fb.Float64Reader()
-              .vTableGetNullable(buffer, rootOffset, 68);
-          final validityDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 50);
-          final planTypeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 52);
-          final activityPolicyParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 54);
-          final iconParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 56);
-          final bundleMessageParam = const fb.ListReader<String>(
-                  fb.StringReader(asciiOptimization: true),
-                  lazy: false)
-              .vTableGetNullable(buffer, rootOffset, 58);
-          final searchedCountriesParam = const fb.ListReader<String>(
-                  fb.StringReader(asciiOptimization: true),
-                  lazy: false)
-              .vTableGetNullable(buffer, rootOffset, 60);
-          final object = EsimEntity(
-              isTopupAllowed: isTopupAllowedParam,
-              planStarted: planStartedParam,
-              bundleExpired: bundleExpiredParam,
-              labelName: labelNameParam,
-              orderNumber: orderNumberParam,
-              orderStatus: orderStatusParam,
-              qrCodeValue: qrCodeValueParam,
-              activationCode: activationCodeParam,
-              smdpAddress: smdpAddressParam,
-              validityDate: validityDateParam,
-              iccid: iccidParam,
-              paymentDate: paymentDateParam,
-              sharedWith: sharedWithParam,
-              displayTitle: displayTitleParam,
-              displaySubtitle: displaySubtitleParam,
-              bundleCode: bundleCodeParam,
-              bundleMarketingName: bundleMarketingNameParam,
-              bundleName: bundleNameParam,
-              countCountries: countCountriesParam,
-              currencyCode: currencyCodeParam,
-              gprsLimitDisplay: gprsLimitDisplayParam,
-              price: priceParam,
-              priceDisplay: priceDisplayParam,
-              unlimited: unlimitedParam,
-              validity: validityParam,
-              validityDisplay: validityDisplayParam,
-              planType: planTypeParam,
-              activityPolicy: activityPolicyParam,
-              icon: iconParam,
-              bundleMessage: bundleMessageParam,
-              searchedCountries: searchedCountriesParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          object.bundleCategory.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0);
-          object.bundleCategory.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<EsimEntity>(object.countries,
-              store, obx_int.RelInfo<EsimEntity>.toMany(5, object.id));
-          obx_int.InternalToManyAccess.setRelInfo<EsimEntity>(
-              object.transactionHistory,
-              store,
-              obx_int.RelInfo<TransactionHistoryEntity>.toOneBacklink(
-                  21,
-                  object.id,
-                  (TransactionHistoryEntity srcObject) => srcObject.esimData));
-          return object;
-        }),
-    TransactionHistoryEntity: obx_int.EntityDefinition<
-            TransactionHistoryEntity>(
-        model: _entities[6],
-        toOneRelations: (TransactionHistoryEntity object) =>
-            [object.esimData, object.bundle],
-        toManyRelations: (TransactionHistoryEntity object) => {},
-        getId: (TransactionHistoryEntity object) => object.id,
-        setId: (TransactionHistoryEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (TransactionHistoryEntity object, fb.Builder fbb) {
-          final userOrderIdOffset = object.userOrderId == null
-              ? null
-              : fbb.writeString(object.userOrderId!);
-          final iccidOffset =
-              object.iccid == null ? null : fbb.writeString(object.iccid!);
-          final bundleTypeOffset = object.bundleType == null
-              ? null
-              : fbb.writeString(object.bundleType!);
-          final createdAtOffset = object.createdAt == null
-              ? null
-              : fbb.writeString(object.createdAt!);
-          fbb.startTable(29);
-          fbb.addInt64(0, object.id);
-          fbb.addInt64(20, object.esimData.targetId);
-          fbb.addOffset(21, userOrderIdOffset);
-          fbb.addOffset(22, iccidOffset);
-          fbb.addOffset(23, bundleTypeOffset);
-          fbb.addBool(24, object.planStarted);
-          fbb.addBool(25, object.bundleExpired);
-          fbb.addOffset(26, createdAtOffset);
-          fbb.addInt64(27, object.bundle.targetId);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final userOrderIdParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 46);
-          final iccidParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 48);
-          final bundleTypeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 50);
-          final planStartedParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 52);
-          final bundleExpiredParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 54);
-          final createdAtParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 56);
-          final object = TransactionHistoryEntity(
-              userOrderId: userOrderIdParam,
-              iccid: iccidParam,
-              bundleType: bundleTypeParam,
-              planStarted: planStartedParam,
-              bundleExpired: bundleExpiredParam,
-              createdAt: createdAtParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          object.esimData.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0);
-          object.esimData.attach(store);
-          object.bundle.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 58, 0);
-          object.bundle.attach(store);
-          return object;
-        }),
+      model: _entities[5],
+      toOneRelations: (EsimEntity object) => [object.bundleCategory],
+      toManyRelations: (EsimEntity object) => {
+        obx_int.RelInfo<EsimEntity>.toMany(5, object.id): object.countries,
+        obx_int.RelInfo<TransactionHistoryEntity>.toOneBacklink(
+          21,
+          object.id,
+          (TransactionHistoryEntity srcObject) => srcObject.esimData,
+        ): object.transactionHistory,
+      },
+      getId: (EsimEntity object) => object.id,
+      setId: (EsimEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (EsimEntity object, fb.Builder fbb) {
+        final labelNameOffset = object.labelName == null
+            ? null
+            : fbb.writeString(object.labelName!);
+        final orderNumberOffset = object.orderNumber == null
+            ? null
+            : fbb.writeString(object.orderNumber!);
+        final orderStatusOffset = object.orderStatus == null
+            ? null
+            : fbb.writeString(object.orderStatus!);
+        final qrCodeValueOffset = object.qrCodeValue == null
+            ? null
+            : fbb.writeString(object.qrCodeValue!);
+        final activationCodeOffset = object.activationCode == null
+            ? null
+            : fbb.writeString(object.activationCode!);
+        final smdpAddressOffset = object.smdpAddress == null
+            ? null
+            : fbb.writeString(object.smdpAddress!);
+        final validityDateOffset = object.validityDate == null
+            ? null
+            : fbb.writeString(object.validityDate!);
+        final iccidOffset =
+            object.iccid == null ? null : fbb.writeString(object.iccid!);
+        final paymentDateOffset = object.paymentDate == null
+            ? null
+            : fbb.writeString(object.paymentDate!);
+        final sharedWithOffset = object.sharedWith == null
+            ? null
+            : fbb.writeString(object.sharedWith!);
+        final displayTitleOffset = object.displayTitle == null
+            ? null
+            : fbb.writeString(object.displayTitle!);
+        final displaySubtitleOffset = object.displaySubtitle == null
+            ? null
+            : fbb.writeString(object.displaySubtitle!);
+        final bundleCodeOffset = object.bundleCode == null
+            ? null
+            : fbb.writeString(object.bundleCode!);
+        final bundleMarketingNameOffset = object.bundleMarketingName == null
+            ? null
+            : fbb.writeString(object.bundleMarketingName!);
+        final bundleNameOffset = object.bundleName == null
+            ? null
+            : fbb.writeString(object.bundleName!);
+        final currencyCodeOffset = object.currencyCode == null
+            ? null
+            : fbb.writeString(object.currencyCode!);
+        final gprsLimitDisplayOffset = object.gprsLimitDisplay == null
+            ? null
+            : fbb.writeString(object.gprsLimitDisplay!);
+        final priceDisplayOffset = object.priceDisplay == null
+            ? null
+            : fbb.writeString(object.priceDisplay!);
+        final validityDisplayOffset = object.validityDisplay == null
+            ? null
+            : fbb.writeString(object.validityDisplay!);
+        final planTypeOffset =
+            object.planType == null ? null : fbb.writeString(object.planType!);
+        final activityPolicyOffset = object.activityPolicy == null
+            ? null
+            : fbb.writeString(object.activityPolicy!);
+        final iconOffset =
+            object.icon == null ? null : fbb.writeString(object.icon!);
+        final bundleMessageOffset = object.bundleMessage == null
+            ? null
+            : fbb.writeList(
+                object.bundleMessage!
+                    .map(fbb.writeString)
+                    .toList(growable: false),
+              );
+        final searchedCountriesOffset = object.searchedCountries == null
+            ? null
+            : fbb.writeList(
+                object.searchedCountries!
+                    .map(fbb.writeString)
+                    .toList(growable: false),
+              );
+        fbb.startTable(34);
+        fbb.addInt64(0, object.id);
+        fbb.addBool(1, object.isTopupAllowed);
+        fbb.addBool(2, object.planStarted);
+        fbb.addBool(3, object.bundleExpired);
+        fbb.addOffset(4, labelNameOffset);
+        fbb.addOffset(5, orderNumberOffset);
+        fbb.addOffset(6, orderStatusOffset);
+        fbb.addOffset(7, qrCodeValueOffset);
+        fbb.addOffset(8, activationCodeOffset);
+        fbb.addOffset(9, smdpAddressOffset);
+        fbb.addOffset(10, validityDateOffset);
+        fbb.addOffset(11, iccidOffset);
+        fbb.addOffset(12, paymentDateOffset);
+        fbb.addOffset(13, sharedWithOffset);
+        fbb.addOffset(14, displayTitleOffset);
+        fbb.addOffset(15, displaySubtitleOffset);
+        fbb.addOffset(16, bundleCodeOffset);
+        fbb.addOffset(17, bundleMarketingNameOffset);
+        fbb.addOffset(18, bundleNameOffset);
+        fbb.addOffset(19, currencyCodeOffset);
+        fbb.addOffset(20, gprsLimitDisplayOffset);
+        fbb.addOffset(21, priceDisplayOffset);
+        fbb.addBool(22, object.unlimited);
+        fbb.addOffset(23, validityDisplayOffset);
+        fbb.addOffset(24, planTypeOffset);
+        fbb.addOffset(25, activityPolicyOffset);
+        fbb.addOffset(26, iconOffset);
+        fbb.addOffset(27, bundleMessageOffset);
+        fbb.addOffset(28, searchedCountriesOffset);
+        fbb.addInt64(29, object.bundleCategory.targetId);
+        fbb.addFloat64(30, object.countCountries);
+        fbb.addFloat64(31, object.price);
+        fbb.addFloat64(32, object.validity);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final isTopupAllowedParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          6,
+        );
+        final planStartedParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          8,
+        );
+        final bundleExpiredParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          10,
+        );
+        final labelNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final orderNumberParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
+        final orderStatusParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 16);
+        final qrCodeValueParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
+        final activationCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final smdpAddressParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 22);
+        final validityDateParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 24);
+        final iccidParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 26);
+        final paymentDateParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 28);
+        final sharedWithParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 30);
+        final displayTitleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 32);
+        final displaySubtitleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 34);
+        final bundleCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 36);
+        final bundleMarketingNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 38);
+        final bundleNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 40);
+        final countCountriesParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          64,
+        );
+        final currencyCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 42);
+        final gprsLimitDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 44);
+        final priceParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          66,
+        );
+        final priceDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 46);
+        final unlimitedParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          48,
+        );
+        final validityParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          68,
+        );
+        final validityDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 50);
+        final planTypeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 52);
+        final activityPolicyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 54);
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 56);
+        final bundleMessageParam = const fb.ListReader<String>(
+          fb.StringReader(asciiOptimization: true),
+          lazy: false,
+        ).vTableGetNullable(buffer, rootOffset, 58);
+        final searchedCountriesParam = const fb.ListReader<String>(
+          fb.StringReader(asciiOptimization: true),
+          lazy: false,
+        ).vTableGetNullable(buffer, rootOffset, 60);
+        final object = EsimEntity(
+          isTopupAllowed: isTopupAllowedParam,
+          planStarted: planStartedParam,
+          bundleExpired: bundleExpiredParam,
+          labelName: labelNameParam,
+          orderNumber: orderNumberParam,
+          orderStatus: orderStatusParam,
+          qrCodeValue: qrCodeValueParam,
+          activationCode: activationCodeParam,
+          smdpAddress: smdpAddressParam,
+          validityDate: validityDateParam,
+          iccid: iccidParam,
+          paymentDate: paymentDateParam,
+          sharedWith: sharedWithParam,
+          displayTitle: displayTitleParam,
+          displaySubtitle: displaySubtitleParam,
+          bundleCode: bundleCodeParam,
+          bundleMarketingName: bundleMarketingNameParam,
+          bundleName: bundleNameParam,
+          countCountries: countCountriesParam,
+          currencyCode: currencyCodeParam,
+          gprsLimitDisplay: gprsLimitDisplayParam,
+          price: priceParam,
+          priceDisplay: priceDisplayParam,
+          unlimited: unlimitedParam,
+          validity: validityParam,
+          validityDisplay: validityDisplayParam,
+          planType: planTypeParam,
+          activityPolicy: activityPolicyParam,
+          icon: iconParam,
+          bundleMessage: bundleMessageParam,
+          searchedCountries: searchedCountriesParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        object.bundleCategory.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          62,
+          0,
+        );
+        object.bundleCategory.attach(store);
+        obx_int.InternalToManyAccess.setRelInfo<EsimEntity>(
+          object.countries,
+          store,
+          obx_int.RelInfo<EsimEntity>.toMany(5, object.id),
+        );
+        obx_int.InternalToManyAccess.setRelInfo<EsimEntity>(
+          object.transactionHistory,
+          store,
+          obx_int.RelInfo<TransactionHistoryEntity>.toOneBacklink(
+            21,
+            object.id,
+            (TransactionHistoryEntity srcObject) => srcObject.esimData,
+          ),
+        );
+        return object;
+      },
+    ),
+    TransactionHistoryEntity:
+        obx_int.EntityDefinition<TransactionHistoryEntity>(
+      model: _entities[6],
+      toOneRelations: (TransactionHistoryEntity object) => [
+        object.esimData,
+        object.bundle,
+      ],
+      toManyRelations: (TransactionHistoryEntity object) => {},
+      getId: (TransactionHistoryEntity object) => object.id,
+      setId: (TransactionHistoryEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (TransactionHistoryEntity object, fb.Builder fbb) {
+        final userOrderIdOffset = object.userOrderId == null
+            ? null
+            : fbb.writeString(object.userOrderId!);
+        final iccidOffset =
+            object.iccid == null ? null : fbb.writeString(object.iccid!);
+        final bundleTypeOffset = object.bundleType == null
+            ? null
+            : fbb.writeString(object.bundleType!);
+        final createdAtOffset = object.createdAt == null
+            ? null
+            : fbb.writeString(object.createdAt!);
+        fbb.startTable(29);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(20, object.esimData.targetId);
+        fbb.addOffset(21, userOrderIdOffset);
+        fbb.addOffset(22, iccidOffset);
+        fbb.addOffset(23, bundleTypeOffset);
+        fbb.addBool(24, object.planStarted);
+        fbb.addBool(25, object.bundleExpired);
+        fbb.addOffset(26, createdAtOffset);
+        fbb.addInt64(27, object.bundle.targetId);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final userOrderIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 46);
+        final iccidParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 48);
+        final bundleTypeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 50);
+        final planStartedParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          52,
+        );
+        final bundleExpiredParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          54,
+        );
+        final createdAtParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 56);
+        final object = TransactionHistoryEntity(
+          userOrderId: userOrderIdParam,
+          iccid: iccidParam,
+          bundleType: bundleTypeParam,
+          planStarted: planStartedParam,
+          bundleExpired: bundleExpiredParam,
+          createdAt: createdAtParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        object.esimData.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          44,
+          0,
+        );
+        object.esimData.attach(store);
+        object.bundle.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          58,
+          0,
+        );
+        object.bundle.attach(store);
+        return object;
+      },
+    ),
     EsimBundleCategoryEntity:
         obx_int.EntityDefinition<EsimBundleCategoryEntity>(
-            model: _entities[7],
-            toOneRelations: (EsimBundleCategoryEntity object) => [],
-            toManyRelations: (EsimBundleCategoryEntity object) => {},
-            getId: (EsimBundleCategoryEntity object) => object.id,
-            setId: (EsimBundleCategoryEntity object, int id) {
-              object.id = id;
-            },
-            objectToFB: (EsimBundleCategoryEntity object, fb.Builder fbb) {
-              final typeOffset =
-                  object.type == null ? null : fbb.writeString(object.type!);
-              final codeOffset =
-                  object.code == null ? null : fbb.writeString(object.code!);
-              final titleOffset =
-                  object.title == null ? null : fbb.writeString(object.title!);
-              fbb.startTable(5);
-              fbb.addInt64(0, object.id);
-              fbb.addOffset(1, typeOffset);
-              fbb.addOffset(2, codeOffset);
-              fbb.addOffset(3, titleOffset);
-              fbb.finish(fbb.endTable());
-              return object.id;
-            },
-            objectFromFB: (obx.Store store, ByteData fbData) {
-              final buffer = fb.BufferContext(fbData);
-              final rootOffset = buffer.derefObject(0);
-              final typeParam = const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 6);
-              final codeParam = const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8);
-              final titleParam = const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 10);
-              final object = EsimBundleCategoryEntity(
-                  type: typeParam, code: codeParam, title: titleParam)
-                ..id =
-                    const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+      model: _entities[7],
+      toOneRelations: (EsimBundleCategoryEntity object) => [],
+      toManyRelations: (EsimBundleCategoryEntity object) => {},
+      getId: (EsimBundleCategoryEntity object) => object.id,
+      setId: (EsimBundleCategoryEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (EsimBundleCategoryEntity object, fb.Builder fbb) {
+        final typeOffset =
+            object.type == null ? null : fbb.writeString(object.type!);
+        final codeOffset =
+            object.code == null ? null : fbb.writeString(object.code!);
+        final titleOffset =
+            object.title == null ? null : fbb.writeString(object.title!);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, typeOffset);
+        fbb.addOffset(2, codeOffset);
+        fbb.addOffset(3, titleOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final typeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final codeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final titleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final object = EsimBundleCategoryEntity(
+          type: typeParam,
+          code: codeParam,
+          title: titleParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-              return object;
-            }),
+        return object;
+      },
+    ),
     EsimBundleEntity: obx_int.EntityDefinition<EsimBundleEntity>(
-        model: _entities[8],
-        toOneRelations: (EsimBundleEntity object) => [object.bundleCategory],
-        toManyRelations: (EsimBundleEntity object) => {
-              obx_int.RelInfo<EsimBundleEntity>.toMany(8, object.id):
-                  object.countries
-            },
-        getId: (EsimBundleEntity object) => object.id,
-        setId: (EsimBundleEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (EsimBundleEntity object, fb.Builder fbb) {
-          final displayTitleOffset = object.displayTitle == null
-              ? null
-              : fbb.writeString(object.displayTitle!);
-          final displaySubtitleOffset = object.displaySubtitle == null
-              ? null
-              : fbb.writeString(object.displaySubtitle!);
-          final bundleCodeOffset = object.bundleCode == null
-              ? null
-              : fbb.writeString(object.bundleCode!);
-          final bundleMarketingNameOffset = object.bundleMarketingName == null
-              ? null
-              : fbb.writeString(object.bundleMarketingName!);
-          final bundleNameOffset = object.bundleName == null
-              ? null
-              : fbb.writeString(object.bundleName!);
-          final currencyCodeOffset = object.currencyCode == null
-              ? null
-              : fbb.writeString(object.currencyCode!);
-          final gprsLimitDisplayOffset = object.gprsLimitDisplay == null
-              ? null
-              : fbb.writeString(object.gprsLimitDisplay!);
-          final priceDisplayOffset = object.priceDisplay == null
-              ? null
-              : fbb.writeString(object.priceDisplay!);
-          final validityDisplayOffset = object.validityDisplay == null
-              ? null
-              : fbb.writeString(object.validityDisplay!);
-          final iconOffset =
-              object.icon == null ? null : fbb.writeString(object.icon!);
-          final planTypeOffset = object.planType == null
-              ? null
-              : fbb.writeString(object.planType!);
-          final activityPolicyOffset = object.activityPolicy == null
-              ? null
-              : fbb.writeString(object.activityPolicy!);
-          fbb.startTable(20);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, displayTitleOffset);
-          fbb.addOffset(2, displaySubtitleOffset);
-          fbb.addOffset(3, bundleCodeOffset);
-          fbb.addOffset(4, bundleMarketingNameOffset);
-          fbb.addOffset(5, bundleNameOffset);
-          fbb.addInt64(6, object.countCountries);
-          fbb.addOffset(7, currencyCodeOffset);
-          fbb.addOffset(8, gprsLimitDisplayOffset);
-          fbb.addFloat64(9, object.price);
-          fbb.addOffset(10, priceDisplayOffset);
-          fbb.addBool(11, object.unlimited);
-          fbb.addInt64(12, object.validity);
-          fbb.addOffset(13, validityDisplayOffset);
-          fbb.addOffset(14, iconOffset);
-          fbb.addOffset(15, planTypeOffset);
-          fbb.addOffset(16, activityPolicyOffset);
-          fbb.addInt64(17, object.bundleCategory.targetId);
-          fbb.addInt8(18, object.bundleTypeValue);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final displayTitleParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 6);
-          final displaySubtitleParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 8);
-          final bundleCodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 10);
-          final bundleMarketingNameParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 12);
-          final bundleNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 14);
-          final countCountriesParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
-          final currencyCodeParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 18);
-          final gprsLimitDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20);
-          final priceParam = const fb.Float64Reader()
-              .vTableGetNullable(buffer, rootOffset, 22);
-          final priceDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 24);
-          final unlimitedParam =
-              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 26);
-          final validityParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 28);
-          final validityDisplayParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 30);
-          final bundleTypeValueParam =
-              const fb.Int8Reader().vTableGet(buffer, rootOffset, 40, 0);
-          final iconParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 32);
-          final planTypeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 34);
-          final activityPolicyParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 36);
-          final object = EsimBundleEntity(
-              displayTitle: displayTitleParam,
-              displaySubtitle: displaySubtitleParam,
-              bundleCode: bundleCodeParam,
-              bundleMarketingName: bundleMarketingNameParam,
-              bundleName: bundleNameParam,
-              countCountries: countCountriesParam,
-              currencyCode: currencyCodeParam,
-              gprsLimitDisplay: gprsLimitDisplayParam,
-              price: priceParam,
-              priceDisplay: priceDisplayParam,
-              unlimited: unlimitedParam,
-              validity: validityParam,
-              validityDisplay: validityDisplayParam,
-              bundleTypeValue: bundleTypeValueParam,
-              icon: iconParam,
-              planType: planTypeParam,
-              activityPolicy: activityPolicyParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          object.bundleCategory.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0);
-          object.bundleCategory.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<EsimBundleEntity>(
-              object.countries,
-              store,
-              obx_int.RelInfo<EsimBundleEntity>.toMany(8, object.id));
-          return object;
-        }),
+      model: _entities[8],
+      toOneRelations: (EsimBundleEntity object) => [object.bundleCategory],
+      toManyRelations: (EsimBundleEntity object) => {
+        obx_int.RelInfo<EsimBundleEntity>.toMany(8, object.id):
+            object.countries,
+      },
+      getId: (EsimBundleEntity object) => object.id,
+      setId: (EsimBundleEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (EsimBundleEntity object, fb.Builder fbb) {
+        final displayTitleOffset = object.displayTitle == null
+            ? null
+            : fbb.writeString(object.displayTitle!);
+        final displaySubtitleOffset = object.displaySubtitle == null
+            ? null
+            : fbb.writeString(object.displaySubtitle!);
+        final bundleCodeOffset = object.bundleCode == null
+            ? null
+            : fbb.writeString(object.bundleCode!);
+        final bundleMarketingNameOffset = object.bundleMarketingName == null
+            ? null
+            : fbb.writeString(object.bundleMarketingName!);
+        final bundleNameOffset = object.bundleName == null
+            ? null
+            : fbb.writeString(object.bundleName!);
+        final currencyCodeOffset = object.currencyCode == null
+            ? null
+            : fbb.writeString(object.currencyCode!);
+        final gprsLimitDisplayOffset = object.gprsLimitDisplay == null
+            ? null
+            : fbb.writeString(object.gprsLimitDisplay!);
+        final priceDisplayOffset = object.priceDisplay == null
+            ? null
+            : fbb.writeString(object.priceDisplay!);
+        final validityDisplayOffset = object.validityDisplay == null
+            ? null
+            : fbb.writeString(object.validityDisplay!);
+        final iconOffset =
+            object.icon == null ? null : fbb.writeString(object.icon!);
+        final planTypeOffset =
+            object.planType == null ? null : fbb.writeString(object.planType!);
+        final activityPolicyOffset = object.activityPolicy == null
+            ? null
+            : fbb.writeString(object.activityPolicy!);
+        fbb.startTable(20);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, displayTitleOffset);
+        fbb.addOffset(2, displaySubtitleOffset);
+        fbb.addOffset(3, bundleCodeOffset);
+        fbb.addOffset(4, bundleMarketingNameOffset);
+        fbb.addOffset(5, bundleNameOffset);
+        fbb.addInt64(6, object.countCountries);
+        fbb.addOffset(7, currencyCodeOffset);
+        fbb.addOffset(8, gprsLimitDisplayOffset);
+        fbb.addFloat64(9, object.price);
+        fbb.addOffset(10, priceDisplayOffset);
+        fbb.addBool(11, object.unlimited);
+        fbb.addInt64(12, object.validity);
+        fbb.addOffset(13, validityDisplayOffset);
+        fbb.addOffset(14, iconOffset);
+        fbb.addOffset(15, planTypeOffset);
+        fbb.addOffset(16, activityPolicyOffset);
+        fbb.addInt64(17, object.bundleCategory.targetId);
+        fbb.addInt8(18, object.bundleTypeValue);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final displayTitleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final displaySubtitleParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final bundleCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final bundleMarketingNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final bundleNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
+        final countCountriesParam = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          16,
+        );
+        final currencyCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
+        final gprsLimitDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final priceParam = const fb.Float64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          22,
+        );
+        final priceDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 24);
+        final unlimitedParam = const fb.BoolReader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          26,
+        );
+        final validityParam = const fb.Int64Reader().vTableGetNullable(
+          buffer,
+          rootOffset,
+          28,
+        );
+        final validityDisplayParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 30);
+        final bundleTypeValueParam = const fb.Int8Reader().vTableGet(
+          buffer,
+          rootOffset,
+          40,
+          0,
+        );
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 32);
+        final planTypeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 34);
+        final activityPolicyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 36);
+        final object = EsimBundleEntity(
+          displayTitle: displayTitleParam,
+          displaySubtitle: displaySubtitleParam,
+          bundleCode: bundleCodeParam,
+          bundleMarketingName: bundleMarketingNameParam,
+          bundleName: bundleNameParam,
+          countCountries: countCountriesParam,
+          currencyCode: currencyCodeParam,
+          gprsLimitDisplay: gprsLimitDisplayParam,
+          price: priceParam,
+          priceDisplay: priceDisplayParam,
+          unlimited: unlimitedParam,
+          validity: validityParam,
+          validityDisplay: validityDisplayParam,
+          bundleTypeValue: bundleTypeValueParam,
+          icon: iconParam,
+          planType: planTypeParam,
+          activityPolicy: activityPolicyParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+        object.bundleCategory.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          38,
+          0,
+        );
+        object.bundleCategory.attach(store);
+        obx_int.InternalToManyAccess.setRelInfo<EsimBundleEntity>(
+          object.countries,
+          store,
+          obx_int.RelInfo<EsimBundleEntity>.toMany(8, object.id),
+        );
+        return object;
+      },
+    ),
     EsimCountryEntity: obx_int.EntityDefinition<EsimCountryEntity>(
-        model: _entities[9],
-        toOneRelations: (EsimCountryEntity object) => [],
-        toManyRelations: (EsimCountryEntity object) => {},
-        getId: (EsimCountryEntity object) => object.id,
-        setId: (EsimCountryEntity object, int id) {
-          object.id = id;
-        },
-        objectToFB: (EsimCountryEntity object, fb.Builder fbb) {
-          final countryIDOffset = object.countryID == null
-              ? null
-              : fbb.writeString(object.countryID!);
-          final countryOffset =
-              object.country == null ? null : fbb.writeString(object.country!);
-          final iso3CodeOffset = object.iso3Code == null
-              ? null
-              : fbb.writeString(object.iso3Code!);
-          final zoneNameOffset = object.zoneName == null
-              ? null
-              : fbb.writeString(object.zoneName!);
-          final countryCodeOffset = object.countryCode == null
-              ? null
-              : fbb.writeString(object.countryCode!);
-          final iconOffset =
-              object.icon == null ? null : fbb.writeString(object.icon!);
-          final operatorListOffset = object.operatorList == null
-              ? null
-              : fbb.writeList(object.operatorList!
-                  .map(fbb.writeString)
-                  .toList(growable: false));
-          final alternativeCountryOffset = object.alternativeCountry == null
-              ? null
-              : fbb.writeString(object.alternativeCountry!);
-          fbb.startTable(10);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, countryIDOffset);
-          fbb.addOffset(2, countryOffset);
-          fbb.addOffset(3, iso3CodeOffset);
-          fbb.addOffset(4, zoneNameOffset);
-          fbb.addOffset(5, countryCodeOffset);
-          fbb.addOffset(6, iconOffset);
-          fbb.addOffset(7, operatorListOffset);
-          fbb.addOffset(8, alternativeCountryOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final countryIDParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 6);
-          final countryParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 8);
-          final iso3CodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 10);
-          final zoneNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 12);
-          final countryCodeParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 14);
-          final alternativeCountryParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 20);
-          final iconParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 16);
-          final operatorListParam = const fb.ListReader<String>(
-                  fb.StringReader(asciiOptimization: true),
-                  lazy: false)
-              .vTableGetNullable(buffer, rootOffset, 18);
-          final object = EsimCountryEntity(
-              countryID: countryIDParam,
-              country: countryParam,
-              iso3Code: iso3CodeParam,
-              zoneName: zoneNameParam,
-              countryCode: countryCodeParam,
-              alternativeCountry: alternativeCountryParam,
-              icon: iconParam,
-              operatorList: operatorListParam)
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+      model: _entities[9],
+      toOneRelations: (EsimCountryEntity object) => [],
+      toManyRelations: (EsimCountryEntity object) => {},
+      getId: (EsimCountryEntity object) => object.id,
+      setId: (EsimCountryEntity object, int id) {
+        object.id = id;
+      },
+      objectToFB: (EsimCountryEntity object, fb.Builder fbb) {
+        final countryIDOffset = object.countryID == null
+            ? null
+            : fbb.writeString(object.countryID!);
+        final countryOffset =
+            object.country == null ? null : fbb.writeString(object.country!);
+        final iso3CodeOffset =
+            object.iso3Code == null ? null : fbb.writeString(object.iso3Code!);
+        final zoneNameOffset =
+            object.zoneName == null ? null : fbb.writeString(object.zoneName!);
+        final countryCodeOffset = object.countryCode == null
+            ? null
+            : fbb.writeString(object.countryCode!);
+        final iconOffset =
+            object.icon == null ? null : fbb.writeString(object.icon!);
+        final operatorListOffset = object.operatorList == null
+            ? null
+            : fbb.writeList(
+                object.operatorList!
+                    .map(fbb.writeString)
+                    .toList(growable: false),
+              );
+        final alternativeCountryOffset = object.alternativeCountry == null
+            ? null
+            : fbb.writeString(object.alternativeCountry!);
+        fbb.startTable(10);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, countryIDOffset);
+        fbb.addOffset(2, countryOffset);
+        fbb.addOffset(3, iso3CodeOffset);
+        fbb.addOffset(4, zoneNameOffset);
+        fbb.addOffset(5, countryCodeOffset);
+        fbb.addOffset(6, iconOffset);
+        fbb.addOffset(7, operatorListOffset);
+        fbb.addOffset(8, alternativeCountryOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final countryIDParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 6);
+        final countryParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 8);
+        final iso3CodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 10);
+        final zoneNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 12);
+        final countryCodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
+        final alternativeCountryParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 20);
+        final iconParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 16);
+        final operatorListParam = const fb.ListReader<String>(
+          fb.StringReader(asciiOptimization: true),
+          lazy: false,
+        ).vTableGetNullable(buffer, rootOffset, 18);
+        final object = EsimCountryEntity(
+          countryID: countryIDParam,
+          country: countryParam,
+          iso3Code: iso3CodeParam,
+          zoneName: zoneNameParam,
+          countryCode: countryCodeParam,
+          alternativeCountry: alternativeCountryParam,
+          icon: iconParam,
+          operatorList: operatorListParam,
+        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-          return object;
-        })
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -1786,530 +2080,653 @@ obx_int.ModelDefinition getObjectBoxModel() {
 class BundleCategoryEntity_ {
   /// See [BundleCategoryEntity.id].
   static final id = obx.QueryIntegerProperty<BundleCategoryEntity>(
-      _entities[0].properties[0]);
+    _entities[0].properties[0],
+  );
 
   /// See [BundleCategoryEntity.type].
-  static final type =
-      obx.QueryStringProperty<BundleCategoryEntity>(_entities[0].properties[1]);
+  static final type = obx.QueryStringProperty<BundleCategoryEntity>(
+    _entities[0].properties[1],
+  );
 
   /// See [BundleCategoryEntity.code].
-  static final code =
-      obx.QueryStringProperty<BundleCategoryEntity>(_entities[0].properties[2]);
+  static final code = obx.QueryStringProperty<BundleCategoryEntity>(
+    _entities[0].properties[2],
+  );
 
   /// See [BundleCategoryEntity.title].
-  static final title =
-      obx.QueryStringProperty<BundleCategoryEntity>(_entities[0].properties[3]);
+  static final title = obx.QueryStringProperty<BundleCategoryEntity>(
+    _entities[0].properties[3],
+  );
 }
 
 /// [BundleEntity] entity fields to define ObjectBox queries.
 class BundleEntity_ {
   /// See [BundleEntity.id].
-  static final id =
-      obx.QueryIntegerProperty<BundleEntity>(_entities[1].properties[0]);
+  static final id = obx.QueryIntegerProperty<BundleEntity>(
+    _entities[1].properties[0],
+  );
 
   /// See [BundleEntity.displayTitle].
-  static final displayTitle =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[1]);
+  static final displayTitle = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[1],
+  );
 
   /// See [BundleEntity.displaySubtitle].
-  static final displaySubtitle =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[2]);
+  static final displaySubtitle = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[2],
+  );
 
   /// See [BundleEntity.bundleCode].
-  static final bundleCode =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[3]);
+  static final bundleCode = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[3],
+  );
 
   /// See [BundleEntity.bundleMarketingName].
-  static final bundleMarketingName =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[4]);
+  static final bundleMarketingName = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[4],
+  );
 
   /// See [BundleEntity.bundleName].
-  static final bundleName =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[5]);
+  static final bundleName = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[5],
+  );
 
   /// See [BundleEntity.countCountries].
-  static final countCountries =
-      obx.QueryIntegerProperty<BundleEntity>(_entities[1].properties[6]);
+  static final countCountries = obx.QueryIntegerProperty<BundleEntity>(
+    _entities[1].properties[6],
+  );
 
   /// See [BundleEntity.currencyCode].
-  static final currencyCode =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[7]);
+  static final currencyCode = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[7],
+  );
 
   /// See [BundleEntity.gprsLimitDisplay].
-  static final gprsLimitDisplay =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[8]);
+  static final gprsLimitDisplay = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[8],
+  );
 
   /// See [BundleEntity.price].
-  static final price =
-      obx.QueryDoubleProperty<BundleEntity>(_entities[1].properties[9]);
+  static final price = obx.QueryDoubleProperty<BundleEntity>(
+    _entities[1].properties[9],
+  );
 
   /// See [BundleEntity.priceDisplay].
-  static final priceDisplay =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[10]);
+  static final priceDisplay = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[10],
+  );
 
   /// See [BundleEntity.unlimited].
-  static final unlimited =
-      obx.QueryBooleanProperty<BundleEntity>(_entities[1].properties[11]);
+  static final unlimited = obx.QueryBooleanProperty<BundleEntity>(
+    _entities[1].properties[11],
+  );
 
   /// See [BundleEntity.validity].
-  static final validity =
-      obx.QueryIntegerProperty<BundleEntity>(_entities[1].properties[12]);
+  static final validity = obx.QueryIntegerProperty<BundleEntity>(
+    _entities[1].properties[12],
+  );
 
   /// See [BundleEntity.validityDisplay].
-  static final validityDisplay =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[13]);
+  static final validityDisplay = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[13],
+  );
 
   /// See [BundleEntity.bundleCategory].
   static final bundleCategory =
       obx.QueryRelationToOne<BundleEntity, BundleCategoryEntity>(
-          _entities[1].properties[14]);
+    _entities[1].properties[14],
+  );
 
   /// See [BundleEntity.homeData].
   static final homeData = obx.QueryRelationToOne<BundleEntity, HomeDataEntity>(
-      _entities[1].properties[15]);
+    _entities[1].properties[15],
+  );
 
   /// See [BundleEntity.bundleTypeValue].
-  static final bundleTypeValue =
-      obx.QueryIntegerProperty<BundleEntity>(_entities[1].properties[16]);
+  static final bundleTypeValue = obx.QueryIntegerProperty<BundleEntity>(
+    _entities[1].properties[16],
+  );
 
   /// See [BundleEntity.icon].
-  static final icon =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[17]);
+  static final icon = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[17],
+  );
 
   /// See [BundleEntity.planType].
-  static final planType =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[18]);
+  static final planType = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[18],
+  );
 
   /// See [BundleEntity.activityPolicy].
-  static final activityPolicy =
-      obx.QueryStringProperty<BundleEntity>(_entities[1].properties[19]);
+  static final activityPolicy = obx.QueryStringProperty<BundleEntity>(
+    _entities[1].properties[19],
+  );
 
   /// see [BundleEntity.countries]
   static final countries = obx.QueryRelationToMany<BundleEntity, CountryEntity>(
-      _entities[1].relations[0]);
+    _entities[1].relations[0],
+  );
 }
 
 /// [CountryEntity] entity fields to define ObjectBox queries.
 class CountryEntity_ {
   /// See [CountryEntity.id].
-  static final id =
-      obx.QueryIntegerProperty<CountryEntity>(_entities[2].properties[0]);
+  static final id = obx.QueryIntegerProperty<CountryEntity>(
+    _entities[2].properties[0],
+  );
 
   /// See [CountryEntity.country].
-  static final country =
-      obx.QueryStringProperty<CountryEntity>(_entities[2].properties[1]);
+  static final country = obx.QueryStringProperty<CountryEntity>(
+    _entities[2].properties[1],
+  );
 
   /// See [CountryEntity.iso3Code].
-  static final iso3Code =
-      obx.QueryStringProperty<CountryEntity>(_entities[2].properties[2]);
+  static final iso3Code = obx.QueryStringProperty<CountryEntity>(
+    _entities[2].properties[2],
+  );
 
   /// See [CountryEntity.zoneName].
-  static final zoneName =
-      obx.QueryStringProperty<CountryEntity>(_entities[2].properties[3]);
+  static final zoneName = obx.QueryStringProperty<CountryEntity>(
+    _entities[2].properties[3],
+  );
 
   /// See [CountryEntity.countryCode].
-  static final countryCode =
-      obx.QueryStringProperty<CountryEntity>(_entities[2].properties[4]);
+  static final countryCode = obx.QueryStringProperty<CountryEntity>(
+    _entities[2].properties[4],
+  );
 
   /// See [CountryEntity.alternativeCountry].
-  static final alternativeCountry =
-      obx.QueryStringProperty<CountryEntity>(_entities[2].properties[5]);
+  static final alternativeCountry = obx.QueryStringProperty<CountryEntity>(
+    _entities[2].properties[5],
+  );
 
   /// See [CountryEntity.icon].
-  static final icon =
-      obx.QueryStringProperty<CountryEntity>(_entities[2].properties[6]);
+  static final icon = obx.QueryStringProperty<CountryEntity>(
+    _entities[2].properties[6],
+  );
 
   /// See [CountryEntity.operatorList].
-  static final operatorList =
-      obx.QueryStringVectorProperty<CountryEntity>(_entities[2].properties[7]);
+  static final operatorList = obx.QueryStringVectorProperty<CountryEntity>(
+    _entities[2].properties[7],
+  );
 
   /// See [CountryEntity.countryID].
-  static final countryID =
-      obx.QueryStringProperty<CountryEntity>(_entities[2].properties[8]);
+  static final countryID = obx.QueryStringProperty<CountryEntity>(
+    _entities[2].properties[8],
+  );
 
   /// see [CountryEntity.bundles]
   static final bundles = obx.QueryRelationToMany<CountryEntity, BundleEntity>(
-      _entities[2].relations[0]);
+    _entities[2].relations[0],
+  );
 }
 
 /// [HomeDataEntity] entity fields to define ObjectBox queries.
 class HomeDataEntity_ {
   /// See [HomeDataEntity.id].
-  static final id =
-      obx.QueryIntegerProperty<HomeDataEntity>(_entities[3].properties[0]);
+  static final id = obx.QueryIntegerProperty<HomeDataEntity>(
+    _entities[3].properties[0],
+  );
 
   /// See [HomeDataEntity.lastUpdated].
-  static final lastUpdated =
-      obx.QueryDateProperty<HomeDataEntity>(_entities[3].properties[1]);
+  static final lastUpdated = obx.QueryDateProperty<HomeDataEntity>(
+    _entities[3].properties[1],
+  );
 
   /// See [HomeDataEntity.version].
-  static final version =
-      obx.QueryStringProperty<HomeDataEntity>(_entities[3].properties[2]);
+  static final version = obx.QueryStringProperty<HomeDataEntity>(
+    _entities[3].properties[2],
+  );
 
   /// see [HomeDataEntity.regions]
   static final regions = obx.QueryRelationToMany<HomeDataEntity, RegionEntity>(
-      _entities[3].relations[0]);
+    _entities[3].relations[0],
+  );
 
   /// see [HomeDataEntity.countries]
   static final countries =
       obx.QueryRelationToMany<HomeDataEntity, CountryEntity>(
-          _entities[3].relations[1]);
+    _entities[3].relations[1],
+  );
 
   /// see [HomeDataEntity.bundles]
   static final bundles = obx.QueryBacklinkToMany<BundleEntity, HomeDataEntity>(
-      BundleEntity_.homeData);
+    BundleEntity_.homeData,
+  );
 }
 
 /// [RegionEntity] entity fields to define ObjectBox queries.
 class RegionEntity_ {
   /// See [RegionEntity.id].
-  static final id =
-      obx.QueryIntegerProperty<RegionEntity>(_entities[4].properties[0]);
+  static final id = obx.QueryIntegerProperty<RegionEntity>(
+    _entities[4].properties[0],
+  );
 
   /// See [RegionEntity.icon].
-  static final icon =
-      obx.QueryStringProperty<RegionEntity>(_entities[4].properties[1]);
+  static final icon = obx.QueryStringProperty<RegionEntity>(
+    _entities[4].properties[1],
+  );
 
   /// See [RegionEntity.zoneName].
-  static final zoneName =
-      obx.QueryStringProperty<RegionEntity>(_entities[4].properties[2]);
+  static final zoneName = obx.QueryStringProperty<RegionEntity>(
+    _entities[4].properties[2],
+  );
 
   /// See [RegionEntity.regionCode].
-  static final regionCode =
-      obx.QueryStringProperty<RegionEntity>(_entities[4].properties[3]);
+  static final regionCode = obx.QueryStringProperty<RegionEntity>(
+    _entities[4].properties[3],
+  );
 
   /// See [RegionEntity.regionName].
-  static final regionName =
-      obx.QueryStringProperty<RegionEntity>(_entities[4].properties[4]);
+  static final regionName = obx.QueryStringProperty<RegionEntity>(
+    _entities[4].properties[4],
+  );
 }
 
 /// [EsimEntity] entity fields to define ObjectBox queries.
 class EsimEntity_ {
   /// See [EsimEntity.id].
-  static final id =
-      obx.QueryIntegerProperty<EsimEntity>(_entities[5].properties[0]);
+  static final id = obx.QueryIntegerProperty<EsimEntity>(
+    _entities[5].properties[0],
+  );
 
   /// See [EsimEntity.isTopupAllowed].
-  static final isTopupAllowed =
-      obx.QueryBooleanProperty<EsimEntity>(_entities[5].properties[1]);
+  static final isTopupAllowed = obx.QueryBooleanProperty<EsimEntity>(
+    _entities[5].properties[1],
+  );
 
   /// See [EsimEntity.planStarted].
-  static final planStarted =
-      obx.QueryBooleanProperty<EsimEntity>(_entities[5].properties[2]);
+  static final planStarted = obx.QueryBooleanProperty<EsimEntity>(
+    _entities[5].properties[2],
+  );
 
   /// See [EsimEntity.bundleExpired].
-  static final bundleExpired =
-      obx.QueryBooleanProperty<EsimEntity>(_entities[5].properties[3]);
+  static final bundleExpired = obx.QueryBooleanProperty<EsimEntity>(
+    _entities[5].properties[3],
+  );
 
   /// See [EsimEntity.labelName].
-  static final labelName =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[4]);
+  static final labelName = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[4],
+  );
 
   /// See [EsimEntity.orderNumber].
-  static final orderNumber =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[5]);
+  static final orderNumber = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[5],
+  );
 
   /// See [EsimEntity.orderStatus].
-  static final orderStatus =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[6]);
+  static final orderStatus = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[6],
+  );
 
   /// See [EsimEntity.qrCodeValue].
-  static final qrCodeValue =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[7]);
+  static final qrCodeValue = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[7],
+  );
 
   /// See [EsimEntity.activationCode].
-  static final activationCode =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[8]);
+  static final activationCode = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[8],
+  );
 
   /// See [EsimEntity.smdpAddress].
-  static final smdpAddress =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[9]);
+  static final smdpAddress = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[9],
+  );
 
   /// See [EsimEntity.validityDate].
-  static final validityDate =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[10]);
+  static final validityDate = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[10],
+  );
 
   /// See [EsimEntity.iccid].
-  static final iccid =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[11]);
+  static final iccid = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[11],
+  );
 
   /// See [EsimEntity.paymentDate].
-  static final paymentDate =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[12]);
+  static final paymentDate = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[12],
+  );
 
   /// See [EsimEntity.sharedWith].
-  static final sharedWith =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[13]);
+  static final sharedWith = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[13],
+  );
 
   /// See [EsimEntity.displayTitle].
-  static final displayTitle =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[14]);
+  static final displayTitle = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[14],
+  );
 
   /// See [EsimEntity.displaySubtitle].
-  static final displaySubtitle =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[15]);
+  static final displaySubtitle = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[15],
+  );
 
   /// See [EsimEntity.bundleCode].
-  static final bundleCode =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[16]);
+  static final bundleCode = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[16],
+  );
 
   /// See [EsimEntity.bundleMarketingName].
-  static final bundleMarketingName =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[17]);
+  static final bundleMarketingName = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[17],
+  );
 
   /// See [EsimEntity.bundleName].
-  static final bundleName =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[18]);
+  static final bundleName = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[18],
+  );
 
   /// See [EsimEntity.currencyCode].
-  static final currencyCode =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[19]);
+  static final currencyCode = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[19],
+  );
 
   /// See [EsimEntity.gprsLimitDisplay].
-  static final gprsLimitDisplay =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[20]);
+  static final gprsLimitDisplay = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[20],
+  );
 
   /// See [EsimEntity.priceDisplay].
-  static final priceDisplay =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[21]);
+  static final priceDisplay = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[21],
+  );
 
   /// See [EsimEntity.unlimited].
-  static final unlimited =
-      obx.QueryBooleanProperty<EsimEntity>(_entities[5].properties[22]);
+  static final unlimited = obx.QueryBooleanProperty<EsimEntity>(
+    _entities[5].properties[22],
+  );
 
   /// See [EsimEntity.validityDisplay].
-  static final validityDisplay =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[23]);
+  static final validityDisplay = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[23],
+  );
 
   /// See [EsimEntity.planType].
-  static final planType =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[24]);
+  static final planType = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[24],
+  );
 
   /// See [EsimEntity.activityPolicy].
-  static final activityPolicy =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[25]);
+  static final activityPolicy = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[25],
+  );
 
   /// See [EsimEntity.icon].
-  static final icon =
-      obx.QueryStringProperty<EsimEntity>(_entities[5].properties[26]);
+  static final icon = obx.QueryStringProperty<EsimEntity>(
+    _entities[5].properties[26],
+  );
 
   /// See [EsimEntity.bundleMessage].
-  static final bundleMessage =
-      obx.QueryStringVectorProperty<EsimEntity>(_entities[5].properties[27]);
+  static final bundleMessage = obx.QueryStringVectorProperty<EsimEntity>(
+    _entities[5].properties[27],
+  );
 
   /// See [EsimEntity.searchedCountries].
-  static final searchedCountries =
-      obx.QueryStringVectorProperty<EsimEntity>(_entities[5].properties[28]);
+  static final searchedCountries = obx.QueryStringVectorProperty<EsimEntity>(
+    _entities[5].properties[28],
+  );
 
   /// See [EsimEntity.bundleCategory].
   static final bundleCategory =
       obx.QueryRelationToOne<EsimEntity, EsimBundleCategoryEntity>(
-          _entities[5].properties[29]);
+    _entities[5].properties[29],
+  );
 
   /// See [EsimEntity.countCountries].
-  static final countCountries =
-      obx.QueryDoubleProperty<EsimEntity>(_entities[5].properties[30]);
+  static final countCountries = obx.QueryDoubleProperty<EsimEntity>(
+    _entities[5].properties[30],
+  );
 
   /// See [EsimEntity.price].
-  static final price =
-      obx.QueryDoubleProperty<EsimEntity>(_entities[5].properties[31]);
+  static final price = obx.QueryDoubleProperty<EsimEntity>(
+    _entities[5].properties[31],
+  );
 
   /// See [EsimEntity.validity].
-  static final validity =
-      obx.QueryDoubleProperty<EsimEntity>(_entities[5].properties[32]);
+  static final validity = obx.QueryDoubleProperty<EsimEntity>(
+    _entities[5].properties[32],
+  );
 
   /// see [EsimEntity.countries]
   static final countries =
       obx.QueryRelationToMany<EsimEntity, EsimCountryEntity>(
-          _entities[5].relations[0]);
+    _entities[5].relations[0],
+  );
 
   /// see [EsimEntity.transactionHistory]
   static final transactionHistory =
       obx.QueryBacklinkToMany<TransactionHistoryEntity, EsimEntity>(
-          TransactionHistoryEntity_.esimData);
+    TransactionHistoryEntity_.esimData,
+  );
 }
 
 /// [TransactionHistoryEntity] entity fields to define ObjectBox queries.
 class TransactionHistoryEntity_ {
   /// See [TransactionHistoryEntity.id].
   static final id = obx.QueryIntegerProperty<TransactionHistoryEntity>(
-      _entities[6].properties[0]);
+    _entities[6].properties[0],
+  );
 
   /// See [TransactionHistoryEntity.esimData].
   static final esimData =
       obx.QueryRelationToOne<TransactionHistoryEntity, EsimEntity>(
-          _entities[6].properties[1]);
+    _entities[6].properties[1],
+  );
 
   /// See [TransactionHistoryEntity.userOrderId].
   static final userOrderId = obx.QueryStringProperty<TransactionHistoryEntity>(
-      _entities[6].properties[2]);
+    _entities[6].properties[2],
+  );
 
   /// See [TransactionHistoryEntity.iccid].
   static final iccid = obx.QueryStringProperty<TransactionHistoryEntity>(
-      _entities[6].properties[3]);
+    _entities[6].properties[3],
+  );
 
   /// See [TransactionHistoryEntity.bundleType].
   static final bundleType = obx.QueryStringProperty<TransactionHistoryEntity>(
-      _entities[6].properties[4]);
+    _entities[6].properties[4],
+  );
 
   /// See [TransactionHistoryEntity.planStarted].
   static final planStarted = obx.QueryBooleanProperty<TransactionHistoryEntity>(
-      _entities[6].properties[5]);
+    _entities[6].properties[5],
+  );
 
   /// See [TransactionHistoryEntity.bundleExpired].
   static final bundleExpired =
       obx.QueryBooleanProperty<TransactionHistoryEntity>(
-          _entities[6].properties[6]);
+    _entities[6].properties[6],
+  );
 
   /// See [TransactionHistoryEntity.createdAt].
   static final createdAt = obx.QueryStringProperty<TransactionHistoryEntity>(
-      _entities[6].properties[7]);
+    _entities[6].properties[7],
+  );
 
   /// See [TransactionHistoryEntity.bundle].
   static final bundle =
       obx.QueryRelationToOne<TransactionHistoryEntity, EsimBundleEntity>(
-          _entities[6].properties[8]);
+    _entities[6].properties[8],
+  );
 }
 
 /// [EsimBundleCategoryEntity] entity fields to define ObjectBox queries.
 class EsimBundleCategoryEntity_ {
   /// See [EsimBundleCategoryEntity.id].
   static final id = obx.QueryIntegerProperty<EsimBundleCategoryEntity>(
-      _entities[7].properties[0]);
+    _entities[7].properties[0],
+  );
 
   /// See [EsimBundleCategoryEntity.type].
   static final type = obx.QueryStringProperty<EsimBundleCategoryEntity>(
-      _entities[7].properties[1]);
+    _entities[7].properties[1],
+  );
 
   /// See [EsimBundleCategoryEntity.code].
   static final code = obx.QueryStringProperty<EsimBundleCategoryEntity>(
-      _entities[7].properties[2]);
+    _entities[7].properties[2],
+  );
 
   /// See [EsimBundleCategoryEntity.title].
   static final title = obx.QueryStringProperty<EsimBundleCategoryEntity>(
-      _entities[7].properties[3]);
+    _entities[7].properties[3],
+  );
 }
 
 /// [EsimBundleEntity] entity fields to define ObjectBox queries.
 class EsimBundleEntity_ {
   /// See [EsimBundleEntity.id].
-  static final id =
-      obx.QueryIntegerProperty<EsimBundleEntity>(_entities[8].properties[0]);
+  static final id = obx.QueryIntegerProperty<EsimBundleEntity>(
+    _entities[8].properties[0],
+  );
 
   /// See [EsimBundleEntity.displayTitle].
-  static final displayTitle =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[1]);
+  static final displayTitle = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[1],
+  );
 
   /// See [EsimBundleEntity.displaySubtitle].
-  static final displaySubtitle =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[2]);
+  static final displaySubtitle = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[2],
+  );
 
   /// See [EsimBundleEntity.bundleCode].
-  static final bundleCode =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[3]);
+  static final bundleCode = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[3],
+  );
 
   /// See [EsimBundleEntity.bundleMarketingName].
-  static final bundleMarketingName =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[4]);
+  static final bundleMarketingName = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[4],
+  );
 
   /// See [EsimBundleEntity.bundleName].
-  static final bundleName =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[5]);
+  static final bundleName = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[5],
+  );
 
   /// See [EsimBundleEntity.countCountries].
-  static final countCountries =
-      obx.QueryIntegerProperty<EsimBundleEntity>(_entities[8].properties[6]);
+  static final countCountries = obx.QueryIntegerProperty<EsimBundleEntity>(
+    _entities[8].properties[6],
+  );
 
   /// See [EsimBundleEntity.currencyCode].
-  static final currencyCode =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[7]);
+  static final currencyCode = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[7],
+  );
 
   /// See [EsimBundleEntity.gprsLimitDisplay].
-  static final gprsLimitDisplay =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[8]);
+  static final gprsLimitDisplay = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[8],
+  );
 
   /// See [EsimBundleEntity.price].
-  static final price =
-      obx.QueryDoubleProperty<EsimBundleEntity>(_entities[8].properties[9]);
+  static final price = obx.QueryDoubleProperty<EsimBundleEntity>(
+    _entities[8].properties[9],
+  );
 
   /// See [EsimBundleEntity.priceDisplay].
-  static final priceDisplay =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[10]);
+  static final priceDisplay = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[10],
+  );
 
   /// See [EsimBundleEntity.unlimited].
-  static final unlimited =
-      obx.QueryBooleanProperty<EsimBundleEntity>(_entities[8].properties[11]);
+  static final unlimited = obx.QueryBooleanProperty<EsimBundleEntity>(
+    _entities[8].properties[11],
+  );
 
   /// See [EsimBundleEntity.validity].
-  static final validity =
-      obx.QueryIntegerProperty<EsimBundleEntity>(_entities[8].properties[12]);
+  static final validity = obx.QueryIntegerProperty<EsimBundleEntity>(
+    _entities[8].properties[12],
+  );
 
   /// See [EsimBundleEntity.validityDisplay].
-  static final validityDisplay =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[13]);
+  static final validityDisplay = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[13],
+  );
 
   /// See [EsimBundleEntity.icon].
-  static final icon =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[14]);
+  static final icon = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[14],
+  );
 
   /// See [EsimBundleEntity.planType].
-  static final planType =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[15]);
+  static final planType = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[15],
+  );
 
   /// See [EsimBundleEntity.activityPolicy].
-  static final activityPolicy =
-      obx.QueryStringProperty<EsimBundleEntity>(_entities[8].properties[16]);
+  static final activityPolicy = obx.QueryStringProperty<EsimBundleEntity>(
+    _entities[8].properties[16],
+  );
 
   /// See [EsimBundleEntity.bundleCategory].
   static final bundleCategory =
       obx.QueryRelationToOne<EsimBundleEntity, EsimBundleCategoryEntity>(
-          _entities[8].properties[17]);
+    _entities[8].properties[17],
+  );
 
   /// See [EsimBundleEntity.bundleTypeValue].
-  static final bundleTypeValue =
-      obx.QueryIntegerProperty<EsimBundleEntity>(_entities[8].properties[18]);
+  static final bundleTypeValue = obx.QueryIntegerProperty<EsimBundleEntity>(
+    _entities[8].properties[18],
+  );
 
   /// see [EsimBundleEntity.countries]
   static final countries =
       obx.QueryRelationToMany<EsimBundleEntity, EsimCountryEntity>(
-          _entities[8].relations[0]);
+    _entities[8].relations[0],
+  );
 }
 
 /// [EsimCountryEntity] entity fields to define ObjectBox queries.
 class EsimCountryEntity_ {
   /// See [EsimCountryEntity.id].
-  static final id =
-      obx.QueryIntegerProperty<EsimCountryEntity>(_entities[9].properties[0]);
+  static final id = obx.QueryIntegerProperty<EsimCountryEntity>(
+    _entities[9].properties[0],
+  );
 
   /// See [EsimCountryEntity.countryID].
-  static final countryID =
-      obx.QueryStringProperty<EsimCountryEntity>(_entities[9].properties[1]);
+  static final countryID = obx.QueryStringProperty<EsimCountryEntity>(
+    _entities[9].properties[1],
+  );
 
   /// See [EsimCountryEntity.country].
-  static final country =
-      obx.QueryStringProperty<EsimCountryEntity>(_entities[9].properties[2]);
+  static final country = obx.QueryStringProperty<EsimCountryEntity>(
+    _entities[9].properties[2],
+  );
 
   /// See [EsimCountryEntity.iso3Code].
-  static final iso3Code =
-      obx.QueryStringProperty<EsimCountryEntity>(_entities[9].properties[3]);
+  static final iso3Code = obx.QueryStringProperty<EsimCountryEntity>(
+    _entities[9].properties[3],
+  );
 
   /// See [EsimCountryEntity.zoneName].
-  static final zoneName =
-      obx.QueryStringProperty<EsimCountryEntity>(_entities[9].properties[4]);
+  static final zoneName = obx.QueryStringProperty<EsimCountryEntity>(
+    _entities[9].properties[4],
+  );
 
   /// See [EsimCountryEntity.countryCode].
-  static final countryCode =
-      obx.QueryStringProperty<EsimCountryEntity>(_entities[9].properties[5]);
+  static final countryCode = obx.QueryStringProperty<EsimCountryEntity>(
+    _entities[9].properties[5],
+  );
 
   /// See [EsimCountryEntity.icon].
-  static final icon =
-      obx.QueryStringProperty<EsimCountryEntity>(_entities[9].properties[6]);
+  static final icon = obx.QueryStringProperty<EsimCountryEntity>(
+    _entities[9].properties[6],
+  );
 
   /// See [EsimCountryEntity.operatorList].
   static final operatorList = obx.QueryStringVectorProperty<EsimCountryEntity>(
-      _entities[9].properties[7]);
+    _entities[9].properties[7],
+  );
 
   /// See [EsimCountryEntity.alternativeCountry].
-  static final alternativeCountry =
-      obx.QueryStringProperty<EsimCountryEntity>(_entities[9].properties[8]);
+  static final alternativeCountry = obx.QueryStringProperty<EsimCountryEntity>(
+    _entities[9].properties[8],
+  );
 }

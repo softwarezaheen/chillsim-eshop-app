@@ -57,11 +57,17 @@ class SocialLoginServiceImpl extends SocialLoginService {
         }
       },
       onError: (dynamic error) {
-        log("Supabase authStateSubscription error:  $error");
+        String errorMessage = error.toString();
+
+        if (errorMessage.contains("Error getting user email")) {
+          errorMessage =
+              "Facebook account has no email. Please try another account";
+        }
+        log("SupaBase authStateSubscription error:  $errorMessage");
         _socialLoginResultStream.add(
           SocialLoginResult(
             socialType: SocialMediaLoginType.google,
-            errorMessage: error.toString(),
+            errorMessage: errorMessage,
           ),
         );
       },
@@ -105,29 +111,72 @@ class SocialLoginServiceImpl extends SocialLoginService {
     return socialLoginResultStream;
   }
 
-  //Google Sign in
-  GoogleSignIn googleSignIn = GoogleSignIn(
-    scopes: <String>["email"],
-  );
+  // Google Sign in - Use singleton instance
+  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+  bool _isInitialized = false;
+
+// Initialize Google Sign In (call this once, preferably in initState)
+  Future<void> _initializeGoogleSignIn() async {
+    if (!_isInitialized) {
+      try {
+        await googleSignIn.initialize();
+        _isInitialized = true;
+      } on Object catch (e) {
+        log("Failed to initialize Google Sign-In: $e");
+      }
+    }
+  }
 
   @override
   Future<Stream<SocialLoginResult>> signInWithGoogle() async {
+    // Ensure initialization first
+    await _initializeGoogleSignIn();
+
     GoogleSignInAccount? currentUser;
 
     try {
-      currentUser = await googleSignIn.signIn();
-      GoogleSignInAuthentication? auth = await currentUser?.authentication;
-      String accessToken = auth?.accessToken ?? "";
-      String idToken = auth?.idToken ?? "";
-      //log("email ${currentUser?.email}, name: ${currentUser?.displayName}, accessToken: $accessToken");
+      // Use authenticate() instead of signIn()
+      currentUser = await googleSignIn.authenticate(
+        scopeHint: <String>["email"], // Use scopeHint parameter
+      );
+
+      // Get authorization tokens through the authorization client
+      final GoogleSignInClientAuthorization? authorization = await currentUser
+          .authorizationClient
+          .authorizationForScopes(<String>["email"]);
+
+      if (authorization == null) {
+        throw Exception("Failed to get authorization from Google Sign In");
+      }
+
+      String? accessToken = authorization.accessToken;
+      String? idToken = authorization.accessToken;
 
       await Supabase.instance.client.auth.signInWithIdToken(
         provider: OAuthProvider.google,
         idToken: idToken,
         accessToken: accessToken,
       );
+    } on GoogleSignInException catch (error) {
+      log("GoogleSignInException: ${error.code}");
+      if (error.code == GoogleSignInExceptionCode.canceled) {
+        // User canceled the sign-in
+        _socialLoginResultStream.add(
+          SocialLoginResult(
+            socialType: SocialMediaLoginType.google,
+            errorMessage: "Sign in was canceled by user",
+          ),
+        );
+        return socialLoginResultStream;
+      }
+      _socialLoginResultStream.add(
+        SocialLoginResult(
+          socialType: SocialMediaLoginType.google,
+          errorMessage: error.toString(),
+        ),
+      );
     } on Object catch (error) {
-      log(error.toString());
+      log("General error: $error");
       _socialLoginResultStream.add(
         SocialLoginResult(
           socialType: SocialMediaLoginType.google,
@@ -167,9 +216,10 @@ class SocialLoginServiceImpl extends SocialLoginService {
         redirectTo:
             AppEnvironment.appEnvironmentHelper.supabaseFacebookCallBackScheme,
         authScreenLaunchMode: LaunchMode.externalApplication,
+        // scopes: "email public_profile",
       );
     } on Object catch (error) {
-      log(error.toString());
+      log("signInWithFaceBook: $error");
       _socialLoginResultStream.add(
         SocialLoginResult(
           socialType: SocialMediaLoginType.facebook,
@@ -207,9 +257,10 @@ class SocialLoginServiceImpl extends SocialLoginService {
     );
   }
 
-  void onDispose() {
-    unawaited(_authStateSubscription?.cancel());
+  @override
+  Future<void> onDispose() async {
+    await _authStateSubscription?.cancel();
     _authStateSubscription = null;
-    unawaited(_socialLoginResultStream.close());
+    await _socialLoginResultStream.close();
   }
 }

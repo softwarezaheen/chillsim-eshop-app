@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -35,18 +37,8 @@ class UserGuideView extends StatelessWidget {
                 ),
                 verticalSpaceSmallMedium,
                 DataPlansTabView(
-                  tabs: List<Tab>.generate(
-                    UserGuideViewType.values.length,
-                    (int index) => Tab(
-                      text: UserGuideViewType.values[index].titleHeader,
-                    ),
-                  ),
-                  tabViewsChildren: <Widget>[
-                    const UserGuideDetailedView(
-                      userGuideViewDataSource: IOSUserGuideEnum.step1,
-                    ),
-                    const AndroidUserGuideView(),
-                  ],
+                  tabs: getUserGuideTabs(),
+                  tabViewsChildren: getUserGuideTabsContent(),
                 ),
               ],
             ),
@@ -54,5 +46,26 @@ class UserGuideView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> getUserGuideTabsContent() {
+    final List<Widget> content = <Widget>[
+      const UserGuideDetailedView(
+        userGuideViewDataSource: IOSUserGuideEnum.step1,
+      ),
+      const AndroidUserGuideView(),
+    ];
+
+    return Platform.isIOS ? content : content.reversed.toList();
+  }
+
+  List<Tab> getUserGuideTabs() {
+    final List<UserGuideViewType> tabOrder = Platform.isIOS
+        ? UserGuideViewType.values
+        : UserGuideViewType.values.reversed.toList();
+
+    return tabOrder
+        .map((UserGuideViewType type) => Tab(text: type.titleHeader))
+        .toList();
   }
 }

@@ -51,6 +51,8 @@
 	<string>$(FACEBOOK_SIGN_IN_APP_ID)</string>
 	<key>FacebookDisplayName</key>
 	<string>${PRODUCT_DISPLAY_NAME}</string>
+	<key>FACEBOOK_CLIENT_TOKEN</key>
+	<string>$(FACEBOOK_CLIENT_TOKEN)</string>
 	<key>FlutterDeepLinkingEnabled</key>
 	<false/>
 	<key>GIDClientID</key>

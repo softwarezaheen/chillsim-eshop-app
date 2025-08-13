@@ -39,7 +39,7 @@ class StartUpViewModel extends BaseModel {
 
     if (Environment.isProdEnv) {
       log("Running on prod env checking device compatible");
-      if (await checkIfDeviceCompatible(context)) {
+      if (context.mounted && await checkIfDeviceCompatible(context)) {
         return;
       }
     }
@@ -53,18 +53,22 @@ class StartUpViewModel extends BaseModel {
 
   @visibleForTesting
   Future<void> showDeviceCompromisedDialog(BuildContext context) async {
-    showNativeDialog(
-      context: context,
-      titleText: "Warning",
-      contentText: "Your device is compromised",
-    );
+    if (context.mounted) {
+      showNativeDialog(
+        context: context,
+        titleText: "Warning",
+        contentText: "Your device is compromised",
+      );
+    }
   }
 
+  //Tested
   Future<bool> checkIfDeviceCompatible(BuildContext context) async {
     DeviceInfoService deviceInfo = locator<DeviceInfoService>();
-    if (await deviceInfo.isRooted ||
-        await deviceInfo.isDevelopmentModeEnable ||
-        !await deviceInfo.isPhysicalDevice) {
+    if (context.mounted &&
+        (await deviceInfo.isRooted ||
+            await deviceInfo.isDevelopmentModeEnable ||
+            !await deviceInfo.isPhysicalDevice)) {
       log("Device compromised");
       showDeviceCompromisedDialog(context);
       return true;
@@ -86,6 +90,7 @@ class StartUpViewModel extends BaseModel {
     navigateToHomePager();
   }
 
+  //Tested
   Future<void> refreshTokenTrigger() async {
     setViewState(ViewState.busy);
 

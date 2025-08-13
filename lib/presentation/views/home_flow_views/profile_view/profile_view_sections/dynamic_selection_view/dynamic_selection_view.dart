@@ -1,3 +1,4 @@
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -21,7 +22,7 @@ class DynamicSelectionView extends StatelessWidget {
     return BaseView<DynamicSelectionViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: DynamicSelectionViewModel(dataSource: dataSource),
+      viewModel: locator<DynamicSelectionViewModel>()..dataSource = dataSource,
       builder: (
         BuildContext context,
         DynamicSelectionViewModel viewModel,

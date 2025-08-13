@@ -351,10 +351,21 @@
   "paymentSelection_titleText": "Choisissez le mode de paiement",
   "paymentSelection_cardText": "Carte de crédit/débit",
   "paymentSelection_walletText": "Portefeuille",
+  "paymentSelection_dcbText": "Facturation directe par l’opérateur",
   "topUpWallet_error": "Échec de la recharge du portefeuille",
   "topUpWallet_success": "Recharge du portefeuille réussie",
   "confirmation_languageTitle": "Changer de langue",
   "confirmation_languageContent": "Êtes-vous sûr de vouloir changer la langue en",
   "appClip_currencyTitle": "Sélectionnez votre devise préférée pour continuer",
-  "appClip_languageTitle": "Sélectionnez votre langue préférée pour continuer"
+  "appClip_languageTitle": "Sélectionnez votre langue préférée pour continuer",
+  "loginView_continueWithPhone": "Continuer avec le numéro de téléphone",
+  "continueWithEmailView_SubTitleTextPhone": "Veuillez entrer votre numéro de téléphone pour continuer",
+  "verifyLogin_buttonTitleTextPhone": "Vérifier le numéro de téléphone",
+  "verifyLogin_checkPhone": "Vous n’avez pas reçu le code ?",
+  "deleteAccount_ConfirmTextPhone": "Entrez votre numéro de téléphone pour confirmer la suppression de votre compte.",
+  "verifyLogin_titleTextPhone": "Vérifiez votre boîte de réception",
+  "verifyOrderOtp_titleText": "Veuillez vérifier votre SMS",
+  "verifyOrderOtp_contentText": "Vous êtes sur le point de payer avec votre solde. Un code de vérification a été envoyé par SMS",
+  "eSim_installation_error_message" : "L'installation automatique de l'eSIM n'est pas disponible, veuillez l'installer manuellement.",
+  "cashback_reward_message": "la récompense en argent du prix de l'offre groupée est ajoutée au solde de votre portefeuille eSIM"
 }

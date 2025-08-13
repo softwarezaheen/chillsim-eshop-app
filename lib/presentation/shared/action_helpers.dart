@@ -268,7 +268,11 @@ Future<bool> openExternalApp({
 // }
 
 Future<ShareResult> shareUrl(String textToShare) {
-  return Share.share(textToShare);
+  return SharePlus.instance.share(
+    ShareParams(
+      text: textToShare,
+    ),
+  );
 }
 
 Future<ShareResult> shareStoreLink({
@@ -283,10 +287,17 @@ Future<ShareResult> shareStoreLink({
   // String buildNumber = packageInfo.buildNumber;
 
   if (Platform.isIOS) {
-    return Share.share("$subject \n\nhttps://itunes.apple.com/app/id$iOSAppId");
+    return SharePlus.instance.share(
+      ShareParams(
+        text: "$subject \n\nhttps://itunes.apple.com/app/id$iOSAppId",
+      ),
+    );
   } else {
-    return Share.share(
-      "$subject \n\nhttps://play.google.com/store/apps/details?id=$packageName",
+    return SharePlus.instance.share(
+      ShareParams(
+        text:
+            "$subject \n\nhttps://play.google.com/store/apps/details?id=$packageName",
+      ),
     );
   }
 

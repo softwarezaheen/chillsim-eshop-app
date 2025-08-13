@@ -1,5 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -8,6 +10,7 @@ import "package:esim_open_source/presentation/views/bottom_sheet/delete_account_
 import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
+import "package:esim_open_source/presentation/widgets/my_phone_input.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
@@ -91,7 +94,10 @@ class DeleteAccountBottomSheet extends StatelessWidget {
                         ),
                         verticalSpaceMediumLarge,
                         Text(
-                          LocaleKeys.deleteAccount_ConfirmText.tr(),
+                          AppEnvironment.appEnvironmentHelper.loginType ==
+                                  LoginType.phoneNumber
+                              ? LocaleKeys.deleteAccount_ConfirmTextPhone.tr()
+                              : LocaleKeys.deleteAccount_ConfirmText.tr(),
                           textAlign: TextAlign.center,
                           style: bodyNormalTextStyle(
                             context: context,
@@ -99,19 +105,39 @@ class DeleteAccountBottomSheet extends StatelessWidget {
                           ),
                         ),
                         verticalSpaceMediumLarge,
-                        MainInputField.formField(
-                          themeColor: themeColor,
-                          errorMessage: viewModel.emailErrorMessage,
-                          labelTitleText:
-                              LocaleKeys.deleteAccount_placeHolderText.tr(),
-                          controller: viewModel.emailController,
-                          textInputType: TextInputType.emailAddress,
-                          backGroundColor: mainWhiteTextColor(context: context),
-                          labelStyle: bodyNormalTextStyle(
-                            context: context,
-                            fontColor: mainDarkTextColor(context: context),
-                          ),
-                        ),
+                        AppEnvironment.appEnvironmentHelper.loginType ==
+                                LoginType.phoneNumber
+                            ? MyPhoneInput(
+                                onChanged: (
+                                  String code,
+                                  String phoneNumber, {
+                                  required bool isValid,
+                                }) {
+                                  viewModel.validateNumber(
+                                    code: code,
+                                    phoneNumber: phoneNumber,
+                                    isValid: isValid,
+                                  );
+                                },
+                                phoneController: viewModel.phoneController,
+                                validateRequired: true,
+                              )
+                            : MainInputField.formField(
+                                themeColor: themeColor,
+                                errorMessage: viewModel.emailErrorMessage,
+                                labelTitleText: LocaleKeys
+                                    .deleteAccount_placeHolderText
+                                    .tr(),
+                                controller: viewModel.emailController,
+                                textInputType: TextInputType.emailAddress,
+                                backGroundColor:
+                                    mainWhiteTextColor(context: context),
+                                labelStyle: bodyNormalTextStyle(
+                                  context: context,
+                                  fontColor:
+                                      mainDarkTextColor(context: context),
+                                ),
+                              ),
                         verticalSpaceMediumLarge,
                         MainButton(
                           title: LocaleKeys.deleteAccount_buttonText.tr(),

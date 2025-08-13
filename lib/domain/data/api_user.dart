@@ -70,4 +70,14 @@ abstract interface class ApiUser {
   FutureOr<dynamic> cancelOrder({
     required String orderID,
   });
+
+  FutureOr<dynamic> resendOrderOtp({
+    required String orderID,
+  });
+
+  FutureOr<dynamic> verifyOrderOtp({
+    required String otp,
+    required String iccid,
+    required String orderID,
+  });
 }

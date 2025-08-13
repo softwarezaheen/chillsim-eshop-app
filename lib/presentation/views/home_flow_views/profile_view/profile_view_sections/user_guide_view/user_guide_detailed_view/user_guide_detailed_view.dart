@@ -1,4 +1,5 @@
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -24,9 +25,8 @@ class UserGuideDetailedView extends StatelessWidget {
     return BaseView<UserGuideDetailedViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: UserGuideDetailedViewModel(
-        userGuideViewDataSource: userGuideViewDataSource,
-      ),
+      viewModel: locator<UserGuideDetailedViewModel>()
+        ..userGuideViewDataSource = userGuideViewDataSource,
       builder: (
         BuildContext context,
         UserGuideDetailedViewModel viewModel,
@@ -83,7 +83,7 @@ class UserGuideDetailedView extends StatelessWidget {
                                         .isPreviousEnabled()
                                     ? context.appColors.baseBlack
                                     : context.appColors.grey_400,
-                              ).imageSupportsRTL,
+                              ).imageSupportsRTL(context),
                             ),
                             Image.asset(
                               viewModel.userGuideViewDataSource.fullImagePath,
@@ -104,7 +104,7 @@ class UserGuideDetailedView extends StatelessWidget {
                                         .isNextEnabled()
                                     ? context.appColors.baseBlack
                                     : context.appColors.grey_400,
-                              ).imageSupportsRTL,
+                              ).imageSupportsRTL(context),
                             ),
                           ],
                         ),

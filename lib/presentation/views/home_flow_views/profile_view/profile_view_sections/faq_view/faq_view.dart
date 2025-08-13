@@ -1,5 +1,6 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -21,7 +22,7 @@ class FaqView extends StatelessWidget {
     return BaseView<FaqViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: FaqViewModel(),
+      viewModel: locator<FaqViewModel>(),
       builder: (
         BuildContext context,
         FaqViewModel viewModel,

@@ -68,7 +68,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                   SizedBox(
                     height: screenHeight -
                         100 -
-                        (viewModel.isKeyboardVisible(context) ? 250 : 0),
+                        (viewModel.isKeyboardVisible(context) ? 200 : 0),
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
@@ -220,9 +220,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  viewModel.isKeyboardVisible(context)
-                      ? const SizedBox.shrink()
-                      : const Spacer(),
+                  const Spacer(),
                   MainButton(
                     hideShadows: true,
                     themeColor: themeColor,

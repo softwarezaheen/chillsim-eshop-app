@@ -11,6 +11,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_notifications_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
@@ -193,6 +194,18 @@ class DataPlansViewModel extends BaseModel {
     );
   }
 
+  Future<void> navigateToCountryBundleByID(String countryCode) async {
+    final EsimArguments args = EsimArguments(
+      type: EsimArgumentType.country,
+      id: countryCode,
+      name: "",
+    );
+    navigationService.navigateTo(
+      BundlesListScreen.routeName,
+      arguments: <String, EsimArguments>{"key": args},
+    );
+  }
+
   Future<void> navigateToRegionBundles(RegionsResponseModel region) async {
     final EsimArguments args = EsimArguments(
       type: EsimArgumentType.region,
@@ -205,8 +218,22 @@ class DataPlansViewModel extends BaseModel {
     );
   }
 
+  Future<void> navigateToRegionBundleByID(String regionCode) async {
+    final EsimArguments args = EsimArguments(
+      type: EsimArgumentType.region,
+      id: regionCode,
+      name: "",
+    );
+    navigationService.navigateTo(
+      BundlesListScreen.routeName,
+      arguments: <String, EsimArguments>{"key": args},
+    );
+  }
+
   Future<void> navigateToEsimDetail(BundleResponseModel bundle) async {
-    if (!AppEnvironment.appEnvironmentHelper.enableGuestFlowPurchase &&
+    if ((!AppEnvironment.appEnvironmentHelper.enableGuestFlowPurchase ||
+            AppEnvironment.appEnvironmentHelper.loginType ==
+                LoginType.phoneNumber) &&
         !isUserLoggedIn) {
       await navigationService.navigateTo(
         LoginView.routeName,

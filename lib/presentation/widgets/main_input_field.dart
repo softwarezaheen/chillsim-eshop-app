@@ -449,7 +449,7 @@ class _MainInputFieldState extends State<MainInputField> {
                     context: context,
                     fontColor: secondaryTextColor(context: context),
                   ),
-                ).textSupportsRTL,
+                ).textSupportsRTL(context),
               )
             : const SizedBox.shrink(),
         SizedBox(
@@ -565,7 +565,7 @@ class _MainInputFieldState extends State<MainInputField> {
                           fontColor: widget.errorBorderColor ??
                               errorTextColor(context: context),
                         ),
-                      ).textSupportsRTL,
+                      ).textSupportsRTL(context),
                     ),
                   ),
       ],

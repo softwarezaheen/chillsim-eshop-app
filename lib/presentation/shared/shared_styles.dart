@@ -388,7 +388,7 @@ TextStyle unlimitedBoldTextStyle({
   bool isItalic = false,
 }) =>
     TextStyle(
-      fontSize: 22,
+      fontSize: 19,
       fontWeight: FontWeight.w700,
       color: fontColor ?? context.appColors.baseWhite,
       fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
@@ -409,7 +409,7 @@ TextStyle unlimitedDataBundleTextStyle({
       fontColor: fontColor,
       isItalic: isItalic,
     ).copyWith(
-      fontSize: 16.5,
+      fontSize: 15,
     );
 
 TextStyle captionOneNormalTextStyle({

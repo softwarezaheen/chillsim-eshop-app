@@ -39,7 +39,7 @@ class AppClipSelectionView extends StatelessWidget {
                     context: context,
                     fontColor: mainDarkTextColor(context: context),
                   ),
-                ).textSupportsRTL,
+                ).textSupportsRTL(context),
               ),
               verticalSpaceSmall,
               Expanded(

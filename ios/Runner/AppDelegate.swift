@@ -2,6 +2,7 @@ import UIKit
 import Flutter
 import flutter_local_notifications
 import BranchSDK
+import FBSDKCoreKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -9,6 +10,12 @@ import BranchSDK
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
+        // ✅ Enables advertiser tracking
+        Settings.shared.isAdvertiserTrackingEnabled = true
+        
+        // ✅ Optional: Enable debug logging
+        Settings.shared.enableLoggingBehavior(.appEvents)
         
         configureBranchTestMode()
         
@@ -50,16 +57,16 @@ import BranchSDK
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
-    override func application(_ application: UIApplication,
-                              continue userActivity: NSUserActivity,
-                              restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-           let url = userActivity.webpageURL {
-            print("App Clip launched via URL: \(url)")
-            return true
-        }
-        return false
-    }
+//    override func application(_ application: UIApplication,
+//                              continue userActivity: NSUserActivity,
+//                              restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+//        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+//           let url = userActivity.webpageURL {
+//            print("App Clip launched via URL: \(url)")
+//            return true
+//        }
+//        return false
+//    }
     
     
     private func openSimProfilesSettings(result: FlutterResult) {

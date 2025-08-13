@@ -1,11 +1,13 @@
 import "dart:async";
 import "dart:developer";
 import "dart:io";
+import "dart:ui";
 
 import "package:chucker_flutter/chucker_flutter.dart";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/dynamic_linking_service.dart";
 import "package:esim_open_source/firebase_options_open_source_dev.dart"
     as open_source_dev;
@@ -27,6 +29,7 @@ import "package:esim_open_source/presentation/views/start_up_view/startup_view.d
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/my_http_overrides.dart";
 import "package:firebase_core/firebase_core.dart";
+import "package:firebase_crashlytics/firebase_crashlytics.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
@@ -53,6 +56,7 @@ void main() async {
   FlutterNativeSplash.remove();
   await AppEnvironment.setupEnvironment();
   await initializeFirebaseApp();
+  await locator<AnalyticsService>().configure();
   await DeepLinkHandler.shared.init(({
     required Uri uri,
     required bool isInitial,
@@ -98,6 +102,17 @@ Future<void> initializeFirebaseApp() async {
   }
 
   await Firebase.initializeApp(options: firebaseOptions);
+
+  FlutterError.onError = (FlutterErrorDetails errorDetails) {
+    unawaited(
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails),);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+    unawaited(
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),);
+    return true;
+  };
 }
 
 class MyFlutterActivity extends StatefulWidget {

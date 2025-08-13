@@ -2,6 +2,7 @@ plugins {
     id "com.android.application"
     // START: FlutterFire Configuration
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
     // END: FlutterFire Configuration
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
@@ -34,7 +35,7 @@ if (flutterVersionName == null) {
 android {
     namespace "com.BaseFlutter.BaseFlutter"
     compileSdk flutter.compileSdkVersion
-    ndkVersion "27.0.11718014"
+    ndkVersion "27.0.12077973"
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -150,7 +151,7 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
     implementation 'com.facebook.android:facebook-login:[version]'

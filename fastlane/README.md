@@ -39,14 +39,6 @@ Run SonarQube analysis for main branch
 
 Run SonarQube analysis for pull requests
 
-### flutter ci
-
-```sh
-[bundle exec] fastlane flutter ci
-```
-
-Complete CI pipeline
-
 ### flutter debug_sonar_config
 
 ```sh

@@ -355,11 +355,22 @@ abstract class  LocaleKeys {
   static const String paymentSelection_titleText = "paymentSelection_titleText";
   static const String paymentSelection_cardText = "paymentSelection_cardText";
   static const String paymentSelection_walletText = "paymentSelection_walletText";
+  static const String paymentSelection_dcbText = "paymentSelection_dcbText";
   static const String topUpWallet_error = "topUpWallet_error";
   static const String topUpWallet_success = "topUpWallet_success";
   static const String confirmation_languageTitle = "confirmation_languageTitle";
   static const String confirmation_languageContent = "confirmation_languageContent";
   static const String appClip_currencyTitle = "appClip_currencyTitle";
   static const String appClip_languageTitle = "appClip_languageTitle";
+  static const String loginView_continueWithPhone = "loginView_continueWithPhone";
+  static const String continueWithEmailView_SubTitleTextPhone = "continueWithEmailView_SubTitleTextPhone";
+  static const String verifyLogin_buttonTitleTextPhone = "verifyLogin_buttonTitleTextPhone";
+  static const String verifyLogin_checkPhone = "verifyLogin_checkPhone";
+  static const String deleteAccount_ConfirmTextPhone = "deleteAccount_ConfirmTextPhone";
+  static const String verifyLogin_titleTextPhone = "verifyLogin_titleTextPhone";
+  static const String verifyOrderOtp_titleText = "verifyOrderOtp_titleText";
+  static const String verifyOrderOtp_contentText = "verifyOrderOtp_contentText";
+  static const String eSim_installation_error_message = "eSim_installation_error_message";
+  static const String cashback_reward_message = "cashback_reward_message";
 
 }

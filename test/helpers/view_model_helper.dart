@@ -7,6 +7,7 @@ import "package:stacked_services/stacked_services.dart";
 
 import "../locator_test.dart";
 
+// ignore_for_file: type=lint
 void onViewModelReadyMock({
   String viewName = "",
   bool isConnected = true,
@@ -18,5 +19,15 @@ void onViewModelReadyMock({
       .thenAnswer((_) async => isConnected);
   when(locator<NavigationService>().clearTillFirstAndShow(HomePager.routeName))
       .thenAnswer((_) async => clearTillFirstAndShow);
+  when(locator<NavigationService>().back()).thenReturn(true);
   when(locator<HomePagerViewModel>().getSelectedTabIndex()).thenReturn(0);
+  when(locator<NavigationService>()
+          .pushNamedAndRemoveUntil(HomePager.routeName))
+      .thenAnswer((_) async => clearTillFirstAndShow);
+
+  // Setup UserGuideDetailedViewModel mock
+  // setupUserGuideDetailedViewModelMock();
 }
+
+// Empty main function to prevent Flutter test runner from treating this as a test file
+void main() {}

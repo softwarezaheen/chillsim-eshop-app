@@ -22,5 +22,6 @@ enum BottomSheetType {
   confirmationSheet,
   upgradeWallet,
   shareReferralCode,
-  paymentSelection;
+  paymentSelection,
+  cashbackReward;
 }

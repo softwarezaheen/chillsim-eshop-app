@@ -1,12 +1,15 @@
+import "package:esim_open_source/domain/data/api_app.dart";
 import "package:esim_open_source/domain/data/api_bundles.dart";
-// import "package:esim_open_source/domain/data/api_promotion.dart";
+import "package:esim_open_source/domain/data/api_device.dart";
+import "package:esim_open_source/domain/data/api_promotion.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/api_bundles_repository.dart";
 import "package:esim_open_source/domain/repository/api_device_repository.dart";
-// import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
+import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
@@ -18,6 +21,7 @@ import "package:esim_open_source/domain/repository/services/redirections_handler
 // import "package:esim_open_source/domain/repository/services/remote_config_service.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
+import "package:esim_open_source/domain/use_case/user/get_order_history_pagination_use_case.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
@@ -28,7 +32,21 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/faq_view/faq_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/android_user_guide_view/android_user_guide_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view_model.dart";
+import "package:esim_open_source/presentation/views/skeleton_view/skeleton_view_model.dart";
+import "package:esim_open_source/presentation/views/start_up_view/startup_view_model.dart";
+import "package:flutter_esim/flutter_esim.dart";
 import "package:get_it/get_it.dart";
+import "package:http/http.dart" as http;
 import "package:mockito/annotations.dart";
 import "package:shared_preferences/shared_preferences.dart";
 import "package:stacked/stacked_annotations.dart";
@@ -37,6 +55,7 @@ import "package:stacked_themes/stacked_themes.dart";
 
 import "locator_test.mocks.dart";
 
+// ignore_for_file: type=lint
 @GenerateMocks(<Type>[
   NavigationRouter,
   CustomRouteObserver,
@@ -49,6 +68,7 @@ import "locator_test.mocks.dart";
   LocalStorageService,
   AppConfigurationService,
   FlutterChannelHandlerService,
+  AnalyticsService,
   //RemoteConfigService,
   ConnectivityService,
   ApiAuthRepository,
@@ -58,25 +78,43 @@ import "locator_test.mocks.dart";
   ApiBundlesRepository,
   ApiUserRepository,
   ApiDeviceRepository,
-  // APIPromotion,
-  // ApiPromotionRepository,
+  APIPromotion,
+  ApiPromotionRepository,
+  GetOrderHistoryPaginationUseCase,
   NavigationService,
   DialogService,
   SnackbarService,
   BottomSheetService,
   ThemeService,
+  //ViewModel
+  AndroidUserGuideViewModel,
   MainViewModel,
   MyESimViewModel,
   ProfileViewModel,
   DataPlansViewModel,
   HomePagerViewModel,
+  StartUpViewModel,
+  ContinueWithEmailViewModel,
   PurchaseLoadingViewModel,
+  DeviceCompabilityCheckViewModel,
+  LoginViewModel,
+  VerifyLoginViewModel,
+  SkeletonViewModel,
+  UserGuideDetailedViewModel,
+  //Services
   UserService,
   UserAuthenticationService,
   BundlesDataService,
   SharedPreferences,
+  FlutterEsim,
+  APIDevice,
+  APIApp,
+  http.Client,
 ])
+Future<void> main() async {}
+
 final GetIt locator = GetIt.instance;
+
 Future<void> setupTestLocator() async {
   StackedLocator.instance.registerEnvironment();
 
@@ -110,6 +148,7 @@ Future<void> appServicesModule() async {
       MockRedirectionsHandlerService.new,
     )
     ..registerLazySingleton<LocalStorageService>(MockLocalStorageService.new)
+    ..registerLazySingleton<AnalyticsService>(MockAnalyticsService.new)
     ..registerLazySingleton<AppConfigurationService>(
       MockAppConfigurationService.new,
     )
@@ -142,11 +181,14 @@ Future<void> appAPIServicesModule() async {
     ..registerLazySingleton<ApiUserRepository>(
       MockApiUserRepository.new,
     )
-    ..registerLazySingleton<ApiDeviceRepository>(MockApiDeviceRepository.new);
-  // ..registerLazySingleton<APIPromotion>(MockAPIPromotion.new)
-  // ..registerLazySingleton<ApiPromotionRepository>(
-  //   MockApiPromotionRepository.new,
-  // );
+    ..registerLazySingleton<GetOrderHistoryPaginationUseCase>(
+      MockGetOrderHistoryPaginationUseCase.new,
+    )
+    ..registerLazySingleton<ApiDeviceRepository>(MockApiDeviceRepository.new)
+    ..registerLazySingleton<APIPromotion>(MockAPIPromotion.new)
+    ..registerLazySingleton<ApiPromotionRepository>(
+      MockApiPromotionRepository.new,
+    );
 }
 
 Future<void> thirdPartyServicesModule() async {
@@ -160,12 +202,58 @@ Future<void> thirdPartyServicesModule() async {
 
 Future<void> viewModelModules() async {
   locator
-    ..registerLazySingleton<MainViewModel>(MockMainViewModel.new)
-    ..registerLazySingleton<MyESimViewModel>(MockMyESimViewModel.new)
-    ..registerLazySingleton<ProfileViewModel>(MockProfileViewModel.new)
-    ..registerLazySingleton<DataPlansViewModel>(MockDataPlansViewModel.new)
-    ..registerLazySingleton<HomePagerViewModel>(MockHomePagerViewModel.new)
+    ..registerLazySingleton<AndroidUserGuideViewModel>(
+      MockAndroidUserGuideViewModel.new,
+    )
+    ..registerLazySingleton<MainViewModel>(
+      MockMainViewModel.new,
+    )
+    ..registerLazySingleton<MyESimViewModel>(
+      MockMyESimViewModel.new,
+    )
+    ..registerLazySingleton<ProfileViewModel>(
+      MockProfileViewModel.new,
+    )
+    ..registerLazySingleton<DataPlansViewModel>(
+      MockDataPlansViewModel.new,
+    )
+    ..registerLazySingleton<HomePagerViewModel>(
+      MockHomePagerViewModel.new,
+    )
     ..registerLazySingleton<PurchaseLoadingViewModel>(
       MockPurchaseLoadingViewModel.new,
+    )
+    ..registerLazySingleton<ContinueWithEmailViewModel>(
+      MockContinueWithEmailViewModel.new,
+    )
+    ..registerLazySingleton<StartUpViewModel>(
+      MockStartUpViewModel.new,
+    )
+    ..registerLazySingleton<DeviceCompabilityCheckViewModel>(
+      MockDeviceCompabilityCheckViewModel.new,
+    )
+    ..registerLazySingleton<LoginViewModel>(
+      MockLoginViewModel.new,
+    )
+    ..registerLazySingleton<VerifyLoginViewModel>(
+      VerifyLoginViewModel.new,
+    )
+    ..registerLazySingleton<SkeletonViewModel>(
+      MockSkeletonViewModel.new,
+    )
+    ..registerLazySingleton<UserGuideDetailedViewModel>(
+      UserGuideDetailedViewModel.new,
+    )
+    ..registerLazySingleton<OrderHistoryViewModel>(
+      OrderHistoryViewModel.new,
+    )
+    ..registerLazySingleton<RewardsHistoryViewModel>(
+      RewardsHistoryViewModel.new,
+    )
+    ..registerLazySingleton<FaqViewModel>(
+      FaqViewModel.new,
+    )
+    ..registerLazySingleton<DynamicSelectionViewModel>(
+      DynamicSelectionViewModel.new,
     );
 }

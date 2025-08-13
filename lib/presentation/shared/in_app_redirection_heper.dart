@@ -3,6 +3,7 @@ import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
+import "package:stacked_services/stacked_services.dart";
 
 sealed class InAppRedirection {
   const InAppRedirection();
@@ -32,7 +33,9 @@ class ReferralRedirection extends InAppRedirection {
   String get routeName => StoryViewer.routeName;
 
   @override
-  dynamic get arguments => ReferalStoriesView().storyViewerArgs;
+  dynamic get arguments =>
+      ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
+          .storyViewerArgs;
 
   @override
   BottomSheetType? get variant => null;

@@ -48,9 +48,12 @@ class StoryViewer extends StatelessWidget {
       Scaffold(
         body: GestureDetector(
           onTapDown: (TapDownDetails details) async {
-            await Future<void>.delayed(const Duration(milliseconds: 400), () async {
+            await Future<void>.delayed(const Duration(milliseconds: 400),
+                () async {
               if (!_isHolding) {
-                await viewModel.onTapDown(context, details);
+                if (context.mounted) {
+                  await viewModel.onTapDown(context, details);
+                }
               }
             });
           },

@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
@@ -8,15 +9,18 @@ import "package:esim_open_source/domain/repository/api_device_repository.dart";
 import "package:esim_open_source/domain/use_case/app/add_device_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 
 class UpdateUserInfoParams {
   UpdateUserInfoParams({
+    required this.email,
     required this.msisdn,
     required this.firstName,
     required this.lastName,
     required this.isNewsletterSubscribed,
   });
+  final String email;
   final String msisdn;
   final String firstName;
   final String lastName;
@@ -41,6 +45,9 @@ class UpdateUserInfoUseCase
     UpdateUserInfoParams params,
   ) async {
     Resource<AuthResponseModel> response = await repository.updateUserInfo(
+      email: AppEnvironment.appEnvironmentHelper.loginType == LoginType.email
+          ? params.email
+          : null,
       msisdn: params.msisdn,
       firstName: params.firstName,
       lastName: params.lastName,

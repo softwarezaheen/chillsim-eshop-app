@@ -71,7 +71,9 @@ extension BannersViewTypesExtension on BannersViewTypes {
         if (locator<UserAuthenticationService>().isUserLoggedIn) {
           locator<NavigationService>().navigateTo(
             StoryViewer.routeName,
-            arguments: ReferalStoriesView().storyViewerArgs,
+            arguments:
+                ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
+                    .storyViewerArgs,
           );
           return;
         }

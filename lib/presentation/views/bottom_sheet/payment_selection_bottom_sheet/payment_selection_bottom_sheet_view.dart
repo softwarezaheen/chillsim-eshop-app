@@ -1,4 +1,6 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/presentation/enums/payment_type.dart";
+import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -17,8 +19,8 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
     required this.requestBase,
     super.key,
   });
-  final SheetRequest<dynamic> requestBase;
-  final Function(SheetResponse<PaymentSelection>) completer;
+  final SheetRequest<PaymentSelectionBottomRequest> requestBase;
+  final Function(SheetResponse<PaymentType>) completer;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +63,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         BottomSheetCloseButton(
-                          onTap: () => completer(
-                            SheetResponse<PaymentSelection>(),
-                          ),
+                          onTap: () => viewModel.onCloseClick(),
                         ),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -78,7 +78,8 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                         verticalSpaceMedium,
                         ListView.separated(
                           shrinkWrap: true,
-                          itemCount: PaymentSelection.values.length,
+                          itemCount:
+                              requestBase.data?.paymentTypeList.length ?? 0,
                           separatorBuilder: (
                             BuildContext context,
                             int index,
@@ -90,7 +91,8 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                           ) =>
                               buildPaymentSelectionView(
                             context,
-                            PaymentSelection.values[index],
+                            requestBase.data!.paymentTypeList[index],
+                            viewModel,
                           ),
                         ),
                       ],
@@ -107,15 +109,11 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
 
   Widget buildPaymentSelectionView(
     BuildContext context,
-    PaymentSelection selection,
+    PaymentType paymentType,
+    PaymentSelectionBottomSheetViewModel viewModel,
   ) =>
       GestureDetector(
-        onTap: () => completer(
-          SheetResponse<PaymentSelection>(
-            confirmed: true,
-            data: selection,
-          ),
-        ),
+        onTap: () => viewModel.onPaymentTypeClick(paymentType),
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: greyBackGroundColor(context: context),
@@ -127,13 +125,13 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Image.asset(
-                  selection.sectionImagePath,
+                  paymentType.sectionImagePath,
                   width: 50,
                   height: 50,
                 ),
                 horizontalSpaceSmall,
                 Text(
-                  selection.titleText,
+                  paymentType.titleText,
                   style: bodyNormalTextStyle(
                     context: context,
                     fontColor: titleTextColor(context: context),
@@ -156,7 +154,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
         ),
       )
       ..add(
-        ObjectFlagProperty<Function(SheetResponse<PaymentSelection> p1)>.has(
+        ObjectFlagProperty<Function(SheetResponse<PaymentType> p1)>.has(
           "completer",
           completer,
         ),

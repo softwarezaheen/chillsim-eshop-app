@@ -296,8 +296,9 @@ class ApiBundlesRepositoryImpl implements ApiBundlesRepository {
     await _repository.clearCache();
   }
 
+  @override
   Future<void> dispose() async {
-    _homeDataController.close();
+    await _homeDataController.close();
   }
 
   @override

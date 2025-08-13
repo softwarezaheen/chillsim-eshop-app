@@ -13,7 +13,7 @@ class ShareReferralCodeBottomSheetViewModel extends BaseModel {
   String get referralCode => userAuthenticationService.referralCode;
 
   String get deepLink =>
-      "https://${AppEnvironment.appEnvironmentHelper.websiteUrl}/${DeepLinkDecodeKeys.referralCode.referralCodePathKey}?${DeepLinkDecodeKeys.referralCode.name}=$referralCode";
+      "https://${AppEnvironment.appEnvironmentHelper.websiteUrl}/${DeepLinkDecodeKeys.referralCode.pathKey}?${DeepLinkDecodeKeys.referralCode.decodingKey}=$referralCode";
 
   String get amount => "5 USD";
 
@@ -23,16 +23,18 @@ class ShareReferralCodeBottomSheetViewModel extends BaseModel {
 
     log(deepLink);
 
-    Share.share(
-      LocaleKeys.shareReferral_fullLinkText.tr(
-        namedArgs: <String, String>{
-          "amount": amount,
-          "code": referralCode,
-          "link": (AppEnvironment.appEnvironmentHelper.enableBranchIO
-                  ? link
-                  : deepLink) ??
-              "",
-        },
+    SharePlus.instance.share(
+      ShareParams(
+        text: LocaleKeys.shareReferral_fullLinkText.tr(
+          namedArgs: <String, String>{
+            "amount": amount,
+            "code": referralCode,
+            "link": (AppEnvironment.appEnvironmentHelper.enableBranchIO
+                    ? link
+                    : deepLink) ??
+                "",
+          },
+        ),
       ),
     );
   }

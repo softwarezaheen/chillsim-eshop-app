@@ -1,5 +1,3 @@
-
-
 abstract class FlutterChannelHandlerService {
   Future<void> openSimProfilesSettings();
   Future<void> openEsimSetupForIOS({
@@ -9,5 +7,6 @@ abstract class FlutterChannelHandlerService {
   Future<void> openEsimSetupForAndroid({
     required String smdpAddress,
     required String activationCode,
+    bool isSHAExist = false,
   });
 }
