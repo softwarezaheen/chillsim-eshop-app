@@ -40,7 +40,7 @@ class OrderHistoryView extends StatelessWidget {
               navigationTitle: LocaleKeys.orderHistory_titleText.tr(),
               textStyle: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             Expanded(
@@ -122,7 +122,8 @@ class OrderHistoryView extends StatelessWidget {
                 countryPrice: bundleOrder.bundleDetails?.priceDisplay ?? "",
                 imagePath: bundleOrder.bundleDetails?.icon ?? "",
                 isLoading: false,
-                showUnlimitedData: bundleOrder.bundleDetails?.unlimited ?? false,
+                showUnlimitedData:
+                    bundleOrder.bundleDetails?.unlimited ?? false,
               ),
               Divider(
                 color: mainBorderColor(context: context),

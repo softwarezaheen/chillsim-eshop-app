@@ -199,7 +199,7 @@ class _DataPlansTabViewState extends State<DataPlansTabView>
                         labelColor: widget.selectedLabelColor ??
                             mainWhiteTextColor(context: context),
                         unselectedLabelColor: widget.unSelectedLabelColor ??
-                            mainDarkTextColor(context: context),
+                            titleTextColor(context: context),
                         labelStyle: widget.selectedTabTextStyle ??
                             captionOneBoldTextStyle(context: context),
                         unselectedLabelStyle: widget.unSelectedTabTextStyle ??

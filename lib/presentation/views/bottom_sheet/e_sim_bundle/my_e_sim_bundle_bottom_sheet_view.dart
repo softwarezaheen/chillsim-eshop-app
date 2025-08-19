@@ -10,7 +10,6 @@ import "package:esim_open_source/presentation/views/base/base_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle/my_e_sim_bundle_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_qr_code/qr_code_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/bundle_divider_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/bundle_info_column_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/bundle_info_row_view.dart";
 import "package:esim_open_source/presentation/widgets/animated_half_circular_progress_indicator.dart";
 import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
@@ -183,13 +182,16 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                     LocaleKeys.accountInformation_titleText.tr(),
                     style: captionOneMediumTextStyle(
                       context: context,
-                      fontColor: mainDarkTextColor(context: context),
+                      fontColor: titleTextColor(context: context),
                     ),
                   ),
                   verticalSpaceSmall,
-                  BundleInfoColumn(
+                  buildInfoRow(
+                    context: context,
                     label: LocaleKeys.esim_validity.tr(),
                     value: item?.validityDisplay ?? "",
+                    isLoading: false,
+                    showCopy: false,
                   ),
                   buildInfoRow(
                     context: context,
@@ -236,7 +238,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                   LocaleKeys.consumption.tr(),
                   style: captionTwoBoldTextStyle(
                     context: context,
-                    fontColor: mainDarkTextColor(context: context),
+                    fontColor: titleTextColor(context: context),
                   ),
                 ),
               ),
@@ -269,7 +271,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                   height: screenWidth(context),
                   child: AnimatedHalfCircularProgressIndicator(
                     targetValue: viewModel.state.consumption,
-                    valueColor: consumptionValueColor(context: context),
+                    valueColor: titleTextColor(context: context),
                     isLoading: viewModel.isBusy,
                   ),
                 ),
@@ -287,7 +289,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: headerOneBoldTextStyle(
                           context: context,
-                          fontColor: mainDarkTextColor(context: context),
+                          fontColor: titleTextColor(context: context),
                         ),
                       ).applyShimmer(
                         context: context,
@@ -323,7 +325,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
             ],
           ),
         ),
-        verticalSpaceTiniest,
+        verticalSpaceSmall,
         viewModel.state.showTopUP
             ? Row(
                 children: <Widget>[
@@ -403,7 +405,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
             LocaleKeys.plan_history.tr(),
             style: captionTwoBoldTextStyle(
               context: context,
-              fontColor: mainDarkTextColor(context: context),
+              fontColor: titleTextColor(context: context),
             ),
           ),
         ),
@@ -457,7 +459,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                         transaction?.bundle?.priceDisplay ?? "",
                         style: headerOneMediumTextStyle(
                           context: context,
-                          fontColor: mainDarkTextColor(context: context),
+                          fontColor: titleTextColor(context: context),
                         ),
                       ),
                       (transaction?.bundle?.unlimited ?? false)
@@ -466,7 +468,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                               transaction?.bundle?.gprsLimitDisplay ?? "",
                               style: headerOneMediumTextStyle(
                                 context: context,
-                                fontColor: mainDarkTextColor(context: context),
+                                fontColor: titleTextColor(context: context),
                               ),
                             ),
                     ],

@@ -14,6 +14,7 @@ class SupportedCountriesCard extends StatefulWidget {
   const SupportedCountriesCard({required this.countries, super.key});
 
   final List<CountryResponseModel> countries;
+
   @override
   State<SupportedCountriesCard> createState() => _SupportedCountriesCardState();
 
@@ -58,7 +59,7 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
               ),
               style: captionTwoMediumTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: bundleDataPriceTextColor(context: context),
               ),
             ),
           ),
@@ -104,7 +105,7 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
                           country.country ?? "",
                           style: captionTwoMediumTextStyle(
                             context: context,
-                            fontColor: titleTextColor(
+                            fontColor: bubbleCountryTextColor(
                               context: context,
                             ),
                           ),
@@ -112,12 +113,15 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
                       ],
                     ),
                     children: <Widget>[
-                      InfoRow(
-                        title: country.operatorList?.join(",") ??
-                            LocaleKeys.supportedCountries_noNetworks.tr(),
-                        message: LocaleKeys.supportedCountries_availableNetworks
-                            .tr(),
-                      ),
+                      (country.operatorList?.isNotEmpty ?? false)
+                          ? InfoRow(
+                              title: country.operatorList?.join(",") ??
+                                  LocaleKeys.supportedCountries_noNetworks.tr(),
+                              message: LocaleKeys
+                                  .supportedCountries_availableNetworks
+                                  .tr(),
+                            )
+                          : Container(),
                     ],
                   );
                 },

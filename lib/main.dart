@@ -27,6 +27,8 @@ import "package:esim_open_source/presentation/views/start_up_view/startup_view.d
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/my_http_overrides.dart";
 import "package:firebase_core/firebase_core.dart";
+import "package:firebase_crashlytics/firebase_crashlytics.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
@@ -98,6 +100,22 @@ Future<void> initializeFirebaseApp() async {
   }
 
   await Firebase.initializeApp(options: firebaseOptions);
+
+  FlutterError.onError = (FlutterErrorDetails errorDetails) {
+    // Don't report UI overflow errors to Crashlytics
+    if (errorDetails.exception.toString().contains("overflowed")) {
+      return; // Just ignore these errors
+    }
+
+    unawaited(
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails));
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+    unawaited(
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
+    return true;
+  };
 }
 
 class MyFlutterActivity extends StatefulWidget {

@@ -44,7 +44,7 @@ class NotificationsView extends StatelessWidget {
                   navigationTitle: LocaleKeys.notificationView_title.tr(),
                   textStyle: headerTwoBoldTextStyle(
                     context: context,
-                    fontColor: mainDarkTextColor(context: context),
+                    fontColor: titleTextColor(context: context),
                   ),
                 ),
                 Expanded(

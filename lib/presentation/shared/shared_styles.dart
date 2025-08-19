@@ -46,10 +46,10 @@ Color regionCountryBundleTitleTextColor({required BuildContext context}) =>
     context.appColors.primaryAlt_900!;
 
 Color bundleDataPriceTextColor({required BuildContext context}) =>
-    context.appColors.primaryAlt_800!;
+    context.appColors.grey_600!;
 
 Color emptyStateTextColor({required BuildContext context}) =>
-    context.appColors.secondary_600!;
+    context.appColors.primary_800!;
 
 //button text
 Color enabledMainButtonTextColor({required BuildContext context}) =>
@@ -59,7 +59,7 @@ Color enabledSecondaryButtonTextColor({required BuildContext context}) =>
     context.appColors.secondary_600!;
 
 Color disabledMainButtonTextColor({required BuildContext context}) =>
-    context.appColors.greyAlt_500!;
+    context.appColors.baseWhite!;
 
 Color bubbleCountryTextColor({required BuildContext context}) =>
     context.appColors.baseBlack!;
@@ -81,10 +81,10 @@ Color facebookButtonColor({required BuildContext context}) =>
     context.appColors.primaryAlt_500!;
 
 Color disabledMainButtonColor({required BuildContext context}) =>
-    context.appColors.greyAlt_200!;
+    context.appColors.primary_500!;
 
 Color iconButtonColor({required BuildContext context}) =>
-    context.appColors.secondary_600!;
+    context.appColors.primary_800!;
 
 Color secondaryIconButtonColor({required BuildContext context}) =>
     context.appColors.primaryAlt_800!;
@@ -113,7 +113,7 @@ Color myEsimSecondaryBackGroundColor({required BuildContext context}) =>
     context.appColors.secondary_600!;
 
 Color mainTabBackGroundColor({required BuildContext context}) =>
-    context.appColors.secondary_600!;
+    context.appColors.primary_800!;
 
 Color whiteBackGroundColor({required BuildContext context}) =>
     context.appColors.baseWhite!;
@@ -150,7 +150,7 @@ Color hyperLinkColor({required BuildContext context}) =>
     context.appColors.hyperLink!;
 
 Color notificationBadgeColor({required BuildContext context}) =>
-    context.appColors.indigo_700!;
+    context.appColors.secondary_600!;
 
 Color enabledSwitchColor({required BuildContext context}) =>
     context.appColors.primaryAlt_25!;
@@ -159,7 +159,7 @@ Color switchThumbColor({required BuildContext context}) =>
     context.appColors.primaryAltSwitchBtn_800!;
 
 Color consumptionValueColor({required BuildContext context}) =>
-    context.appColors.primary_800!;
+    context.appColors.secondary_600!;
 
 Color consumptionBackgroundColor({required BuildContext context}) =>
     context.appColors.primary_50!;
@@ -388,7 +388,7 @@ TextStyle unlimitedBoldTextStyle({
   bool isItalic = false,
 }) =>
     TextStyle(
-      fontSize: 22,
+      fontSize: 19,
       fontWeight: FontWeight.w700,
       color: fontColor ?? context.appColors.baseWhite,
       fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
@@ -409,7 +409,7 @@ TextStyle unlimitedDataBundleTextStyle({
       fontColor: fontColor,
       isItalic: isItalic,
     ).copyWith(
-      fontSize: 16.5,
+      fontSize: 15,
     );
 
 TextStyle captionOneNormalTextStyle({

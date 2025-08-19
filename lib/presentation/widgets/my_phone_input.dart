@@ -36,7 +36,7 @@ class MyPhoneInput extends StatelessWidget {
       countryCodeStyle: bodyNormalTextStyle(context: context).copyWith(
         color: context.appColors.grey_900,
       ),
-      defaultCountry: IsoCode.LB,
+      defaultCountry: phoneController.value?.isoCode ?? IsoCode.RO,
       autovalidateMode: AutovalidateMode.always,
       validator: PhoneValidator.compose(
         <PhoneNumberInputValidator>[
@@ -76,7 +76,7 @@ class MyPhoneInput extends StatelessWidget {
         ),
       ),
       onChanged: (PhoneNumber? p) => onChanged(
-        p?.countryCode ?? "961",
+        p?.countryCode ?? phoneController.value?.isoCode.name ?? "RO",
         p?.nsn ?? "",
         isValid: p?.isValid(type: PhoneNumberType.mobile) ?? false,
       ),

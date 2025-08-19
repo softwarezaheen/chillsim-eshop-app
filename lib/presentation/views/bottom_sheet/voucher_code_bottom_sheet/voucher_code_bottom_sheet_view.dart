@@ -53,7 +53,7 @@ class VoucherCodeBottomSheetView extends StatelessWidget {
                 LocaleKeys.voucherCode_titleText.tr(),
                 style: headerThreeMediumTextStyle(
                   context: context,
-                  fontColor: mainDarkTextColor(context: context),
+                  fontColor: titleTextColor(context: context),
                 ),
               ),
               verticalSpaceSmallMedium,

@@ -52,7 +52,7 @@ class BannersViewModel extends BaseModel {
 
   void setupButtonColorAnimation(BuildContext context) {
     Color redColor = context.appColors.error_500!;
-    Color greyColor = context.appColors.grey_900!;
+    Color greyColor = context.appColors.primary_800!;
     Color whiteColor = context.appColors.baseWhite!;
 
     _textColor = whiteColor;

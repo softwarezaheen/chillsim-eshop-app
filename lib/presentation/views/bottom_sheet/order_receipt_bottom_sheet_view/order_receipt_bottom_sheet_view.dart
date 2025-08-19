@@ -112,8 +112,8 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                 titleText: LocaleKeys
                                     .orderReceiptBottomSheet_address
                                     .tr(),
-                                contentText: viewModel.bundleOrderModel
-                                        ?.paymentDetails?.address ??
+                                contentText: viewModel
+                                        .bundleOrderModel?.companyAddress ??
                                     "N/A",
                               ),
                               DividerLine(
@@ -125,9 +125,9 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                 titleText: LocaleKeys
                                     .orderReceiptBottomSheet_email
                                     .tr(),
-                                contentText: viewModel.bundleOrderModel
-                                        ?.paymentDetails?.receiptEmail ??
-                                    "N/A",
+                                contentText:
+                                    viewModel.bundleOrderModel?.companyEmail ??
+                                        "N/A",
                               ),
                               DividerLine(
                                 verticalPadding: 0,

@@ -82,7 +82,7 @@ class ContactUsViewModel extends BaseModel {
     setViewState(ViewState.busy);
     Resource<StringResponse?> response = await contactUsUseCase.execute(
       ContactUsParams(
-        email: _state.emailController.text,
+        email: _state.emailController.text.trim(),
         message: _state.messageController.text,
       ),
     );

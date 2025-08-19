@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const String appName = "appName";
   static const String noDataAvailableYet = "noDataAvailableYet";
   static const String errorRetrievingYourData = "errorRetrievingYourData";
@@ -36,12 +36,15 @@ abstract class  LocaleKeys {
   static const String data_to = "data_to";
   static const String request_button = "request_button";
   static const String data_from = "data_from";
-  static const String please_fill_all_required_fields = "please_fill_all_required_fields";
-  static const String please_enter_a_valid_amount = "please_enter_a_valid_amount";
+  static const String please_fill_all_required_fields =
+      "please_fill_all_required_fields";
+  static const String please_enter_a_valid_amount =
+      "please_enter_a_valid_amount";
   static const String request_not_available = "request_not_available";
   static const String otp_validation_message = "otp_validation_message";
   static const String length_validation_message = "length_validation_message";
-  static const String otp_validation_message_numbers = "otp_validation_message_numbers";
+  static const String otp_validation_message_numbers =
+      "otp_validation_message_numbers";
   static const String home = "home";
   static const String accounts = "accounts";
   static const String services = "services";
@@ -49,41 +52,63 @@ abstract class  LocaleKeys {
   static const String pin = "pin";
   static const String is_required_field = "is_required_field";
   static const String email_address_mismatch = "email_address_mismatch";
-  static const String enter_a_valid_email_address = "enter_a_valid_email_address";
-  static const String enter_a_valid_website_address = "enter_a_valid_website_address";
+  static const String enter_a_valid_email_address =
+      "enter_a_valid_email_address";
+  static const String enter_a_valid_website_address =
+      "enter_a_valid_website_address";
   static const String loginView_titleText = "loginView_titleText";
   static const String loginView_subTitleText = "loginView_subTitleText";
-  static const String loginView_continueWithFacebook = "loginView_continueWithFacebook";
-  static const String loginView_continueWithApple = "loginView_continueWithApple";
-  static const String loginView_continueWithGoogle = "loginView_continueWithGoogle";
-  static const String loginView_continueWithEmail = "loginView_continueWithEmail";
+  static const String loginView_continueWithFacebook =
+      "loginView_continueWithFacebook";
+  static const String loginView_continueWithApple =
+      "loginView_continueWithApple";
+  static const String loginView_continueWithGoogle =
+      "loginView_continueWithGoogle";
+  static const String loginView_continueWithEmail =
+      "loginView_continueWithEmail";
   static const String loginView_termsText = "loginView_termsText";
   static const String loginView_termsFirstText = "loginView_termsFirstText";
   static const String loginView_termsSecondText = "loginView_termsSecondText";
-  static const String continueWithEmailView_titleText = "continueWithEmailView_titleText";
-  static const String continueWithEmailView_SubTitleText = "continueWithEmailView_SubTitleText";
-  static const String continueWithEmailView_emailTitleField = "continueWithEmailView_emailTitleField";
-  static const String continueWithEmailView_emailPlaceholder = "continueWithEmailView_emailPlaceholder";
-  static const String continueWithEmailView_acceptTerms = "continueWithEmailView_acceptTerms";
-  static const String continueWithEmailView_termsText = "continueWithEmailView_termsText";
+  static const String continueWithEmailView_titleText =
+      "continueWithEmailView_titleText";
+  static const String continueWithEmailView_SubTitleText =
+      "continueWithEmailView_SubTitleText";
+  static const String continueWithEmailView_emailTitleField =
+      "continueWithEmailView_emailTitleField";
+  static const String continueWithEmailView_emailPlaceholder =
+      "continueWithEmailView_emailPlaceholder";
+  static const String continueWithEmailView_acceptTerms =
+      "continueWithEmailView_acceptTerms";
+  static const String continueWithEmailView_termsText =
+      "continueWithEmailView_termsText";
   static const String dataPlans_titleText = "dataPlans_titleText";
   static const String myESim_titleText = "myESim_titleText";
-  static const String dataPlans_SearchPlaceHolderText = "dataPlans_SearchPlaceHolderText";
+  static const String dataPlans_SearchPlaceHolderText =
+      "dataPlans_SearchPlaceHolderText";
   static const String dataPlans_countriesText = "dataPlans_countriesText";
   static const String dataPlans_regionsText = "dataPlans_regionsText";
   static const String dataPlans_globalsText = "dataPlans_globalsText";
   static const String dataPlans_countryTripText = "dataPlans_countryTripText";
   static const String dataPlans_onCruiseText = "dataPlans_onCruiseText";
   static const String dataPlans_onLandText = "dataPlans_onLandText";
-  static const String dataPlans_liveChatBannerTitle = "dataPlans_liveChatBannerTitle";
-  static const String dataPlans_referAndEarnBannerTitle = "dataPlans_referAndEarnBannerTitle";
-  static const String dataPlans_cashbackRewardsBannerTitle = "dataPlans_cashbackRewardsBannerTitle";
-  static const String dataPlans_liveChatBannerContent = "dataPlans_liveChatBannerContent";
-  static const String dataPlans_referAndEarnBannerContent = "dataPlans_referAndEarnBannerContent";
-  static const String dataPlans_cashbackRewardsBannerContent = "dataPlans_cashbackRewardsBannerContent";
-  static const String dataPlans_liveChatBannerButtonText = "dataPlans_liveChatBannerButtonText";
-  static const String dataPlans_referAndEarnBannerButtonText = "dataPlans_referAndEarnBannerButtonText";
-  static const String dataPlans_cashbackRewardsBannerButtonText = "dataPlans_cashbackRewardsBannerButtonText";
+  static const String dataPlans_liveChatBannerTitle =
+      "dataPlans_liveChatBannerTitle";
+  static const String dataPlans_referAndEarnBannerTitle =
+      "dataPlans_referAndEarnBannerTitle";
+  static const String dataPlans_cashbackRewardsBannerTitle =
+      "dataPlans_cashbackRewardsBannerTitle";
+  static const String dataPlans_liveChatBannerContent =
+      "dataPlans_liveChatBannerContent";
+  static const String dataPlans_referAndEarnBannerContent =
+      "dataPlans_referAndEarnBannerContent";
+  static const String dataPlans_cashbackRewardsBannerContent =
+      "dataPlans_cashbackRewardsBannerContent";
+  static const String dataPlans_liveChatBannerButtonText =
+      "dataPlans_liveChatBannerButtonText";
+  static const String dataPlans_referAndEarnBannerButtonText =
+      "dataPlans_referAndEarnBannerButtonText";
+  static const String dataPlans_cashbackRewardsBannerButtonText =
+      "dataPlans_cashbackRewardsBannerButtonText";
   static const String myEsim_tabName = "myEsim_tabName";
   static const String profile_tabName = "profile_tabName";
   static const String profile_guest = "profile_guest";
@@ -104,34 +129,51 @@ abstract class  LocaleKeys {
   static const String profile_logout = "profile_logout";
   static const String verifyLogin_titleText = "verifyLogin_titleText";
   static const String verifyLogin_contentText = "verifyLogin_contentText";
-  static const String verifyLogin_buttonTitleText = "verifyLogin_buttonTitleText";
+  static const String verifyLogin_buttonTitleText =
+      "verifyLogin_buttonTitleText";
   static const String verifyLogin_checkEmail = "verifyLogin_checkEmail";
   static const String verifyLogin_resendCode = "verifyLogin_resendCode";
   static const String verifyLogin_wrongCode = "verifyLogin_wrongCode";
   static const String notificationView_title = "notificationView_title";
-  static const String notificationView_emptyTitle = "notificationView_emptyTitle";
-  static const String accountInformation_titleText = "accountInformation_titleText";
-  static const String accountInformation_namePlaceHolderText = "accountInformation_namePlaceHolderText";
-  static const String accountInformation_familyNamePlaceHolderText = "accountInformation_familyNamePlaceHolderText";
-  static const String accountInformation_contentText = "accountInformation_contentText";
-  static const String accountInformation_saveText = "accountInformation_saveText";
+  static const String notificationView_emptyTitle =
+      "notificationView_emptyTitle";
+  static const String accountInformation_titleText =
+      "accountInformation_titleText";
+  static const String accountInformation_namePlaceHolderText =
+      "accountInformation_namePlaceHolderText";
+  static const String accountInformation_familyNamePlaceHolderText =
+      "accountInformation_familyNamePlaceHolderText";
+  static const String accountInformation_contentText =
+      "accountInformation_contentText";
+  static const String accountInformation_saveText =
+      "accountInformation_saveText";
   static const String phoneInput_placeHolder = "phoneInput_placeHolder";
-  static const String phoneInput_countryPlaceHolder = "phoneInput_countryPlaceHolder";
-  static const String myWallet_availableBalanceText = "myWallet_availableBalanceText";
-  static const String myWallet_voucherSectionText = "myWallet_voucherSectionText";
+  static const String phoneInput_countryPlaceHolder =
+      "phoneInput_countryPlaceHolder";
+  static const String myWallet_availableBalanceText =
+      "myWallet_availableBalanceText";
+  static const String myWallet_voucherSectionText =
+      "myWallet_voucherSectionText";
   static const String myWallet_referSectionText = "myWallet_referSectionText";
-  static const String myWallet_cashbackSectionText = "myWallet_cashbackSectionText";
-  static const String myWallet_rewardsSectionText = "myWallet_rewardsSectionText";
+  static const String myWallet_cashbackSectionText =
+      "myWallet_cashbackSectionText";
+  static const String myWallet_rewardsSectionText =
+      "myWallet_rewardsSectionText";
   static const String contactUs_titleText = "contactUs_titleText";
   static const String contactUs_contentText = "contactUs_contentText";
-  static const String contactUs_emailPlaceHolderText = "contactUs_emailPlaceHolderText";
-  static const String contactUs_messagePlaceHolderText = "contactUs_messagePlaceHolderText";
+  static const String contactUs_emailPlaceHolderText =
+      "contactUs_emailPlaceHolderText";
+  static const String contactUs_messagePlaceHolderText =
+      "contactUs_messagePlaceHolderText";
   static const String contactUs_buttonTitleText = "contactUs_buttonTitleText";
   static const String contactUs_successTitleText = "contactUs_successTitleText";
   static const String orderHistory_titleText = "orderHistory_titleText";
-  static const String orderHistory_bundleValidityText = "orderHistory_bundleValidityText";
-  static const String orderHistory_emptyTitleText = "orderHistory_emptyTitleText";
-  static const String orderHistory_emptyContentText = "orderHistory_emptyContentText";
+  static const String orderHistory_bundleValidityText =
+      "orderHistory_bundleValidityText";
+  static const String orderHistory_emptyTitleText =
+      "orderHistory_emptyTitleText";
+  static const String orderHistory_emptyContentText =
+      "orderHistory_emptyContentText";
   static const String logout_titleText = "logout_titleText";
   static const String logout_contentText = "logout_contentText";
   static const String logout_buttonTitleText = "logout_buttonTitleText";
@@ -139,34 +181,56 @@ abstract class  LocaleKeys {
   static const String deleteAccount_titleText = "deleteAccount_titleText";
   static const String deleteAccount_ContentText = "deleteAccount_ContentText";
   static const String deleteAccount_ConfirmText = "deleteAccount_ConfirmText";
-  static const String deleteAccount_placeHolderText = "deleteAccount_placeHolderText";
+  static const String deleteAccount_placeHolderText =
+      "deleteAccount_placeHolderText";
   static const String deleteAccount_buttonText = "deleteAccount_buttonText";
   static const String orderBottomSheet_orderID = "orderBottomSheet_orderID";
-  static const String orderBottomSheet_paymentDetails = "orderBottomSheet_paymentDetails";
-  static const String orderBottomSheet_orderStatus = "orderBottomSheet_orderStatus";
-  static const String orderBottomSheet_viewReceipt = "orderBottomSheet_viewReceipt";
-  static const String orderReceiptBottomSheet_companyName = "orderReceiptBottomSheet_companyName";
-  static const String orderReceiptBottomSheet_address = "orderReceiptBottomSheet_address";
-  static const String orderReceiptBottomSheet_email = "orderReceiptBottomSheet_email";
-  static const String orderReceiptBottomSheet_orderID = "orderReceiptBottomSheet_orderID";
-  static const String orderReceiptBottomSheet_totalPaid = "orderReceiptBottomSheet_totalPaid";
-  static const String orderReceiptBottomSheet_datePaid = "orderReceiptBottomSheet_datePaid";
-  static const String orderReceiptBottomSheet_paymentMethod = "orderReceiptBottomSheet_paymentMethod";
-  static const String orderReceiptBottomSheet_summary = "orderReceiptBottomSheet_summary";
-  static const String orderReceiptBottomSheet_qty = "orderReceiptBottomSheet_qty";
-  static const String orderReceiptBottomSheet_product = "orderReceiptBottomSheet_product";
-  static const String orderReceiptBottomSheet_unitPrice = "orderReceiptBottomSheet_unitPrice";
-  static const String orderReceiptBottomSheet_amount = "orderReceiptBottomSheet_amount";
-  static const String orderReceiptBottomSheet_download = "orderReceiptBottomSheet_download";
+  static const String orderBottomSheet_paymentDetails =
+      "orderBottomSheet_paymentDetails";
+  static const String orderBottomSheet_orderStatus =
+      "orderBottomSheet_orderStatus";
+  static const String orderBottomSheet_viewReceipt =
+      "orderBottomSheet_viewReceipt";
+  static const String orderReceiptBottomSheet_companyName =
+      "orderReceiptBottomSheet_companyName";
+  static const String orderReceiptBottomSheet_address =
+      "orderReceiptBottomSheet_address";
+  static const String orderReceiptBottomSheet_email =
+      "orderReceiptBottomSheet_email";
+  static const String orderReceiptBottomSheet_orderID =
+      "orderReceiptBottomSheet_orderID";
+  static const String orderReceiptBottomSheet_totalPaid =
+      "orderReceiptBottomSheet_totalPaid";
+  static const String orderReceiptBottomSheet_datePaid =
+      "orderReceiptBottomSheet_datePaid";
+  static const String orderReceiptBottomSheet_paymentMethod =
+      "orderReceiptBottomSheet_paymentMethod";
+  static const String orderReceiptBottomSheet_summary =
+      "orderReceiptBottomSheet_summary";
+  static const String orderReceiptBottomSheet_qty =
+      "orderReceiptBottomSheet_qty";
+  static const String orderReceiptBottomSheet_product =
+      "orderReceiptBottomSheet_product";
+  static const String orderReceiptBottomSheet_unitPrice =
+      "orderReceiptBottomSheet_unitPrice";
+  static const String orderReceiptBottomSheet_amount =
+      "orderReceiptBottomSheet_amount";
+  static const String orderReceiptBottomSheet_download =
+      "orderReceiptBottomSheet_download";
   static const String voucherCode_titleText = "voucherCode_titleText";
   static const String voucherCode_contentText = "voucherCode_contentText";
-  static const String voucherCode_placeHolderText = "voucherCode_placeHolderText";
+  static const String voucherCode_placeHolderText =
+      "voucherCode_placeHolderText";
   static const String voucherCode_buttonText = "voucherCode_buttonText";
   static const String rewardHistory_titleText = "rewardHistory_titleText";
-  static const String rewardHistory_emptyTitleText = "rewardHistory_emptyTitleText";
-  static const String rewardHistory_emptyContentText = "rewardHistory_emptyContentText";
-  static const String rewardHistory_referTypeTitle = "rewardHistory_referTypeTitle";
-  static const String rewardHistory_cashbackTypeTitle = "rewardHistory_cashbackTypeTitle";
+  static const String rewardHistory_emptyTitleText =
+      "rewardHistory_emptyTitleText";
+  static const String rewardHistory_emptyContentText =
+      "rewardHistory_emptyContentText";
+  static const String rewardHistory_referTypeTitle =
+      "rewardHistory_referTypeTitle";
+  static const String rewardHistory_cashbackTypeTitle =
+      "rewardHistory_cashbackTypeTitle";
   static const String userGuideView_titleText = "userGuideView_titleText";
   static const String userGuideView_iosTitle = "userGuideView_iosTitle";
   static const String userGuideView_androidTitle = "userGuideView_androidTitle";
@@ -179,15 +243,24 @@ abstract class  LocaleKeys {
   static const String userGuideView_androidStep7 = "userGuideView_androidStep7";
   static const String userGuideView_androidStep8 = "userGuideView_androidStep8";
   static const String userGuideView_androidStep9 = "userGuideView_androidStep9";
-  static const String userGuideView_androidStep10 = "userGuideView_androidStep10";
-  static const String userGuideView_androidStep11 = "userGuideView_androidStep11";
-  static const String userGuideView_androidStep12 = "userGuideView_androidStep12";
-  static const String userGuideView_androidStep13 = "userGuideView_androidStep13";
-  static const String userGuideView_androidStep14 = "userGuideView_androidStep14";
-  static const String userGuideView_androidStep15 = "userGuideView_androidStep15";
-  static const String userGuideView_androidStep16 = "userGuideView_androidStep16";
-  static const String userGuideView_androidStep17 = "userGuideView_androidStep17";
-  static const String userGuideView_androidStep18 = "userGuideView_androidStep18";
+  static const String userGuideView_androidStep10 =
+      "userGuideView_androidStep10";
+  static const String userGuideView_androidStep11 =
+      "userGuideView_androidStep11";
+  static const String userGuideView_androidStep12 =
+      "userGuideView_androidStep12";
+  static const String userGuideView_androidStep13 =
+      "userGuideView_androidStep13";
+  static const String userGuideView_androidStep14 =
+      "userGuideView_androidStep14";
+  static const String userGuideView_androidStep15 =
+      "userGuideView_androidStep15";
+  static const String userGuideView_androidStep16 =
+      "userGuideView_androidStep16";
+  static const String userGuideView_androidStep17 =
+      "userGuideView_androidStep17";
+  static const String userGuideView_androidStep18 =
+      "userGuideView_androidStep18";
   static const String userGuideView_iosStep1 = "userGuideView_iosStep1";
   static const String userGuideView_iosStep2 = "userGuideView_iosStep2";
   static const String userGuideView_iosStep3 = "userGuideView_iosStep3";
@@ -206,38 +279,61 @@ abstract class  LocaleKeys {
   static const String userGuideView_iosStep16 = "userGuideView_iosStep16";
   static const String userGuideView_iosStep17 = "userGuideView_iosStep17";
   static const String userGuideView_iosStep18 = "userGuideView_iosStep18";
-  static const String userGuideView_stepIndexTitle = "userGuideView_stepIndexTitle";
-  static const String userGuideView_androidCameraTitle = "userGuideView_androidCameraTitle";
-  static const String userGuideView_androidGalleryTitle = "userGuideView_androidGalleryTitle";
-  static const String userGuideView_androidGuideFirstText = "userGuideView_androidGuideFirstText";
-  static const String userGuideView_androidGuideSecondText = "userGuideView_androidGuideSecondText";
-  static const String userGuideView_androidGuideThirdText = "userGuideView_androidGuideThirdText";
-  static const String userGuideView_androidGuideFourthText = "userGuideView_androidGuideFourthText";
-  static const String userGuideView_androidGuideFifthText = "userGuideView_androidGuideFifthText";
+  static const String userGuideView_stepIndexTitle =
+      "userGuideView_stepIndexTitle";
+  static const String userGuideView_androidCameraTitle =
+      "userGuideView_androidCameraTitle";
+  static const String userGuideView_androidGalleryTitle =
+      "userGuideView_androidGalleryTitle";
+  static const String userGuideView_androidGuideFirstText =
+      "userGuideView_androidGuideFirstText";
+  static const String userGuideView_androidGuideSecondText =
+      "userGuideView_androidGuideSecondText";
+  static const String userGuideView_androidGuideThirdText =
+      "userGuideView_androidGuideThirdText";
+  static const String userGuideView_androidGuideFourthText =
+      "userGuideView_androidGuideFourthText";
+  static const String userGuideView_androidGuideFifthText =
+      "userGuideView_androidGuideFifthText";
   static const String userGuideView_selectMethod = "userGuideView_selectMethod";
-  static const String userGuideView_androidGuideFirstStep = "userGuideView_androidGuideFirstStep";
-  static const String userGuideView_androidGuideSecondStep = "userGuideView_androidGuideSecondStep";
-  static const String userGuideView_androidGuideThirdStep = "userGuideView_androidGuideThirdStep";
-  static const String userGuideView_androidGuideFourthStep = "userGuideView_androidGuideFourthStep";
-  static const String userGuideView_androidGuideFifthStep = "userGuideView_androidGuideFifthStep";
-  static const String userGuideView_androidGuideSixthStep = "userGuideView_androidGuideSixthStep";
+  static const String userGuideView_androidGuideFirstStep =
+      "userGuideView_androidGuideFirstStep";
+  static const String userGuideView_androidGuideSecondStep =
+      "userGuideView_androidGuideSecondStep";
+  static const String userGuideView_androidGuideThirdStep =
+      "userGuideView_androidGuideThirdStep";
+  static const String userGuideView_androidGuideFourthStep =
+      "userGuideView_androidGuideFourthStep";
+  static const String userGuideView_androidGuideFifthStep =
+      "userGuideView_androidGuideFifthStep";
+  static const String userGuideView_androidGuideSixthStep =
+      "userGuideView_androidGuideSixthStep";
   static const String userGuideView_firstDevice = "userGuideView_firstDevice";
   static const String userGuideView_secondDevice = "userGuideView_secondDevice";
   static const String userGuideView_thirdDevice = "userGuideView_thirdDevice";
   static const String userGuideView_fourthDevice = "userGuideView_fourthDevice";
   static const String userGuideView_fifthDevice = "userGuideView_fifthDevice";
-  static const String userGuideView_firstAndroidDevice = "userGuideView_firstAndroidDevice";
-  static const String userGuideView_secondAndroidDevice = "userGuideView_secondAndroidDevice";
-  static const String userGuideView_thirdAndroidDevice = "userGuideView_thirdAndroidDevice";
-  static const String userGuideView_fourthAndroidDevice = "userGuideView_fourthAndroidDevice";
-  static const String userGuideView_fifthAndroidDevice = "userGuideView_fifthAndroidDevice";
-  static const String userGuideView_sixthAndroidDevice = "userGuideView_sixthAndroidDevice";
-  static const String userGuideView_seventhAndroidDevice = "userGuideView_seventhAndroidDevice";
-  static const String userGuideView_eighthAndroidDevice = "userGuideView_eighthAndroidDevice";
+  static const String userGuideView_firstAndroidDevice =
+      "userGuideView_firstAndroidDevice";
+  static const String userGuideView_secondAndroidDevice =
+      "userGuideView_secondAndroidDevice";
+  static const String userGuideView_thirdAndroidDevice =
+      "userGuideView_thirdAndroidDevice";
+  static const String userGuideView_fourthAndroidDevice =
+      "userGuideView_fourthAndroidDevice";
+  static const String userGuideView_fifthAndroidDevice =
+      "userGuideView_fifthAndroidDevice";
+  static const String userGuideView_sixthAndroidDevice =
+      "userGuideView_sixthAndroidDevice";
+  static const String userGuideView_seventhAndroidDevice =
+      "userGuideView_seventhAndroidDevice";
+  static const String userGuideView_eighthAndroidDevice =
+      "userGuideView_eighthAndroidDevice";
   static const String common_iAgreeText = "common_iAgreeText";
   static const String choose_payment_method = "choose_payment_method";
   static const String credit_debit_card = "credit_debit_card";
-  static const String the_qr_code_is_being_generated = "the_qr_code_is_being_generated";
+  static const String the_qr_code_is_being_generated =
+      "the_qr_code_is_being_generated";
   static const String this_may_take_a_while = "this_may_take_a_while";
   static const String qr_code_sent_to_your_email = "qr_code_sent_to_your_email";
   static const String activation_code = "activation_code";
@@ -260,13 +356,17 @@ abstract class  LocaleKeys {
   static const String yesterday = "yesterday";
   static const String bundleInfo_priceText = "bundleInfo_priceText";
   static const String bundleInfo_validityText = "bundleInfo_validityText";
-  static const String supportedCountries_tittleText = "supportedCountries_tittleText";
-  static const String supportedCountries_card_tittleText = "supportedCountries_card_tittleText";
+  static const String supportedCountries_tittleText =
+      "supportedCountries_tittleText";
+  static const String supportedCountries_card_tittleText =
+      "supportedCountries_card_tittleText";
   static const String promoCodeView_titleText = "promoCodeView_titleText";
   static const String promoCodeView_buttonText = "promoCodeView_buttonText";
-  static const String promoCodeView_cancelButtonText = "promoCodeView_cancelButtonText";
+  static const String promoCodeView_cancelButtonText =
+      "promoCodeView_cancelButtonText";
   static const String bundleDetails_planTypeText = "bundleDetails_planTypeText";
-  static const String bundleDetails_activationPolicyText = "bundleDetails_activationPolicyText";
+  static const String bundleDetails_activationPolicyText =
+      "bundleDetails_activationPolicyText";
   static const String bundleDetails_emptyText = "bundleDetails_emptyText";
   static const String edit_name = "edit_name";
   static const String current_plans = "current_plans";
@@ -274,7 +374,8 @@ abstract class  LocaleKeys {
   static const String no_active_eSim = "no_active_eSim";
   static const String no_active_eSim_description = "no_active_eSim_description";
   static const String no_expired_eSim = "no_expired_eSim";
-  static const String no_expired_eSim_description = "no_expired_eSim_description";
+  static const String no_expired_eSim_description =
+      "no_expired_eSim_description";
   static const String bundle_validity = "bundle_validity";
   static const String last_purchase = "last_purchase";
   static const String top_up = "top_up";
@@ -285,26 +386,36 @@ abstract class  LocaleKeys {
   static const String goToSettings = "goToSettings";
   static const String validity = "validity";
   static const String qr_code_details = "qr_code_details";
-  static const String supportedCountries_availableInText = "supportedCountries_availableInText";
-  static const String supportedCountries_availableNetworks = "supportedCountries_availableNetworks";
-  static const String supportedCountries_noNetworks = "supportedCountries_noNetworks";
+  static const String supportedCountries_availableInText =
+      "supportedCountries_availableInText";
+  static const String supportedCountries_availableNetworks =
+      "supportedCountries_availableNetworks";
+  static const String supportedCountries_noNetworks =
+      "supportedCountries_noNetworks";
   static const String loadingView_contentText = "loadingView_contentText";
   static const String compatibleView_contentText = "compatibleView_contentText";
-  static const String compatibleView_compatibleText = "compatibleView_compatibleText";
-  static const String compatibleView_inCompatibleText = "compatibleView_inCompatibleText";
+  static const String compatibleView_compatibleText =
+      "compatibleView_compatibleText";
+  static const String compatibleView_inCompatibleText =
+      "compatibleView_inCompatibleText";
   static const String compatibleSheet_titleText = "compatibleSheet_titleText";
   static const String compatibleSheet_buttonText = "compatibleSheet_buttonText";
-  static const String compatibleSheet_contentText1 = "compatibleSheet_contentText1";
-  static const String compatibleSheet_contentText2 = "compatibleSheet_contentText2";
+  static const String compatibleSheet_contentText1 =
+      "compatibleSheet_contentText1";
+  static const String compatibleSheet_contentText2 =
+      "compatibleSheet_contentText2";
   static const String payment_success = "payment_success";
   static const String the_qr_code_was_sent = "the_qr_code_was_sent";
   static const String gotoMyESim = "gotoMyESim";
   static const String installYourESim = "installYourESim";
   static const String check_user_guide = "check_user_guide";
   static const String bundleExistsView_titleText = "bundleExistsView_titleText";
-  static const String bundleExistsView_contentText = "bundleExistsView_contentText";
-  static const String bundleExistsView_buttonOneText = "bundleExistsView_buttonOneText";
-  static const String bundleExistsView_buttonTwoText = "bundleExistsView_buttonTwoText";
+  static const String bundleExistsView_contentText =
+      "bundleExistsView_contentText";
+  static const String bundleExistsView_buttonOneText =
+      "bundleExistsView_buttonOneText";
+  static const String bundleExistsView_buttonTwoText =
+      "bundleExistsView_buttonTwoText";
   static const String image_saved = "image_saved";
   static const String qr_code_saved = "qr_code_saved";
   static const String permission_required = "permission_required";
@@ -319,10 +430,12 @@ abstract class  LocaleKeys {
   static const String invalid_phone_number = "invalid_phone_number";
   static const String noConnection_titleText = "noConnection_titleText";
   static const String noConnection_contentText = "noConnection_contentText";
-  static const String noConnection_buttonTitleText = "noConnection_buttonTitleText";
+  static const String noConnection_buttonTitleText =
+      "noConnection_buttonTitleText";
   static const String check_plans_text = "check_plans_text";
   static const String qrcodeDetails_titleText = "qrcodeDetails_titleText";
-  static const String qrcodeDetails_checkUserGuideText = "qrcodeDetails_checkUserGuideText";
+  static const String qrcodeDetails_checkUserGuideText =
+      "qrcodeDetails_checkUserGuideText";
   static const String unlimited = "unlimited";
   static const String unlimited_data_bundle = "unlimited_data_bundle";
   static const String esim_validity = "esim_validity";
@@ -331,21 +444,30 @@ abstract class  LocaleKeys {
   static const String storiesView_notNow = "storiesView_notNow";
   static const String storiesView_startSharing = "storiesView_startSharing";
   static const String storiesView_cashbackTitle = "storiesView_cashbackTitle";
-  static const String storiesView_cashbackContent = "storiesView_cashbackContent";
+  static const String storiesView_cashbackContent =
+      "storiesView_cashbackContent";
   static const String storiesView_referralTitle1 = "storiesView_referralTitle1";
-  static const String storiesView_referralContent1 = "storiesView_referralContent1";
+  static const String storiesView_referralContent1 =
+      "storiesView_referralContent1";
   static const String storiesView_referralTitle2 = "storiesView_referralTitle2";
-  static const String storiesView_referralContent2 = "storiesView_referralContent2";
+  static const String storiesView_referralContent2 =
+      "storiesView_referralContent2";
   static const String storiesView_referralTitle3 = "storiesView_referralTitle3";
-  static const String storiesView_referralContent3 = "storiesView_referralContent3";
+  static const String storiesView_referralContent3 =
+      "storiesView_referralContent3";
   static const String profile_currency = "profile_currency";
   static const String confirmation_currencyTitle = "confirmation_currencyTitle";
-  static const String confirmation_currencyContent = "confirmation_currencyContent";
-  static const String confirmation_confirmationButtonText = "confirmation_confirmationButtonText";
-  static const String confirmation_cancellationButtonText = "confirmation_cancellationButtonText";
-  static const String myWallet_upgradeSectionText = "myWallet_upgradeSectionText";
+  static const String confirmation_currencyContent =
+      "confirmation_currencyContent";
+  static const String confirmation_confirmationButtonText =
+      "confirmation_confirmationButtonText";
+  static const String confirmation_cancellationButtonText =
+      "confirmation_cancellationButtonText";
+  static const String myWallet_upgradeSectionText =
+      "myWallet_upgradeSectionText";
   static const String upgradeWallet_contentText = "upgradeWallet_contentText";
-  static const String upgradeWallet_buttonTextText = "upgradeWallet_buttonTextText";
+  static const String upgradeWallet_buttonTextText =
+      "upgradeWallet_buttonTextText";
   static const String upgradeWallet_hintText = "upgradeWallet_hintText";
   static const String shareReferral_titleText = "shareReferral_titleText";
   static const String shareReferral_contentText = "shareReferral_contentText";
@@ -354,12 +476,15 @@ abstract class  LocaleKeys {
   static const String shareReferral_fullLinkText = "shareReferral_fullLinkText";
   static const String paymentSelection_titleText = "paymentSelection_titleText";
   static const String paymentSelection_cardText = "paymentSelection_cardText";
-  static const String paymentSelection_walletText = "paymentSelection_walletText";
+  static const String paymentSelection_walletText =
+      "paymentSelection_walletText";
   static const String topUpWallet_error = "topUpWallet_error";
   static const String topUpWallet_success = "topUpWallet_success";
   static const String confirmation_languageTitle = "confirmation_languageTitle";
-  static const String confirmation_languageContent = "confirmation_languageContent";
+  static const String confirmation_languageContent =
+      "confirmation_languageContent";
   static const String appClip_currencyTitle = "appClip_currencyTitle";
   static const String appClip_languageTitle = "appClip_languageTitle";
-
+  static const String eSim_installation_error_message =
+      "eSim_installation_error_message";
 }

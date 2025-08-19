@@ -38,9 +38,10 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
   void onViewModelReady() {
     super.onViewModelReady();
 
-    PurchaseEsimBundleResponseModel? item = request.data?.eSimBundleResponseModel;
+    PurchaseEsimBundleResponseModel? item =
+        request.data?.eSimBundleResponseModel;
 
-    bool isUnlimited= item?.unlimited ?? false;
+    bool isUnlimited = item?.unlimited ?? false;
 
     _state
       ..item = item
@@ -48,13 +49,11 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
           (request.data?.eSimBundleResponseModel?.isTopupAllowed ?? true)
       ..consumptionLoading = !isUnlimited;
 
-    if(isUnlimited){
+    if (isUnlimited) {
       notifyListeners();
-    }else{
+    } else {
       unawaited(_fetchConsumptionData());
     }
-
-
   }
 
 //#endregion
@@ -73,7 +72,9 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
         double dataAllocated = (result.data?.dataAllocated ?? 0).toDouble();
         String dataAllocatedDisplay = result.data?.dataAllocatedDisplay ?? "";
         String dataUsedDisplay = result.data?.dataUsedDisplay ?? "";
+
         double percentage = (dataUsed / dataAllocated) * 100;
+        percentage = double.parse(percentage.toStringAsFixed(2));
         _state
           ..percentageUI = "$percentage %"
           ..consumption = percentage / 100

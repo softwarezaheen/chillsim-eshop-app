@@ -21,6 +21,7 @@ import "package:stacked_services/stacked_services.dart";
 import "package:stacked_themes/stacked_themes.dart";
 
 import "../helpers/haptic_helper.dart";
+import "../helpers/package_info_helper.dart";
 import "../helpers/view_helper.dart";
 import "../helpers/view_model_helper.dart";
 import "../locator_test.dart";
@@ -45,6 +46,7 @@ Future<void> main() async {
   setUp(() async {
     await setupTestLocator();
     HapticHelperTest.implementHaptic();
+    PackageInfoHelperTest.initPackageInfo();
     AppEnvironment.setupEnvironment();
     viewModel = ContinueWithEmailViewModel();
     locator.registerFactory<ContinueWithEmailViewModel>(
@@ -204,5 +206,6 @@ Future<void> main() async {
 
   tearDownAll(() async {
     HapticHelperTest.deInitHaptic();
+    PackageInfoHelperTest.deInitPackageInfo();
   });
 }

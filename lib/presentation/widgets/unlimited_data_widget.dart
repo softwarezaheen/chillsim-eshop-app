@@ -1,8 +1,6 @@
-import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
-import "package:esim_open_source/presentation/shared/shared_styles.dart";
-import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -36,16 +34,12 @@ class UnlimitedDataWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              LocaleKeys.unlimited.tr(),
-              style:  unlimitedBoldTextStyle(
-                context: context,
-              ),
-            ),
-            Text(
-              LocaleKeys.unlimited_data_bundle.tr(),
-              style: unlimitedDataBundleTextStyle(
-                context: context,
+            Flexible(
+              child: Image.asset(
+                EnvironmentImages.unlimitedDataBundle.fullImagePath,
+                width: width,
+                fit: BoxFit.contain,
+                height: height,
               ),
             ),
           ],

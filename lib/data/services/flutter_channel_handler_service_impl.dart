@@ -1,6 +1,8 @@
 import "dart:developer";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/services.dart";
 
 class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
@@ -15,6 +17,8 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
     return _instance!;
   }
 
+  String errorMessage = LocaleKeys.eSim_installation_error_message.tr();
+
   static FlutterChannelHandlerServiceImpl? _instance;
 
   @override
@@ -23,10 +27,10 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
       await flutterToNativePlatform.invokeMethod("openSimProfilesSettings");
     } on PlatformException catch (e) {
       log("openSimProfilesSettings Error : ${e.message}");
-      rethrow;
+      throw Exception(errorMessage);
     } on Object catch (e) {
       log("openSimProfilesSettings Error: $e");
-      rethrow;
+      throw Exception(errorMessage);
     }
   }
 
@@ -43,10 +47,10 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
       );
     } on PlatformException catch (e) {
       log("openEsimSetup Error : ${e.message}");
-      rethrow;
+      throw Exception(errorMessage);
     } on Object catch (e) {
       log("openEsimSetup Error: $e");
-      rethrow;
+      throw Exception(errorMessage);
     }
   }
 
@@ -67,10 +71,9 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
       return result;
     } on PlatformException catch (e) {
       log("openEsimSetupForAndroid Error : ${e.message}");
-      rethrow;
+      throw Exception(errorMessage);
     } on Object catch (e) {
-      log("openEsimSetupForAndroid Error: $e");
-      rethrow;
+      throw Exception(errorMessage);
     }
   }
 }

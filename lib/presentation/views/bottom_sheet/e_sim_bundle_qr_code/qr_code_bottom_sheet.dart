@@ -118,7 +118,7 @@ class ESimQrBottomSheet extends StatelessWidget {
           LocaleKeys.qr_code_details.tr(),
           style: headerThreeMediumTextStyle(
             context: context,
-            fontColor: mainDarkTextColor(context: context),
+            fontColor: titleTextColor(context: context),
           ),
         ),
         verticalSpaceSmallMedium,
@@ -245,7 +245,7 @@ class ESimQrBottomSheet extends StatelessWidget {
                 icon: Icons.share_outlined,
                 onPressed: viewModel.onShareClick,
                 backgroundColor: myEsimIconButtonColor(context: context),
-                iconColor: mainWhiteTextColor(context: context),
+                iconColor: titleTextColor(context: context),
               ).applyShimmer(
                 context: context,
                 enable: viewModel.isBusy,
@@ -258,7 +258,7 @@ class ESimQrBottomSheet extends StatelessWidget {
                 icon: Icons.file_download_outlined,
                 onPressed: viewModel.onDownloadClick,
                 backgroundColor: myEsimIconButtonColor(context: context),
-                iconColor: mainWhiteTextColor(context: context),
+                iconColor: titleTextColor(context: context),
               ).applyShimmer(
                 context: context,
                 enable: viewModel.isBusy,
@@ -294,6 +294,7 @@ Widget buildInfoRow({
   required String label,
   required String value,
   required bool isLoading,
+  bool showCopy = true,
 }) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -306,7 +307,7 @@ Widget buildInfoRow({
               label,
               style: captionOneMediumTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             verticalSpaceTiniest,
@@ -321,22 +322,24 @@ Widget buildInfoRow({
           ],
         ),
       ),
-      IconButton(
-        icon: Icon(
-          Icons.copy,
-          size: 20,
-          color: secondaryIconButtonColor(context: context),
-        ).applyShimmer(
-          context: context,
-          enable: isLoading,
-          borderRadius: 30,
-        ),
-        onPressed: () async {
-          if (value.isNotEmpty) {
-            copyText(value);
-          }
-        },
-      ),
+      showCopy
+          ? IconButton(
+              icon: Icon(
+                Icons.copy,
+                size: 20,
+                color: secondaryIconButtonColor(context: context),
+              ).applyShimmer(
+                context: context,
+                enable: isLoading,
+                borderRadius: 30,
+              ),
+              onPressed: () async {
+                if (value.isNotEmpty) {
+                  copyText(value);
+                }
+              },
+            )
+          : const SizedBox.shrink(),
     ],
   );
 }

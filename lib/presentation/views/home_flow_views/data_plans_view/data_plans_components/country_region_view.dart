@@ -58,8 +58,7 @@ class CountryRegionView extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: captionOneMediumTextStyle(
                     context: context,
-                    fontColor:
-                        regionCountryBundleTitleTextColor(context: context),
+                    fontColor: bubbleCountryTextColor(context: context),
                   ),
                 ).applyShimmer(
                   context: context,

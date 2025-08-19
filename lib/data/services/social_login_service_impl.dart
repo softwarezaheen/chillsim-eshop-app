@@ -57,11 +57,17 @@ class SocialLoginServiceImpl extends SocialLoginService {
         }
       },
       onError: (dynamic error) {
-        log("Supabase authStateSubscription error:  $error");
+        String errorMessage = error.toString();
+
+        if (errorMessage.contains("Error getting user email")) {
+          errorMessage =
+              "Facebook account has no email. Please try another account";
+        }
+        log("SupaBase authStateSubscription error:  $errorMessage");
         _socialLoginResultStream.add(
           SocialLoginResult(
             socialType: SocialMediaLoginType.google,
-            errorMessage: error.toString(),
+            errorMessage: errorMessage,
           ),
         );
       },
@@ -167,9 +173,10 @@ class SocialLoginServiceImpl extends SocialLoginService {
         redirectTo:
             AppEnvironment.appEnvironmentHelper.supabaseFacebookCallBackScheme,
         authScreenLaunchMode: LaunchMode.externalApplication,
+        // scopes: "email public_profile",
       );
     } on Object catch (error) {
-      log(error.toString());
+      log("signInWithFaceBook: ${error.toString()}");
       _socialLoginResultStream.add(
         SocialLoginResult(
           socialType: SocialMediaLoginType.facebook,

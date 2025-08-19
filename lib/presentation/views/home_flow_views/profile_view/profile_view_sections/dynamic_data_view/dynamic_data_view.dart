@@ -36,7 +36,7 @@ class DynamicDataView extends StatelessWidget {
               navigationTitle: viewModel.viewType.viewTitle,
               textStyle: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             verticalSpaceSmallMedium,

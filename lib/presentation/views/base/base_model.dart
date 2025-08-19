@@ -225,11 +225,16 @@ class BaseModel extends ReactiveViewModel implements ConnectionListener {
   bool isKeyboardVisible(BuildContext context) {
     final bool isKeyboardVisible =
         KeyboardVisibilityProvider.isKeyboardVisible(context);
+
     return isKeyboardVisible;
     // if (MediaQuery.of(context).viewInsets.bottom > 0.0) {
     //   return true;
     // }
     // return false;
+  }
+
+  void hideKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   Future<String?> listenForSMS() async {
