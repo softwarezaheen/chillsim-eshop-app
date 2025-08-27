@@ -4,7 +4,6 @@ import "dart:convert";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/presentation/enums/language_enum.dart";
-import "package:package_info_plus/package_info_plus.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 class LocalStorageServiceImpl implements LocalStorageService {
@@ -12,7 +11,6 @@ class LocalStorageServiceImpl implements LocalStorageService {
 
   late SharedPreferences _sharedPrefs;
   static LocalStorageServiceImpl? _instance;
-  String _versionNumber = "";
 
   AuthResponseModel? _authResponse;
 
@@ -33,8 +31,6 @@ class LocalStorageServiceImpl implements LocalStorageService {
   }
 
   Future<void> _initialise() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    _versionNumber = packageInfo.version;
     _sharedPrefs = await SharedPreferences.getInstance();
   }
 
