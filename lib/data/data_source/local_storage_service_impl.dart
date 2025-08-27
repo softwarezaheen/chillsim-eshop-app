@@ -3,12 +3,16 @@ import "dart:convert";
 
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/presentation/enums/language_enum.dart";
+import "package:package_info_plus/package_info_plus.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 class LocalStorageServiceImpl implements LocalStorageService {
   LocalStorageServiceImpl._privateConstructor();
+
   late SharedPreferences _sharedPrefs;
   static LocalStorageServiceImpl? _instance;
+  String _versionNumber = "";
 
   AuthResponseModel? _authResponse;
 
@@ -29,6 +33,8 @@ class LocalStorageServiceImpl implements LocalStorageService {
   }
 
   Future<void> _initialise() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    _versionNumber = packageInfo.version;
     _sharedPrefs = await SharedPreferences.getInstance();
   }
 
@@ -104,6 +110,30 @@ class LocalStorageServiceImpl implements LocalStorageService {
     return _authResponse;
   }
 
+  String _getDefaultLanguage() {
+    String language = LanguageEnum.english.code;
+
+    String? defaultLanguage =
+        getString(LocalStorageKeys.appLanguage)?.toLowerCase();
+
+    //check if the app was installed before implementing romanian language
+    bool hasPreviouslyStarted =
+        getBool(LocalStorageKeys.hasPreviouslyStarted) ?? false;
+
+    language = hasPreviouslyStarted
+        ? LanguageEnum.english.code
+        : LanguageEnum.romanian.code;
+
+    if (defaultLanguage == null) {
+      //user has not set a language
+      unawaited(setString(LocalStorageKeys.appLanguage, language));
+    } else {
+      language = defaultLanguage;
+    }
+
+    return language;
+  }
+
   @override
   String get accessToken {
     if (_authResponse == null) {
@@ -137,5 +167,6 @@ class LocalStorageServiceImpl implements LocalStorageService {
 
   @override
   String get languageCode =>
-      getString(LocalStorageKeys.appLanguage)?.toLowerCase() ?? "en";
+      getString(LocalStorageKeys.appLanguage)?.toLowerCase() ??
+      _getDefaultLanguage();
 }

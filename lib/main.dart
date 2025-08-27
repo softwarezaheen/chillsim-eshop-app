@@ -186,15 +186,11 @@ class _MyFlutterActivityState extends State<MyFlutterActivity>
       onViewModelReady: (MainViewModel model) async => model.onModelReady(),
       builder: (BuildContext context, MainViewModel model, Widget? child) {
         return EasyLocalization(
-          supportedLocales: const <Locale>[
-            Locale("en"),
-            Locale("ar"),
-            Locale("fr"),
-          ],
+          useOnlyLangCode: true,
+          startLocale: model.getDefaultLocale(),
+          supportedLocales: model.getLocaleList(),
           path:
               "assets/translations/${AppEnvironment.appEnvironmentHelper.environmentTheme.directoryName}",
-          // <-- change the path of the translation files
-          fallbackLocale: const Locale("en"),
           child: MyThemeBuilder(
             // statusBarColorBuilder: (theme) => model.getColor(),
             // defaultThemeMode: ThemeMode.light,

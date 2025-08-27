@@ -3113,16 +3113,16 @@ class MockMainViewModel extends _i1.Mock implements _i46.MainViewModel {
       ) as _i7.Future<void>);
 
   @override
-  _i6.Locale getLocale(_i20.BuildContext? context) => (super.noSuchMethod(
+  _i6.Locale getDefaultLocale() => (super.noSuchMethod(
         Invocation.method(
-          #getLocale,
-          [context],
+          #getDefaultLocale,
+          [],
         ),
         returnValue: _FakeLocale_4(
           this,
           Invocation.method(
-            #getLocale,
-            [context],
+            #getDefaultLocale,
+            [],
           ),
         ),
       ) as _i6.Locale);
@@ -3165,6 +3165,15 @@ class MockMainViewModel extends _i1.Mock implements _i46.MainViewModel {
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
+
+  @override
+  List<_i6.Locale> getLocaleList() => (super.noSuchMethod(
+        Invocation.method(
+          #getLocaleList,
+          [],
+        ),
+        returnValue: <_i6.Locale>[],
+      ) as List<_i6.Locale>);
 
   @override
   void dispose() => super.noSuchMethod(
@@ -3483,6 +3492,21 @@ class MockMyESimViewModel extends _i1.Mock implements _i10.MyESimViewModel {
           Invocation.getter(#getBundleLabelUseCase),
         ),
       ) as _i9.GetBundleLabelUseCase);
+
+  @override
+  bool get isInstallationFailed => (super.noSuchMethod(
+        Invocation.getter(#isInstallationFailed),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  set isInstallationFailed(bool? _isInstallationFailed) => super.noSuchMethod(
+        Invocation.setter(
+          #isInstallationFailed,
+          _isInstallationFailed,
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   _i10.ESimState get state => (super.noSuchMethod(
@@ -4080,6 +4104,15 @@ class MockMyESimViewModel extends _i1.Mock implements _i10.MyESimViewModel {
         ),
         returnValue: false,
       ) as bool);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   _i7.Future<String?> listenForSMS() => (super.noSuchMethod(
@@ -4952,6 +4985,15 @@ class MockProfileViewModel extends _i1.Mock implements _i54.ProfileViewModel {
         ),
         returnValue: false,
       ) as bool);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   _i7.Future<String?> listenForSMS() => (super.noSuchMethod(
@@ -5926,6 +5968,15 @@ class MockDataPlansViewModel extends _i1.Mock
       ) as bool);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i7.Future<String?> listenForSMS() => (super.noSuchMethod(
         Invocation.method(
           #listenForSMS,
@@ -6793,6 +6844,15 @@ class MockHomePagerViewModel extends _i1.Mock
         ),
         returnValue: false,
       ) as bool);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   _i7.Future<String?> listenForSMS() => (super.noSuchMethod(
@@ -7666,6 +7726,15 @@ class MockPurchaseLoadingViewModel extends _i1.Mock
         ),
         returnValue: false,
       ) as bool);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   _i7.Future<String?> listenForSMS() => (super.noSuchMethod(

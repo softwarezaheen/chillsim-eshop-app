@@ -6,6 +6,7 @@ AppEnvironmentHelper openSourceStagingEnvInstance = AppEnvironmentHelper(
   enableBannersView: false,
   enableWalletView: false,
   enablePromoCode: false,
+  enableLanguageSelection: true,
   omniConfigBaseUrl: "",
   omniConfigTenant: "",
   omniConfigApiKey: "",
