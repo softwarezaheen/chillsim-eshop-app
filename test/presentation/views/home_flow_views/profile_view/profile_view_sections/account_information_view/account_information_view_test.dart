@@ -38,7 +38,7 @@ Future<void> main() async {
       onViewModelReadyMock(viewName: "AccountInformationView");
       when(locator<ApiAuthRepository>().updateUserInfo(
         email: "",
-        msisdn: "+961",
+        msisdn: "+40",
         firstName: "",
         lastName: "",
         isNewsletterSubscribed: true,

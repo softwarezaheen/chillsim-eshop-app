@@ -110,12 +110,12 @@ Future<void> initializeFirebaseApp() async {
     }
 
     unawaited(
-        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails));
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails),);
   };
   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
     unawaited(
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),);
     return true;
   };
 }

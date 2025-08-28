@@ -41,8 +41,8 @@ enum DeepLinkDecodeKeys {
 }
 
 class DeepLinkHandler {
-  final String tag = "DeepLinkHandler";
   DeepLinkHandler._initialize({required this.redirectionsHandlerService});
+  final String tag = "DeepLinkHandler";
   static DeepLinkHandler shared = DeepLinkHandler._initialize(
     redirectionsHandlerService: locator<RedirectionsHandlerService>(),
   );

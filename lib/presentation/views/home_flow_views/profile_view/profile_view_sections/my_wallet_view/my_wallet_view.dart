@@ -136,7 +136,7 @@ class MyWalletView extends StatelessWidget {
                                     style: bodyMediumTextStyle(
                                       context: context,
                                       fontColor: bubbleCountryTextColor(
-                                          context: context),
+                                          context: context,),
                                     ),
                                   ),
                                 ],

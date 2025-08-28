@@ -94,7 +94,7 @@ Future<void> main() async {
       await tester.pump();
 
       expect(tester.takeException(),
-          isNotNull); // Navigation exception is expected due to mocking
+          isNotNull,); // Navigation exception is expected due to mocking
     });
 
     testWidgets("main button triggers verification",
@@ -210,7 +210,7 @@ Future<void> main() async {
                 final double fieldWidth =
                     view.calculateFieldWidth(context: context);
                 expect(fieldWidth,
-                    35.0); // Expected calculation: (300 - 30 - 60) / 6 = 35
+                    35.0,); // Expected calculation: (300 - 30 - 60) / 6 = 35
                 return Container();
               },
             ),
@@ -240,7 +240,7 @@ Future<void> main() async {
                 final double fieldWidth =
                     view.calculateFieldWidth(context: context);
                 expect(fieldWidth,
-                    60.0); // Should return the maximum size (60) when calculated size exceeds it
+                    60.0,); // Should return the maximum size (60) when calculated size exceeds it
                 return Container();
               },
             ),

@@ -33,7 +33,7 @@ class MySwitch extends StatelessWidget {
       return Switch(
         value: value,
         onChanged: (bool value) => onChanged(value: value),
-        activeColor: activeColor,
+        activeThumbColor: activeColor,
         activeTrackColor: activeColor,
         inactiveTrackColor: trackColor,
         thumbColor: WidgetStateProperty.all(thumbColor),

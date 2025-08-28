@@ -52,7 +52,7 @@ class AccountInformationViewModel extends BaseModel {
     PhoneNumber? parsed;
     try {
       parsed = PhoneNumber.parse(userMsisdn);
-    } on PhoneNumberException catch (e) {
+    } on PhoneNumberException {
       //ignore
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
