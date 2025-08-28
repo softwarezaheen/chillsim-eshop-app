@@ -1,6 +1,5 @@
 import "dart:async";
 
-import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/promotion/reward_history_response_model.dart";
 import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
@@ -8,27 +7,26 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/get_rewards_history_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
-import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:stacked_services/stacked_services.dart";
 
-enum RewardHistoryType {
-  none,
-  cashback,
-  referEarn;
-
-  String get titleText {
-    switch (this) {
-      case RewardHistoryType.none:
-        return LocaleKeys.rewardHistory_referTypeTitle.tr();
-      case RewardHistoryType.cashback:
-        return LocaleKeys.rewardHistory_cashbackTypeTitle.tr();
-      case RewardHistoryType.referEarn:
-        return LocaleKeys.rewardHistory_referTypeTitle.tr();
-    }
-  }
-}
+// enum RewardHistoryType {
+//   none,
+//   cashback,
+//   referEarn;
+//
+//   String get titleText {
+//     switch (this) {
+//       case RewardHistoryType.none:
+//         return LocaleKeys.rewardHistory_referTypeTitle.tr();
+//       case RewardHistoryType.cashback:
+//         return LocaleKeys.rewardHistory_cashbackTypeTitle.tr();
+//       case RewardHistoryType.referEarn:
+//         return LocaleKeys.rewardHistory_referTypeTitle.tr();
+//     }
+//   }
+// }
 
 class RewardHistoryModel {
   RewardHistoryModel({
@@ -40,7 +38,7 @@ class RewardHistoryModel {
     required this.rewardValidity,
     required this.rewardCountryCode,
     required this.rewardEmail,
-    required this.rewardType,
+    // required this.rewardType,
   });
 
   int rewardID;
@@ -51,11 +49,11 @@ class RewardHistoryModel {
   String rewardValidity;
   String rewardCountryCode;
   String rewardEmail;
-  RewardHistoryType rewardType;
+  // RewardHistoryType rewardType;
 }
 
 class RewardsHistoryViewModel extends BaseModel {
-  RewardHistoryType selectedType = RewardHistoryType.none;
+  // RewardHistoryType selectedType = RewardHistoryType.none;
 
   List<RewardHistoryResponseModel> _rewardsHistory =
       <RewardHistoryResponseModel>[];
@@ -96,34 +94,43 @@ class RewardsHistoryViewModel extends BaseModel {
         notifyListeners();
       },
     );
-    changeSelectedType(selectedType);
+    // changeSelectedType(selectedType);
+    filteredRewardHistory = _rewardsHistory;
     applyShimmer = false;
   }
 
-  void changeSelectedType(RewardHistoryType newType) {
-    if (selectedType == newType) {
-      selectedType = RewardHistoryType.none;
-      filteredRewardHistory = _rewardsHistory;
-    } else {
-      selectedType = newType;
-      filteredRewardHistory = _rewardsHistory
-          .where((RewardHistoryResponseModel i) => i.type == newType)
-          .toList();
-    }
-    notifyListeners();
-  }
+  // void changeSelectedType(RewardHistoryType newType) {
+  //   if (selectedType == newType) {
+  //     selectedType = RewardHistoryType.none;
+  //     filteredRewardHistory = _rewardsHistory;
+  //   } else {
+  //     selectedType = newType;
+  //     filteredRewardHistory = _rewardsHistory
+  //         .where((RewardHistoryResponseModel i) => i.type == newType)
+  //         .toList();
+  //   }
+  //   notifyListeners();
+  // }
 
   Future<void> onEmptyStateTapped() async {
-    if (selectedType == RewardHistoryType.cashback) {
-      navigationService.navigateTo(
-        StoryViewer.routeName,
-        arguments: CashbackStoriesView().storyViewerArgs,
-      );
-      return;
-    }
     navigationService.navigateTo(
       StoryViewer.routeName,
-      arguments: ReferalStoriesView().storyViewerArgs,
+      arguments:
+          ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
+              .storyViewerArgs,
     );
+    // if (selectedType == RewardHistoryType.cashback) {
+    //   navigationService.navigateTo(
+    //     StoryViewer.routeName,
+    //     arguments: CashbackStoriesView().storyViewerArgs,
+    //   );
+    //   return;
+    // }
+    // navigationService.navigateTo(
+    //   StoryViewer.routeName,
+    //   arguments:
+    //       ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
+    //           .storyViewerArgs,
+    // );
   }
 }

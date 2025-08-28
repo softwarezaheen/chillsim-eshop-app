@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -25,7 +26,7 @@ class OrderHistoryView extends StatelessWidget {
     return BaseView<OrderHistoryViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: OrderHistoryViewModel(),
+      viewModel: locator<OrderHistoryViewModel>(),
       builder: (
         BuildContext context,
         OrderHistoryViewModel viewModel,
@@ -62,13 +63,10 @@ class OrderHistoryView extends StatelessWidget {
                   separatorBuilder: (BuildContext context, int index) =>
                       verticalSpaceSmallMedium,
                   builder: (OrderHistoryResponseModel item) {
-                    return GestureDetector(
-                      onTap: () async => viewModel.orderTapped(item),
-                      child: bundleOrderHistoryView(
-                        context: context,
-                        viewModel: viewModel,
-                        bundleOrder: item,
-                      ),
+                    return bundleOrderHistoryView(
+                      context: context,
+                      viewModel: viewModel,
+                      bundleOrder: item,
                     );
                   },
                 ),

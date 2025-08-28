@@ -1,19 +1,21 @@
 import "dart:async";
+import "dart:io";
 import "dart:math";
 
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
+import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/user/get_related_topup_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/top_up_user_bundle_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/esim_base_model.dart";
-import "package:flutter/material.dart";
-import "package:fluttertoast/fluttertoast.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class TopUpBottomSheetViewModel extends EsimBaseModel {
@@ -43,6 +45,8 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       _topUpBundle(
         iccId: request.data?.iccID ?? "",
         bundleCode: item.bundleCode ?? "",
+        bundlePrice: item.priceDisplay ?? "",
+        bundleCurrency: item.currencyCode ?? "",
       ),
     );
   }
@@ -117,6 +121,8 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   Future<void> _topUpBundle({
     required String iccId,
     required String bundleCode,
+    required String bundlePrice,
+    required String bundleCurrency,
   }) async {
     setViewState(ViewState.busy);
     Resource<BundleAssignResponseModel?> response = await topUpUserBundleUseCase
@@ -139,6 +145,8 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
               result.data?.customerEphemeralKeySecret ?? "",
           test: result.data?.testEnv ?? false,
           billingCountryCode: result.data?.billingCountryCode ?? "",
+          bundlePrice: bundlePrice,
+          bundleCurrency: bundleCurrency,
         );
       },
     );
@@ -152,15 +160,21 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     required String customerId,
     required String customerEphemeralKeySecret,
     required String billingCountryCode,
+    required String bundlePrice,
+    required String bundleCurrency,
     bool test = false,
   }) async {
     try {
-      await paymentService.initializePaymentKeys(
+      await paymentService.prepareCheckout(
+        paymentType: PaymentType.card,
         publishableKey: publishableKey,
         merchantIdentifier: merchantIdentifier,
       );
 
-      await paymentService.triggerPaymentSheet(
+      await paymentService.processOrderPayment(
+        paymentType: PaymentType.card,
+        iccID: request.data?.iccID ?? "",
+        orderID: orderID,
         billingCountryCode: billingCountryCode,
         paymentIntentClientSecret: paymentIntentClientSecret,
         customerId: customerId,
@@ -172,15 +186,21 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       closeBottomSheet();
       showToast(
         e.toString().replaceAll("Exception:", ""),
-        gravity: ToastGravity.BOTTOM,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.grey,
       );
       hideKeyboard();
       return;
     }
 
     hideKeyboard();
+    String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
+    analyticsService.logEvent(
+      event: AnalyticEvent.buyTopUpSuccess(
+        utm: utm,
+        platform: Platform.isAndroid ? "Android" : "iOS",
+        amount: bundlePrice,
+        currency: bundleCurrency,
+      ),
+    );
     completer(
       SheetResponse<MainBottomSheetResponse>(
         data: MainBottomSheetResponse(

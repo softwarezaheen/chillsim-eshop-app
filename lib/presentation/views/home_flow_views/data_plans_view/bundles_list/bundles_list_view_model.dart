@@ -7,6 +7,7 @@ import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/base/esim_base_model.dart";
@@ -129,7 +130,9 @@ class BundlesListViewModel extends EsimBaseModel {
                 .toList()
             : <CountriesRequestModel>[];
     // SheetResponse<EmptyBottomSheetResponse>? response
-    if (!AppEnvironment.appEnvironmentHelper.enableGuestFlowPurchase &&
+    if ((!AppEnvironment.appEnvironmentHelper.enableGuestFlowPurchase ||
+            AppEnvironment.appEnvironmentHelper.loginType ==
+                LoginType.phoneNumber) &&
         !isUserLoggedIn) {
       await navigationService.navigateTo(
         LoginView.routeName,

@@ -2,6 +2,7 @@ import UIKit
 import Flutter
 import flutter_local_notifications
 import BranchSDK
+import FBSDKCoreKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -9,6 +10,12 @@ import BranchSDK
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
+        // ✅ Enables advertiser tracking
+        Settings.shared.isAdvertiserTrackingEnabled = true
+        
+        // ✅ Optional: Enable debug logging
+        Settings.shared.enableLoggingBehavior(.appEvents)
         
         configureBranchTestMode()
         

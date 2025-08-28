@@ -111,7 +111,8 @@ class MyWalletView extends StatelessWidget {
                     ) =>
                         GestureDetector(
                       onTap: () async {
-                        viewModel.walletSections[index].tapAction(viewModel);
+                        viewModel.walletSections[index]
+                            .tapAction(context, viewModel);
                       },
                       child: ColoredBox(
                         color: Colors.transparent,
@@ -144,7 +145,7 @@ class MyWalletView extends StatelessWidget {
                                 EnvironmentImages.darkArrowRight.fullImagePath,
                                 width: 15,
                                 height: 15,
-                              ).imageSupportsRTL,
+                              ).imageSupportsRTL(context),
                             ],
                           ),
                         ),

@@ -70,8 +70,10 @@ Future<void> capturePdfAndShare({
 
     DisplayMessageHelper.toast("Pdf Saved");
     // Share the PDF file
-    await Share.shareXFiles(
-      <XFile>[XFile(tempPath)],
+    await SharePlus.instance.share(
+      ShareParams(
+        files: <XFile>[XFile(tempPath)],
+      ),
     );
   } on Object catch (_) {
     DisplayMessageHelper.toast("Something went wrong");

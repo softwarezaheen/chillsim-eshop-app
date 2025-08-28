@@ -1,3 +1,5 @@
+import "dart:developer";
+
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
@@ -10,6 +12,7 @@ import "package:esim_open_source/presentation/extensions/helper_extensions.dart"
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/cupertino.dart";
+import "package:phone_input/phone_input_package.dart";
 
 class DeleteAccountBottomSheetViewModel extends BaseModel {
   String? emailErrorMessage;
@@ -20,14 +23,24 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
   final DeleteAccountUseCase deleteAccountUseCase =
       DeleteAccountUseCase(locator<ApiAuthRepository>());
 
+  PhoneController phoneController =
+      PhoneController(const PhoneNumber(isoCode: IsoCode.SY, nsn: ""));
+
   @override
   void onViewModelReady() {
     super.onViewModelReady();
-    _emailController.addListener(_validateForm);
+    PhoneNumber parsed = PhoneNumber.parse(userMsisdn);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      phoneController.value = PhoneNumber(
+        isoCode: parsed.isoCode,
+        nsn: "",
+      );
+      _emailController.addListener(_validateForm);
+    });
   }
 
   void _validateForm() {
-    final String emailAddress = _emailController.text;
+    final String emailAddress = _emailController.text.trim();
     emailErrorMessage = validateEmailAddress(emailAddress.trim());
     _isButtonEnabled = emailErrorMessage?.isEmpty ?? false;
 
@@ -48,6 +61,17 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
     }
 
     return "";
+  }
+
+  void validateNumber({
+    required String code,
+    required String phoneNumber,
+    required bool isValid,
+  }) {
+    log(userMsisdn);
+    bool phoneNumberMatches = userMsisdn == "+$code$phoneNumber";
+    _isButtonEnabled = isValid && phoneNumberMatches;
+    notifyListeners();
   }
 
   Future<void> deleteAccountButtonTapped() async {

@@ -18,13 +18,14 @@ import "package:esim_open_source/data/repository/api_bundles_repository_impl.dar
 import "package:esim_open_source/data/repository/api_device_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_promotion_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_user_repository_impl.dart";
+import "package:esim_open_source/data/services/analytics_service_impl.dart";
 import "package:esim_open_source/data/services/app_configuration_service_impl.dart";
 import "package:esim_open_source/data/services/connectivity_service_impl.dart";
 import "package:esim_open_source/data/services/device_info_service_impl.dart";
-import "package:esim_open_source/data/services/dynamic_linking_service_impl.dart";
 import "package:esim_open_source/data/services/dynamic_linking_service_empty_impl.dart";
+import "package:esim_open_source/data/services/dynamic_linking_service_impl.dart";
 import "package:esim_open_source/data/services/flutter_channel_handler_service_impl.dart";
-import "package:esim_open_source/data/services/payment_service_impl.dart";
+import "package:esim_open_source/data/services/payment/payment_service_impl.dart";
 import "package:esim_open_source/data/services/push_notification_service_impl.dart";
 import "package:esim_open_source/data/services/redirections_handler_service_impl.dart";
 import "package:esim_open_source/data/services/remote_config_service_impl.dart";
@@ -38,6 +39,7 @@ import "package:esim_open_source/domain/repository/api_bundles_repository.dart";
 import "package:esim_open_source/domain/repository/api_device_repository.dart";
 import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
@@ -50,15 +52,31 @@ import "package:esim_open_source/domain/repository/services/redirections_handler
 import "package:esim_open_source/domain/repository/services/remote_config_service.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
+import "package:esim_open_source/domain/use_case/user/get_order_history_pagination_use_case.dart";
 import "package:esim_open_source/objectbox.g.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/view_models/main_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/notifications_view/notifications_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/contact_us_view/contact_us_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_data_view/dynamic_data_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/faq_view/faq_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view_model.dart";
+import "package:esim_open_source/presentation/views/skeleton_view/skeleton_view_model.dart";
+import "package:esim_open_source/presentation/views/start_up_view/startup_view_model.dart";
 import "package:get_it/get_it.dart";
 import "package:stacked_services/stacked_services.dart";
 import "package:stacked_themes/stacked_themes.dart";
@@ -93,15 +111,16 @@ Future<void> appServicesModule() async {
       () =>
           PushNotificationServiceImpl.getInstance() as PushNotificationService,
     )
-    // ..registerLazySingleton(
-    //   () => BiometricAuthServiceImpl.instance as BiometricAuthService,
-    // )
-    // ..registerLazySingleton(
-    //   () => ContactServiceImpl.instance as ContactService,
-    // )
     ..registerLazySingleton(
       () => SocialLoginServiceImpl.instance as SocialLoginService,
+      dispose: (SocialLoginService service) => service.onDispose(),
     )
+    // ..registerLazySingleton(
+    //   () => AppEnvironment.appEnvironmentHelper.paymentServiceType ==
+    //           PaymentType.dcb
+    //       ? DcbPaymentServiceImpl.instance as PaymentService
+    //       : StripePaymentServiceImpl.instance as PaymentService,
+    // )
     ..registerLazySingleton(
       () => PaymentServiceImpl.instance as PaymentService,
     )
@@ -129,6 +148,9 @@ Future<void> appServicesModule() async {
     )
     ..registerLazySingleton(
       () => RemoteConfigServiceImpl.instance as RemoteConfigService,
+    )
+    ..registerLazySingleton(
+      () => AnalyticsServiceImpl.instance as AnalyticsService,
     );
 }
 
@@ -157,6 +179,7 @@ Future<void> appAPIServicesModule() async {
         apiBundles: locator(),
         repository: HomeLocalDataSource(locator()),
       ) as ApiBundlesRepository,
+      dispose: (ApiBundlesRepository repository) => repository.dispose(),
     )
     ..registerLazySingleton(
       () => ApiUserRepositoryImpl(
@@ -183,7 +206,8 @@ Future<void> appAPIServicesModule() async {
         }
         return DynamicLinkingServiceEmptyImpl() as DynamicLinkingService;
       },
-    );
+    )
+    ..registerLazySingleton(() => GetOrderHistoryPaginationUseCase(locator()));
   // ..registerLazySingleton(() => GetBundlesByRegionUseCase(locator()))
   // ..registerLazySingleton(() => GetBundlesByCountryUseCase(locator()))
   // ..registerLazySingleton(() => GetBundlesGlobalUseCase(locator()))
@@ -212,9 +236,55 @@ Future<void> viewModelModules() async {
 }
 
 Future<void> viewModelInjectionModules() async {
-  locator.registerFactory<ContinueWithEmailViewModel>(
-    ContinueWithEmailViewModel.new,
-  );
+  locator
+    ..registerFactory<ContinueWithEmailViewModel>(
+      ContinueWithEmailViewModel.new,
+    )
+    ..registerFactory<StartUpViewModel>(
+      StartUpViewModel.new,
+    )
+    ..registerFactory<DeviceCompabilityCheckViewModel>(
+      DeviceCompabilityCheckViewModel.new,
+    )
+    ..registerFactory<VerifyLoginViewModel>(
+      VerifyLoginViewModel.new,
+    )
+    ..registerFactory<SkeletonViewModel>(
+      SkeletonViewModel.new,
+    )
+    ..registerFactory<UserGuideDetailedViewModel>(
+      UserGuideDetailedViewModel.new,
+    )
+    ..registerFactory<OrderHistoryViewModel>(
+      OrderHistoryViewModel.new,
+    )
+    ..registerFactory<RewardsHistoryViewModel>(
+      RewardsHistoryViewModel.new,
+    )
+    ..registerFactory<FaqViewModel>(
+      FaqViewModel.new,
+    )
+    ..registerFactory<DynamicSelectionViewModel>(
+      DynamicSelectionViewModel.new,
+    )
+    ..registerFactory<LoginViewModel>(
+      LoginViewModel.new,
+    )
+    ..registerFactory<DynamicDataViewModel>(
+      DynamicDataViewModel.new,
+    )
+    ..registerFactory<ContactUsViewModel>(
+      ContactUsViewModel.new,
+    )
+    ..registerFactory<AccountInformationViewModel>(
+      AccountInformationViewModel.new,
+    )
+    ..registerFactory<NotificationsViewModel>(
+      NotificationsViewModel.new,
+    )
+    ..registerFactory<VerifyPurchaseViewModel>(
+      VerifyPurchaseViewModel.new,
+    );
 }
 
 Future<void> resetLazySingleton<T extends Object>({

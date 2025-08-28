@@ -12,6 +12,7 @@ class MyPhoneInput extends StatelessWidget {
     required this.phoneController,
     this.validateRequired = false,
     this.validateEmpty = false,
+    this.enabled = true,
     super.key,
   });
   final Function(
@@ -23,10 +24,12 @@ class MyPhoneInput extends StatelessWidget {
   final PhoneController phoneController;
   final bool validateRequired;
   final bool validateEmpty;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return PhoneInput(
+      enabled: enabled,
       controller: phoneController,
       style: bodyNormalTextStyle(
         context: context,
@@ -80,7 +83,7 @@ class MyPhoneInput extends StatelessWidget {
         p?.nsn ?? "",
         isValid: p?.isValid(type: PhoneNumberType.mobile) ?? false,
       ),
-      countrySelectorNavigator: CountrySelectorNavigator.bottomSheet(
+      countrySelectorNavigator: CountrySelectorNavigator.modalBottomSheet(
         searchInputDecoration: InputDecoration(
           focusColor: Colors.green,
           labelText: LocaleKeys.phoneInput_countryPlaceHolder.tr(),
@@ -121,6 +124,7 @@ class MyPhoneInput extends StatelessWidget {
         ),
       )
       ..add(DiagnosticsProperty<bool>("validateRequired", validateRequired))
-      ..add(DiagnosticsProperty<bool>("validateEmpty", validateEmpty));
+      ..add(DiagnosticsProperty<bool>("validateEmpty", validateEmpty))
+      ..add(DiagnosticsProperty<bool>("enabled", enabled));
   }
 }

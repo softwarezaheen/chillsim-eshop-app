@@ -1,11 +1,13 @@
 import "dart:developer";
 
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/use_case/auth/update_user_info_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
@@ -33,7 +35,6 @@ class AccountInformationViewModel extends BaseModel {
   bool isPhoneValid = false;
 
   TextEditingController get nameController => _nameController;
-
   TextEditingController get emailController => _emailController;
 
   TextEditingController get familyNameController => _familyNameController;
@@ -124,6 +125,7 @@ class AccountInformationViewModel extends BaseModel {
     Resource<AuthResponseModel> updateInfoResponse =
         await updateUserInfoUseCase.execute(
       UpdateUserInfoParams(
+        email: _emailController.text,
         msisdn:
             "+${phoneController.value?.countryCode}${phoneController.value?.nsn}",
         firstName: _nameController.text,
@@ -147,11 +149,18 @@ class AccountInformationViewModel extends BaseModel {
         ? true
         : ((userPhoneNumber != userMsisdn) && isPhoneValid);
 
-    _saveButtonEnabled = ((_receiveUpdates != isNewsletterSubscribed) ||
-            (_nameController.text != userFirstName) ||
-            (_familyNameController.text != userLastName) ||
-            (userPhoneNumber != userMsisdn)) &&
-        isValidPhone;
+    _saveButtonEnabled =
+        AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
+            ? ((_receiveUpdates != isNewsletterSubscribed) ||
+                    (_nameController.text != userFirstName) ||
+                    (_familyNameController.text != userLastName) ||
+                    (_emailController.text != userEmailAddress)) &&
+                isValidEmail
+            : ((_receiveUpdates != isNewsletterSubscribed) ||
+                    (_nameController.text != userFirstName) ||
+                    (_familyNameController.text != userLastName) ||
+                    (userPhoneNumber != userMsisdn)) &&
+                isValidPhone;
 
     if (isPhoneValid) {
       _validationError = null;

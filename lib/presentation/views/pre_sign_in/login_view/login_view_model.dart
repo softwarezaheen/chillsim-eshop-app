@@ -1,8 +1,11 @@
 import "dart:async";
+import "dart:io";
 
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
+import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
 import "package:esim_open_source/domain/use_case/auth/social_media_verify_login_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
@@ -13,7 +16,7 @@ import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_em
 
 class LoginViewModel extends BaseModel {
   LoginViewModel({this.redirection});
-  final InAppRedirection? redirection;
+  InAppRedirection? redirection;
   final SocialLoginService socialLoginService = locator<SocialLoginService>();
 
   bool _redirecting = false;
@@ -124,6 +127,13 @@ class LoginViewModel extends BaseModel {
           socialLoginService.logOut();
           return;
         }
+        String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
+        analyticsService.logEvent(
+          event: AnalyticEvent.loginSuccess(
+            utm: utm,
+            platform: Platform.isAndroid ? "Android" : "iOS",
+          ),
+        );
         await navigateToHomePager(redirection: redirection);
       },
       onFailure: (Resource<AuthResponseModel> response) async {

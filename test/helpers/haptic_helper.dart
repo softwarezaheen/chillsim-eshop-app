@@ -7,11 +7,7 @@ class HapticHelperTest {
   static void implementHaptic() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
-      if (methodCall.method == "selection") {
-        // Simulate success
-        return null;
-      }
-      throw MissingPluginException();
+      return null;
     });
   }
 

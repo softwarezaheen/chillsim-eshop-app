@@ -4,7 +4,9 @@ import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bun
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
+import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/bundle_details_bottom_sheet/bundle_detail_bottom_sheet_view.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/cashback_reward_bottom_sheet/cashback_reward_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/compatible_bottom_sheet_view/compatible_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/confirmation_bottom_sheet_view/confirmation_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/delete_account_bottom_sheet/delete_account_bottom_sheet.dart";
@@ -18,7 +20,6 @@ import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sh
 import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_method_bottom_sheet/payment_method_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_selection_bottom_sheet/payment_selection_bottom_sheet_view.dart";
-import "package:esim_open_source/presentation/views/bottom_sheet/payment_selection_bottom_sheet/payment_selection_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/services_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/share_referral_code/share_referral_code_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/success_bottom_sheet/success_bottom_sheet.dart";
@@ -244,11 +245,20 @@ void setupBottomSheetUi() {
     BottomSheetType.paymentSelection: (
       dynamic context,
       dynamic sheetRequest,
-      Function(SheetResponse<PaymentSelection>) completer,
+      Function(SheetResponse<PaymentType>) completer,
     ) =>
-        PaymentSelectionBottomSheetView(
+        _PaymentSelectionBottomSheet(
+          request: sheetRequest,
           completer: completer,
-          requestBase: sheetRequest,
+        ),
+    BottomSheetType.cashbackReward: (
+      dynamic context,
+      dynamic sheetRequest,
+      Function(SheetResponse<EmptyBottomSheetResponse>) completer,
+    ) =>
+        _CashbackRewardBottomSheet(
+          request: sheetRequest,
+          completer: completer,
         ),
   };
 
@@ -265,67 +275,6 @@ class PurchaseBundleBottomSheetArgs {
   final RegionRequestModel? region;
   final List<CountriesRequestModel>? countries;
   final BundleResponseModel bundleResponseModel;
-}
-
-class _ServicesBottomSheet extends StatelessWidget {
-  const _ServicesBottomSheet({
-    required this.request,
-    required this.completer,
-  });
-
-  final SheetRequest<ServicesBottomRequest> request;
-  final Function(SheetResponse<MainBottomSheetResponse>) completer;
-
-  @override
-  Widget build(BuildContext context) {
-    return ServicesBottomSheet(
-      requestBase: request,
-      completer: completer,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(
-        DiagnosticsProperty<SheetRequest<ServicesBottomRequest>>(
-          "request",
-          request,
-        ),
-      )
-      ..add(
-        ObjectFlagProperty<
-            Function(SheetResponse<MainBottomSheetResponse> p1)>.has(
-          "completer",
-          completer,
-        ),
-      );
-  }
-}
-
-class ServicesBottomRequest {
-  const ServicesBottomRequest({
-    this.title,
-    this.subtitle,
-    this.actions,
-  });
-
-  final String? title;
-  final String? subtitle;
-  final List<ServicesBottomAction>? actions;
-}
-
-class ServicesBottomAction {
-  const ServicesBottomAction({
-    this.title,
-    this.svgurl,
-    this.tag = "",
-  });
-
-  final String? title;
-  final String? svgurl;
-  final String tag;
 }
 
 class EmptyBottomSheetResponse {
@@ -528,6 +477,69 @@ class GenericBottomSheet extends StatelessWidget {
       );
   }
 }
+
+//#region Service Bottom Sheet
+class _ServicesBottomSheet extends StatelessWidget {
+  const _ServicesBottomSheet({
+    required this.request,
+    required this.completer,
+  });
+
+  final SheetRequest<ServicesBottomRequest> request;
+  final Function(SheetResponse<MainBottomSheetResponse>) completer;
+
+  @override
+  Widget build(BuildContext context) {
+    return ServicesBottomSheet(
+      requestBase: request,
+      completer: completer,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+        DiagnosticsProperty<SheetRequest<ServicesBottomRequest>>(
+          "request",
+          request,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<
+            Function(SheetResponse<MainBottomSheetResponse> p1)>.has(
+          "completer",
+          completer,
+        ),
+      );
+  }
+}
+
+class ServicesBottomRequest {
+  const ServicesBottomRequest({
+    this.title,
+    this.subtitle,
+    this.actions,
+  });
+
+  final String? title;
+  final String? subtitle;
+  final List<ServicesBottomAction>? actions;
+}
+
+class ServicesBottomAction {
+  const ServicesBottomAction({
+    this.title,
+    this.svgurl,
+    this.tag = "",
+  });
+
+  final String? title;
+  final String? svgurl;
+  final String tag;
+}
+//#endregion
 
 //#region bundle qr code
 class _BundleQrBottomSheet extends StatelessWidget {
@@ -822,5 +834,112 @@ class SuccessBottomRequest {
   final String title;
   final String description;
   final String? imagePath;
+}
+//#endregion
+
+//#region CashbackReward Bottom Sheet
+class _CashbackRewardBottomSheet extends StatelessWidget {
+  const _CashbackRewardBottomSheet({
+    required this.request,
+    required this.completer,
+  });
+
+  final SheetRequest<CashbackRewardBottomRequest> request;
+  final Function(SheetResponse<EmptyBottomSheetResponse>) completer;
+
+  @override
+  Widget build(BuildContext context) {
+    return CashbackRewardBottomSheet(
+      request: request,
+      completer: completer,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+        DiagnosticsProperty<SheetRequest<CashbackRewardBottomRequest>>(
+          "request",
+          request,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<
+            Function(SheetResponse<EmptyBottomSheetResponse> p1)>.has(
+          "completer",
+          completer,
+        ),
+      );
+  }
+}
+
+class CashbackRewardBottomRequest {
+  CashbackRewardBottomRequest({
+    required this.title,
+    required this.percent,
+    required this.description,
+    required this.imagePath,
+  });
+
+  final String title;
+  final String percent;
+  final String description;
+  final String imagePath;
+}
+//#endregion
+
+//#region Payment Selection
+class _PaymentSelectionBottomSheet extends StatelessWidget {
+  const _PaymentSelectionBottomSheet({
+    required this.request,
+    required this.completer,
+  });
+
+  final SheetRequest<PaymentSelectionBottomRequest> request;
+  final Function(SheetResponse<PaymentType>) completer;
+
+  @override
+  Widget build(BuildContext context) {
+    return PaymentSelectionBottomSheetView(
+      completer: completer,
+      requestBase: request,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+        DiagnosticsProperty<SheetRequest<PaymentSelectionBottomRequest>>(
+          "request",
+          request,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<Function(SheetResponse<PaymentType> p1)>.has(
+          "completer",
+          completer,
+        ),
+      );
+  }
+}
+
+class PaymentSelectionBottomRequest {
+  const PaymentSelectionBottomRequest({required this.paymentTypeList});
+
+  final List<PaymentType> paymentTypeList;
+}
+
+class PaymentSelectionResponse {
+  const PaymentSelectionResponse({
+    required this.paymentType,
+    required this.canceled,
+  });
+
+  final PaymentType paymentType;
+  final bool canceled;
 }
 //#endregion

@@ -6,6 +6,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_order_success/purchase_order_success_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/notifications_view/notifications_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view.dart";
@@ -101,7 +102,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         routeName: settingsName,
         viewToShow: VerifyLoginView(
           redirection: args.redirection,
-          emailAddress: args.emailAddress,
+          username: args.username,
+        ),
+      );
+
+    case VerifyPurchaseView.routeName:
+      VerifyPurchaseViewArgs args =
+          settings.arguments! as VerifyPurchaseViewArgs;
+      return _getPageRoute(
+        routeName: settingsName,
+        viewToShow: VerifyPurchaseView(
+          args: args,
         ),
       );
 

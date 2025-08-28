@@ -5,7 +5,8 @@ import "package:esim_open_source/data/remote/unauthorized_access_interface.dart"
 
 abstract interface class APIAuth {
   FutureOr<dynamic> login({
-    required String email,
+    required String? email,
+    required String? phoneNumber,
   });
 
   FutureOr<dynamic> resendOtp({
@@ -15,7 +16,8 @@ abstract interface class APIAuth {
   FutureOr<dynamic> logout();
 
   FutureOr<dynamic> verifyOtp({
-    String email = "",
+    String? email,
+    String? phoneNumber,
     String pinCode = "",
     String providerToken = "",
     String providerType = "",
@@ -24,6 +26,7 @@ abstract interface class APIAuth {
   FutureOr<dynamic> deleteAccount();
 
   FutureOr<dynamic> updateUserInfo({
+    required String? email,
     required String msisdn,
     required String firstName,
     required String lastName,

@@ -24,6 +24,8 @@ class HomePagerViewModel extends MainBaseModel {
     _tabController = controller;
   }
 
+  LockableTabController get tabController => _tabController!;
+
   set lockTabBar(bool lock) {
     _tabController?.isLocked = lock;
   }

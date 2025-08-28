@@ -6,11 +6,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:flutter/material.dart";
 
 class UserGuideDetailedViewModel extends BaseModel {
-  UserGuideDetailedViewModel({
-    required this.userGuideViewDataSource,
-  });
-
-  UserGuideViewDataSource userGuideViewDataSource;
+  late UserGuideViewDataSource userGuideViewDataSource;
   ScrollController scrollController = ScrollController();
 
   bool isFromAndroidScreen = false;

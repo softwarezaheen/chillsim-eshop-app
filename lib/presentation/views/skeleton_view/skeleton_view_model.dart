@@ -156,7 +156,7 @@ class SkeletonViewModel extends BaseModel {
 
   Future<void> showLoader() async {
     setViewState(ViewState.busy);
-    await Future<void>.delayed(const Duration(seconds: 5));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     setViewState(ViewState.success);
   }
 }

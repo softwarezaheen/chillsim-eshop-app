@@ -134,7 +134,7 @@ class ProfileView extends StatelessWidget {
               context: context,
               fontColor: titleTextColor(context: context),
             ),
-          ).textSupportsRTL,
+          ).textSupportsRTL(context),
           verticalSpaceSmall,
         ],
       );
@@ -171,7 +171,7 @@ class ProfileView extends StatelessWidget {
                   EnvironmentImages.darkArrowRight.fullImagePath,
                   width: 15,
                   height: 15,
-                ).imageSupportsRTL,
+                ).imageSupportsRTL(context),
               ],
             ),
           ),
@@ -188,7 +188,7 @@ class ProfileView extends StatelessWidget {
       children: <Widget>[
         Text(
           viewModel.isUserLoggedIn
-              ? viewModel.getEmailAddress()
+              ? viewModel.getUserName()
               : LocaleKeys.profile_guest.tr(),
           textAlign: TextAlign.center,
           style: headerThreeBoldTextStyle(

@@ -26,4 +26,6 @@ abstract interface class ApiBundlesRepository {
   });
 
   Future<void> clearCache();
+
+  Future<void> dispose();
 }

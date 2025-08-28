@@ -1,5 +1,7 @@
 import "dart:async";
 
+import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:flutter/material.dart";
@@ -32,7 +34,11 @@ class ProfileViewModel extends BaseModel {
     navigationService.navigateTo(LoginView.routeName);
   }
 
-  String getEmailAddress() {
+  String getUserName() {
+    if (AppEnvironment.appEnvironmentHelper.loginType ==
+        LoginType.phoneNumber) {
+      return userMsisdn;
+    }
     return userEmailAddress;
   }
 }

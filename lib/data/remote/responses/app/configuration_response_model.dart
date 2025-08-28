@@ -1,6 +1,3 @@
-// key : "CATALOG.BUNDLES_CACHE_VERSION"
-// value : "1740565172"
-
 import "dart:convert";
 
 import "package:esim_open_source/utils/parsing_helper.dart";
@@ -10,7 +7,10 @@ enum ConfigurationResponseKeys {
   whatsAppNumber,
   supabaseBaseUrl,
   supabaseAnonKey,
-  defaultCurrency;
+  defaultCurrency,
+  paymentTypes,
+  loginType,
+  referAndEarnAmount;
 
   String get configurationKeyValue {
     switch (this) {
@@ -24,6 +24,12 @@ enum ConfigurationResponseKeys {
         return "SUPABASE_BASE_ANON_KEY";
       case ConfigurationResponseKeys.defaultCurrency:
         return "default_currency";
+      case ConfigurationResponseKeys.paymentTypes:
+        return "allowed_payment_types";
+      case ConfigurationResponseKeys.loginType:
+        return "login_type";
+      case ConfigurationResponseKeys.referAndEarnAmount:
+        return "REFERRAL_CODE_AMOUNT";
     }
   }
 }

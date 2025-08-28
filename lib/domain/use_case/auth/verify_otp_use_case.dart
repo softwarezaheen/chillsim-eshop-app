@@ -2,6 +2,7 @@ import "dart:async";
 import "dart:developer";
 
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
@@ -12,17 +13,18 @@ import "package:esim_open_source/domain/use_case/app/add_device_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/apply_referral_code_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 
 class VerifyOtpParams {
   VerifyOtpParams({
-    this.email = "",
+    this.username = "",
     this.pinCode = "",
     this.providerToken = "",
     this.providerType = "",
   });
 
-  final String email;
+  final String username;
   final String pinCode;
   final String providerType;
 
@@ -53,7 +55,14 @@ class VerifyOtpUseCase
   @override
   FutureOr<Resource<AuthResponseModel>> execute(VerifyOtpParams params) async {
     Resource<AuthResponseModel> response = await repository.verifyOtp(
-      email: params.email,
+      email:
+          AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
+              ? null
+              : params.username,
+      phoneNumber:
+          AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
+              ? params.username
+              : null,
       pinCode: params.pinCode,
       providerType: params.providerType,
       providerToken: params.providerToken,

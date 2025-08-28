@@ -1,4 +1,3 @@
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view_model.dart";
 import "package:esim_open_source/utils/date_time_utils.dart";
 import "package:esim_open_source/utils/parsing_helper.dart";
 
@@ -26,12 +25,12 @@ class RewardHistoryResponseModel {
   final String? promotionName;
   final String? date;
 
-  RewardHistoryType get type {
-    if (isReferral ?? true) {
-      return RewardHistoryType.referEarn;
-    }
-    return RewardHistoryType.cashback;
-  }
+  // RewardHistoryType get type {
+  //   if (isReferral ?? true) {
+  //     return RewardHistoryType.referEarn;
+  //   }
+  //   return RewardHistoryType.cashback;
+  // }
 
   String get dateDisplayed => DateTimeUtils.formatTimestampToDate(
         timestamp: int.parse(date ?? "0"),

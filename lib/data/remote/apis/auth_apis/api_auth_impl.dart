@@ -27,10 +27,12 @@ class APIAuthImpl extends APIService implements APIAuth {
 
   @override
   FutureOr<ResponseMain<EmptyResponse?>> login({
-    required String email,
+    required String? email,
+    required String? phoneNumber,
   }) async {
     Map<String, String> params = <String, String>{
-      "email": email,
+      if (email != null) "email": email,
+      if (phoneNumber != null) "phone": phoneNumber,
     };
 
     ResponseMain<EmptyResponse?> loginResponse = await sendRequest(
@@ -77,13 +79,15 @@ class APIAuthImpl extends APIService implements APIAuth {
 
   @override
   FutureOr<ResponseMain<AuthResponseModel>> verifyOtp({
-    String email = "",
+    String? email,
+    String? phoneNumber,
     String pinCode = "",
     String providerToken = "",
     String providerType = "",
   }) async {
     Map<String, dynamic> params = <String, dynamic>{
-      "user_email": email,
+      if (email != null) "user_email": email,
+      if (phoneNumber != null) "phone": phoneNumber,
       "verification_pin": pinCode,
       "provider_token": providerToken,
       "provider_type": providerType,
@@ -114,12 +118,14 @@ class APIAuthImpl extends APIService implements APIAuth {
 
   @override
   FutureOr<ResponseMain<AuthResponseModel>> updateUserInfo({
+    required String? email,
     required String msisdn,
     required String firstName,
     required String lastName,
     required bool isNewsletterSubscribed,
   }) async {
     Map<String, dynamic> params = <String, dynamic>{
+      if (email != null) "email": email,
       "msisdn": msisdn,
       "first_name": firstName,
       "last_name": lastName,

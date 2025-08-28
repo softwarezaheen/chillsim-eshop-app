@@ -10,6 +10,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/stories_view
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/widgets.dart";
 import "package:stacked_services/stacked_services.dart";
 
 enum MyWalletViewSections {
@@ -59,7 +60,8 @@ enum MyWalletViewSections {
     }
   }
 
-  Future<void> tapAction(MyWalletViewModel viewModel) async {
+  Future<void> tapAction(
+      BuildContext context, MyWalletViewModel viewModel,) async {
     switch (this) {
       case MyWalletViewSections.voucherCode:
         SheetResponse<EmptyBottomSheetResponse>? voucherCodeResponse =
@@ -74,7 +76,7 @@ enum MyWalletViewSections {
       case MyWalletViewSections.referEarn:
         viewModel.navigationService.navigateTo(
           StoryViewer.routeName,
-          arguments: ReferalStoriesView().storyViewerArgs,
+          arguments: ReferalStoriesView(context).storyViewerArgs,
         );
       case MyWalletViewSections.cashbackRewards:
         viewModel.navigationService.navigateTo(

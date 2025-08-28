@@ -10,6 +10,7 @@ class BundleAssignResponseModel {
     this.merchantDisplayName,
     this.stripeUrlScheme,
     this.orderId,
+    this.paymentStatus,
   });
 
   factory BundleAssignResponseModel.fromJson({dynamic json}) {
@@ -24,6 +25,7 @@ class BundleAssignResponseModel {
       merchantDisplayName: json["merchant_display_name"],
       stripeUrlScheme: json["stripe_url_scheme"],
       orderId: json["order_id"],
+      paymentStatus: json["payment_status"],
     );
   }
 
@@ -37,6 +39,7 @@ class BundleAssignResponseModel {
   final String? merchantDisplayName;
   final String? stripeUrlScheme;
   final String? orderId;
+  final String? paymentStatus;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -50,6 +53,7 @@ class BundleAssignResponseModel {
       "merchant_display_name": merchantDisplayName,
       "stripe_url_scheme": stripeUrlScheme,
       "order_id": orderId,
+      "payment_status": paymentStatus,
     };
   }
 }

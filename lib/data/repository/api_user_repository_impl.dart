@@ -240,4 +240,30 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
       ),
     );
   }
+
+  @override
+  FutureOr<Resource<EmptyResponse?>> resendOrderOtp({
+    required String orderID,
+  }) async {
+    return responseToResource(
+      apiUserBundles.resendOrderOtp(
+        orderID: orderID,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<Resource<EmptyResponse?>> verifyOrderOtp({
+    required String otp,
+    required String iccid,
+    required String orderID,
+  }) async {
+    return responseToResource(
+      apiUserBundles.verifyOrderOtp(
+        otp: otp,
+        iccid: iccid,
+        orderID: orderID,
+      ),
+    );
+  }
 }

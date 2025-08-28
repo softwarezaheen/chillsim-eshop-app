@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/promotion/reward_history_response_model.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -24,7 +25,7 @@ class RewardsHistoryView extends StatelessWidget {
     return BaseView<RewardsHistoryViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: RewardsHistoryViewModel(),
+      viewModel: locator<RewardsHistoryViewModel>(),
       builder: (
         BuildContext context,
         RewardsHistoryViewModel viewModel,
@@ -45,10 +46,10 @@ class RewardsHistoryView extends StatelessWidget {
                 ),
               ),
               verticalSpaceSmall,
-              rewardHistoryTypeWidget(
-                context,
-                viewModel,
-              ),
+              // rewardHistoryTypeWidget(
+              //   context,
+              //   viewModel,
+              // ),
               Expanded(
                 child: PaddingWidget.applyPadding(
                   top: 20,
@@ -65,7 +66,8 @@ class RewardsHistoryView extends StatelessWidget {
                             EnvironmentImages.emptyRewardHistory.fullImagePath,
                         content: LocaleKeys.rewardHistory_emptyContentText.tr(),
                         button: MainButton.bannerButton(
-                          title: viewModel.selectedType.titleText,
+                          title: LocaleKeys.rewardHistory_referTypeTitle
+                              .tr() /*viewModel.selectedType.titleText*/,
                           action: () async => viewModel.onEmptyStateTapped(),
                           themeColor: themeColor,
                           textColor:
@@ -97,67 +99,67 @@ class RewardsHistoryView extends StatelessWidget {
     );
   }
 
-  Widget rewardHistoryTypeWidget(
-    BuildContext context,
-    RewardsHistoryViewModel viewModel,
-  ) {
-    return PaddingWidget.applySymmetricPadding(
-      horizontal: 15,
-      child: SizedBox(
-        height: 30,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: RewardHistoryType.values.length,
-            separatorBuilder: (BuildContext context, int index) {
-              if (RewardHistoryType.values[index] == RewardHistoryType.none) {
-                return const SizedBox.shrink();
-              }
-              return const SizedBox(width: 10);
-            },
-            itemBuilder: (BuildContext context, int index) {
-              if (RewardHistoryType.values[index] == RewardHistoryType.none) {
-                return const SizedBox.shrink();
-              }
-              return GestureDetector(
-                onTap: () {
-                  viewModel.changeSelectedType(RewardHistoryType.values[index]);
-                },
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: RewardHistoryType.values[index] ==
-                            viewModel.selectedType
-                        ? enabledMainButtonColor(context: context)
-                        : mainWhiteTextColor(context: context),
-                    border: Border.all(
-                      color: mainBorderColor(context: context),
-                    ),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: PaddingWidget.applySymmetricPadding(
-                    vertical: 5,
-                    horizontal: 10,
-                    child: Center(
-                      child: Text(
-                        RewardHistoryType.values[index].titleText,
-                        style: captionTwoNormalTextStyle(context: context)
-                            .copyWith(
-                          color: RewardHistoryType.values[index] ==
-                                  viewModel.selectedType
-                              ? mainWhiteTextColor(context: context)
-                              : contentTextColor(context: context),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget rewardHistoryTypeWidget(
+  //   BuildContext context,
+  //   RewardsHistoryViewModel viewModel,
+  // ) {
+  //   return PaddingWidget.applySymmetricPadding(
+  //     horizontal: 15,
+  //     child: SizedBox(
+  //       height: 30,
+  //       child: Align(
+  //         alignment: Alignment.centerLeft,
+  //         child: ListView.separated(
+  //           shrinkWrap: true,
+  //           scrollDirection: Axis.horizontal,
+  //           itemCount: RewardHistoryType.values.length,
+  //           separatorBuilder: (BuildContext context, int index) {
+  //             if (RewardHistoryType.values[index] == RewardHistoryType.none) {
+  //               return const SizedBox.shrink();
+  //             }
+  //             return const SizedBox(width: 10);
+  //           },
+  //           itemBuilder: (BuildContext context, int index) {
+  //             if (RewardHistoryType.values[index] == RewardHistoryType.none) {
+  //               return const SizedBox.shrink();
+  //             }
+  //             return GestureDetector(
+  //               onTap: () {
+  //                 viewModel.changeSelectedType(RewardHistoryType.values[index]);
+  //               },
+  //               child: DecoratedBox(
+  //                 decoration: BoxDecoration(
+  //                   color: RewardHistoryType.values[index] ==
+  //                           viewModel.selectedType
+  //                       ? enabledMainButtonColor(context: context)
+  //                       : mainWhiteTextColor(context: context),
+  //                   border: Border.all(
+  //                     color: mainBorderColor(context: context),
+  //                   ),
+  //                   borderRadius: BorderRadius.circular(15),
+  //                 ),
+  //                 child: PaddingWidget.applySymmetricPadding(
+  //                   vertical: 5,
+  //                   horizontal: 10,
+  //                   child: Center(
+  //                     child: Text(
+  //                       RewardHistoryType.values[index].titleText,
+  //                       style: captionTwoNormalTextStyle(context: context)
+  //                           .copyWith(
+  //                         color: RewardHistoryType.values[index] ==
+  //                                 viewModel.selectedType
+  //                             ? mainWhiteTextColor(context: context)
+  //                             : contentTextColor(context: context),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

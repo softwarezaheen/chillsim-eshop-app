@@ -111,7 +111,7 @@ class AndroidUserGuideView extends StatelessWidget {
                   EnvironmentImages.chevronRight.fullImagePath,
                   width: 15,
                   height: 15,
-                ).imageSupportsRTL,
+                ).imageSupportsRTL(context),
               ],
             ),
           ],

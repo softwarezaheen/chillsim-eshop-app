@@ -4,7 +4,9 @@ import "dart:io";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -26,7 +28,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
       routeName: routeName,
-      viewModel: LoginViewModel(redirection: redirection),
+      viewModel: locator<LoginViewModel>()..redirection = redirection,
       hideAppBar: true,
       backGroundImage: EnvironmentImages.onBoardingBackground.fullImagePath,
       builder: (
@@ -46,6 +48,7 @@ class LoginView extends StatelessWidget {
               Column(
                 children: <Widget>[
                   GestureDetector(
+                    key: const Key("backButtonPressed"),
                     onTap: () async {
                       viewModel.backButtonPressed();
                     },
@@ -147,7 +150,10 @@ class LoginView extends StatelessWidget {
                     },
                     themeColor: themeColor,
                     image: EnvironmentImages.loginMail.fullImagePath,
-                    title: LocaleKeys.loginView_continueWithEmail.tr(),
+                    title: AppEnvironment.appEnvironmentHelper.loginType ==
+                            LoginType.phoneNumber
+                        ? LocaleKeys.loginView_continueWithPhone.tr()
+                        : LocaleKeys.loginView_continueWithEmail.tr(),
                     titleTextStyle: bodyBoldTextStyle(context: context),
                     textColor: titleTextColor(context: context),
                     buttonColor: enabledMainWhiteButtonColor(context: context),
