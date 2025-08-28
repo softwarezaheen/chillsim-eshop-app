@@ -11,6 +11,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
+import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/deep_link_helper.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
@@ -22,6 +23,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
+import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
@@ -233,10 +235,16 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
 
       case ReferAndEarn():
         log("Referral code saved");
-      // navigationService.navigateTo(
-      //   StoryViewer.routeName,
-      //   arguments: ReferalStoriesView().storyViewerArgs,
-      // );
+        showToast(
+          LocaleKeys.referral_code_activated.tr(),
+        );
+
+        if (!locator<UserAuthenticationService>().isUserLoggedIn) {
+          await Future<void>.delayed(const Duration(seconds: 1));
+          navigationService.navigateTo(
+            LoginView.routeName,
+          );
+        }
 
       case CountrySelected():
         if (!locator<NavigationRouter>().isPageVisible(HomePager.routeName)) {

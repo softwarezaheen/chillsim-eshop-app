@@ -75,7 +75,7 @@
   "dataPlans_referAndEarnBannerTitle": "Refer & Earn",
   "dataPlans_cashbackRewardsBannerTitle": "Cashback Rewards",
   "dataPlans_liveChatBannerContent": "Chat with us live 24/7 for instant support and assistance!",
-  "dataPlans_referAndEarnBannerContent": "Invite your friends and family directly from the app and start earning $3 in referral credit for each successful referral!",
+  "dataPlans_referAndEarnBannerContent": "Invite your friends and family directly from the app and start earning {referAndEarnAmount} in referral credit for each successful referral!",
   "dataPlans_cashbackRewardsBannerContent": "10% cashback\nwill be added to your balance",
   "dataPlans_liveChatBannerButtonText": "Chat With Us",
   "dataPlans_referAndEarnBannerButtonText": "Refer Now",
@@ -372,5 +372,8 @@
   "verifyOrderOtp_titleText": "Please verify your SMS",
   "verifyOrderOtp_contentText": "You are about to pay using your airtime balance. A verification code was sent by sms",
   "eSim_installation_error_message" : "Auto eSIM installation is not available, Please use manual install",
-  "cashback_reward_message": "Cash back reward of the bundle price is added back into your eSIM wallet balance"
+  "cashback_reward_message": "Cash back reward of the bundle price is added back into your eSIM wallet balance",
+  "referral_code_activated": "Referral code activated successfully",
+  "no_payment_method_available": "No payment method available right now",
+  "no_sufficient_balance_in_wallet": "No Sufficient Balance in your Wallet"
 }

@@ -15,6 +15,7 @@ import "package:esim_open_source/domain/use_case/app/add_device_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/set_auth_reload_call_back_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/set_unauthorized_access_call_back_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
+import "package:esim_open_source/presentation/enums/language_enum.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:flutter/material.dart";
 import "package:http/http.dart";
@@ -41,6 +42,11 @@ class MainViewModel extends ReactiveViewModel
     _unauthorizedAccessCallBackUseCase
         .execute(UnauthorizedAccessCallBackParams(this));
     _addAuthReloadCallBackUseCase.execute(AuthReloadAccessCallBackParams(this));
+  }
+
+  Locale getDefaultLocale() {
+    String languageCode = locator<LocalStorageService>().languageCode;
+    return Locale(languageCode);
   }
 
   Locale getLocale(BuildContext context) {
@@ -89,5 +95,11 @@ class MainViewModel extends ReactiveViewModel
     if (authResponseModel != null) {
       locator<UserAuthenticationService>().saveUserResponse(authResponseModel);
     }
+  }
+
+  List<Locale> getLocaleList() {
+    return LanguageEnum.values
+        .map((LanguageEnum item) => Locale(item.code))
+        .toList();
   }
 }

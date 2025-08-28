@@ -105,12 +105,14 @@ Future<void> initializeFirebaseApp() async {
 
   FlutterError.onError = (FlutterErrorDetails errorDetails) {
     unawaited(
-        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails),);
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails),
+    );
   };
   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
     unawaited(
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),);
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
+    );
     return true;
   };
 }
@@ -183,15 +185,11 @@ class _MyFlutterActivityState extends State<MyFlutterActivity>
       onViewModelReady: (MainViewModel model) async => model.onModelReady(),
       builder: (BuildContext context, MainViewModel model, Widget? child) {
         return EasyLocalization(
-          supportedLocales: const <Locale>[
-            Locale("en"),
-            Locale("ar"),
-            Locale("fr"),
-          ],
+          useOnlyLangCode: true,
+          startLocale: model.getDefaultLocale(),
+          supportedLocales: model.getLocaleList(),
           path:
               "assets/translations/${AppEnvironment.appEnvironmentHelper.environmentTheme.directoryName}",
-          // <-- change the path of the translation files
-          fallbackLocale: const Locale("en"),
           child: MyThemeBuilder(
             // statusBarColorBuilder: (theme) => model.getColor(),
             // defaultThemeMode: ThemeMode.light,

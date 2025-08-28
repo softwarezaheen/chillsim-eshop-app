@@ -3,7 +3,7 @@
 // with `dart run build_runner build`.
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
-// ignore_for_file: type=lint
+// ignore_for_file: camel_case_types, depend_on_referenced_packages
 // coverage:ignore-file
 
 import 'dart:typed_data';
@@ -960,12 +960,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (BundleCategoryEntity object, fb.Builder fbb) {
-        final typeOffset =
-            object.type == null ? null : fbb.writeString(object.type!);
-        final codeOffset =
-            object.code == null ? null : fbb.writeString(object.code!);
-        final titleOffset =
-            object.title == null ? null : fbb.writeString(object.title!);
+        final typeOffset = object.type == null
+            ? null
+            : fbb.writeString(object.type!);
+        final codeOffset = object.code == null
+            ? null
+            : fbb.writeString(object.code!);
+        final titleOffset = object.title == null
+            ? null
+            : fbb.writeString(object.title!);
         fbb.startTable(5);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, typeOffset);
@@ -1036,10 +1039,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final validityDisplayOffset = object.validityDisplay == null
             ? null
             : fbb.writeString(object.validityDisplay!);
-        final iconOffset =
-            object.icon == null ? null : fbb.writeString(object.icon!);
-        final planTypeOffset =
-            object.planType == null ? null : fbb.writeString(object.planType!);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
+        final planTypeOffset = object.planType == null
+            ? null
+            : fbb.writeString(object.planType!);
         final activityPolicyOffset = object.activityPolicy == null
             ? null
             : fbb.writeString(object.activityPolicy!);
@@ -1184,20 +1189,24 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (CountryEntity object, fb.Builder fbb) {
-        final countryOffset =
-            object.country == null ? null : fbb.writeString(object.country!);
-        final iso3CodeOffset =
-            object.iso3Code == null ? null : fbb.writeString(object.iso3Code!);
-        final zoneNameOffset =
-            object.zoneName == null ? null : fbb.writeString(object.zoneName!);
+        final countryOffset = object.country == null
+            ? null
+            : fbb.writeString(object.country!);
+        final iso3CodeOffset = object.iso3Code == null
+            ? null
+            : fbb.writeString(object.iso3Code!);
+        final zoneNameOffset = object.zoneName == null
+            ? null
+            : fbb.writeString(object.zoneName!);
         final countryCodeOffset = object.countryCode == null
             ? null
             : fbb.writeString(object.countryCode!);
         final alternativeCountryOffset = object.alternativeCountry == null
             ? null
             : fbb.writeString(object.alternativeCountry!);
-        final iconOffset =
-            object.icon == null ? null : fbb.writeString(object.icon!);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
         final operatorListOffset = object.operatorList == null
             ? null
             : fbb.writeList(
@@ -1284,8 +1293,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (HomeDataEntity object, fb.Builder fbb) {
-        final versionOffset =
-            object.version == null ? null : fbb.writeString(object.version!);
+        final versionOffset = object.version == null
+            ? null
+            : fbb.writeString(object.version!);
         fbb.startTable(4);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.lastUpdated?.millisecondsSinceEpoch);
@@ -1340,10 +1350,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (RegionEntity object, fb.Builder fbb) {
-        final iconOffset =
-            object.icon == null ? null : fbb.writeString(object.icon!);
-        final zoneNameOffset =
-            object.zoneName == null ? null : fbb.writeString(object.zoneName!);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
+        final zoneNameOffset = object.zoneName == null
+            ? null
+            : fbb.writeString(object.zoneName!);
         final regionCodeOffset = object.regionCode == null
             ? null
             : fbb.writeString(object.regionCode!);
@@ -1421,8 +1433,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final validityDateOffset = object.validityDate == null
             ? null
             : fbb.writeString(object.validityDate!);
-        final iccidOffset =
-            object.iccid == null ? null : fbb.writeString(object.iccid!);
+        final iccidOffset = object.iccid == null
+            ? null
+            : fbb.writeString(object.iccid!);
         final paymentDateOffset = object.paymentDate == null
             ? null
             : fbb.writeString(object.paymentDate!);
@@ -1456,13 +1469,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final validityDisplayOffset = object.validityDisplay == null
             ? null
             : fbb.writeString(object.validityDisplay!);
-        final planTypeOffset =
-            object.planType == null ? null : fbb.writeString(object.planType!);
+        final planTypeOffset = object.planType == null
+            ? null
+            : fbb.writeString(object.planType!);
         final activityPolicyOffset = object.activityPolicy == null
             ? null
             : fbb.writeString(object.activityPolicy!);
-        final iconOffset =
-            object.icon == null ? null : fbb.writeString(object.icon!);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
         final bundleMessageOffset = object.bundleMessage == null
             ? null
             : fbb.writeList(
@@ -1685,136 +1700,140 @@ obx_int.ModelDefinition getObjectBoxModel() {
     ),
     TransactionHistoryEntity:
         obx_int.EntityDefinition<TransactionHistoryEntity>(
-      model: _entities[6],
-      toOneRelations: (TransactionHistoryEntity object) => [
-        object.esimData,
-        object.bundle,
-      ],
-      toManyRelations: (TransactionHistoryEntity object) => {},
-      getId: (TransactionHistoryEntity object) => object.id,
-      setId: (TransactionHistoryEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (TransactionHistoryEntity object, fb.Builder fbb) {
-        final userOrderIdOffset = object.userOrderId == null
-            ? null
-            : fbb.writeString(object.userOrderId!);
-        final iccidOffset =
-            object.iccid == null ? null : fbb.writeString(object.iccid!);
-        final bundleTypeOffset = object.bundleType == null
-            ? null
-            : fbb.writeString(object.bundleType!);
-        final createdAtOffset = object.createdAt == null
-            ? null
-            : fbb.writeString(object.createdAt!);
-        fbb.startTable(29);
-        fbb.addInt64(0, object.id);
-        fbb.addInt64(20, object.esimData.targetId);
-        fbb.addOffset(21, userOrderIdOffset);
-        fbb.addOffset(22, iccidOffset);
-        fbb.addOffset(23, bundleTypeOffset);
-        fbb.addBool(24, object.planStarted);
-        fbb.addBool(25, object.bundleExpired);
-        fbb.addOffset(26, createdAtOffset);
-        fbb.addInt64(27, object.bundle.targetId);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final userOrderIdParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 46);
-        final iccidParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 48);
-        final bundleTypeParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 50);
-        final planStartedParam = const fb.BoolReader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          52,
-        );
-        final bundleExpiredParam = const fb.BoolReader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          54,
-        );
-        final createdAtParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 56);
-        final object = TransactionHistoryEntity(
-          userOrderId: userOrderIdParam,
-          iccid: iccidParam,
-          bundleType: bundleTypeParam,
-          planStarted: planStartedParam,
-          bundleExpired: bundleExpiredParam,
-          createdAt: createdAtParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-        object.esimData.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          44,
-          0,
-        );
-        object.esimData.attach(store);
-        object.bundle.targetId = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          58,
-          0,
-        );
-        object.bundle.attach(store);
-        return object;
-      },
-    ),
+          model: _entities[6],
+          toOneRelations: (TransactionHistoryEntity object) => [
+            object.esimData,
+            object.bundle,
+          ],
+          toManyRelations: (TransactionHistoryEntity object) => {},
+          getId: (TransactionHistoryEntity object) => object.id,
+          setId: (TransactionHistoryEntity object, int id) {
+            object.id = id;
+          },
+          objectToFB: (TransactionHistoryEntity object, fb.Builder fbb) {
+            final userOrderIdOffset = object.userOrderId == null
+                ? null
+                : fbb.writeString(object.userOrderId!);
+            final iccidOffset = object.iccid == null
+                ? null
+                : fbb.writeString(object.iccid!);
+            final bundleTypeOffset = object.bundleType == null
+                ? null
+                : fbb.writeString(object.bundleType!);
+            final createdAtOffset = object.createdAt == null
+                ? null
+                : fbb.writeString(object.createdAt!);
+            fbb.startTable(29);
+            fbb.addInt64(0, object.id);
+            fbb.addInt64(20, object.esimData.targetId);
+            fbb.addOffset(21, userOrderIdOffset);
+            fbb.addOffset(22, iccidOffset);
+            fbb.addOffset(23, bundleTypeOffset);
+            fbb.addBool(24, object.planStarted);
+            fbb.addBool(25, object.bundleExpired);
+            fbb.addOffset(26, createdAtOffset);
+            fbb.addInt64(27, object.bundle.targetId);
+            fbb.finish(fbb.endTable());
+            return object.id;
+          },
+          objectFromFB: (obx.Store store, ByteData fbData) {
+            final buffer = fb.BufferContext(fbData);
+            final rootOffset = buffer.derefObject(0);
+            final userOrderIdParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 46);
+            final iccidParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 48);
+            final bundleTypeParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 50);
+            final planStartedParam = const fb.BoolReader().vTableGetNullable(
+              buffer,
+              rootOffset,
+              52,
+            );
+            final bundleExpiredParam = const fb.BoolReader().vTableGetNullable(
+              buffer,
+              rootOffset,
+              54,
+            );
+            final createdAtParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 56);
+            final object = TransactionHistoryEntity(
+              userOrderId: userOrderIdParam,
+              iccid: iccidParam,
+              bundleType: bundleTypeParam,
+              planStarted: planStartedParam,
+              bundleExpired: bundleExpiredParam,
+              createdAt: createdAtParam,
+            )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+            object.esimData.targetId = const fb.Int64Reader().vTableGet(
+              buffer,
+              rootOffset,
+              44,
+              0,
+            );
+            object.esimData.attach(store);
+            object.bundle.targetId = const fb.Int64Reader().vTableGet(
+              buffer,
+              rootOffset,
+              58,
+              0,
+            );
+            object.bundle.attach(store);
+            return object;
+          },
+        ),
     EsimBundleCategoryEntity:
         obx_int.EntityDefinition<EsimBundleCategoryEntity>(
-      model: _entities[7],
-      toOneRelations: (EsimBundleCategoryEntity object) => [],
-      toManyRelations: (EsimBundleCategoryEntity object) => {},
-      getId: (EsimBundleCategoryEntity object) => object.id,
-      setId: (EsimBundleCategoryEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (EsimBundleCategoryEntity object, fb.Builder fbb) {
-        final typeOffset =
-            object.type == null ? null : fbb.writeString(object.type!);
-        final codeOffset =
-            object.code == null ? null : fbb.writeString(object.code!);
-        final titleOffset =
-            object.title == null ? null : fbb.writeString(object.title!);
-        fbb.startTable(5);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, typeOffset);
-        fbb.addOffset(2, codeOffset);
-        fbb.addOffset(3, titleOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final typeParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 6);
-        final codeParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 8);
-        final titleParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 10);
-        final object = EsimBundleCategoryEntity(
-          type: typeParam,
-          code: codeParam,
-          title: titleParam,
-        )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          model: _entities[7],
+          toOneRelations: (EsimBundleCategoryEntity object) => [],
+          toManyRelations: (EsimBundleCategoryEntity object) => {},
+          getId: (EsimBundleCategoryEntity object) => object.id,
+          setId: (EsimBundleCategoryEntity object, int id) {
+            object.id = id;
+          },
+          objectToFB: (EsimBundleCategoryEntity object, fb.Builder fbb) {
+            final typeOffset = object.type == null
+                ? null
+                : fbb.writeString(object.type!);
+            final codeOffset = object.code == null
+                ? null
+                : fbb.writeString(object.code!);
+            final titleOffset = object.title == null
+                ? null
+                : fbb.writeString(object.title!);
+            fbb.startTable(5);
+            fbb.addInt64(0, object.id);
+            fbb.addOffset(1, typeOffset);
+            fbb.addOffset(2, codeOffset);
+            fbb.addOffset(3, titleOffset);
+            fbb.finish(fbb.endTable());
+            return object.id;
+          },
+          objectFromFB: (obx.Store store, ByteData fbData) {
+            final buffer = fb.BufferContext(fbData);
+            final rootOffset = buffer.derefObject(0);
+            final typeParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 6);
+            final codeParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 8);
+            final titleParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 10);
+            final object = EsimBundleCategoryEntity(
+              type: typeParam,
+              code: codeParam,
+              title: titleParam,
+            )..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-        return object;
-      },
-    ),
+            return object;
+          },
+        ),
     EsimBundleEntity: obx_int.EntityDefinition<EsimBundleEntity>(
       model: _entities[8],
       toOneRelations: (EsimBundleEntity object) => [object.bundleCategory],
@@ -1854,10 +1873,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final validityDisplayOffset = object.validityDisplay == null
             ? null
             : fbb.writeString(object.validityDisplay!);
-        final iconOffset =
-            object.icon == null ? null : fbb.writeString(object.icon!);
-        final planTypeOffset =
-            object.planType == null ? null : fbb.writeString(object.planType!);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
+        final planTypeOffset = object.planType == null
+            ? null
+            : fbb.writeString(object.planType!);
         final activityPolicyOffset = object.activityPolicy == null
             ? null
             : fbb.writeString(object.activityPolicy!);
@@ -1995,17 +2016,21 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final countryIDOffset = object.countryID == null
             ? null
             : fbb.writeString(object.countryID!);
-        final countryOffset =
-            object.country == null ? null : fbb.writeString(object.country!);
-        final iso3CodeOffset =
-            object.iso3Code == null ? null : fbb.writeString(object.iso3Code!);
-        final zoneNameOffset =
-            object.zoneName == null ? null : fbb.writeString(object.zoneName!);
+        final countryOffset = object.country == null
+            ? null
+            : fbb.writeString(object.country!);
+        final iso3CodeOffset = object.iso3Code == null
+            ? null
+            : fbb.writeString(object.iso3Code!);
+        final zoneNameOffset = object.zoneName == null
+            ? null
+            : fbb.writeString(object.zoneName!);
         final countryCodeOffset = object.countryCode == null
             ? null
             : fbb.writeString(object.countryCode!);
-        final iconOffset =
-            object.icon == null ? null : fbb.writeString(object.icon!);
+        final iconOffset = object.icon == null
+            ? null
+            : fbb.writeString(object.icon!);
         final operatorListOffset = object.operatorList == null
             ? null
             : fbb.writeList(
@@ -2174,8 +2199,8 @@ class BundleEntity_ {
   /// See [BundleEntity.bundleCategory].
   static final bundleCategory =
       obx.QueryRelationToOne<BundleEntity, BundleCategoryEntity>(
-    _entities[1].properties[14],
-  );
+        _entities[1].properties[14],
+      );
 
   /// See [BundleEntity.homeData].
   static final homeData = obx.QueryRelationToOne<BundleEntity, HomeDataEntity>(
@@ -2286,8 +2311,8 @@ class HomeDataEntity_ {
   /// see [HomeDataEntity.countries]
   static final countries =
       obx.QueryRelationToMany<HomeDataEntity, CountryEntity>(
-    _entities[3].relations[1],
-  );
+        _entities[3].relations[1],
+      );
 
   /// see [HomeDataEntity.bundles]
   static final bundles = obx.QueryBacklinkToMany<BundleEntity, HomeDataEntity>(
@@ -2473,8 +2498,8 @@ class EsimEntity_ {
   /// See [EsimEntity.bundleCategory].
   static final bundleCategory =
       obx.QueryRelationToOne<EsimEntity, EsimBundleCategoryEntity>(
-    _entities[5].properties[29],
-  );
+        _entities[5].properties[29],
+      );
 
   /// See [EsimEntity.countCountries].
   static final countCountries = obx.QueryDoubleProperty<EsimEntity>(
@@ -2494,14 +2519,14 @@ class EsimEntity_ {
   /// see [EsimEntity.countries]
   static final countries =
       obx.QueryRelationToMany<EsimEntity, EsimCountryEntity>(
-    _entities[5].relations[0],
-  );
+        _entities[5].relations[0],
+      );
 
   /// see [EsimEntity.transactionHistory]
   static final transactionHistory =
       obx.QueryBacklinkToMany<TransactionHistoryEntity, EsimEntity>(
-    TransactionHistoryEntity_.esimData,
-  );
+        TransactionHistoryEntity_.esimData,
+      );
 }
 
 /// [TransactionHistoryEntity] entity fields to define ObjectBox queries.
@@ -2514,8 +2539,8 @@ class TransactionHistoryEntity_ {
   /// See [TransactionHistoryEntity.esimData].
   static final esimData =
       obx.QueryRelationToOne<TransactionHistoryEntity, EsimEntity>(
-    _entities[6].properties[1],
-  );
+        _entities[6].properties[1],
+      );
 
   /// See [TransactionHistoryEntity.userOrderId].
   static final userOrderId = obx.QueryStringProperty<TransactionHistoryEntity>(
@@ -2540,8 +2565,8 @@ class TransactionHistoryEntity_ {
   /// See [TransactionHistoryEntity.bundleExpired].
   static final bundleExpired =
       obx.QueryBooleanProperty<TransactionHistoryEntity>(
-    _entities[6].properties[6],
-  );
+        _entities[6].properties[6],
+      );
 
   /// See [TransactionHistoryEntity.createdAt].
   static final createdAt = obx.QueryStringProperty<TransactionHistoryEntity>(
@@ -2551,8 +2576,8 @@ class TransactionHistoryEntity_ {
   /// See [TransactionHistoryEntity.bundle].
   static final bundle =
       obx.QueryRelationToOne<TransactionHistoryEntity, EsimBundleEntity>(
-    _entities[6].properties[8],
-  );
+        _entities[6].properties[8],
+      );
 }
 
 /// [EsimBundleCategoryEntity] entity fields to define ObjectBox queries.
@@ -2668,8 +2693,8 @@ class EsimBundleEntity_ {
   /// See [EsimBundleEntity.bundleCategory].
   static final bundleCategory =
       obx.QueryRelationToOne<EsimBundleEntity, EsimBundleCategoryEntity>(
-    _entities[8].properties[17],
-  );
+        _entities[8].properties[17],
+      );
 
   /// See [EsimBundleEntity.bundleTypeValue].
   static final bundleTypeValue = obx.QueryIntegerProperty<EsimBundleEntity>(
@@ -2679,8 +2704,8 @@ class EsimBundleEntity_ {
   /// see [EsimBundleEntity.countries]
   static final countries =
       obx.QueryRelationToMany<EsimBundleEntity, EsimCountryEntity>(
-    _entities[8].relations[0],
-  );
+        _entities[8].relations[0],
+      );
 }
 
 /// [EsimCountryEntity] entity fields to define ObjectBox queries.

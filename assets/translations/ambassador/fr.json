@@ -75,7 +75,7 @@
   "dataPlans_referAndEarnBannerTitle": "Parrainez et gagnez",
   "dataPlans_cashbackRewardsBannerTitle": "Récompenses cashback",
   "dataPlans_liveChatBannerContent": "Discutez avec nous en direct 24/7 pour un support instantané !",
-  "dataPlans_referAndEarnBannerContent": "Invitez vos amis et votre famille directement depuis l’app et commencez à gagner 3 $ de crédit par parrainage réussi !",
+  "dataPlans_referAndEarnBannerContent": "Invitez vos amis et votre famille directement depuis l’app et commencez à gagner {referAndEarnAmount} de crédit par parrainage réussi !",
   "dataPlans_cashbackRewardsBannerContent": "10 % de cashback\nsera ajouté à votre solde",
   "dataPlans_liveChatBannerButtonText": "Discuter avec nous",
   "dataPlans_referAndEarnBannerButtonText": "Parrainer maintenant",
@@ -367,5 +367,8 @@
   "verifyOrderOtp_titleText": "Veuillez vérifier votre SMS",
   "verifyOrderOtp_contentText": "Vous êtes sur le point de payer avec votre solde. Un code de vérification a été envoyé par SMS",
   "eSim_installation_error_message" : "L'installation automatique de l'eSIM n'est pas disponible, veuillez l'installer manuellement.",
-  "cashback_reward_message": "la récompense en argent du prix de l'offre groupée est ajoutée au solde de votre portefeuille eSIM"
+  "cashback_reward_message": "la récompense en argent du prix de l'offre groupée est ajoutée au solde de votre portefeuille eSIM",
+  "referral_code_activated": "Code de parrainage activé avec succès",
+  "no_payment_method_available": "Aucun moyen de paiement disponible pour le moment",
+  "no_sufficient_balance_in_wallet": "Solde insuffisant dans votre portefeuille"
 }

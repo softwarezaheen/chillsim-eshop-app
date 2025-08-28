@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -27,7 +28,7 @@ class NotificationsView extends StatelessWidget {
       hideLoader: true,
       disposeViewModel: true,
       enableBottomSafeArea: false,
-      viewModel: NotificationsViewModel(),
+      viewModel: locator<NotificationsViewModel>(),
       builder: (
         BuildContext context,
         NotificationsViewModel viewModel,

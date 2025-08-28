@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart" as loc;
+import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
@@ -53,10 +54,9 @@ class VerifyPurchaseView extends StatelessWidget {
     return BaseView<VerifyPurchaseViewModel>(
       routeName: routeName,
       hideAppBar: true,
-      viewModel: VerifyPurchaseViewModel(
-        iccid: args.iccid,
-        orderID: args.orderID,
-      ),
+      viewModel: locator<VerifyPurchaseViewModel>()
+        ..iccid = args.iccid
+        ..orderID = args.orderID,
       builder: (
         BuildContext context,
         VerifyPurchaseViewModel viewModel,

@@ -8,11 +8,7 @@ class FluttertoastHelperTest {
   static void implementFluttertoast() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
-      if (methodCall.method == "showToast") {
-        // Simulate successful toast
-        return null;
-      }
-      throw MissingPluginException();
+      return null;
     });
   }
 

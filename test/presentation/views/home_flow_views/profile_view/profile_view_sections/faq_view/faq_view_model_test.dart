@@ -37,6 +37,18 @@ Future<void> main() async {
   });
 
   group("FaqViewModel", () {
+    test("get faqs , returns error", () async {
+      when(mockLocalStorageService.languageCode).thenReturn("en");
+      when(mockApiAppRepository.getFaq()).thenAnswer(
+        (_) async => Resource<List<FaqResponse>?>.error(
+          data: <FaqResponse>[],
+          "Network error",
+        ),
+      );
+
+      viewModel.getFaqs();
+    });
+
     test("constructor", () {
       expect(viewModel, isA<FaqViewModel>());
       expect(viewModel.getFaqUseCase, isNotNull);
@@ -55,18 +67,6 @@ Future<void> main() async {
       await Future<void>.delayed(const Duration(milliseconds: 10));
 
       verify(mockApiAppRepository.getFaq()).called(1);
-    });
-
-    test("get faqs , returns error", () async {
-      when(mockLocalStorageService.languageCode).thenReturn("en");
-      when(mockApiAppRepository.getFaq()).thenAnswer(
-        (_) async => Resource<List<FaqResponse>?>.error(
-          data: <FaqResponse>[],
-          "Network error",
-        ),
-      );
-
-      viewModel.getFaqs();
     });
 
     test("faqTapped", () {

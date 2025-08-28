@@ -21,6 +21,8 @@ import "package:esim_open_source/domain/repository/services/redirections_handler
 // import "package:esim_open_source/domain/repository/services/remote_config_service.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
+import "package:esim_open_source/domain/use_case/app/get_about_us_use_case.dart";
+import "package:esim_open_source/domain/use_case/app/get_terms_and_condition_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_order_history_pagination_use_case.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
@@ -31,7 +33,11 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/notifications_view/notifications_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/contact_us_view/contact_us_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_data_view/dynamic_data_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/faq_view/faq_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view_model.dart";
@@ -41,6 +47,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view_model.dart";
 import "package:esim_open_source/presentation/views/skeleton_view/skeleton_view_model.dart";
 import "package:esim_open_source/presentation/views/start_up_view/startup_view_model.dart";
@@ -80,6 +87,8 @@ import "locator_test.mocks.dart";
   ApiDeviceRepository,
   APIPromotion,
   ApiPromotionRepository,
+  GetAboutUsUseCase,
+  GetTermsAndConditionUseCase,
   GetOrderHistoryPaginationUseCase,
   NavigationService,
   DialogService,
@@ -99,6 +108,7 @@ import "locator_test.mocks.dart";
   DeviceCompabilityCheckViewModel,
   LoginViewModel,
   VerifyLoginViewModel,
+  VerifyPurchaseViewModel,
   SkeletonViewModel,
   UserGuideDetailedViewModel,
   //Services
@@ -181,6 +191,12 @@ Future<void> appAPIServicesModule() async {
     ..registerLazySingleton<ApiUserRepository>(
       MockApiUserRepository.new,
     )
+    ..registerLazySingleton<GetAboutUsUseCase>(
+      MockGetAboutUsUseCase.new,
+    )
+    ..registerLazySingleton<GetTermsAndConditionUseCase>(
+      MockGetTermsAndConditionUseCase.new,
+    )
     ..registerLazySingleton<GetOrderHistoryPaginationUseCase>(
       MockGetOrderHistoryPaginationUseCase.new,
     )
@@ -209,16 +225,16 @@ Future<void> viewModelModules() async {
       MockMainViewModel.new,
     )
     ..registerLazySingleton<MyESimViewModel>(
-      MockMyESimViewModel.new,
+      MyESimViewModel.new,
     )
     ..registerLazySingleton<ProfileViewModel>(
-      MockProfileViewModel.new,
+      ProfileViewModel.new,
     )
     ..registerLazySingleton<DataPlansViewModel>(
-      MockDataPlansViewModel.new,
+      /*Mock*/ DataPlansViewModel.new,
     )
     ..registerLazySingleton<HomePagerViewModel>(
-      MockHomePagerViewModel.new,
+      /*Mock*/ HomePagerViewModel.new,
     )
     ..registerLazySingleton<PurchaseLoadingViewModel>(
       MockPurchaseLoadingViewModel.new,
@@ -238,6 +254,9 @@ Future<void> viewModelModules() async {
     ..registerLazySingleton<VerifyLoginViewModel>(
       VerifyLoginViewModel.new,
     )
+    ..registerLazySingleton<VerifyPurchaseViewModel>(
+      VerifyPurchaseViewModel.new,
+    )
     ..registerLazySingleton<SkeletonViewModel>(
       MockSkeletonViewModel.new,
     )
@@ -255,5 +274,17 @@ Future<void> viewModelModules() async {
     )
     ..registerLazySingleton<DynamicSelectionViewModel>(
       DynamicSelectionViewModel.new,
+    )
+    ..registerLazySingleton<DynamicDataViewModel>(
+      DynamicDataViewModel.new,
+    )
+    ..registerLazySingleton<ContactUsViewModel>(
+      ContactUsViewModel.new,
+    )
+    ..registerLazySingleton<AccountInformationViewModel>(
+      AccountInformationViewModel.new,
+    )
+    ..registerLazySingleton<NotificationsViewModel>(
+      NotificationsViewModel.new,
     );
 }

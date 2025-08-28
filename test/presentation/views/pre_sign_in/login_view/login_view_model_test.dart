@@ -27,7 +27,7 @@ Future<void> main() async {
 
   setUp(() async {
     await setupTest();
-    onViewModelReadyMock();
+    onViewModelReadyMock(viewName: "LoginViewPage");
     mockSocialLoginService =
         locator<SocialLoginService>() as MockSocialLoginService;
     mockNavigationService =

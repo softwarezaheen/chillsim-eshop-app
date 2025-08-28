@@ -1,5 +1,6 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -26,7 +27,7 @@ class AccountInformationView extends StatelessWidget {
     return BaseView<AccountInformationViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: AccountInformationViewModel(),
+      viewModel: locator<AccountInformationViewModel>(),
       builder: (
         BuildContext context,
         AccountInformationViewModel viewModel,

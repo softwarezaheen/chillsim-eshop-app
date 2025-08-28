@@ -8,8 +8,6 @@ import "package:esim_open_source/domain/repository/services/local_storage_servic
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
-import "package:flutter/material.dart";
-import "package:fluttertoast/fluttertoast.dart";
 
 class ApplyReferralCodeUserCaseParams {
   ApplyReferralCodeUserCaseParams({
@@ -40,9 +38,6 @@ class ApplyReferralCodeUseCase
       log("Show error with text: ${response.message}");
       showToast(
         response.message ?? "Invalid referral code",
-        gravity: ToastGravity.BOTTOM,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.grey,
       );
     }
     return response;

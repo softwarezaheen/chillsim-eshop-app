@@ -15,12 +15,12 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 
 class VerifyPurchaseViewModel extends BaseModel {
   VerifyPurchaseViewModel({
-    required this.iccid,
-    required this.orderID,
+    this.iccid,
+    this.orderID,
   });
 
-  String iccid;
-  String orderID;
+  String? iccid;
+  String? orderID;
 
   bool _isVerifyButtonEnabled = false;
   bool get isVerifyButtonEnabled => _isVerifyButtonEnabled;
@@ -57,8 +57,8 @@ class VerifyPurchaseViewModel extends BaseModel {
     Resource<EmptyResponse?> authResponse = await verifyOrderOtpUseCase.execute(
       VerifyOrderOtpParam(
         otp: _pinCode,
-        iccid: iccid,
-        orderID: orderID,
+        iccid: iccid ?? "",
+        orderID: orderID ?? "",
       ),
     );
 
@@ -89,7 +89,7 @@ class VerifyPurchaseViewModel extends BaseModel {
     Resource<EmptyResponse?> resendOtpResponse =
         await resendOrderOtpUseCase.execute(
       ResendOrderOtpParam(
-        orderID: orderID,
+        orderID: orderID ?? "",
       ),
     );
 

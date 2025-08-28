@@ -9,7 +9,8 @@ enum ConfigurationResponseKeys {
   supabaseAnonKey,
   defaultCurrency,
   paymentTypes,
-  loginType;
+  loginType,
+  referAndEarnAmount;
 
   String get configurationKeyValue {
     switch (this) {
@@ -27,6 +28,8 @@ enum ConfigurationResponseKeys {
         return "allowed_payment_types";
       case ConfigurationResponseKeys.loginType:
         return "login_type";
+      case ConfigurationResponseKeys.referAndEarnAmount:
+        return "REFERRAL_CODE_AMOUNT";
     }
   }
 }

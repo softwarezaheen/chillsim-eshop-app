@@ -8,4 +8,5 @@ abstract class AppConfigurationService {
   String get getDefaultCurrency;
   String get getPaymentTypes;
   String get getLoginType;
+  String get referAndEarnAmount;
 }

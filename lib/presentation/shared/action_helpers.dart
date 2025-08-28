@@ -15,7 +15,6 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
-import "package:fluttertoast/fluttertoast.dart";
 import "package:package_info_plus/package_info_plus.dart";
 import "package:share_plus/share_plus.dart";
 import "package:url_launcher/url_launcher.dart";
@@ -377,9 +376,6 @@ Future<void> copyText(String text) async {
   await Clipboard.setData(ClipboardData(text: text));
   await showToast(
     LocaleKeys.copied_to_clipboard.tr(),
-    gravity: ToastGravity.BOTTOM,
-    toastLength: Toast.LENGTH_LONG,
-    backgroundColor: Colors.grey,
   );
 }
 

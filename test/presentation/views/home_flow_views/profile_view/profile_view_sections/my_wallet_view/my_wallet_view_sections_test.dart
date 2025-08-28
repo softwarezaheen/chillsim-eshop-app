@@ -45,16 +45,26 @@ Future<void> main() async {
 
       test("enum contains all expected sections", () {
         expect(MyWalletViewSections.values.length, equals(5));
-        expect(MyWalletViewSections.values,
-            contains(MyWalletViewSections.voucherCode),);
-        expect(MyWalletViewSections.values,
-            contains(MyWalletViewSections.referEarn),);
-        expect(MyWalletViewSections.values,
-            contains(MyWalletViewSections.cashbackRewards),);
-        expect(MyWalletViewSections.values,
-            contains(MyWalletViewSections.rewardHistory),);
-        expect(MyWalletViewSections.values,
-            contains(MyWalletViewSections.upgradeWallet),);
+        expect(
+          MyWalletViewSections.values,
+          contains(MyWalletViewSections.voucherCode),
+        );
+        expect(
+          MyWalletViewSections.values,
+          contains(MyWalletViewSections.referEarn),
+        );
+        expect(
+          MyWalletViewSections.values,
+          contains(MyWalletViewSections.cashbackRewards),
+        );
+        expect(
+          MyWalletViewSections.values,
+          contains(MyWalletViewSections.rewardHistory),
+        );
+        expect(
+          MyWalletViewSections.values,
+          contains(MyWalletViewSections.upgradeWallet),
+        );
       });
 
       test("sections are properly ordered", () {
@@ -127,8 +137,9 @@ Future<void> main() async {
             isScrollControlled: true,
             variant: BottomSheetType.voucherCode,
           ),
-        ).thenAnswer((_) async =>
-            SheetResponse<EmptyBottomSheetResponse>(confirmed: true),);
+        ).thenAnswer(
+          (_) async => SheetResponse<EmptyBottomSheetResponse>(confirmed: true),
+        );
 
         await MyWalletViewSections.voucherCode
             .tapAction(FakeContext(), mockViewModel);
@@ -149,8 +160,9 @@ Future<void> main() async {
             isScrollControlled: true,
             variant: BottomSheetType.voucherCode,
           ),
-        ).thenAnswer((_) async =>
-            SheetResponse<EmptyBottomSheetResponse>(confirmed: true),);
+        ).thenAnswer(
+          (_) async => SheetResponse<EmptyBottomSheetResponse>(confirmed: true),
+        );
 
         // This should complete without throwing
         await MyWalletViewSections.voucherCode
@@ -164,28 +176,6 @@ Future<void> main() async {
           ),
         ).called(1);
       });
-
-      // test("referEarn tap action navigates to referral stories", () async {
-      //   when(
-      //     mockNavigationService.navigateTo(
-      //       StoryViewer.routeName,
-      //       arguments: dynamic,
-      //     ),
-      //   ).thenAnswer((_) async => true);
-      //   BuildContext context = FakeContext();
-      //   when(enabledMainButtonTextColor(
-      //           context: context))
-      //       .thenReturn(Colors.white);
-      //   await MyWalletViewSections.referEarn
-      //       .tapAction(context, mockViewModel);
-      //
-      //   verify(
-      //     mockNavigationService.navigateTo(
-      //       StoryViewer.routeName,
-      //       arguments: any,
-      //     ),
-      //   ).called(1);
-      // });
 
       test("rewardHistory tap action navigates to rewards history view",
           () async {
@@ -207,8 +197,9 @@ Future<void> main() async {
             isScrollControlled: true,
             variant: BottomSheetType.upgradeWallet,
           ),
-        ).thenAnswer((_) async =>
-            SheetResponse<EmptyBottomSheetResponse>(confirmed: true),);
+        ).thenAnswer(
+          (_) async => SheetResponse<EmptyBottomSheetResponse>(confirmed: true),
+        );
 
         await MyWalletViewSections.upgradeWallet
             .tapAction(FakeContext(), mockViewModel);
@@ -229,8 +220,9 @@ Future<void> main() async {
             isScrollControlled: true,
             variant: BottomSheetType.upgradeWallet,
           ),
-        ).thenAnswer((_) async =>
-            SheetResponse<EmptyBottomSheetResponse>(confirmed: true),);
+        ).thenAnswer(
+          (_) async => SheetResponse<EmptyBottomSheetResponse>(confirmed: true),
+        );
 
         // This should complete without throwing
         await MyWalletViewSections.upgradeWallet
@@ -265,12 +257,18 @@ Future<void> main() async {
 
         expect(testSwitch(MyWalletViewSections.voucherCode), equals("voucher"));
         expect(testSwitch(MyWalletViewSections.referEarn), equals("refer"));
-        expect(testSwitch(MyWalletViewSections.cashbackRewards),
-            equals("cashback"),);
         expect(
-            testSwitch(MyWalletViewSections.rewardHistory), equals("history"),);
+          testSwitch(MyWalletViewSections.cashbackRewards),
+          equals("cashback"),
+        );
         expect(
-            testSwitch(MyWalletViewSections.upgradeWallet), equals("upgrade"),);
+          testSwitch(MyWalletViewSections.rewardHistory),
+          equals("history"),
+        );
+        expect(
+          testSwitch(MyWalletViewSections.upgradeWallet),
+          equals("upgrade"),
+        );
       });
     });
 
@@ -284,12 +282,13 @@ Future<void> main() async {
 
       test("enum values can be compared", () {
         expect(
-            MyWalletViewSections.voucherCode ==
-                MyWalletViewSections.voucherCode,
-            isTrue,);
+          MyWalletViewSections.voucherCode == MyWalletViewSections.voucherCode,
+          isTrue,
+        );
         expect(
-            MyWalletViewSections.voucherCode != MyWalletViewSections.referEarn,
-            isTrue,);
+          MyWalletViewSections.voucherCode != MyWalletViewSections.referEarn,
+          isTrue,
+        );
       });
 
       test("enum values have unique names", () {

@@ -3,6 +3,7 @@ import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/presentation/theme/my_theme_builder.dart";
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
 import "package:flutter/material.dart";
+import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
 import "package:shared_preferences/shared_preferences.dart";
@@ -34,7 +35,9 @@ Widget createTestableWidget(Widget child) {
           MaterialApp(
         theme: regularTheme,
         darkTheme: darkTheme,
-        home: child,
+        home: KeyboardVisibilityProvider(
+          child: child,
+        ),
       ),
     ),
   );

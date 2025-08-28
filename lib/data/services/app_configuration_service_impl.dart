@@ -11,6 +11,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
+import "package:esim_open_source/utils/generation_helper.dart";
 
 class AppConfigurationServiceImpl extends AppConfigurationService {
   AppConfigurationServiceImpl._privateConstructor();
@@ -149,8 +150,18 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
             ?.firstWhere(
               (ConfigurationResponseModel element) =>
                   element.key == key.configurationKeyValue,
+              orElse: () => ConfigurationResponseModel(key: "", value: ""),
             )
             .value ??
         "";
+  }
+
+  @override
+  String get referAndEarnAmount {
+    String referralAmount = _getConfigData(
+      key: ConfigurationResponseKeys.referAndEarnAmount,
+    );
+    String currencyCode = getSelectedCurrencyCode();
+    return "$currencyCode $referralAmount";
   }
 }

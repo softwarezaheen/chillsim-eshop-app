@@ -120,9 +120,11 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   void onViewModelReady() {
     super.onViewModelReady();
     _emailController.addListener(_validateForm);
-    _promoCodeController.text = _referralCode;
-    isPromoCodeExpanded = _referralCode.isNotEmpty;
     _promoCodeController.addListener(notifyListeners);
+
+    if (_referralCode.isNotEmpty) {
+      unawaited(validatePromoCode(_referralCode));
+    }
   }
 
   void updateTermsSelections() {
@@ -234,8 +236,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 
     if (paymentTypeList.isEmpty) {
       //no payment type available
-      //todo MAHDI add translation
-      showToast("No payment method available right now");
+      showToast(LocaleKeys.no_payment_method_available.tr());
       return;
     }
 
@@ -250,7 +251,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
             final bool hasSufficientBalance =
                 userAuthenticationService.walletAvailableBalance >= price;
             if (!hasSufficientBalance) {
-              showToast("No Sufficient Balance in your Wallet");
+              showToast(LocaleKeys.no_sufficient_balance_in_wallet.tr());
               return;
             }
             _triggerAssignFlow(paymentType: paymentType);
@@ -389,6 +390,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           cancelOrder(orderID: orderID);
 
         case PaymentResult.otpRequested:
+          //must send api for request otp , not implemented from backend
           bool result = await locator<NavigationService>().navigateTo(
             VerifyPurchaseView.routeName,
             arguments: VerifyPurchaseViewArgs(
@@ -431,6 +433,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   }
 
   Future<void> _navigateToLoading(String orderID, String? bearerToken) async {
+    // remove the promo code after payment successfully completed
+    _removePromoCodeFromLocalStorage();
+
     String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
     analyticsService.logEvent(
       event: AnalyticEvent.buySuccess(
@@ -524,6 +529,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       onSuccess: (Resource<BundleResponseModel?> result) async {
         _bundle = result.data;
         _promoCode = promoCode;
+        _promoCodeController.text = _referralCode;
+        isPromoCodeExpanded = true;
         updatePromoCodeView(
           message: result.message ?? "",
           isEnabled: false,
@@ -533,15 +540,27 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       onFailure: (Resource<BundleResponseModel?> result) async {
         _bundle = _tempBundle;
         _promoCode = null;
-        updatePromoCodeView(
-          message: result.message ?? "",
-          isEnabled: true,
-          fieldColor: Colors.red,
-        );
+        isPromoCodeExpanded = false;
+        _removePromoCodeFromLocalStorage();
+        if (isPromoCodeExpanded) {
+          updatePromoCodeView(
+            message: result.message ?? "",
+            isEnabled: true,
+            fieldColor: Colors.red,
+          );
+        } else {
+          updatePromoCodeView(isEnabled: true);
+        }
       },
     );
 
     setViewState(ViewState.idle);
+  }
+
+  void _removePromoCodeFromLocalStorage() {
+    unawaited(
+      locator<LocalStorageService>().remove(LocalStorageKeys.referralCode),
+    );
   }
 //#endregion
 }

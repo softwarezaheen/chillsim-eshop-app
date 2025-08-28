@@ -58,9 +58,14 @@ import "package:esim_open_source/presentation/extensions/stacked_services/custom
 import "package:esim_open_source/presentation/view_models/main_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/data_plans_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/notifications_view/notifications_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/contact_us_view/contact_us_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_data_view/dynamic_data_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/faq_view/faq_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view_model.dart";
@@ -264,6 +269,21 @@ Future<void> viewModelInjectionModules() async {
     )
     ..registerFactory<LoginViewModel>(
       LoginViewModel.new,
+    )
+    ..registerFactory<DynamicDataViewModel>(
+      DynamicDataViewModel.new,
+    )
+    ..registerFactory<ContactUsViewModel>(
+      ContactUsViewModel.new,
+    )
+    ..registerFactory<AccountInformationViewModel>(
+      AccountInformationViewModel.new,
+    )
+    ..registerFactory<NotificationsViewModel>(
+      NotificationsViewModel.new,
+    )
+    ..registerFactory<VerifyPurchaseViewModel>(
+      VerifyPurchaseViewModel.new,
     );
 }
 

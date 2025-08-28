@@ -16,8 +16,6 @@ import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/esim_base_model.dart";
-import "package:flutter/material.dart";
-import "package:fluttertoast/fluttertoast.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class TopUpBottomSheetViewModel extends EsimBaseModel {
@@ -188,9 +186,6 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       closeBottomSheet();
       showToast(
         e.toString().replaceAll("Exception:", ""),
-        gravity: ToastGravity.BOTTOM,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.grey,
       );
 
       return;

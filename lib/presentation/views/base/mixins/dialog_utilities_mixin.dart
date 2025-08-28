@@ -10,7 +10,6 @@ import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
-import "package:fluttertoast/fluttertoast.dart";
 import "package:stacked/stacked.dart";
 import "package:stacked_services/stacked_services.dart";
 
@@ -51,9 +50,6 @@ mixin DialogUtilitiesMixin on BaseViewModel {
     } else {
       await showToast(
         contentMessage ?? "Error",
-        gravity: ToastGravity.BOTTOM,
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.grey,
       );
     }
   }

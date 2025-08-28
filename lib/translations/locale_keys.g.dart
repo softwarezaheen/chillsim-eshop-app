@@ -372,5 +372,8 @@ abstract class  LocaleKeys {
   static const String verifyOrderOtp_contentText = "verifyOrderOtp_contentText";
   static const String eSim_installation_error_message = "eSim_installation_error_message";
   static const String cashback_reward_message = "cashback_reward_message";
+  static const String referral_code_activated = "referral_code_activated";
+  static const String no_payment_method_available = "no_payment_method_available";
+  static const String no_sufficient_balance_in_wallet = "no_sufficient_balance_in_wallet";
 
 }

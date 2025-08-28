@@ -2,9 +2,13 @@ import "package:esim_open_source/data/remote/api_end_point.dart";
 import "package:esim_open_source/data/remote/http_methods.dart";
 import "package:esim_open_source/data/remote/responses/app/configuration_response_model.dart";
 import "package:esim_open_source/data/remote/responses/app/currencies_response_model.dart";
+import "package:esim_open_source/data/remote/responses/app/dynamic_page_response.dart";
 import "package:esim_open_source/data/remote/responses/app/faq_response.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/device/device_info_response_model.dart";
+import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 
 /// Factory class for creating consistent test data across all test files.
@@ -28,6 +32,19 @@ class TestDataFactory {
     return List<DeviceInfoResponseModel>.generate(
       count,
       (int index) => createDeviceResponse(),
+    );
+  }
+
+  // MARK: - Dynamic Page Response Data
+  static DynamicPageResponse createDynamicPageResponse({
+    String? pageTitle,
+    String? pageIntro,
+    String? pageContent,
+  }) {
+    return DynamicPageResponse(
+      pageTitle: pageTitle ?? "Test Page Title",
+      pageIntro: pageIntro ?? "Test Page Intro",
+      pageContent: pageContent ?? "Test Page Content",
     );
   }
 
@@ -298,5 +315,162 @@ class TestDataFactory {
         errorMessage: "Internal Server Error",
       ),
     };
+  }
+
+  // MARK: - User Notification Data
+  static UserNotificationModel createUserNotification({
+    int? notificationId,
+    String? title,
+    String? content,
+    String? datetime,
+    String? transactionStatus,
+    String? transaction,
+    String? transactionMessage,
+    bool? status,
+    String? iccid,
+    String? category,
+    String? translatedMessage,
+  }) {
+    return UserNotificationModel(
+      notificationId: notificationId ?? 1,
+      title: title ?? "Test Notification",
+      content: content ?? "Test notification content",
+      datetime: datetime ?? "1640995200", // 2022-01-01 00:00:00
+      transactionStatus: transactionStatus,
+      transaction: transaction,
+      transactionMessage: transactionMessage,
+      status: status ?? true,
+      iccid: iccid ?? "test-iccid-123",
+      category: category ?? "1",
+      translatedMessage: translatedMessage,
+    );
+  }
+
+  static List<UserNotificationModel> createUserNotificationList({
+    int count = 3,
+  }) {
+    return List<UserNotificationModel>.generate(
+      count,
+      (int index) => createUserNotification(
+        notificationId: index + 1,
+        title: "Test Notification ${index + 1}",
+        content: "Test notification content ${index + 1}",
+        datetime: "${1640995200 + (index * 3600)}", // Each hour apart
+        status: index % 2 == 0, // Alternate read/unread status
+        iccid: "test-iccid-${index + 1}",
+        category: "${index + 1}",
+      ),
+    );
+  }
+
+  static UserNotificationModel createUnreadNotification({
+    int? notificationId,
+    String? title,
+    String? iccid,
+    String? category,
+  }) {
+    return createUserNotification(
+      notificationId: notificationId ?? 999,
+      title: title ?? "Unread Notification",
+      status: false,
+      iccid: iccid ?? "unread-iccid",
+      category: category ?? "2",
+    );
+  }
+
+  static UserNotificationModel createReadNotification({
+    int? notificationId,
+    String? title,
+    String? iccid,
+    String? category,
+  }) {
+    return createUserNotification(
+      notificationId: notificationId ?? 888,
+      title: title ?? "Read Notification",
+      status: true,
+      iccid: iccid ?? "read-iccid",
+      category: category ?? "1",
+    );
+  }
+
+  // MARK: - Purchase ESim Bundle Data
+  static PurchaseEsimBundleResponseModel createPurchaseEsimBundle({
+    String? orderNumber,
+    String? orderStatus,
+    String? displayTitle,
+    String? displaySubtitle,
+    String? bundleCode,
+    String? iccid,
+    String? paymentDate,
+    String? validityDate,
+    String? gprsLimitDisplay,
+    String? validityDisplay,
+    String? icon,
+    String? smdpAddress,
+    String? activationCode,
+    bool? unlimited,
+    bool? isTopupAllowed,
+    List<CountryResponseModel>? countries,
+  }) {
+    return PurchaseEsimBundleResponseModel(
+      orderNumber: orderNumber ?? "test-order-123",
+      orderStatus: orderStatus ?? "active",
+      displayTitle: displayTitle ?? "Test Bundle",
+      displaySubtitle: displaySubtitle ?? "Test Subtitle",
+      bundleCode: bundleCode ?? "test-bundle-code",
+      iccid: iccid ?? "test-iccid-123",
+      paymentDate: paymentDate ?? "1640995200", // 2022-01-01
+      validityDate: validityDate,
+      gprsLimitDisplay: gprsLimitDisplay ?? "1GB",
+      validityDisplay: validityDisplay ?? "7 Days",
+      icon: icon ?? "test-icon-path",
+      smdpAddress: smdpAddress ?? "test.smdp.address",
+      activationCode: activationCode ?? "LPA:test-activation-code",
+      unlimited: unlimited ?? false,
+      isTopupAllowed: isTopupAllowed ?? true,
+      countries: countries ?? <CountryResponseModel>[],
+    );
+  }
+
+  static List<PurchaseEsimBundleResponseModel> createPurchaseEsimBundleList({
+    int count = 3,
+  }) {
+    return List<PurchaseEsimBundleResponseModel>.generate(
+      count,
+      (int index) => createPurchaseEsimBundle(
+        orderNumber: "test-order-${index + 1}",
+        displayTitle: "Test Bundle ${index + 1}",
+        displaySubtitle: "Test Subtitle ${index + 1}",
+        bundleCode: "bundle-code-${index + 1}",
+        iccid: "iccid-${index + 1}",
+        orderStatus: index % 2 == 0 ? "active" : "expired",
+      ),
+    );
+  }
+
+  static PurchaseEsimBundleResponseModel createActivePurchaseEsimBundle({
+    String? orderNumber,
+    String? displayTitle,
+  }) {
+    return createPurchaseEsimBundle(
+      orderNumber: orderNumber ?? "active-order-123",
+      displayTitle: displayTitle ?? "Active Bundle",
+      orderStatus: "active",
+      unlimited: false,
+      isTopupAllowed: true,
+    );
+  }
+
+  static PurchaseEsimBundleResponseModel createExpiredPurchaseEsimBundle({
+    String? orderNumber,
+    String? displayTitle,
+  }) {
+    return createPurchaseEsimBundle(
+      orderNumber: orderNumber ?? "expired-order-123",
+      displayTitle: displayTitle ?? "Expired Bundle",
+      orderStatus: "expired",
+      unlimited: false,
+      isTopupAllowed: false,
+    );
   }
 }

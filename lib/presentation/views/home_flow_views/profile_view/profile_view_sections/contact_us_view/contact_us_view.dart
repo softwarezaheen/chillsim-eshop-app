@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -20,7 +21,7 @@ class ContactUsView extends StatelessWidget {
     return BaseView<ContactUsViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: ContactUsViewModel(),
+      viewModel: locator<ContactUsViewModel>(),
       builder: (
         BuildContext context,
         ContactUsViewModel viewModel,

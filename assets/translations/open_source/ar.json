@@ -75,7 +75,7 @@
   "dataPlans_referAndEarnBannerTitle": "قم بالإحالة واكسب",
   "dataPlans_cashbackRewardsBannerTitle": "مكافآت استرداد النقود",
   "dataPlans_liveChatBannerContent": "على مدار الساعة للحصول على دعم فوري ومساعدة!",
-  "dataPlans_referAndEarnBannerContent": "ادعُ أصدقاءك وعائلتك مباشرة من التطبيق وابدأ في كسب 3 دولارات كرصيد إحالة لكل إحالة ناجحة!",
+  "dataPlans_referAndEarnBannerContent": "ادعُ أصدقاءك وعائلتك مباشرة من التطبيق وابدأ في كسب {referAndEarnAmount} كرصيد إحالة لكل إحالة ناجحة!",
   "dataPlans_cashbackRewardsBannerContent": "سيُضاف 10% استرداد نقدي\nإلى رصيدك",
   "dataPlans_liveChatBannerButtonText": "الدردشة معنا",
   "dataPlans_referAndEarnBannerButtonText": "الإحالة الآن",
@@ -367,6 +367,9 @@
   "verifyLogin_titleTextPhone": "تحقق من صندوق الوارد",
   "verifyOrderOtp_titleText": "يرجى التحقق من الرسالة النصية",
   "verifyOrderOtp_contentText": "أنت على وشك الدفع باستخدام رصيد الخاص بك. تم إرسال رمز التحقق عبر رسالة نصية قصيرة",
-  "eSim_installation_error_message" : "Auto eSIM installation is not available, Please use manual install",
-  "cashback_reward_message": "تُضاف مكافأة الاسترداد النقدي لسعر الباقة مرة أخرى إلى رصيد محفظة eSIM"
+  "eSim_installation_error_message": "تثبيت eSIM التلقائي غير متاح، يرجى استخدام التثبيت اليدوي",
+  "cashback_reward_message": "تُضاف مكافأة الاسترداد النقدي لسعر الباقة مرة أخرى إلى رصيد محفظة eSIM",
+  "referral_code_activated": "تم تفعيل رمز الإحالة بنجاح",
+  "no_payment_method_available": "لا توجد طريقة دفع متاحة حالياً",
+  "no_sufficient_balance_in_wallet": "لا يوجد رصيد كافٍ في محفظتك"
 }
