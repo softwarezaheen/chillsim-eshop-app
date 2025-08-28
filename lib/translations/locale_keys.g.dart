@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: type=lint
 
 abstract class  LocaleKeys {
   static const appName = 'appName';
@@ -355,12 +355,25 @@ abstract class  LocaleKeys {
   static const paymentSelection_titleText = 'paymentSelection_titleText';
   static const paymentSelection_cardText = 'paymentSelection_cardText';
   static const paymentSelection_walletText = 'paymentSelection_walletText';
+  static const paymentSelection_dcbText = 'paymentSelection_dcbText';
   static const topUpWallet_error = 'topUpWallet_error';
   static const topUpWallet_success = 'topUpWallet_success';
   static const confirmation_languageTitle = 'confirmation_languageTitle';
   static const confirmation_languageContent = 'confirmation_languageContent';
   static const appClip_currencyTitle = 'appClip_currencyTitle';
   static const appClip_languageTitle = 'appClip_languageTitle';
+  static const loginView_continueWithPhone = 'loginView_continueWithPhone';
+  static const continueWithEmailView_SubTitleTextPhone = 'continueWithEmailView_SubTitleTextPhone';
+  static const verifyLogin_buttonTitleTextPhone = 'verifyLogin_buttonTitleTextPhone';
+  static const verifyLogin_checkPhone = 'verifyLogin_checkPhone';
+  static const deleteAccount_ConfirmTextPhone = 'deleteAccount_ConfirmTextPhone';
+  static const verifyLogin_titleTextPhone = 'verifyLogin_titleTextPhone';
+  static const verifyOrderOtp_titleText = 'verifyOrderOtp_titleText';
+  static const verifyOrderOtp_contentText = 'verifyOrderOtp_contentText';
   static const eSim_installation_error_message = 'eSim_installation_error_message';
+  static const cashback_reward_message = 'cashback_reward_message';
+  static const referral_code_activated = 'referral_code_activated';
+  static const no_payment_method_available = 'no_payment_method_available';
+  static const no_sufficient_balance_in_wallet = 'no_sufficient_balance_in_wallet';
 
 }

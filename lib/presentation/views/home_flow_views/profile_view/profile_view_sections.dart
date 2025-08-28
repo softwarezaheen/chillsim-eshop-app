@@ -3,6 +3,7 @@ import "dart:developer";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_model.dart";
@@ -154,6 +155,8 @@ enum ProfileViewSections {
       case ProfileViewSections.faq:
         viewModel.navigationService.navigateTo(FaqView.routeName);
       case ProfileViewSections.contactUs:
+        viewModel.analyticsService
+            .logEvent(event: AnalyticEvent.contactUsClicked());
         viewModel.navigationService.navigateTo(ContactUsView.routeName);
       case ProfileViewSections.orderHistory:
         viewModel.navigationService.navigateTo(OrderHistoryView.routeName);
@@ -168,6 +171,8 @@ enum ProfileViewSections {
           arguments: DynamicDataViewType.termsConditions,
         );
       case ProfileViewSections.userGuide:
+        viewModel.analyticsService
+            .logEvent(event: AnalyticEvent.userGuideOpened());
         viewModel.navigationService.navigateTo(
           UserGuideView.routeName,
         );

@@ -133,7 +133,7 @@ class AndroidGalleryUserGuideView extends StatelessWidget {
               Icons.play_arrow,
               size: 20,
               color: context.appColors.baseBlack,
-            ).imageSupportsRTL,
+            ).imageSupportsRTL(context),
             const SizedBox(
               width: 6,
             ),

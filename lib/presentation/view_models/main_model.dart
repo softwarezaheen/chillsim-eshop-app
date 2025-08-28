@@ -49,6 +49,10 @@ class MainViewModel extends ReactiveViewModel
     return Locale(languageCode);
   }
 
+  Locale getLocale(BuildContext context) {
+    return const Locale("en");
+  }
+
   @override
   Future<void> onUnauthorizedAccessCallBackUseCase(
     BaseResponse? response,

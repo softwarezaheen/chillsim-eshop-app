@@ -58,12 +58,16 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
   Future<bool> openEsimSetupForAndroid({
     required String smdpAddress,
     required String activationCode,
+    bool isSHAExist = true,
   }) async {
     try {
       String cardData = "LPA:1\$$smdpAddress\$$activationCode";
       bool result = await flutterToNativePlatform.invokeMethod(
         "openEsimSetup",
-        <String, String>{"cardData": cardData},
+        <String, String>{
+          "cardData": cardData,
+          "isSHAExist": "$isSHAExist",
+        },
       );
       if (!result) {
         throw Exception("eSIM installation not supported");
@@ -73,6 +77,7 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
       log("openEsimSetupForAndroid Error : ${e.message}");
       throw Exception(errorMessage);
     } on Object catch (e) {
+      log("openEsimSetupForAndroid Error: $e");
       throw Exception(errorMessage);
     }
   }

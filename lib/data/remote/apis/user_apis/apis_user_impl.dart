@@ -290,4 +290,40 @@ class APIUserImpl extends APIService implements ApiUser {
     );
     return response;
   }
+
+  @override
+  FutureOr<ResponseMain<EmptyResponse?>> resendOrderOtp({
+    required String orderID,
+  }) async {
+    ResponseMain<EmptyResponse?> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.resendOrderOtp,
+        paramIDs: <String>[orderID],
+      ),
+      fromJson: EmptyResponse.fromJson,
+    );
+    return response;
+  }
+
+  @override
+  FutureOr<ResponseMain<EmptyResponse?>> verifyOrderOtp({
+    required String otp,
+    required String iccid,
+    required String orderID,
+  }) async {
+    Map<String, dynamic> params = <String, dynamic>{
+      "otp": otp,
+      "iccid": iccid,
+      "order_id": orderID,
+    };
+
+    ResponseMain<EmptyResponse?> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.verifyOrderOtp,
+        parameters: params,
+      ),
+      fromJson: EmptyResponse.fromJson,
+    );
+    return response;
+  }
 }

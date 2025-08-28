@@ -15,10 +15,11 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
 
   @override
   FutureOr<Resource<EmptyResponse?>> login({
-    required String email,
+    required String? email,
+    required String? phoneNumber,
   }) async {
     return responseToResource(
-      apiAuth.login(email: email),
+      apiAuth.login(email: email, phoneNumber: phoneNumber),
     );
   }
 
@@ -40,7 +41,8 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
 
   @override
   FutureOr<Resource<AuthResponseModel>> verifyOtp({
-    String email = "",
+    String? email,
+    String? phoneNumber,
     String pinCode = "",
     String providerToken = "",
     String providerType = "",
@@ -48,6 +50,7 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
     return responseToResource(
       apiAuth.verifyOtp(
         email: email,
+        phoneNumber: phoneNumber,
         pinCode: pinCode,
         providerToken: providerToken,
         providerType: providerType,
@@ -64,6 +67,7 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
 
   @override
   FutureOr<Resource<AuthResponseModel>> updateUserInfo({
+    required String? email,
     required String msisdn,
     required String firstName,
     required String lastName,
@@ -71,6 +75,7 @@ class ApiAuthRepositoryImpl implements ApiAuthRepository {
   }) async {
     return responseToResource(
       apiAuth.updateUserInfo(
+        email: email,
         msisdn: msisdn,
         firstName: firstName,
         lastName: lastName,

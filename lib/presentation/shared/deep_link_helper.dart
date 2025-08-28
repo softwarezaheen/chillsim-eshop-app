@@ -5,19 +5,44 @@ import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/domain/repository/services/redirections_handler_service.dart";
 
 enum DeepLinkDecodeKeys {
-  referralCode;
+  regionTab,
+  countryTab,
+  referralCode,
+  regionSelected,
+  countrySelected;
 
-  String get referralCodePathKey {
+  String get pathKey {
     switch (this) {
+      case DeepLinkDecodeKeys.regionTab:
+        return "regions";
+      case DeepLinkDecodeKeys.countryTab:
+        return "countries";
       case DeepLinkDecodeKeys.referralCode:
         return "referral";
+      case DeepLinkDecodeKeys.regionSelected:
+        return "regionSelected";
+      case DeepLinkDecodeKeys.countrySelected:
+        return "countrySelected";
+    }
+  }
+
+  String get decodingKey {
+    switch (this) {
+      case DeepLinkDecodeKeys.referralCode:
+        return "referralCode";
+      case DeepLinkDecodeKeys.regionSelected:
+        return "regionCode";
+      case DeepLinkDecodeKeys.countrySelected:
+        return "countryCode";
+      default:
+        return "";
     }
   }
 }
 
 class DeepLinkHandler {
-  final String tag = "DeepLinkHandler";
   DeepLinkHandler._initialize({required this.redirectionsHandlerService});
+  final String tag = "DeepLinkHandler";
   static DeepLinkHandler shared = DeepLinkHandler._initialize(
     redirectionsHandlerService: locator<RedirectionsHandlerService>(),
   );

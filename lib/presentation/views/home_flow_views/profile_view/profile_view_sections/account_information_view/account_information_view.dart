@@ -1,4 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -16,6 +19,7 @@ import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
 
 class AccountInformationView extends StatelessWidget {
   const AccountInformationView({super.key});
+
   static const String routeName = "AccountInformationView";
 
   @override
@@ -23,7 +27,7 @@ class AccountInformationView extends StatelessWidget {
     return BaseView<AccountInformationViewModel>(
       hideAppBar: true,
       routeName: routeName,
-      viewModel: AccountInformationViewModel(),
+      viewModel: locator<AccountInformationViewModel>(),
       builder: (
         BuildContext context,
         AccountInformationViewModel viewModel,
@@ -95,34 +99,64 @@ class AccountInformationView extends StatelessWidget {
                               ),
                               getSpacersWidgets(context),
                               MyPhoneInput(
+                                enabled: AppEnvironment
+                                            .appEnvironmentHelper.loginType ==
+                                        LoginType.phoneNumber
+                                    ? false
+                                    : true,
                                 onChanged: viewModel.validateNumber,
                                 phoneController: viewModel.phoneController,
                                 validateRequired: true,
                               ),
                               getSpacersWidgets(context),
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: greyBackGroundColor(context: context),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: PaddingWidget.applySymmetricPadding(
-                                    vertical: 15,
-                                    horizontal: 20,
-                                    child: Text(
-                                      viewModel.userEmail,
-                                      style: bodyNormalTextStyle(
+                              AppEnvironment.appEnvironmentHelper.loginType ==
+                                      LoginType.phoneNumber
+                                  ? MainInputField.formField(
+                                      themeColor: themeColor,
+                                      hintText: LocaleKeys.email.tr(),
+                                      hintLabelStyle: captionOneNormalTextStyle(
                                         context: context,
                                         fontColor: secondaryTextColor(
                                           context: context,
                                         ),
                                       ),
+                                      errorMessage: viewModel.emailErrorMessage,
+                                      controller: viewModel.emailController,
+                                      backGroundColor: whiteBackGroundColor(
+                                        context: context,
+                                      ),
+                                      labelStyle: bodyNormalTextStyle(
+                                        context: context,
+                                        fontColor:
+                                            mainDarkTextColor(context: context),
+                                      ),
+                                    )
+                                  : Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: greyBackGroundColor(
+                                          context: context,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child:
+                                            PaddingWidget.applySymmetricPadding(
+                                          vertical: 15,
+                                          horizontal: 20,
+                                          child: Text(
+                                            viewModel.userEmail,
+                                            style: bodyNormalTextStyle(
+                                              context: context,
+                                              fontColor: secondaryTextColor(
+                                                context: context,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
                               verticalSpaceSmallMedium,
                               Row(
                                 children: <Widget>[

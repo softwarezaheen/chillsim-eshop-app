@@ -47,12 +47,12 @@ class NotificationsViewModel extends BaseModel {
   void onNotificationCLicked(UserNotificationModel notification) {
     RedirectionCategoryType redirectionCategoryType =
         RedirectionsHelper.fromNotificationValue(
-      notification.category ?? "0",
-      notification.iccid,
+      categoryID: notification.category ?? "0",
+      iccID: notification.iccid,
     );
     if (redirectionCategoryType is ConsumptionBundleDetail) {
       redirectionsHandlerService.notificationInboxRedirections(
-        iccid: notification.iccid ?? "",
+        iccID: notification.iccid ?? "",
         category: notification.category ?? "",
         isUnlimitedData: false,
       );

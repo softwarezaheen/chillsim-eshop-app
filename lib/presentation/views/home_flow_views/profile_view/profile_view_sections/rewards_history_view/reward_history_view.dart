@@ -1,9 +1,10 @@
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/promotion/reward_history_response_model.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view_model.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -58,21 +59,26 @@ class RewardHistoryView extends StatelessWidget {
   ) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: rewardHistoryModel.type == RewardHistoryType.cashback
+        color: context.appColors.warning_50
+        /*rewardHistoryModel.type == RewardHistoryType.cashback
             ? context.appColors.indigo_50
-            : context.appColors.warning_50,
+            : context.appColors.warning_50*/
+        ,
         borderRadius: BorderRadius.circular(12),
       ),
       child: PaddingWidget.applySymmetricPadding(
         vertical: 5,
         horizontal: 10,
         child: Text(
-          rewardHistoryModel.type.titleText,
+          LocaleKeys.rewardHistory_referTypeTitle
+              .tr() /*rewardHistoryModel.type.titleText*/,
           style: captionTwoNormalTextStyle(
             context: context,
-            fontColor: rewardHistoryModel.type == RewardHistoryType.cashback
+            fontColor: context.appColors.warning_700
+            /*rewardHistoryModel.type == RewardHistoryType.cashback
                 ? context.appColors.indigo_700
-                : context.appColors.warning_700,
+                : context.appColors.warning_700*/
+            ,
           ),
         ),
       ),
@@ -106,7 +112,8 @@ class RewardHistoryView extends StatelessWidget {
                 fontColor: contentTextColor(context: context),
               ),
             ),
-            rewardHistoryModel.type == RewardHistoryType.referEarn
+            const SizedBox.shrink(),
+            /*rewardHistoryModel.type == RewardHistoryType.referEarn
                 ? const SizedBox.shrink()
                 : Text(
                     rewardHistoryModel.promotionName ?? "",
@@ -114,7 +121,7 @@ class RewardHistoryView extends StatelessWidget {
                       context: context,
                       fontColor: contentTextColor(context: context),
                     ),
-                  ),
+                  ),*/
           ],
         ),
       ],

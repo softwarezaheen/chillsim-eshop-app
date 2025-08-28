@@ -1,3 +1,4 @@
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
 import "package:esim_open_source/presentation/views/skeleton_view/skeleton_view_model.dart";
@@ -10,7 +11,7 @@ class SkeletonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<SkeletonViewModel>(
-      viewModel: SkeletonViewModel(),
+      viewModel: locator<SkeletonViewModel>(),
       appBarTitle: (SkeletonViewModel model) => "Skeleton Views",
       appBarBackgroundColor: Colors.blue,
       routeName: routeName,

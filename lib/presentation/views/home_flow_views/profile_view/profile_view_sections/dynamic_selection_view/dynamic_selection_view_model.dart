@@ -65,11 +65,13 @@ class CurrenciesDataSource implements DynamicSelectionViewDataSource {
     Resource<List<CurrenciesResponseModel>?> response =
         await getCurrenciesUseCase.execute(NoParams());
 
-    return response.data
+    List<String> result = response.data
             ?.map((CurrenciesResponseModel e) => e.currency ?? "")
             .where((String item) => item.trim().isNotEmpty)
             .toList() ??
         <String>[];
+
+    return result;
   }
 
   @override
@@ -136,9 +138,7 @@ class LanguagesDataSource implements DynamicSelectionViewDataSource {
 }
 
 class DynamicSelectionViewModel extends BaseModel {
-  DynamicSelectionViewModel({required this.dataSource});
-
-  final DynamicSelectionViewDataSource dataSource;
+  late DynamicSelectionViewDataSource dataSource;
 
   @override
   Future<void> onViewModelReady() async {

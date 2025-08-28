@@ -7,7 +7,8 @@ import "package:esim_open_source/domain/util/resource.dart";
 
 abstract interface class ApiAuthRepository {
   FutureOr<dynamic> login({
-    required String email,
+    required String? email,
+    required String? phoneNumber,
   });
 
   FutureOr<dynamic> logout();
@@ -17,7 +18,8 @@ abstract interface class ApiAuthRepository {
   });
 
   FutureOr<dynamic> verifyOtp({
-    String email = "",
+    String? email,
+    String? phoneNumber,
     String pinCode = "",
     String providerToken = "",
     String providerType = "",
@@ -26,6 +28,7 @@ abstract interface class ApiAuthRepository {
   FutureOr<dynamic> deleteAccount();
 
   FutureOr<dynamic> updateUserInfo({
+    required String? email,
     required String msisdn,
     required String firstName,
     required String lastName,

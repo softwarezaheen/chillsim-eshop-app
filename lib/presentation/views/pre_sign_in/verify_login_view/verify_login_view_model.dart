@@ -1,8 +1,12 @@
+import "dart:io";
+
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
+import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/auth/resend_otp_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/verify_otp_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
@@ -12,13 +16,13 @@ import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 
 class VerifyLoginViewModel extends BaseModel {
-  VerifyLoginViewModel({required this.emailAddress, this.redirection});
+  VerifyLoginViewModel({this.username, this.redirection});
   InAppRedirection? redirection;
 
   bool _isVerifyButtonEnabled = false;
   bool get isVerifyButtonEnabled => _isVerifyButtonEnabled;
 
-  String emailAddress;
+  String? username;
   String _pinCode = "";
   String _errorMessage = "";
   @override
@@ -51,13 +55,20 @@ class VerifyLoginViewModel extends BaseModel {
     Resource<AuthResponseModel> authResponse = await verifyOtpUseCase.execute(
       VerifyOtpParams(
         pinCode: _pinCode,
-        email: emailAddress,
+        username: username ?? "",
       ),
     );
 
     await handleResponse(
       authResponse,
       onSuccess: (Resource<AuthResponseModel> response) async {
+        String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
+        analyticsService.logEvent(
+          event: AnalyticEvent.loginSuccess(
+            utm: utm,
+            platform: Platform.isAndroid ? "Android" : "iOS",
+          ),
+        );
         await navigateToHomePager(redirection: redirection);
       },
       onFailure: (Resource<AuthResponseModel> response) async {
@@ -74,7 +85,7 @@ class VerifyLoginViewModel extends BaseModel {
 
     Resource<EmptyResponse?> resendOtpResponse = await resendOtpUseCase.execute(
       ResendOtpParams(
-        email: emailAddress,
+        username: username ?? "",
       ),
     );
 

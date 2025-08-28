@@ -1,7 +1,6 @@
 import "package:easy_localization/easy_localization.dart" as localization;
 import "package:esim_open_source/presentation/enums/language_enum.dart";
 import "package:flutter/material.dart";
-import "package:stacked_services/stacked_services.dart";
 
 extension EmailValidator on String {
   bool isValidEmail() {
@@ -34,10 +33,9 @@ extension CompactMap<K, V> on Map<K, V> {
 }
 
 extension RTLExtension on Widget {
-  Widget get imageSupportsRTL {
-    final BuildContext? context = StackedService.navigatorKey?.currentContext;
+  Widget imageSupportsRTL(BuildContext context) {
     final String langCode =
-        localization.EasyLocalization.of(context!)?.locale.languageCode ?? "en";
+        localization.EasyLocalization.of(context)?.locale.languageCode ?? "en";
 
     final bool isRTL = LanguageEnum.fromCode(langCode).isRTL;
 
@@ -48,10 +46,9 @@ extension RTLExtension on Widget {
     );
   }
 
-  Widget get textSupportsRTL {
-    final BuildContext? context = StackedService.navigatorKey?.currentContext;
+  Widget textSupportsRTL(BuildContext context) {
     final String langCode =
-        localization.EasyLocalization.of(context!)?.locale.languageCode ?? "en";
+        localization.EasyLocalization.of(context)?.locale.languageCode ?? "en";
 
     final bool isRTL = LanguageEnum.fromCode(langCode).isRTL;
 

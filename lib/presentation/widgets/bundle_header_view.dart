@@ -124,7 +124,7 @@ class BundleHeaderView extends StatelessWidget {
                             EnvironmentImages.darkArrowRight.fullImagePath,
                             width: 15,
                             height: 15,
-                          ).imageSupportsRTL
+                          ).imageSupportsRTL(context)
                         : const SizedBox(width: 5),
                   ],
                 ),

@@ -12,6 +12,8 @@ import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class ReferalStoriesView {
+  ReferalStoriesView(this.context);
+  BuildContext context;
   StoryViewerArgs get storyViewerArgs {
     Widget sharedButtons = PaddingWidget.applyPadding(
       end: 20,
@@ -32,10 +34,10 @@ class ReferalStoriesView {
             hideShadows: true,
             height: 55,
             enabledTextColor: enabledMainButtonTextColor(
-              context: StackedService.navigatorKey!.currentContext!,
+              context: context,
             ),
             enabledBackgroundColor: enabledMainButtonColor(
-              context: StackedService.navigatorKey!.currentContext!,
+              context: context,
             ),
           ),
           verticalSpaceSmall,
@@ -46,10 +48,10 @@ class ReferalStoriesView {
             hideShadows: true,
             height: 55,
             enabledTextColor: enabledMainButtonColor(
-              context: StackedService.navigatorKey!.currentContext!,
+              context: context,
             ),
             enabledBackgroundColor: enabledMainButtonTextColor(
-              context: StackedService.navigatorKey!.currentContext!,
+              context: context,
             ),
           ),
         ],
@@ -84,10 +86,9 @@ class ReferalStoriesView {
                       Text(
                         LocaleKeys.storiesView_referralTitle1.tr(),
                         style: headerOneBoldTextStyle(
-                          context: StackedService.navigatorKey!.currentContext!,
+                          context: context,
                           fontColor: mainWhiteTextColor(
-                            context:
-                                StackedService.navigatorKey!.currentContext!,
+                            context: context,
                           ),
                         ),
                       ),
@@ -95,10 +96,9 @@ class ReferalStoriesView {
                       Text(
                         LocaleKeys.storiesView_referralContent1.tr(),
                         style: headerFourNormalTextStyle(
-                          context: StackedService.navigatorKey!.currentContext!,
+                          context: context,
                           fontColor: mainWhiteTextColor(
-                            context:
-                                StackedService.navigatorKey!.currentContext!,
+                            context: context,
                           ),
                         ),
                       ),
@@ -137,11 +137,9 @@ class ReferalStoriesView {
                         Text(
                           LocaleKeys.storiesView_referralTitle2.tr(),
                           style: headerOneBoldTextStyle(
-                            context:
-                                StackedService.navigatorKey!.currentContext!,
+                            context: context,
                             fontColor: mainWhiteTextColor(
-                              context:
-                                  StackedService.navigatorKey!.currentContext!,
+                              context: context,
                             ),
                           ),
                         ),
@@ -149,11 +147,9 @@ class ReferalStoriesView {
                         Text(
                           LocaleKeys.storiesView_referralContent2.tr(),
                           style: headerFourNormalTextStyle(
-                            context:
-                                StackedService.navigatorKey!.currentContext!,
+                            context: context,
                             fontColor: mainWhiteTextColor(
-                              context:
-                                  StackedService.navigatorKey!.currentContext!,
+                              context: context,
                             ),
                           ),
                         ),
@@ -193,11 +189,9 @@ class ReferalStoriesView {
                         Text(
                           LocaleKeys.storiesView_referralTitle3.tr(),
                           style: headerOneBoldTextStyle(
-                            context:
-                                StackedService.navigatorKey!.currentContext!,
+                            context: context,
                             fontColor: mainWhiteTextColor(
-                              context:
-                                  StackedService.navigatorKey!.currentContext!,
+                              context: context,
                             ),
                           ),
                         ),
@@ -205,11 +199,9 @@ class ReferalStoriesView {
                         Text(
                           LocaleKeys.storiesView_referralContent3.tr(),
                           style: headerFourNormalTextStyle(
-                            context:
-                                StackedService.navigatorKey!.currentContext!,
+                            context: context,
                             fontColor: mainWhiteTextColor(
-                              context:
-                                  StackedService.navigatorKey!.currentContext!,
+                              context: context,
                             ),
                           ),
                         ),

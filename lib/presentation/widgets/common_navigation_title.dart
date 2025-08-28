@@ -33,7 +33,7 @@ class CommonNavigationTitle extends StatelessWidget {
                 EnvironmentImages.navBackIcon.fullImagePath,
                 width: 25,
                 height: 25,
-              ).imageSupportsRTL,
+              ).imageSupportsRTL(context),
             ),
             horizontalSpaceSmall,
             Text(

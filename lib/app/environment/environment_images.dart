@@ -74,6 +74,7 @@ enum EnvironmentImages {
   walletUpgrade,
   payByCard,
   payByWallet,
+  payByDcb,
   //banners
   bannersCashback,
   bannersChatWithUsPerson,
@@ -152,6 +153,7 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.walletUpgrade:
       case EnvironmentImages.payByCard:
       case EnvironmentImages.payByWallet:
+      case EnvironmentImages.payByDcb:
       case EnvironmentImages.notificationIcon:
       case EnvironmentImages.deleteAccountIcon:
       case EnvironmentImages.checkCompatibleIcon:
@@ -289,6 +291,7 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.walletUpgrade:
       case EnvironmentImages.payByCard:
       case EnvironmentImages.payByWallet:
+      case EnvironmentImages.payByDcb:
         return "wallet/$name";
       case EnvironmentImages.bannersCashback:
       case EnvironmentImages.bannersChatWithUsPerson:

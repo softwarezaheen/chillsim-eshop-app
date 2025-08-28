@@ -72,7 +72,7 @@ class CountryRegionView extends StatelessWidget {
                       EnvironmentImages.darkArrowRight.fullImagePath,
                       height: 15,
                       fit: BoxFit.fitHeight,
-                    ).imageSupportsRTL,
+                    ).imageSupportsRTL(context),
             ],
           ),
         ),

@@ -15,7 +15,6 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
-import "package:fluttertoast/fluttertoast.dart";
 import "package:package_info_plus/package_info_plus.dart";
 import "package:share_plus/share_plus.dart";
 import "package:url_launcher/url_launcher.dart";
@@ -268,7 +267,11 @@ Future<bool> openExternalApp({
 // }
 
 Future<ShareResult> shareUrl(String textToShare) {
-  return Share.share(textToShare);
+  return SharePlus.instance.share(
+    ShareParams(
+      text: textToShare,
+    ),
+  );
 }
 
 Future<ShareResult> shareStoreLink({
@@ -283,10 +286,17 @@ Future<ShareResult> shareStoreLink({
   // String buildNumber = packageInfo.buildNumber;
 
   if (Platform.isIOS) {
-    return Share.share("$subject \n\nhttps://itunes.apple.com/app/id$iOSAppId");
+    return SharePlus.instance.share(
+      ShareParams(
+        text: "$subject \n\nhttps://itunes.apple.com/app/id$iOSAppId",
+      ),
+    );
   } else {
-    return Share.share(
-      "$subject \n\nhttps://play.google.com/store/apps/details?id=$packageName",
+    return SharePlus.instance.share(
+      ShareParams(
+        text:
+            "$subject \n\nhttps://play.google.com/store/apps/details?id=$packageName",
+      ),
     );
   }
 
@@ -366,9 +376,6 @@ Future<void> copyText(String text) async {
   await Clipboard.setData(ClipboardData(text: text));
   await showToast(
     LocaleKeys.copied_to_clipboard.tr(),
-    gravity: ToastGravity.BOTTOM,
-    toastLength: Toast.LENGTH_LONG,
-    backgroundColor: Colors.grey,
   );
 }
 

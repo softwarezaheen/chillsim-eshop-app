@@ -98,11 +98,11 @@ const BorderRadius charKeyboardItemBorderRadius =
 
 Future<void> showToast(
   String message, {
-  Toast toastLength = Toast.LENGTH_SHORT,
+  Toast toastLength = Toast.LENGTH_LONG,
   int timeInSecForIosWeb = 1,
   double? fontSize = 16.0,
-  ToastGravity? gravity = ToastGravity.TOP,
-  Color backgroundColor = Colors.black,
+  ToastGravity? gravity = ToastGravity.BOTTOM,
+  Color backgroundColor = Colors.grey,
   Color textColor = Colors.white,
   bool webShowClose = false,
 }) async {

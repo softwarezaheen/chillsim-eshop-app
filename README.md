@@ -87,7 +87,7 @@ Each flavor can have it's own feature flag where the user can turn on or off fro
 # Add your texts or Change Translation :
 1. Open the translations files ar.json and en.json located in (assets/translations/open_source)
 2. Add new texts to these json files or change available texts
-3. Run the following command in terminal: dart run easy_localization:generate -S assets/translations -f keys -O lib/translations -o locale_keys.g.dart to generate a file locale_keys.g.dart at(lib/translations)
+3. Run the following command in terminal: dart run easy_localization:generate -S assets/translations/open_source -f keys -O lib/translations -o locale_keys.g.dart to generate a file locale_keys.g.dart at(lib/translations)
 4. If the linter giving warning on the auto generated file just add (// ignore_for_file: type = lint) at the top of a file
 5. You can use the texts like so LocaleKeys.{key of your text}.tr()
 

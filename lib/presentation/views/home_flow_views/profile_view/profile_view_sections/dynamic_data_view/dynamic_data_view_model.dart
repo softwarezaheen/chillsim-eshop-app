@@ -26,9 +26,7 @@ enum DynamicDataViewType {
 }
 
 class DynamicDataViewModel extends BaseModel {
-  DynamicDataViewModel({required this.viewType});
-
-  final DynamicDataViewType viewType;
+  late DynamicDataViewType viewType;
 
   String viewTitle = "";
   String viewIntro = "";

@@ -1,6 +1,8 @@
 import "package:easy_localization/easy_localization.dart";
-import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
@@ -10,6 +12,7 @@ import "package:esim_open_source/presentation/views/base/base_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
+import "package:esim_open_source/presentation/widgets/my_phone_input.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
@@ -56,7 +59,7 @@ class ContinueWithEmailView extends StatelessWidget {
                         width: 25,
                         height: 25,
                       ),
-                    ).imageSupportsRTL.textSupportsRTL,
+                    ).imageSupportsRTL(context).textSupportsRTL(context),
                   ),
                   Image.asset(
                     EnvironmentImages.darkAppIcon.fullImagePath,
@@ -75,33 +78,56 @@ class ContinueWithEmailView extends StatelessWidget {
                       ),
                       verticalSpaceSmall,
                       Text(
-                        LocaleKeys.continueWithEmailView_SubTitleText.tr(),
+                        AppEnvironment.appEnvironmentHelper.loginType ==
+                                LoginType.phoneNumber
+                            ? LocaleKeys.continueWithEmailView_SubTitleTextPhone
+                                .tr()
+                            : LocaleKeys.continueWithEmailView_SubTitleText
+                                .tr(),
                         style: bodyNormalTextStyle(
                           context: context,
                           fontColor: secondaryTextColor(context: context),
                         ),
                       ),
                       verticalSpace(90),
-                      MainInputField.formField(
-                        themeColor: themeColor,
-                        labelTitleText: LocaleKeys
-                            .continueWithEmailView_emailTitleField
-                            .tr(),
-                        hintText: LocaleKeys
-                            .continueWithEmailView_emailPlaceholder
-                            .tr(),
-                        controller: viewModel.state?.emailController ??
-                            TextEditingController(),
-                        textInputType: TextInputType.emailAddress,
-                        errorMessage: viewModel.state?.emailErrorMessage,
-                        backGroundColor: context.appColors.baseWhite,
-                        labelStyle: bodyNormalTextStyle(
-                          context: context,
-                          fontColor: secondaryTextColor(context: context),
-                        ),
-                      ),
+                      AppEnvironment.appEnvironmentHelper.loginType ==
+                              LoginType.phoneNumber
+                          ? MyPhoneInput(
+                              onChanged: (
+                                String code,
+                                String phoneNumber, {
+                                required bool isValid,
+                              }) {
+                                viewModel.validateNumber(
+                                  code: code,
+                                  number: phoneNumber,
+                                  isValid: isValid,
+                                );
+                              },
+                              phoneController: viewModel.phoneController,
+                              validateRequired: true,
+                            )
+                          : MainInputField.formField(
+                              themeColor: themeColor,
+                              labelTitleText: LocaleKeys
+                                  .continueWithEmailView_emailTitleField
+                                  .tr(),
+                              hintText: LocaleKeys
+                                  .continueWithEmailView_emailPlaceholder
+                                  .tr(),
+                              controller: viewModel.state?.emailController ??
+                                  TextEditingController(),
+                              textInputType: TextInputType.emailAddress,
+                              errorMessage: viewModel.state?.emailErrorMessage,
+                              backGroundColor: context.appColors.baseWhite,
+                              labelStyle: bodyNormalTextStyle(
+                                context: context,
+                                fontColor: secondaryTextColor(context: context),
+                              ),
+                            ),
                       verticalSpaceMediumLarge,
                       GestureDetector(
+                        key: const Key("checkBox"),
                         onTap: () {
                           viewModel.updateTermsSelections();
                         },
@@ -129,7 +155,7 @@ class ContinueWithEmailView extends StatelessWidget {
                               child: termsAndConditionTappableWidget(
                                 context,
                                 viewModel,
-                              ).textSupportsRTL,
+                              ).textSupportsRTL(context),
                             ),
                           ],
                         ),

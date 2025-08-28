@@ -2,12 +2,16 @@ import "dart:async";
 import "dart:developer";
 
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/app/configuration_response_model.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/app/get_configurations_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
+import "package:esim_open_source/presentation/enums/payment_type.dart";
+import "package:esim_open_source/utils/generation_helper.dart";
 
 class AppConfigurationServiceImpl extends AppConfigurationService {
   AppConfigurationServiceImpl._privateConstructor();
@@ -27,6 +31,60 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
   List<ConfigurationResponseModel>? _configData;
 
   @override
+  Future<void> getAppConfigurations() async {
+    _appConfigCompleter = Completer<void>();
+
+    String? config = locator<LocalStorageService>().getString(
+      LocalStorageKeys.appConfigurations,
+    );
+
+    if (config != null) {
+      try {
+        _configData = ConfigurationResponseModel.fromJsonListString(config);
+      } on Object catch (e) {
+        log(e.toString());
+      }
+    }
+    // if (_configData?.isNotEmpty ?? false) {
+    //   _appConfigCompleter?.complete();
+    // }
+
+    Resource<List<ConfigurationResponseModel>?> response =
+        await GetConfigurationsUseCase(locator()).execute(NoParams());
+
+    if (response.resourceType == ResourceType.success) {
+      _configData = response.data;
+
+      locator<LocalStorageService>().setString(
+        LocalStorageKeys.appConfigurations,
+        ConfigurationResponseModel.toJsonListString(
+          _configData ?? <ConfigurationResponseModel>[],
+        ),
+      );
+
+      //set default login type from api
+      String loginTypeString = getLoginType;
+      if (loginTypeString.isNotEmpty) {
+        LoginType? loginType = LoginType.fromValue(value: loginTypeString);
+        AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi = loginType;
+      }
+
+      //set default payment type from api
+      String paymentTypeString = getPaymentTypes;
+      if (paymentTypeString.isNotEmpty) {
+        List<PaymentType> paymentTypeList =
+            PaymentType.getListFromValues(paymentTypeString);
+        AppEnvironment.appEnvironmentHelper.setPaymentTypeListFromApi =
+            paymentTypeList;
+      }
+
+      if (!(_appConfigCompleter?.isCompleted ?? true)) {
+        _appConfigCompleter?.complete();
+      }
+    }
+  }
+
+  @override
   Future<String> get getCatalogVersion async {
     await _appConfigCompleter?.future;
     return _getConfigData(
@@ -39,16 +97,6 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     return _getConfigData(
       key: ConfigurationResponseKeys.defaultCurrency,
     );
-  }
-
-  String _getConfigData({required ConfigurationResponseKeys key}) {
-    return _configData
-            ?.firstWhere(
-              (ConfigurationResponseModel element) =>
-                  element.key == key.configurationKeyValue,
-            )
-            .value ??
-        "";
   }
 
   @override
@@ -84,39 +132,36 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
   }
 
   @override
-  Future<void> getAppConfigurations() async {
-    _appConfigCompleter = Completer<void>();
-
-    String? config = locator<LocalStorageService>().getString(
-      LocalStorageKeys.appConfigurations,
+  String get getLoginType {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.loginType,
     );
+  }
 
-    if (config != null) {
-      try {
-        _configData = ConfigurationResponseModel.fromJsonListString(config);
-      } on Object catch (e) {
-        log(e.toString());
-      }
-    }
-    // if (_configData?.isNotEmpty ?? false) {
-    //   _appConfigCompleter?.complete();
-    // }
+  @override
+  String get getPaymentTypes {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.paymentTypes,
+    );
+  }
 
-    Resource<List<ConfigurationResponseModel>?> response =
-        await GetConfigurationsUseCase(locator()).execute(NoParams());
+  String _getConfigData({required ConfigurationResponseKeys key}) {
+    return _configData
+            ?.firstWhere(
+              (ConfigurationResponseModel element) =>
+                  element.key == key.configurationKeyValue,
+              orElse: () => ConfigurationResponseModel(key: "", value: ""),
+            )
+            .value ??
+        "";
+  }
 
-    if (response.resourceType == ResourceType.success) {
-      _configData = response.data;
-
-      locator<LocalStorageService>().setString(
-        LocalStorageKeys.appConfigurations,
-        ConfigurationResponseModel.toJsonListString(
-          _configData ?? <ConfigurationResponseModel>[],
-        ),
-      );
-      if (!(_appConfigCompleter?.isCompleted ?? true)) {
-        _appConfigCompleter?.complete();
-      }
-    }
+  @override
+  String get referAndEarnAmount {
+    String referralAmount = _getConfigData(
+      key: ConfigurationResponseKeys.referAndEarnAmount,
+    );
+    String currencyCode = getSelectedCurrencyCode();
+    return "$currencyCode $referralAmount";
   }
 }

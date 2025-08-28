@@ -8,12 +8,10 @@ import "package:esim_open_source/domain/use_case/app/contact_us_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
-import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
-import "package:fluttertoast/fluttertoast.dart";
 
 class ContactUsViewModel extends BaseModel {
   //#region UseCases
@@ -72,33 +70,34 @@ class ContactUsViewModel extends BaseModel {
   }
 
   void onSendMessageClicked(BuildContext context) {
-    unawaited(_sendMessage(context));
+    if (context.mounted) {
+      unawaited(_sendMessage(context));
+    }
   }
 
 //#endregion
 
 //#region Apis
   Future<void> _sendMessage(BuildContext context) async {
-    setViewState(ViewState.busy);
-    Resource<StringResponse?> response = await contactUsUseCase.execute(
-      ContactUsParams(
-        email: _state.emailController.text.trim(),
-        message: _state.messageController.text,
-      ),
-    );
-    handleResponse(
-      response,
-      onSuccess: (Resource<StringResponse?> result) async {
-        setViewState(ViewState.idle);
-        showToast(
-          LocaleKeys.contactUs_successTitleText.tr(),
-          gravity: ToastGravity.BOTTOM,
-          toastLength: Toast.LENGTH_LONG,
-          backgroundColor: toastBackGroundColor(context: context),
-        );
-        navigationService.back();
-      },
-    );
+    if (context.mounted) {
+      setViewState(ViewState.busy);
+      Resource<StringResponse?> response = await contactUsUseCase.execute(
+        ContactUsParams(
+          email: _state.emailController.text,
+          message: _state.messageController.text,
+        ),
+      );
+      handleResponse(
+        response,
+        onSuccess: (Resource<StringResponse?> result) async {
+          setViewState(ViewState.idle);
+          showToast(
+            LocaleKeys.contactUs_successTitleText.tr(),
+          );
+          navigationService.back();
+        },
+      );
+    }
   }
 //#endregion
 }

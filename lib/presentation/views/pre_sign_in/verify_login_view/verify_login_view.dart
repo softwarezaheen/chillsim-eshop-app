@@ -1,5 +1,8 @@
 import "package:easy_localization/easy_localization.dart" as loc;
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
@@ -18,11 +21,12 @@ import "package:flutter/services.dart";
 
 class VerifyLoginView extends StatelessWidget {
   const VerifyLoginView({
-    required this.emailAddress,
+    required this.username,
     this.redirection,
     super.key,
   });
-  final String emailAddress;
+
+  final String username;
   static const String routeName = "VerifyLoginView";
   final InAppRedirection? redirection;
 
@@ -44,10 +48,9 @@ class VerifyLoginView extends StatelessWidget {
     return BaseView<VerifyLoginViewModel>(
       routeName: routeName,
       hideAppBar: true,
-      viewModel: VerifyLoginViewModel(
-        redirection: redirection,
-        emailAddress: emailAddress,
-      ),
+      viewModel: locator<VerifyLoginViewModel>()
+        ..username = username
+        ..redirection = redirection,
       builder: (
         BuildContext context,
         VerifyLoginViewModel viewModel,
@@ -68,11 +71,14 @@ class VerifyLoginView extends StatelessWidget {
                     width: 25,
                     height: 25,
                   ),
-                ).imageSupportsRTL.textSupportsRTL,
+                ).imageSupportsRTL(context).textSupportsRTL(context),
               ),
               verticalSpaceMediumLarge,
               Text(
-                LocaleKeys.verifyLogin_titleText.tr(),
+                AppEnvironment.appEnvironmentHelper.loginType ==
+                        LoginType.phoneNumber
+                    ? LocaleKeys.verifyLogin_titleTextPhone.tr()
+                    : LocaleKeys.verifyLogin_titleText.tr(),
                 style: headerTwoMediumTextStyle(
                   context: context,
                   fontColor: titleTextColor(context: context),
@@ -130,7 +136,10 @@ class VerifyLoginView extends StatelessWidget {
               ),
               verticalSpaceLarge,
               MainButton(
-                title: LocaleKeys.verifyLogin_buttonTitleText.tr(),
+                title: AppEnvironment.appEnvironmentHelper.loginType ==
+                        LoginType.phoneNumber
+                    ? LocaleKeys.verifyLogin_buttonTitleTextPhone.tr()
+                    : LocaleKeys.verifyLogin_buttonTitleText.tr(),
                 onPressed: () async {
                   viewModel.verifyButtonTapped();
                 },
@@ -165,7 +174,10 @@ class VerifyLoginView extends StatelessWidget {
     return Text.rich(
       textAlign: TextAlign.center,
       TextSpan(
-        text: LocaleKeys.verifyLogin_checkEmail.tr(),
+        text: AppEnvironment.appEnvironmentHelper.loginType ==
+                LoginType.phoneNumber
+            ? LocaleKeys.verifyLogin_checkPhone.tr()
+            : LocaleKeys.verifyLogin_checkEmail.tr(),
         style: captionOneNormalTextStyle(
           context: context,
           fontColor: secondaryTextColor(context: context),
@@ -191,7 +203,7 @@ class VerifyLoginView extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(StringProperty("emailAddress", emailAddress))
+      ..add(StringProperty("emailAddress", username))
       ..add(
         DiagnosticsProperty<InAppRedirection?>("redirection", redirection),
       );

@@ -41,7 +41,11 @@ Future<XFile?> compressImage(File file) async {
 
 Future<dynamic> shareImage({required String imagePath}) async {
   if (imagePath.isNotEmpty) {
-    await Share.shareXFiles(<XFile>[XFile(imagePath)]);
+    await SharePlus.instance.share(
+      ShareParams(
+        files: <XFile>[XFile(imagePath)],
+      ),
+    );
   }
 }
 
