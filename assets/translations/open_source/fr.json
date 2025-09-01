@@ -370,5 +370,9 @@
   "cashback_reward_message": "la récompense en argent du prix de l'offre groupée est ajoutée au solde de votre portefeuille eSIM",
   "referral_code_activated": "Code de parrainage activé avec succès",
   "no_payment_method_available": "Aucun moyen de paiement disponible pour le moment",
-  "no_sufficient_balance_in_wallet": "Solde insuffisant dans votre portefeuille"
+  "no_sufficient_balance_in_wallet": "Solde insuffisant dans votre portefeuille",
+  "summary_of_payment": "Résumé du paiement",
+  "subtotal": "Sous-total",
+  "estimated_tax": "Taxe estimée",
+  "total": "Total"
 }

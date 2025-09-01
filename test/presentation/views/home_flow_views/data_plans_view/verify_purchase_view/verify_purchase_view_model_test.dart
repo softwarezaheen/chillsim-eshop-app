@@ -94,9 +94,9 @@ Future<void> main() async {
   group("VerifyPurchaseViewModel OTP Field Tests", () {
     test("otpFieldChanged disables verify button and fills initial code", () {
       // First initialize the view model
-      viewModel.onViewModelReady();
+      viewModel..onViewModelReady()
 
-      viewModel.otpFieldChanged("123");
+      ..otpFieldChanged("123");
 
       expect(viewModel.isVerifyButtonEnabled, isFalse);
       expect(viewModel.initialVerificationCode[0], "1");
@@ -118,25 +118,25 @@ Future<void> main() async {
     });
 
     test("fillInitial handles code shorter than otpCount", () {
-      viewModel.onViewModelReady();
+      viewModel..onViewModelReady()
 
-      viewModel.fillInitial("12");
+      ..fillInitial("12");
 
       expect(viewModel.initialVerificationCode, <String>["1", "2", "", "", "", ""]);
     });
 
     test("fillInitial handles code longer than otpCount", () {
-      viewModel.onViewModelReady();
+      viewModel..onViewModelReady()
 
-      viewModel.fillInitial("1234567890");
+      ..fillInitial("1234567890");
 
       expect(viewModel.initialVerificationCode, <String>["1", "2", "3", "4", "5", "6"]);
     });
 
     test("fillInitial handles empty code", () {
-      viewModel.onViewModelReady();
+      viewModel..onViewModelReady()
 
-      viewModel.fillInitial("");
+      ..fillInitial("");
 
       expect(viewModel.initialVerificationCode, <String>["", "", "", "", "", ""]);
     });

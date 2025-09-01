@@ -11,6 +11,9 @@ class BundleAssignResponseModel {
     this.stripeUrlScheme,
     this.orderId,
     this.paymentStatus,
+    this.taxPriceDisplay,
+    this.subtotalPriceDisplay,
+    this.totalPriceDisplay,
   });
 
   factory BundleAssignResponseModel.fromJson({dynamic json}) {
@@ -26,6 +29,9 @@ class BundleAssignResponseModel {
       stripeUrlScheme: json["stripe_url_scheme"],
       orderId: json["order_id"],
       paymentStatus: json["payment_status"],
+      taxPriceDisplay: json["tax_price_display"],
+      totalPriceDisplay: json["total_price_display"],
+      subtotalPriceDisplay: json["subtotal_price_display"],
     );
   }
 
@@ -40,6 +46,16 @@ class BundleAssignResponseModel {
   final String? stripeUrlScheme;
   final String? orderId;
   final String? paymentStatus;
+  final String? subtotalPriceDisplay;
+  final String? taxPriceDisplay;
+  final String? totalPriceDisplay;
+
+  bool isTaxExist() {
+    String numericPart =
+        (taxPriceDisplay ?? "").replaceAll(RegExp(r"[^0-9\.\-]"), "");
+    double value = double.tryParse(numericPart) ?? 0.0;
+    return value > 0.0;
+  }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -54,6 +70,9 @@ class BundleAssignResponseModel {
       "stripe_url_scheme": stripeUrlScheme,
       "order_id": orderId,
       "payment_status": paymentStatus,
+      "tax_price_display": taxPriceDisplay,
+      "total_price_display": totalPriceDisplay,
+      "subtotal_price_display": subtotalPriceDisplay,
     };
   }
 }

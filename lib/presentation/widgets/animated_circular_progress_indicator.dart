@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
@@ -64,7 +66,7 @@ class _AnimatedCircularProgressIndicatorState
     );
 
     // Start the animation
-    _controller.forward();
+    unawaited(_controller.forward());
   }
 
   @override
@@ -82,7 +84,7 @@ class _AnimatedCircularProgressIndicatorState
         ),
       );
 
-      _controller.forward(from: 0);
+      unawaited(_controller.forward(from: 0));
     }
   }
 

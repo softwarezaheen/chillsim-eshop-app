@@ -92,13 +92,13 @@ Future<void> main() async {
     });
 
     test("updateButtonState handles validation errors", () {
-      viewModel.userPhoneNumber = "invalid";
-      viewModel.isPhoneValid = false;
-      viewModel.updateButtonState();
+      viewModel..userPhoneNumber = "invalid"
+      ..isPhoneValid = false
+      ..updateButtonState();
       expect(viewModel.validationError, isNotNull);
 
-      viewModel.isPhoneValid = true;
-      viewModel.updateButtonState();
+      viewModel..isPhoneValid = true
+      ..updateButtonState();
       expect(viewModel.validationError, isNull);
     });
 

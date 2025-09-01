@@ -371,5 +371,9 @@
   "cashback_reward_message": "تُضاف مكافأة الاسترداد النقدي لسعر الباقة مرة أخرى إلى رصيد محفظة eSIM",
   "referral_code_activated": "تم تفعيل رمز الإحالة بنجاح",
   "no_payment_method_available": "لا توجد طريقة دفع متاحة حالياً",
-  "no_sufficient_balance_in_wallet": "لا يوجد رصيد كافٍ في محفظتك"
+  "no_sufficient_balance_in_wallet": "لا يوجد رصيد كافٍ في محفظتك",
+  "summary_of_payment": "ملخص الدفع",
+  "subtotal": "المجموع الفرعي",
+  "estimated_tax": "الضريبة المقدرة",
+  "total": "الإجمالي"
 }

@@ -19,6 +19,8 @@ import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:esim_open_source/utils/order_status_enum.dart";
+import "package:esim_open_source/utils/payment_helper.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
@@ -128,22 +130,29 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
     handleResponse(
       response,
       onSuccess: (Resource<BundleAssignResponseModel?> result) async {
-        if (result.data == null) {
-          handleError(response);
+        PaymentStatus paymentStatus =
+            PaymentStatus.fromString(result.data?.paymentStatus);
+        if (paymentStatus == PaymentStatus.completed) {
           return;
         }
-        await initiatePaymentRequest(
-          paymentType: paymentType,
-          orderID: result.data?.orderId ?? "",
-          publishableKey: result.data?.publishableKey ?? "",
-          merchantIdentifier: result.data?.merchantIdentifier ?? "",
-          paymentIntentClientSecret:
-              result.data?.paymentIntentClientSecret ?? "",
-          customerId: result.data?.customerId ?? "",
-          customerEphemeralKeySecret:
-              result.data?.customerEphemeralKeySecret ?? "",
-          test: result.data?.testEnv ?? false,
-          billingCountryCode: result.data?.billingCountryCode ?? "",
+        await PaymentHelper.checkTaxAmount(
+          result: result,
+          onError: () => () async {
+            handleError(result);
+          },
+          onSuccess: () => initiatePaymentRequest(
+            paymentType: paymentType,
+            orderID: result.data?.orderId ?? "",
+            publishableKey: result.data?.publishableKey ?? "",
+            merchantIdentifier: result.data?.merchantIdentifier ?? "",
+            paymentIntentClientSecret:
+                result.data?.paymentIntentClientSecret ?? "",
+            customerId: result.data?.customerId ?? "",
+            customerEphemeralKeySecret:
+                result.data?.customerEphemeralKeySecret ?? "",
+            test: result.data?.testEnv ?? false,
+            billingCountryCode: result.data?.billingCountryCode ?? "",
+          ),
         );
       },
     );

@@ -197,13 +197,13 @@ Future<void> main() async {
   });
 
   test("viewModel properties coverage", () {
-    final DynamicDataViewModel viewModel = locator<DynamicDataViewModel>();
+    final DynamicDataViewModel viewModel = locator<DynamicDataViewModel>()
 
     // Cover all property setters and getters (lines 29-35)
-    viewModel.viewType = DynamicDataViewType.aboutUs;
-    viewModel.viewTitle = "Test Title";
-    viewModel.viewIntro = "Test Intro";
-    viewModel.viewContent = "Test Content";
+    ..viewType = DynamicDataViewType.aboutUs
+    ..viewTitle = "Test Title"
+    ..viewIntro = "Test Intro"
+    ..viewContent = "Test Content";
 
     expect(viewModel.viewType, equals(DynamicDataViewType.aboutUs));
     expect(viewModel.viewTitle, equals("Test Title"));
@@ -214,8 +214,8 @@ Future<void> main() async {
     expect(viewModel.getHtmlContent, equals("Test Intro Test Content"));
 
     // Cover edge cases
-    viewModel.viewIntro = "";
-    viewModel.viewContent = "";
+    viewModel..viewIntro = ""
+    ..viewContent = "";
     expect(viewModel.getHtmlContent, equals(" "));
 
     // Cover use case initialization (lines 37-39)
@@ -277,9 +277,9 @@ Future<void> main() async {
     when(mockLocalStorage.languageCode).thenReturn("en");
 
     // Reset state
-    viewModel.viewTitle = "";
-    viewModel.viewIntro = "";
-    viewModel.viewContent = "";
+    viewModel..viewTitle = ""
+    ..viewIntro = ""
+    ..viewContent = "";
 
     // Test null handling with ?? operators (lines 80-82)
     when(mockApiRepo.getTermsConditions()).thenAnswer(

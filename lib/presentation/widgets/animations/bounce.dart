@@ -1,5 +1,7 @@
 library flutter_bounce;
 
+import "dart:async";
+
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -78,11 +80,11 @@ class BounceState extends State<Bounce> with SingleTickerProviderStateMixin {
   // but in a duration of time, and our callback is called here as well
   void _onTap() {
     //Firing the animation right away
-    _animate.forward();
+    unawaited(_animate.forward());
 
     //Now reversing the animation after the user defined duration
     Future<void>.delayed(userDuration, () {
-      _animate.reverse();
+      unawaited(_animate.reverse());
 
       //Calling the callback
       onPressed();

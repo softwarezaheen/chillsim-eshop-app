@@ -370,5 +370,9 @@
   "cashback_reward_message": "Cash back reward of the bundle price is added back into your eSIM wallet balance",
   "referral_code_activated": "Referral code activated successfully",
   "no_payment_method_available": "No payment method available right now",
-  "no_sufficient_balance_in_wallet": "No Sufficient Balance in your Wallet"
+  "no_sufficient_balance_in_wallet": "No Sufficient Balance in your Wallet",
+  "summary_of_payment": "Summary of Payment",
+  "subtotal": "Subtotal",
+  "estimated_tax": "Estimated Tax",
+  "total": "Total"
 }

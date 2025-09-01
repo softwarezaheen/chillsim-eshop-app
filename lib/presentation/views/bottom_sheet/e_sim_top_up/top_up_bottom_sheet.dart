@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
@@ -124,7 +126,7 @@ class TopUpBottomSheet extends StatelessWidget {
           showUnlimitedData: item.unlimited ?? false,
           validFor: item.validityDisplay ?? "",
           onPriceButtonClick: () {
-            viewModel.onBuyClick(index: index);
+            unawaited(viewModel.onBuyClick(index: index));
           },
           isLoading: viewModel.applyShimmer,
           icon: item.icon ?? "",

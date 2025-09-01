@@ -2,7 +2,7 @@ import "package:esim_open_source/presentation/extensions/context_extension.dart"
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
-import "package:esim_open_source/presentation/views/bottom_sheet/services_bottom_model.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/services_bottom_sheet/services_bottom_model.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:stacked/stacked.dart";

@@ -70,7 +70,7 @@ class AnimationScaleUpDownState extends State<AnimationScaleUpDown>
 
     //Now reversing the animation after the user defined duration
     Future<void>.delayed(userDuration, () {
-      _animate.reverse();
+      unawaited(_animate.reverse());
     });
   }
 

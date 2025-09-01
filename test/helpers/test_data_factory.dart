@@ -356,7 +356,7 @@ class TestDataFactory {
         title: "Test Notification ${index + 1}",
         content: "Test notification content ${index + 1}",
         datetime: "${1640995200 + (index * 3600)}", // Each hour apart
-        status: index % 2 == 0, // Alternate read/unread status
+        status: index.isEven, // Alternate read/unread status
         iccid: "test-iccid-${index + 1}",
         category: "${index + 1}",
       ),
@@ -443,7 +443,7 @@ class TestDataFactory {
         displaySubtitle: "Test Subtitle ${index + 1}",
         bundleCode: "bundle-code-${index + 1}",
         iccid: "iccid-${index + 1}",
-        orderStatus: index % 2 == 0 ? "active" : "expired",
+        orderStatus: index.isEven ? "active" : "expired",
       ),
     );
   }

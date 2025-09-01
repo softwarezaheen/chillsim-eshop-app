@@ -2,7 +2,9 @@ import "dart:async";
 import "dart:io";
 import "dart:math";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
@@ -16,6 +18,8 @@ import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/esim_base_model.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:esim_open_source/utils/payment_helper.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class TopUpBottomSheetViewModel extends EsimBaseModel {
@@ -24,6 +28,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   //#region UseCases
   final TopUpUserBundleUseCase topUpUserBundleUseCase =
       TopUpUserBundleUseCase(locator());
+
   //#endregion
 
   //#region Variables
@@ -39,16 +44,57 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     unawaited(fetchTopUpRelated());
   }
 
-  void onBuyClick({required int index}) {
+  Future<void> onBuyClick({required int index}) async {
     BundleResponseModel item = bundleItems[index];
-    unawaited(
-      _topUpBundle(
-        iccId: request.data?.iccID ?? "",
-        bundleCode: item.bundleCode ?? "",
-        bundlePrice: item.priceDisplay ?? "",
-        bundleCurrency: item.currencyCode ?? "",
-      ),
-    );
+
+    List<PaymentType> paymentTypeList = AppEnvironment.appEnvironmentHelper
+        .paymentTypeList(isUserLoggedIn: isUserLoggedIn);
+    if (paymentTypeList.isEmpty) {
+      //no payment type available
+      showToast(LocaleKeys.no_payment_method_available.tr());
+      return;
+    }
+
+    String iccId = request.data?.iccID ?? "";
+
+    if (paymentTypeList.length == 1) {
+      //check if it's wallet, then check if wallet available
+      PaymentType paymentType = paymentTypeList.first;
+
+      switch (paymentType) {
+        case PaymentType.wallet:
+          final bool hasSufficientBalance =
+              userAuthenticationService.walletAvailableBalance >=
+                  (item.price ?? 0.0);
+          if (!hasSufficientBalance) {
+            showToast(LocaleKeys.no_sufficient_balance_in_wallet.tr());
+            return;
+          }
+          _topUpBundle(
+            paymentType: paymentType,
+            iccId: iccId,
+            item: item,
+          );
+
+        case PaymentType.dcb:
+        case PaymentType.card:
+          _topUpBundle(
+            paymentType: paymentType,
+            iccId: iccId,
+            item: item,
+          );
+      }
+    } else {
+      PaymentType? paymentType =
+          await PaymentHelper.choosePaymentMethod(paymentTypeList);
+      if (paymentType != null) {
+        _topUpBundle(
+          paymentType: paymentType,
+          iccId: iccId,
+          item: item,
+        );
+      }
+    }
   }
 
   void closeBottomSheet() {
@@ -119,40 +165,50 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   }
 
   Future<void> _topUpBundle({
+    required PaymentType paymentType,
     required String iccId,
-    required String bundleCode,
-    required String bundlePrice,
-    required String bundleCurrency,
+    required BundleResponseModel item,
   }) async {
+    String bundleCode = item.bundleCode ?? "";
+    double bundlePrice = item.price ?? 0.0;
+    String bundlePriceDisplay = item.priceDisplay ?? "";
+    String bundleCurrency = item.currencyCode ?? "";
+
     setViewState(ViewState.busy);
     Resource<BundleAssignResponseModel?> response = await topUpUserBundleUseCase
         .execute(TopUpUserBundleParam(iccID: iccId, bundleCode: bundleCode));
     handleResponse(
       response,
       onSuccess: (Resource<BundleAssignResponseModel?> result) async {
-        if (result.data == null) {
-          handleError(response);
-          return;
-        }
-        initiatePaymentRequest(
-          orderID: result.data?.orderId ?? "",
-          publishableKey: result.data?.publishableKey ?? "",
-          merchantIdentifier: result.data?.merchantIdentifier ?? "",
-          paymentIntentClientSecret:
-              result.data?.paymentIntentClientSecret ?? "",
-          customerId: result.data?.customerId ?? "",
-          customerEphemeralKeySecret:
-              result.data?.customerEphemeralKeySecret ?? "",
-          test: result.data?.testEnv ?? false,
-          billingCountryCode: result.data?.billingCountryCode ?? "",
-          bundlePrice: bundlePrice,
-          bundleCurrency: bundleCurrency,
+        setViewState(ViewState.idle);
+        PaymentHelper.checkTaxAmount(
+          result: result,
+          onError: () => () async {
+            handleError(result);
+            cancelOrder(orderID: result.data?.orderId ?? "");
+          },
+          onSuccess: () => initiatePaymentRequest(
+            paymentType: paymentType,
+            orderID: result.data?.orderId ?? "",
+            publishableKey: result.data?.publishableKey ?? "",
+            merchantIdentifier: result.data?.merchantIdentifier ?? "",
+            paymentIntentClientSecret:
+                result.data?.paymentIntentClientSecret ?? "",
+            customerId: result.data?.customerId ?? "",
+            customerEphemeralKeySecret:
+                result.data?.customerEphemeralKeySecret ?? "",
+            test: result.data?.testEnv ?? false,
+            billingCountryCode: result.data?.billingCountryCode ?? "",
+            bundlePrice: bundlePriceDisplay,
+            bundleCurrency: bundleCurrency,
+          ),
         );
       },
     );
   }
 
   Future<void> initiatePaymentRequest({
+    required PaymentType paymentType,
     required String orderID,
     required String publishableKey,
     required String merchantIdentifier,
@@ -165,14 +221,15 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     bool test = false,
   }) async {
     try {
+      setViewState(ViewState.busy);
       await paymentService.prepareCheckout(
-        paymentType: PaymentType.card,
+        paymentType: paymentType,
         publishableKey: publishableKey,
         merchantIdentifier: merchantIdentifier,
       );
 
       await paymentService.processOrderPayment(
-        paymentType: PaymentType.card,
+        paymentType: paymentType,
         iccID: request.data?.iccID ?? "",
         orderID: orderID,
         billingCountryCode: billingCountryCode,

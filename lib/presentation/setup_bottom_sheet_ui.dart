@@ -20,9 +20,10 @@ import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sh
 import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_method_bottom_sheet/payment_method_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_selection_bottom_sheet/payment_selection_bottom_sheet_view.dart";
-import "package:esim_open_source/presentation/views/bottom_sheet/services_bottom_sheet.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/services_bottom_sheet/services_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/share_referral_code/share_referral_code_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/success_bottom_sheet/success_bottom_sheet.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/tax_bottom_sheet/tax_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/terms_bottom_sheet/terms_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/upgrade_wallet_bottom_sheet/upgrade_wallet_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/voucher_code_bottom_sheet/voucher_code_bottom_sheet_view.dart";
@@ -257,6 +258,15 @@ void setupBottomSheetUi() {
       Function(SheetResponse<EmptyBottomSheetResponse>) completer,
     ) =>
         _CashbackRewardBottomSheet(
+          request: sheetRequest,
+          completer: completer,
+        ),
+    BottomSheetType.tax: (
+      dynamic context,
+      dynamic sheetRequest,
+      Function(SheetResponse<EmptyBottomSheetResponse>) completer,
+    ) =>
+        _TaxBottomSheet(
           request: sheetRequest,
           completer: completer,
         ),
@@ -941,5 +951,56 @@ class PaymentSelectionResponse {
 
   final PaymentType paymentType;
   final bool canceled;
+}
+//#endregion
+
+//#region Tax Bottom Sheet
+class _TaxBottomSheet extends StatelessWidget {
+  const _TaxBottomSheet({
+    required this.request,
+    required this.completer,
+  });
+
+  final SheetRequest<TaxBottomRequest> request;
+  final Function(SheetResponse<EmptyBottomSheetResponse>) completer;
+
+  @override
+  Widget build(BuildContext context) {
+    return TaxBottomSheet(
+      request: request,
+      completer: completer,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+        DiagnosticsProperty<SheetRequest<TaxBottomRequest>>(
+          "request",
+          request,
+        ),
+      )
+      ..add(
+        ObjectFlagProperty<
+            Function(SheetResponse<EmptyBottomSheetResponse> p1)>.has(
+          "completer",
+          completer,
+        ),
+      );
+  }
+}
+
+class TaxBottomRequest {
+  TaxBottomRequest({
+    required this.subTotal,
+    required this.estimatedTax,
+    required this.total,
+  });
+
+  final String subTotal;
+  final String estimatedTax;
+  final String total;
 }
 //#endregion

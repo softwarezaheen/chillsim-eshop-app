@@ -1,5 +1,6 @@
 library flutter_bounce;
 
+import "dart:async";
 import "dart:math" as math;
 
 import "package:flutter/foundation.dart";
@@ -71,7 +72,7 @@ class AnimationFlipVerticallyState extends State<AnimationFlipVertically>
   Future<void> loopOnce(BuildContext context) async {
     //Firing the animation right away
     Future<void>.delayed(Duration(milliseconds: widget.startAfter), () {
-      _animate.forward();
+      unawaited(_animate.forward());
     });
 
     //Now reversing the animation after the user defined duration

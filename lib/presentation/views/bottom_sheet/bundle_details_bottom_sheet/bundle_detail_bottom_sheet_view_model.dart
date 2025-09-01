@@ -30,6 +30,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/main_page/ho
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/order_status_enum.dart";
+import "package:esim_open_source/utils/payment_helper.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
@@ -263,22 +264,11 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           _triggerAssignFlow(paymentType: paymentType);
       }
     } else {
-      _choosePaymentMethod(paymentTypeList);
-    }
-  }
-
-  Future<void> _choosePaymentMethod(
-    List<PaymentType> paymentTypeList,
-  ) async {
-    SheetResponse<PaymentType>? response =
-        await bottomSheetService.showCustomSheet(
-      data: PaymentSelectionBottomRequest(paymentTypeList: paymentTypeList),
-      enableDrag: false,
-      isScrollControlled: true,
-      variant: BottomSheetType.paymentSelection,
-    );
-    if (response?.confirmed ?? false) {
-      _triggerAssignFlow(paymentType: response?.data ?? PaymentType.card);
+      PaymentType? paymentType =
+          await PaymentHelper.choosePaymentMethod(paymentTypeList);
+      if (paymentType != null) {
+        _triggerAssignFlow(paymentType: paymentType);
+      }
     }
   }
 
@@ -312,14 +302,11 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         ),
       ),
     );
+    setViewState(ViewState.idle);
+
     handleResponse(
       response,
       onSuccess: (Resource<BundleAssignResponseModel?> result) async {
-        if (result.data == null) {
-          handleError(response);
-          return;
-        }
-
         PaymentStatus paymentStatus =
             PaymentStatus.fromString(result.data?.paymentStatus);
         if (paymentStatus == PaymentStatus.completed) {
@@ -329,20 +316,26 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           );
           return;
         }
-
-        _initiatePaymentRequest(
-          paymentType: paymentType,
-          bearerToken: bearerToken,
-          orderID: result.data?.orderId ?? "",
-          publishableKey: result.data?.publishableKey ?? "",
-          merchantIdentifier: result.data?.merchantIdentifier ?? "",
-          paymentIntentClientSecret:
-              result.data?.paymentIntentClientSecret ?? "",
-          customerId: result.data?.customerId ?? "",
-          customerEphemeralKeySecret:
-              result.data?.customerEphemeralKeySecret ?? "",
-          test: result.data?.testEnv ?? false,
-          billingCountryCode: result.data?.billingCountryCode ?? "",
+        await PaymentHelper.checkTaxAmount(
+          result: result,
+          onError: () => () async {
+            handleError(result);
+            cancelOrder(orderID: result.data?.orderId ?? "");
+          },
+          onSuccess: () => _initiatePaymentRequest(
+            paymentType: paymentType,
+            bearerToken: bearerToken,
+            orderID: result.data?.orderId ?? "",
+            publishableKey: result.data?.publishableKey ?? "",
+            merchantIdentifier: result.data?.merchantIdentifier ?? "",
+            paymentIntentClientSecret:
+                result.data?.paymentIntentClientSecret ?? "",
+            customerId: result.data?.customerId ?? "",
+            customerEphemeralKeySecret:
+                result.data?.customerEphemeralKeySecret ?? "",
+            test: result.data?.testEnv ?? false,
+            billingCountryCode: result.data?.billingCountryCode ?? "",
+          ),
         );
       },
     );
@@ -361,6 +354,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     bool test = false,
   }) async {
     try {
+      setViewState(ViewState.busy);
+
       await paymentService.prepareCheckout(
         paymentType: paymentType,
         publishableKey: publishableKey,

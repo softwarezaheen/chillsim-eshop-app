@@ -45,9 +45,9 @@ Future<void> main() async {
 
     test("onViewModelReady with redirection", () {
       final InAppRedirection redirection = InAppRedirection.cashback();
-      viewModel.redirection = redirection;
+      viewModel..redirection = redirection
 
-      viewModel.onViewModelReady();
+      ..onViewModelReady();
 
       verify(mockRedirectionsHandlerService.redirectToRoute(
         redirection: redirection,
@@ -63,9 +63,9 @@ Future<void> main() async {
     });
 
     test("lockTabBar setter with tab controller", () {
-      viewModel.tabController = mockTabController;
+      viewModel..tabController = mockTabController
       
-      viewModel.lockTabBar = true;
+      ..lockTabBar = true;
 
       verify(mockTabController.isLocked = true).called(1);
     });
@@ -79,9 +79,9 @@ Future<void> main() async {
     });
 
     test("changeSelectedTabIndex with tab controller", () {
-      viewModel.tabController = mockTabController;
+      viewModel..tabController = mockTabController
       
-      viewModel.changeSelectedTabIndex(index: 1);
+      ..changeSelectedTabIndex(index: 1);
 
       verify(mockTabController.animateTo(1)).called(1);
     });
@@ -130,8 +130,8 @@ Future<void> main() async {
             Builder(
               builder: (BuildContext context) {
                 // Call twice to test the removal logic (lines 42-44)
-                viewModel.setRelatedListeners(context: context);
-                viewModel.setRelatedListeners(context: context);
+                viewModel..setRelatedListeners(context: context)
+                ..setRelatedListeners(context: context);
                 return Container();
               },
             ),
@@ -168,22 +168,22 @@ Future<void> main() async {
 
     group("Tab Controller Interaction Tests", () {
       test("tab controller operations with mock controller", () {
-        viewModel.tabController = mockTabController;
-        viewModel.lockTabBar = true;
-        viewModel.changeSelectedTabIndex(index: 2);
+        viewModel..tabController = mockTabController
+        ..lockTabBar = true
+        ..changeSelectedTabIndex(index: 2);
 
         verify(mockTabController.isLocked = true).called(1);
         verify(mockTabController.animateTo(2)).called(1);
       });
 
       test("multiple tab controller operations", () {
-        viewModel.tabController = mockTabController;
+        viewModel..tabController = mockTabController
         
         // Test multiple operations
-        viewModel.lockTabBar = false;
-        viewModel.changeSelectedTabIndex(index: 0);
-        viewModel.lockTabBar = true;
-        viewModel.changeSelectedTabIndex(index: 2);
+        ..lockTabBar = false
+        ..changeSelectedTabIndex(index: 0)
+        ..lockTabBar = true
+        ..changeSelectedTabIndex(index: 2);
 
         verify(mockTabController.isLocked = false).called(1);
         verify(mockTabController.isLocked = true).called(1);
