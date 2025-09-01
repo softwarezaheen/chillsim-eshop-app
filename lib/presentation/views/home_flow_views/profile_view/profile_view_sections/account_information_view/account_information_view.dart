@@ -42,7 +42,7 @@ class AccountInformationView extends StatelessWidget {
               navigationTitle: LocaleKeys.accountInformation_titleText.tr(),
               textStyle: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             Expanded(

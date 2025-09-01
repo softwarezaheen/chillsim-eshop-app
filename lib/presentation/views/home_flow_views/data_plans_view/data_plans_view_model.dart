@@ -276,10 +276,12 @@ class DataPlansViewModel extends BaseModel {
         } else {
           UserNotificationModel? foundNotRead;
           try {
-            foundNotRead = result.data?.firstWhere(
-              (UserNotificationModel notification) =>
-                  !(notification.status ?? false),
-            );
+            foundNotRead = result.data!
+                .where(
+                  (UserNotificationModel notification) =>
+                      !(notification.status ?? false),
+                )
+                .firstOrNull; // Returns null if no element found
           } on Exception catch (_) {
             foundNotRead = null;
           }

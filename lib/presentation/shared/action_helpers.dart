@@ -90,7 +90,7 @@ Widget _iOSNativeDialog({
             style: titleTextStyle ??
                 bodyMediumTextStyle(
                   context: context,
-                  fontColor: mainDarkTextColor(context: context),
+                  fontColor: titleTextColor(context: context),
                 ),
           ),
     content: contentText == null
@@ -147,7 +147,7 @@ Widget _androidNativeDialog({
               style: titleTextStyle ??
                   bodyMediumTextStyle(
                     context: context,
-                    fontColor: mainDarkTextColor(context: context),
+                    fontColor: titleTextColor(context: context),
                   ),
             ),
       content: contentText == null

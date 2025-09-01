@@ -72,7 +72,7 @@ class UpgradeWalletBottomSheetView extends StatelessWidget {
                           LocaleKeys.myWallet_upgradeSectionText.tr(),
                           style: headerThreeMediumTextStyle(
                             context: context,
-                            fontColor: mainDarkTextColor(context: context),
+                            fontColor: titleTextColor(context: context),
                           ),
                         ),
                         verticalSpaceSmallMedium,

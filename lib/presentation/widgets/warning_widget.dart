@@ -27,19 +27,19 @@ class WarningWidget extends StatelessWidget {
                 Icon(
                   size: 18,
                   Icons.info_outline,
-                  color: context.appColors.baseWhite,
+                  color: context.appColors.baseBlack,
                 ),
                 Text(
                   "Warning",
                   style: captionTwoBoldTextStyle(context: context)
-                      .copyWith(color: context.appColors.baseWhite),
+                      .copyWith(color: context.appColors.baseBlack),
                 ),
               ],
             ),
             Text(
               warningTextContent,
-              style: captionTwoBoldTextStyle(context: context)
-                  .copyWith(color: context.appColors.baseWhite),
+              style: captionTwoMediumTextStyle(context: context)
+                  .copyWith(color: context.appColors.baseBlack),
             ),
           ],
         ),

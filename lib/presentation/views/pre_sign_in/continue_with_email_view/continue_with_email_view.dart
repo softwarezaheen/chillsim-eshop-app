@@ -73,7 +73,7 @@ class ContinueWithEmailView extends StatelessWidget {
                         LocaleKeys.continueWithEmailView_titleText.tr(),
                         style: headerTwoMediumTextStyle(
                           context: context,
-                          fontColor: mainDarkTextColor(context: context),
+                          fontColor: titleTextColor(context: context),
                         ),
                       ),
                       verticalSpaceSmall,
@@ -202,7 +202,7 @@ class ContinueWithEmailView extends StatelessWidget {
         text: LocaleKeys.continueWithEmailView_acceptTerms.tr(),
         style: captionOneMediumTextStyle(
           context: context,
-          fontColor: mainDarkTextColor(context: context),
+          fontColor: titleTextColor(context: context),
         ),
         children: <TextSpan>[
           TextSpan(

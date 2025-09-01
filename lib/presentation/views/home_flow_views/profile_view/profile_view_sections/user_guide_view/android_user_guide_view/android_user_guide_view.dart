@@ -97,7 +97,7 @@ class AndroidUserGuideView extends StatelessWidget {
                       titleText,
                       style: bodyNormalTextStyle(
                         context: context,
-                        fontColor: titleTextColor(context: context),
+                        fontColor: bubbleCountryTextColor(context: context),
                       ),
                     ),
                   ),

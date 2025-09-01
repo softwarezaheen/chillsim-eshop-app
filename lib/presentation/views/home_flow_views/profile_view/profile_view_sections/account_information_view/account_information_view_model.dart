@@ -14,6 +14,7 @@ import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/cupertino.dart";
 import "package:phone_input/phone_input_package.dart";
+import "package:phone_input/src/number_parser/models/phone_number_exceptions.dart";
 
 class AccountInformationViewModel extends BaseModel {
   bool _receiveUpdates = false;
@@ -24,6 +25,7 @@ class AccountInformationViewModel extends BaseModel {
   bool _saveButtonEnabled = false;
 
   String? _validationError;
+
   String? get validationError => _validationError;
 
   bool get saveButtonEnabled => _saveButtonEnabled;
@@ -42,7 +44,7 @@ class AccountInformationViewModel extends BaseModel {
   final UpdateUserInfoUseCase updateUserInfoUseCase =
       UpdateUserInfoUseCase(locator<ApiAuthRepository>());
   PhoneController phoneController =
-      PhoneController(const PhoneNumber(isoCode: IsoCode.LB, nsn: ""));
+      PhoneController(const PhoneNumber(isoCode: IsoCode.RO, nsn: ""));
 
   @override
   Future<void> onViewModelReady() async {
@@ -50,17 +52,19 @@ class AccountInformationViewModel extends BaseModel {
     PhoneNumber? parsed;
     try {
       parsed = PhoneNumber.parse(userMsisdn);
-    } on Object catch (_) {
+    } on PhoneNumberException {
       //ignore
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userEmail = userEmailAddress;
+      debugPrint("userEmail: $userEmail");
+      log(userEmail);
       _nameController.text = userFirstName;
       _familyNameController.text = userLastName;
       _receiveUpdates = isNewsletterSubscribed;
       _emailController.text = userEmailAddress;
       phoneController.value = PhoneNumber(
-        isoCode: parsed?.isoCode ?? IsoCode.LB,
+        isoCode: parsed?.isoCode ?? IsoCode.RO,
         nsn: parsed?.nsn ?? "",
       );
 
@@ -109,6 +113,7 @@ class AccountInformationViewModel extends BaseModel {
     String phoneNumber, {
     required bool isValid,
   }) {
+    debugPrint("validateNumber, code: $countryCode, number: $phoneNumber");
     isPhoneValid = isValid;
     userPhoneNumber = phoneNumber;
     updateButtonState();

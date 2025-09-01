@@ -132,7 +132,7 @@ class ProfileView extends StatelessWidget {
             section.sectionTitle,
             style: captionOneNormalTextStyle(
               context: context,
-              fontColor: sectionTitleTextColor(context: context),
+              fontColor: titleTextColor(context: context),
             ),
           ).textSupportsRTL(context),
           verticalSpaceSmall,
@@ -162,7 +162,7 @@ class ProfileView extends StatelessWidget {
                       section.sectionTitle,
                       style: bodyNormalTextStyle(
                         context: context,
-                        fontColor: titleTextColor(context: context),
+                        fontColor: bubbleCountryTextColor(context: context),
                       ),
                     ),
                   ],
@@ -193,7 +193,7 @@ class ProfileView extends StatelessWidget {
           textAlign: TextAlign.center,
           style: headerThreeBoldTextStyle(
             context: context,
-            fontColor: mainDarkTextColor(
+            fontColor: titleTextColor(
               context: context,
             ),
           ),

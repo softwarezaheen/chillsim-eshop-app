@@ -72,7 +72,7 @@ class DataPlansView extends StatelessWidget {
                         LocaleKeys.dataPlans_titleText.tr(),
                         style: headerTwoBoldTextStyle(
                           context: context,
-                          fontColor: mainDarkTextColor(context: context),
+                          fontColor: titleTextColor(context: context),
                         ),
                       ),
                       getTopTrialingWidget(
@@ -130,7 +130,7 @@ class DataPlansView extends StatelessWidget {
       initialIndex: DataPlansViewModel.cruiseTabBarSelectedIndex,
       backGroundColor: whiteBackGroundColor(context: context),
       selectedTabColor: mainTabBackGroundColor(context: context),
-      selectedLabelColor: mainDarkTextColor(context: context),
+      selectedLabelColor: titleTextColor(context: context),
       selectedTabTextStyle: captionOneMediumTextStyle(context: context),
       childWidget: DataPlansViewModel.cruiseTabBarSelectedIndex == 0
           ? (AppEnvironment.appEnvironmentHelper.enableBannersView &&

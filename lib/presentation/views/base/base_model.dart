@@ -114,4 +114,8 @@ class BaseModel extends ReactiveViewModel
     locator<SocialLoginService>().logOut();
     addDeviceUseCase.execute(NoParams());
   }
+
+  void hideKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
 }

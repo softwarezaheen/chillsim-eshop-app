@@ -32,7 +32,7 @@ class UserGuideView extends StatelessWidget {
                   navigationTitle: LocaleKeys.userGuideView_titleText.tr(),
                   textStyle: headerTwoBoldTextStyle(
                     context: context,
-                    fontColor: mainDarkTextColor(context: context),
+                    fontColor: titleTextColor(context: context),
                   ),
                 ),
                 verticalSpaceSmallMedium,

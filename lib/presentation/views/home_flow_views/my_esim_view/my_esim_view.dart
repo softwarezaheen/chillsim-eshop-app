@@ -5,7 +5,6 @@ import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
-import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -70,7 +69,7 @@ class MyESimView extends StatelessWidget {
                   LocaleKeys.myESim_titleText.tr(),
                   style: headerTwoBoldTextStyle(
                     context: context,
-                    fontColor: mainDarkTextColor(context: context),
+                    fontColor: titleTextColor(context: context),
                   ),
                 ),
                 GestureDetector(
@@ -79,7 +78,7 @@ class MyESimView extends StatelessWidget {
                   },
                   child: Badge(
                     isLabelVisible: viewModel.state.showNotificationBadge,
-                    backgroundColor: context.appColors.indigo_700,
+                    backgroundColor: notificationBadgeColor(context: context),
                     child: Image.asset(
                       EnvironmentImages.notificationIcon.fullImagePath,
                       width: 25,

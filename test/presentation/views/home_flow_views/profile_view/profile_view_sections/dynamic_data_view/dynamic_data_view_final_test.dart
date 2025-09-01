@@ -198,8 +198,6 @@ Future<void> main() async {
 
   test("viewModel properties coverage", () {
     final DynamicDataViewModel viewModel = locator<DynamicDataViewModel>()
-
-    // Cover all property setters and getters (lines 29-35)
     ..viewType = DynamicDataViewType.aboutUs
     ..viewTitle = "Test Title"
     ..viewIntro = "Test Intro"

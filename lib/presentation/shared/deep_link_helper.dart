@@ -42,6 +42,7 @@ enum DeepLinkDecodeKeys {
 
 class DeepLinkHandler {
   DeepLinkHandler._initialize({required this.redirectionsHandlerService});
+  final String tag = "DeepLinkHandler";
   static DeepLinkHandler shared = DeepLinkHandler._initialize(
     redirectionsHandlerService: locator<RedirectionsHandlerService>(),
   );
@@ -58,12 +59,13 @@ class DeepLinkHandler {
   ) async {
     // Handle cold start
     try {
+      log("$tag | init: start");
       final Uri? initialLink = await _appLinks.getInitialLink();
       if (initialLink != null) {
         onDeepLink(uri: initialLink, isInitial: true);
       }
     } on Object catch (e) {
-      log("Failed to get initial deep link: $e");
+      log("$tag | init: Failed to get initial deep link: $e");
     }
 
     // Handle resumed app

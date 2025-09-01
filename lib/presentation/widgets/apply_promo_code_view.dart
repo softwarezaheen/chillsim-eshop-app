@@ -57,7 +57,7 @@ class ApplyPromoCode extends StatelessWidget {
                     LocaleKeys.promoCodeView_titleText.tr(),
                     style: captionOneMediumTextStyle(
                       context: context,
-                      fontColor: mainDarkTextColor(context: context),
+                      fontColor: titleTextColor(context: context),
                     ),
                   ),
                   Icon(

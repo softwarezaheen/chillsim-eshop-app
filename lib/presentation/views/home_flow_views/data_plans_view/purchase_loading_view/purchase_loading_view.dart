@@ -41,7 +41,7 @@ class PurchaseLoadingView extends StatelessWidget {
               LocaleKeys.qr_code.tr(),
               style: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             verticalSpaceLarge,
@@ -55,7 +55,7 @@ class PurchaseLoadingView extends StatelessWidget {
               textAlign: TextAlign.center,
               style: captionOneNormalTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: bubbleCountryTextColor(context: context),
               ),
             ),
             verticalSpaceMassive,

@@ -379,5 +379,4 @@ abstract class  LocaleKeys {
   static const subtotal = 'subtotal';
   static const estimated_tax = 'estimated_tax';
   static const total = 'total';
-
 }

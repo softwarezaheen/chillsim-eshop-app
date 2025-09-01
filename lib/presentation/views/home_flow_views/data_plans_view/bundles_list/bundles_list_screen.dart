@@ -55,7 +55,7 @@ class BundlesListScreen extends StatelessWidget {
                   navigationTitle: esimItem.name,
                   textStyle: headerTwoMediumTextStyle(
                     context: context,
-                    fontColor: mainDarkTextColor(context: context),
+                    fontColor: titleTextColor(context: context),
                   ),
                 ),
                 esimItem.type == EsimArgumentType.country
@@ -257,14 +257,20 @@ class FlagChip extends StatelessWidget {
         countryName,
         style: captionTwoMediumTextStyle(
           context: context,
-          fontColor: bubbleCountryTextColor(
+          fontColor: titleTextColor(
             context: context,
           ),
         ),
       ),
-      deleteIcon: const Icon(Icons.close, size: 12),
+      deleteIcon: Icon(
+        Icons.close,
+        size: 12,
+        color: titleTextColor(
+          context: context,
+        ),
+      ),
       onDeleted: onRemove,
-      backgroundColor: greyBackGroundColor(context: context),
+      backgroundColor: mainDarkTextColor(context: context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),

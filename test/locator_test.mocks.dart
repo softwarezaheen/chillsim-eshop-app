@@ -4114,6 +4114,15 @@ class MockAndroidUserGuideViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -5646,6 +5655,15 @@ class MockMyESimViewModel extends _i1.Mock implements _i23.MyESimViewModel {
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -6554,6 +6572,15 @@ class MockProfileViewModel extends _i1.Mock implements _i76.ProfileViewModel {
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void dispose() => super.noSuchMethod(
@@ -7598,6 +7625,15 @@ class MockDataPlansViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void notifyListeners() => super.noSuchMethod(
         Invocation.method(
           #notifyListeners,
@@ -8503,6 +8539,15 @@ class MockHomePagerViewModel extends _i1.Mock
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void dispose() => super.noSuchMethod(
@@ -9422,6 +9467,15 @@ class MockStartUpViewModel extends _i1.Mock implements _i81.StartUpViewModel {
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void dispose() => super.noSuchMethod(
@@ -10398,6 +10452,15 @@ class MockContinueWithEmailViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -11309,6 +11372,15 @@ class MockPurchaseLoadingViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -12192,6 +12264,15 @@ class MockDeviceCompabilityCheckViewModel extends _i1.Mock
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void dispose() => super.noSuchMethod(
@@ -13159,6 +13240,15 @@ class MockLoginViewModel extends _i1.Mock implements _i85.LoginViewModel {
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void dispose() => super.noSuchMethod(
@@ -14151,6 +14241,15 @@ class MockVerifyLoginViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -15141,6 +15240,15 @@ class MockVerifyPurchaseViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -16093,6 +16201,15 @@ class MockSkeletonViewModel extends _i1.Mock implements _i88.SkeletonViewModel {
       ) as _i20.Future<void>);
 
   @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -17015,6 +17132,15 @@ class MockUserGuideDetailedViewModel extends _i1.Mock
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void hideKeyboard() => super.noSuchMethod(
+        Invocation.method(
+          #hideKeyboard,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void dispose() => super.noSuchMethod(

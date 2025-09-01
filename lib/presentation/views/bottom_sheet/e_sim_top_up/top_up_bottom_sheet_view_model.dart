@@ -244,9 +244,11 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       showToast(
         e.toString().replaceAll("Exception:", ""),
       );
-
+      hideKeyboard();
       return;
     }
+
+    hideKeyboard();
     String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
     analyticsService.logEvent(
       event: AnalyticEvent.buyTopUpSuccess(

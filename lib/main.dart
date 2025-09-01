@@ -104,15 +104,18 @@ Future<void> initializeFirebaseApp() async {
   await Firebase.initializeApp(options: firebaseOptions);
 
   FlutterError.onError = (FlutterErrorDetails errorDetails) {
+    // Don't report UI overflow errors to Crashlytics
+    if (errorDetails.exception.toString().contains("overflowed")) {
+      return; // Just ignore these errors
+    }
+
     unawaited(
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails),
-    );
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails),);
   };
   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
   PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
     unawaited(
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),
-    );
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true),);
     return true;
   };
 }

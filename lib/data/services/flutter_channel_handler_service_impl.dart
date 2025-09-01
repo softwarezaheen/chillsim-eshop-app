@@ -1,6 +1,8 @@
 import "dart:developer";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/services.dart";
 
 class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
@@ -15,8 +17,7 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
     return _instance!;
   }
 
-  String errorMessage =
-      "Auto eSIM installation is not available, Please use manual install";
+  String errorMessage = LocaleKeys.eSim_installation_error_message.tr();
 
   static FlutterChannelHandlerServiceImpl? _instance;
 

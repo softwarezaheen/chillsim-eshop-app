@@ -105,7 +105,7 @@ class ConsumptionBottomSheetView extends StatelessWidget {
           LocaleKeys.consumption_details.tr(),
           style: headerThreeMediumTextStyle(
             context: context,
-            fontColor: mainDarkTextColor(context: context),
+            fontColor: titleTextColor(context: context),
           ),
         ),
       ],
@@ -169,7 +169,7 @@ class ConsumptionBottomSheetView extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: headerOneBoldTextStyle(
                             context: context,
-                            fontColor: mainDarkTextColor(context: context),
+                            fontColor: titleTextColor(context: context),
                           ),
                         ).applyShimmer(
                           context: context,

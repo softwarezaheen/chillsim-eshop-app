@@ -54,7 +54,7 @@ class UserGuideDetailedView extends StatelessWidget {
                   viewModel.userGuideViewDataSource.title,
                   style: headerTwoMediumTextStyle(
                     context: context,
-                    fontColor: mainDarkTextColor(context: context),
+                    fontColor: titleTextColor(context: context),
                   ),
                 ),
               ),
@@ -115,7 +115,7 @@ class UserGuideDetailedView extends StatelessWidget {
                             viewModel.userGuideViewDataSource.stepNumberLabel,
                             style: headerThreeMediumTextStyle(
                               context: context,
-                              fontColor: mainDarkTextColor(context: context),
+                              fontColor: titleTextColor(context: context),
                             ),
                           ),
                         ),

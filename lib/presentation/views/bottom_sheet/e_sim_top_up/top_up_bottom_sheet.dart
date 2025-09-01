@@ -102,7 +102,7 @@ class TopUpBottomSheet extends StatelessWidget {
             LocaleKeys.top_up_plan.tr(),
             style: headerThreeMediumTextStyle(
               context: context,
-              fontColor: mainDarkTextColor(context: context),
+              fontColor: titleTextColor(context: context),
             ),
           ),
         ),

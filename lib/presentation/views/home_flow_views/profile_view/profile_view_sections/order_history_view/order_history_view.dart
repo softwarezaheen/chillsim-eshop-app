@@ -41,7 +41,7 @@ class OrderHistoryView extends StatelessWidget {
               navigationTitle: LocaleKeys.orderHistory_titleText.tr(),
               textStyle: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             Expanded(

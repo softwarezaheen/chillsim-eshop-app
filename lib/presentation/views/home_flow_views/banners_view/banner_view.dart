@@ -63,8 +63,8 @@ class BannerView extends StatelessWidget {
                         title: bannerView.buttonText,
                         textColor: bannerView == BannersViewTypes.liveChat
                             ? bannersViewModel.textColor ??
-                                context.appColors.grey_900
-                            : context.appColors.grey_900,
+                                context.appColors.primary_800
+                            : context.appColors.primary_800,
                         buttonColor: bannerView == BannersViewTypes.liveChat
                             ? bannersViewModel.buttonColor ??
                                 context.appColors.baseWhite

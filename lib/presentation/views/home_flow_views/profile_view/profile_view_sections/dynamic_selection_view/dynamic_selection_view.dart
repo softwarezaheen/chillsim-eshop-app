@@ -39,7 +39,7 @@ class DynamicSelectionView extends StatelessWidget {
                 navigationTitle: viewModel.dataSource.viewTitle,
                 textStyle: headerTwoBoldTextStyle(
                   context: context,
-                  fontColor: mainDarkTextColor(context: context),
+                  fontColor: titleTextColor(context: context),
                 ),
               ),
               verticalSpaceSmall,
@@ -100,7 +100,7 @@ class DynamicSelectionView extends StatelessWidget {
               text,
               style: bodyMediumTextStyle(
                 context: context,
-                fontColor: titleTextColor(context: context),
+                fontColor: bubbleCountryTextColor(context: context),
               ),
             ),
           ),

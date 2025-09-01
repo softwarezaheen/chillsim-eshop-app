@@ -35,7 +35,7 @@ class MyWalletView extends StatelessWidget {
               navigationTitle: LocaleKeys.profile_myWallet.tr(),
               textStyle: headerTwoBoldTextStyle(
                 context: context,
-                fontColor: mainDarkTextColor(context: context),
+                fontColor: titleTextColor(context: context),
               ),
             ),
             verticalSpaceMedium,
@@ -135,8 +135,8 @@ class MyWalletView extends StatelessWidget {
                                         .walletSections[index].sectionTitle,
                                     style: bodyMediumTextStyle(
                                       context: context,
-                                      fontColor:
-                                          titleTextColor(context: context),
+                                      fontColor: bubbleCountryTextColor(
+                                          context: context,),
                                     ),
                                   ),
                                 ],

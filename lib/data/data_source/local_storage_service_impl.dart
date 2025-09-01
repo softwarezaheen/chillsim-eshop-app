@@ -8,6 +8,7 @@ import "package:shared_preferences/shared_preferences.dart";
 
 class LocalStorageServiceImpl implements LocalStorageService {
   LocalStorageServiceImpl._privateConstructor();
+
   late SharedPreferences _sharedPrefs;
   static LocalStorageServiceImpl? _instance;
 
@@ -110,6 +111,14 @@ class LocalStorageServiceImpl implements LocalStorageService {
 
     String? defaultLanguage =
         getString(LocalStorageKeys.appLanguage)?.toLowerCase();
+
+    //check if the app was installed before implementing romanian language
+    bool hasPreviouslyStarted =
+        getBool(LocalStorageKeys.hasPreviouslyStarted) ?? false;
+
+    language = hasPreviouslyStarted
+        ? LanguageEnum.english.code
+        : LanguageEnum.romanian.code;
 
     if (defaultLanguage == null) {
       //user has not set a language

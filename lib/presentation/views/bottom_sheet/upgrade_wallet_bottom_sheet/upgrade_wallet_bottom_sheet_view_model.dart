@@ -209,10 +209,12 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
       }
     } on Exception catch (e) {
       showToast(e.toString().replaceAll("Exception:", ""));
+      hideKeyboard();
       unawaited(cancelOrder(orderID: orderID));
       return;
     }
 
+    hideKeyboard();
     setViewState(ViewState.busy);
     await getUserInfoUseCase.execute(NoParams());
     setViewState(ViewState.idle);

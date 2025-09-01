@@ -42,6 +42,7 @@ class MyESimViewModel extends BaseModel {
   ESimState get state => _state;
 
   bool isInstallationFailed = false;
+
   //#endregion
 
   //#region Functions
@@ -128,7 +129,6 @@ class MyESimViewModel extends BaseModel {
       PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
       if (Platform.isAndroid) {
         // unawaited(
-        //TODO MAHDI add SHAExist from API when it comes
         await locator<FlutterChannelHandlerService>().openEsimSetupForAndroid(
           smdpAddress: item.smdpAddress ?? "",
           activationCode: item.activationCode ?? "",
@@ -238,10 +238,12 @@ class MyESimViewModel extends BaseModel {
         } else {
           UserNotificationModel? foundNotRead;
           try {
-            foundNotRead = result.data!.firstWhere(
-              (UserNotificationModel notification) =>
-                  !(notification.status ?? false),
-            );
+            foundNotRead = result.data!
+                .where(
+                  (UserNotificationModel notification) =>
+                      !(notification.status ?? false),
+                )
+                .firstOrNull; // Returns null if no element found
           } on Exception catch (_) {
             foundNotRead = null;
           }
