@@ -2,6 +2,7 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
@@ -33,11 +34,16 @@ extension BannersViewTypesExtension on BannersViewTypes {
         return LocaleKeys.dataPlans_referAndEarnBannerContent.tr(
           namedArgs: <String, String>{
             "referAndEarnAmount":
-                locator<AppConfigurationService>().referAndEarnAmount,
+                locator<ReferralInfoService>().getReferralAmountAndCurrency,
           },
         );
       // case BannersViewTypes.cashBackRewards:
-      //   return LocaleKeys.dataPlans_cashbackRewardsBannerContent.tr();
+      //   return LocaleKeys.dataPlans_cashbackRewardsBannerContent.tr(
+      //     namedArgs: <String, String>{
+      //       "CashbackDiscount":
+      //       locator<AppConfigurationService>().getCashbackDiscount,
+      //     },
+      //   );
     }
   }
 

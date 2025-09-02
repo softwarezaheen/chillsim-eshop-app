@@ -12,6 +12,7 @@ import "package:esim_open_source/domain/repository/services/device_info_service.
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/push_notification_service.dart";
 import "package:esim_open_source/domain/repository/services/redirections_handler_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
@@ -75,6 +76,7 @@ class TestableStartUpViewModel extends StartUpViewModel {
     // Skip _initializePushServices() to avoid Firebase.app() call
 
     unawaited(_initializeConfigurations());
+    locator<ReferralInfoService>();
 
     setViewState(ViewState.busy);
 

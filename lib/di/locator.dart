@@ -28,6 +28,7 @@ import "package:esim_open_source/data/services/flutter_channel_handler_service_i
 import "package:esim_open_source/data/services/payment/payment_service_impl.dart";
 import "package:esim_open_source/data/services/push_notification_service_impl.dart";
 import "package:esim_open_source/data/services/redirections_handler_service_impl.dart";
+import "package:esim_open_source/data/services/referral_info_service_impl.dart";
 import "package:esim_open_source/data/services/remote_config_service_impl.dart";
 import "package:esim_open_source/data/services/social_login_service_impl.dart";
 import "package:esim_open_source/domain/data/api_bundles.dart";
@@ -49,6 +50,7 @@ import "package:esim_open_source/domain/repository/services/local_storage_servic
 import "package:esim_open_source/domain/repository/services/payment_service.dart";
 import "package:esim_open_source/domain/repository/services/push_notification_service.dart";
 import "package:esim_open_source/domain/repository/services/redirections_handler_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/repository/services/remote_config_service.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
@@ -138,6 +140,9 @@ Future<void> appServicesModule() async {
     )
     ..registerLazySingleton(
       () => AppConfigurationServiceImpl.instance as AppConfigurationService,
+    )
+    ..registerLazySingleton(
+          () => ReferralInfoServiceImpl.instance as ReferralInfoService,
     )
     ..registerLazySingleton(
       () => FlutterChannelHandlerServiceImpl.getInstance()

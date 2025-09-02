@@ -7,6 +7,7 @@ import "package:esim_open_source/data/remote/responses/app/currencies_response_m
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/use_case/app/get_currencies_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
@@ -81,6 +82,7 @@ class CurrenciesDataSource implements DynamicSelectionViewDataSource {
     await getUserInfoUseCase.execute(NoParams());
     await locator<LocalStorageService>()
         .setString(LocalStorageKeys.appCurrency, code);
+    await locator<ReferralInfoService>().refreshReferralInfo();
   }
 
   @override
@@ -128,6 +130,7 @@ class LanguagesDataSource implements DynamicSelectionViewDataSource {
     StackedService.navigatorKey?.currentContext!.setLocale(Locale(value));
     await locator<LocalStorageService>()
         .setString(LocalStorageKeys.appLanguage, value);
+    await locator<ReferralInfoService>().refreshReferralInfo();
   }
 
   @override

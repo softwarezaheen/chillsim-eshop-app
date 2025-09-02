@@ -18,6 +18,7 @@ import "package:esim_open_source/domain/repository/services/local_storage_servic
 import "package:esim_open_source/domain/repository/services/payment_service.dart";
 import "package:esim_open_source/domain/repository/services/push_notification_service.dart";
 import "package:esim_open_source/domain/repository/services/redirections_handler_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 // import "package:esim_open_source/domain/repository/services/remote_config_service.dart";
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
@@ -74,6 +75,7 @@ import "locator_test.mocks.dart";
   RedirectionsHandlerService,
   LocalStorageService,
   AppConfigurationService,
+  ReferralInfoService,
   FlutterChannelHandlerService,
   AnalyticsService,
   //RemoteConfigService,
@@ -159,6 +161,9 @@ Future<void> appServicesModule() async {
     )
     ..registerLazySingleton<LocalStorageService>(MockLocalStorageService.new)
     ..registerLazySingleton<AnalyticsService>(MockAnalyticsService.new)
+    ..registerLazySingleton<ReferralInfoService>(
+      MockReferralInfoService.new,
+    )
     ..registerLazySingleton<AppConfigurationService>(
       MockAppConfigurationService.new,
     )

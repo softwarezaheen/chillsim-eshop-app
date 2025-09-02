@@ -15,4 +15,6 @@ abstract interface class APIPromotion {
   });
 
   FutureOr<dynamic> getRewardsHistory();
+
+  FutureOr<dynamic> getReferralInfo();
 }

@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
@@ -48,7 +49,12 @@ class CashbackStoriesView {
                     ),
                     verticalSpaceSmallMedium,
                     Text(
-                      LocaleKeys.storiesView_cashbackContent.tr(),
+                      LocaleKeys.storiesView_cashbackContent.tr(
+                        namedArgs: <String, String>{
+                          "CashbackDiscount":
+                          locator<AppConfigurationService>().getCashbackDiscount,
+                        },
+                      ),
                       style: bodyNormalTextStyle(
                         context: StackedService.navigatorKey!.currentContext!,
                         fontColor: mainWhiteTextColor(

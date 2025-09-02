@@ -1,5 +1,6 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/presentation/theme/my_theme_builder.dart";
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
 import "package:flutter/material.dart";
@@ -59,6 +60,7 @@ Future<void> setupTest() async {
   AppEnvironment.setupEnvironment();
   FluttertoastHelperTest.implementFluttertoast();
   FlutterEsimHelperTest.implementFlutterEsim();
+  when(locator<ReferralInfoService>().getReferralAmountAndCurrency).thenReturn("5 \$");
 }
 
 Future<void> tearDownTest() async {

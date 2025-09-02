@@ -10,7 +10,7 @@ enum ConfigurationResponseKeys {
   defaultCurrency,
   paymentTypes,
   loginType,
-  referAndEarnAmount;
+  cashbackDiscount;
 
   String get configurationKeyValue {
     switch (this) {
@@ -28,8 +28,8 @@ enum ConfigurationResponseKeys {
         return "allowed_payment_types";
       case ConfigurationResponseKeys.loginType:
         return "login_type";
-      case ConfigurationResponseKeys.referAndEarnAmount:
-        return "REFERRAL_CODE_AMOUNT";
+      case ConfigurationResponseKeys.cashbackDiscount:
+        return "REFERRAL_CODE_PERCENTAGE";
     }
   }
 }

@@ -4,6 +4,7 @@ import "package:esim_open_source/domain/repository/api_user_repository.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
@@ -40,7 +41,9 @@ void onViewModelReadyMock({
   )).thenAnswer((_) async => null);
   when(locator<UserAuthenticationService>().userEmailAddress).thenReturn("");
   when(locator<BundlesDataService>().isBundleServicesLoading).thenReturn(true);
-  when(locator<AppConfigurationService>().referAndEarnAmount).thenReturn("5");
+  when(locator<AppConfigurationService>().getCashbackDiscount).thenReturn("10%");
+  when(locator<ReferralInfoService>().getReferralAmount).thenReturn("5");
+  when(locator<ReferralInfoService>().getReferralAmountAndCurrency).thenReturn("5 \$");
   when(locator<UserAuthenticationService>().userFirstName).thenReturn("");
   when(locator<UserAuthenticationService>().userLastName).thenReturn("");
   when(locator<UserAuthenticationService>().isUserLoggedIn).thenReturn(true);

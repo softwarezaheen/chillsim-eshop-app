@@ -76,11 +76,7 @@ class ShareReferralCodeBottomSheet extends StatelessWidget {
                     ),
                     verticalSpaceSmall,
                     Text(
-                      LocaleKeys.shareReferral_contentText.tr(
-                        namedArgs: <String, String>{
-                          "amount": viewModel.amount,
-                        },
-                      ),
+                      viewModel.getReferralMessage,
                       textAlign: TextAlign.center,
                       style: bodyNormalTextStyle(
                         context: context,

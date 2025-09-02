@@ -6,6 +6,7 @@ enum LocalStorageKeys {
   fcmToken("fcmToken"),
   hasPreviouslyStarted("hasPreviouslyStarted"),
   appConfigurations("appConfigurations"),
+  referralInfo("referralInfo"),
   appCurrency("appCurrency"),
   referralCode("referralCode"),
   appLanguage("appLanguage"),

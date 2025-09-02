@@ -10,6 +10,7 @@ import "package:esim_open_source/domain/repository/services/app_configuration_se
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/push_notification_service.dart";
+import "package:esim_open_source/domain/repository/services/referral_info_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
 import "package:esim_open_source/domain/use_case/auth/refresh_token_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
@@ -123,10 +124,11 @@ class StartUpViewModel extends BaseModel {
   }
 
   Future<void>? _initializeConfigurations() async {
-    locator<SocialLoginService>().initialise(
+    await locator<SocialLoginService>().initialise(
       url: await locator<AppConfigurationService>().getSupabaseUrl,
       anonKey: await locator<AppConfigurationService>().getSupabaseAnon,
     );
+    locator<ReferralInfoService>();
   }
 
   Future<void>? _initializePushServices() async {
