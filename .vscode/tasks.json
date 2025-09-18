@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Flutter iOS (Development)",
+			"type": "shell",
+			"command": "flutter build ios --debug",
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
