@@ -5,6 +5,7 @@ import "package:esim_open_source/data/remote/responses/user/order_history_respon
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/billing_information_view/billing_info_bottomsheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/bundle_details_bottom_sheet/bundle_detail_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/cashback_reward_bottom_sheet/cashback_reward_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/compatible_bottom_sheet_view/compatible_bottom_sheet_view.dart";
@@ -144,6 +145,15 @@ void setupBottomSheetUi() {
           requestBase: sheetRequest,
           completer: completer,
         ),
+    BottomSheetType.billingInfo: (
+      dynamic context,
+      dynamic sheetRequest,
+      Function(SheetResponse<EmptyBottomSheetResponse>) completer,
+    ) =>
+        BillingInfoBottomSheetView(
+          requestBase: sheetRequest,
+          completer: completer,
+        ),
     BottomSheetType.paymentMethod: (
       dynamic context,
       dynamic sheetRequest,
@@ -274,7 +284,7 @@ class PurchaseBundleBottomSheetArgs {
 
   final RegionRequestModel? region;
   final List<CountriesRequestModel>? countries;
-  final BundleResponseModel bundleResponseModel;
+  final BundleResponseModel? bundleResponseModel;
 }
 
 class EmptyBottomSheetResponse {

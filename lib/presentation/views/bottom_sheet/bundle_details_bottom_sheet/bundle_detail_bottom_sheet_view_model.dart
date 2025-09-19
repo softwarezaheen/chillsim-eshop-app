@@ -1,13 +1,17 @@
 import "dart:async";
+import "dart:developer";
 import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
+import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/auth/tmp_login_use_case.dart";
@@ -86,6 +90,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     return _isLoginEnabled;
   }
 
+  BundleTaxesResponseModel? _taxes;
+  BundleTaxesResponseModel? get taxes => _taxes;
+
   //Promo code sub view
   bool isPromoCodeExpanded = false;
 
@@ -125,6 +132,10 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     if (_referralCode.isNotEmpty) {
       unawaited(validatePromoCode(_referralCode));
     }
+
+    if (_bundle != null && _bundle!.bundleCode != null) {
+      unawaited(loadTaxes());
+    } 
   }
 
   void updateTermsSelections() {
@@ -563,4 +574,25 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     );
   }
 //#endregion
+
+//#taxes
+  Future<void> loadTaxes() async {
+    if (_bundle?.bundleCode == null || _bundle!.bundleCode!.isEmpty) {
+      return;
+    }
+    setViewState(ViewState.busy);
+    final ResponseMain<BundleTaxesResponseModel> response =
+        await locator<ApiUser>().getTaxes(bundleCode: _bundle!.bundleCode!);
+
+    if (response.status == "success" && response.data != null ) {
+      _taxes = response.data;
+      log("Taxes loaded: fee=${_taxes?.fee}, vat=${_taxes?.vat}, originalPrice=${_taxes?.originalAmount}, total=${_taxes?.total}  ");
+      notifyListeners();
+    } else {
+      // Optionally handle error
+      setViewState(ViewState.idle);
+    }
+    notifyListeners();
+    setViewState(ViewState.idle);
+  }
 }

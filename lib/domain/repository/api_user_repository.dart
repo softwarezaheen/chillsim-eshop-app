@@ -81,4 +81,22 @@ abstract interface class ApiUserRepository {
     required String iccid,
     required String orderID,
   });
+
+  FutureOr<dynamic> getUserBillingInfo();
+
+  FutureOr<dynamic> setUserBillingInfo({
+    required String email,
+    required String firstName, required String lastName, required String country, required String city, String? phone,
+    String? state,
+    String? billingAddress,
+    String? companyName,
+    String? vatCode,
+    String? tradeRegistry,
+    bool? confirm,
+    String? verifyBy,
+  });
+
+  FutureOr<dynamic> getTaxes({
+    required String bundleCode,
+  });
 }

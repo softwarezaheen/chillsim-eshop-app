@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -145,7 +146,10 @@ class ReferalStoriesView {
                         ),
                         verticalSpaceSmallMedium,
                         Text(
-                          LocaleKeys.storiesView_referralContent2.tr(),
+                          LocaleKeys.storiesView_referralContent2.tr(namedArgs: {
+                            "referral_bonus": locator<AppConfigurationService>()
+                                .referAndEarnAmount,
+                          }),
                           style: headerFourNormalTextStyle(
                             context: context,
                             fontColor: mainWhiteTextColor(
@@ -197,7 +201,10 @@ class ReferalStoriesView {
                         ),
                         verticalSpaceSmallMedium,
                         Text(
-                          LocaleKeys.storiesView_referralContent3.tr(),
+                          LocaleKeys.storiesView_referralContent3.tr(namedArgs: {
+                            "referral_bonus": locator<AppConfigurationService>()
+                                .referAndEarnAmount,
+                          }),
                           style: headerFourNormalTextStyle(
                             context: context,
                             fontColor: mainWhiteTextColor(

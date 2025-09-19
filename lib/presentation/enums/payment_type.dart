@@ -40,13 +40,24 @@ enum PaymentType {
       )
       .fullImagePath;
 
-  static List<PaymentType> getListFromValues(String paymentTypeString) {
-    List<String> values =
-        paymentTypeString.split(",").map((String e) => e.trim()).toList();
+  static List<PaymentType> getListFromValues(String? paymentTypeString) {
+    if (paymentTypeString == null || paymentTypeString.isEmpty) {
+      return <PaymentType>[];
+    }
+    return paymentTypeString
+        .split(",")
+        .map((String e) => PaymentType.values.firstWhere(
+              (PaymentType type) =>
+                  type.name.toLowerCase() == e.trim().toLowerCase(),
+              orElse: () => PaymentType.card, // fallback if not found
+            ),)
+        .toList();
+    // List<String> values =
+    //     paymentTypeString.split(",").map((String e) => e.trim()).toList();
 
-    return PaymentType.values.where((PaymentType paymentType) {
-      return values.contains(paymentType.type);
-    }).toList();
+    // return PaymentType.values.where((PaymentType paymentType) {
+    //   return values.contains(paymentType.type);
+    // }).toList();
   }
 }
 

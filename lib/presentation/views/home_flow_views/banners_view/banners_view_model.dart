@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banners_view_types.dart";
@@ -10,7 +11,14 @@ class BannersViewModel extends BaseModel {
   Timer? _buttonTimer;
   int _currentPage = 0;
   PageController bannersPageController = PageController(viewportFraction: 0.9);
-  List<BannersViewTypes> banners = BannersViewTypes.values;
+  List<BannersViewTypes> banners = BannersViewTypes.values
+      .where((element) {
+        if (element == BannersViewTypes.bannersReferral) {
+          return AppEnvironment.appEnvironmentHelper.enableReferral;
+        }
+        return true;
+      })
+      .toList();
 
   Color? _textColor;
   Color? _buttonColor;

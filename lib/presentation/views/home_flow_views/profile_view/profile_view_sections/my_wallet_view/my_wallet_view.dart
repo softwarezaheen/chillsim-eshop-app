@@ -65,7 +65,7 @@ class MyWalletView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "${viewModel.userAuthenticationService.walletCurrencyCode} ${viewModel.userAuthenticationService.walletAvailableBalance}",
+                              "${viewModel.userAuthenticationService.walletCurrencyCode} ${viewModel.userAuthenticationService.walletAvailableBalance.toStringAsFixed(2)}",
                               style: headerZeroBoldTextStyle(
                                 context: context,
                                 fontColor: titleTextColor(context: context),

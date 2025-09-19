@@ -6,10 +6,12 @@ import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
+import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
 
@@ -326,4 +328,44 @@ class APIUserImpl extends APIService implements ApiUser {
     );
     return response;
   }
+
+  @override
+  FutureOr<ResponseMain<EmptyResponse?>> setUserBillingInfo({
+    required Map<String, dynamic> billingInfo,
+  }) async {
+    ResponseMain<EmptyResponse?> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.setUserBillingInfo,
+        parameters: billingInfo,
+      ),
+      fromJson: EmptyResponse.fromJson,
+    );
+    return response;
+  }
+
+  @override
+  FutureOr<ResponseMain<UserGetBillingInfoResponseModel?>> getUserBillingInfo() async {
+    ResponseMain<UserGetBillingInfoResponseModel?> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.getUserBillingInfo,
+      ),
+      fromJson: ({dynamic json}) => UserGetBillingInfoResponseModel.fromJson(json: json),
+    );
+    return response;
+  }
+
+  @override
+  FutureOr<ResponseMain<BundleTaxesResponseModel?>> getTaxes(
+      {required String bundleCode,}
+  ) async {
+    ResponseMain<BundleTaxesResponseModel> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.getTaxes,
+        paramIDs: <String>[bundleCode],
+      ),
+      fromJson: ({dynamic json}) => BundleTaxesResponseModel.fromJson(json: json),
+    );
+    return response;
+  }
+  
 }

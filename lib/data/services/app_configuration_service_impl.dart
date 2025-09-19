@@ -54,6 +54,7 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
 
     if (response.resourceType == ResourceType.success) {
       _configData = response.data;
+      log(  "Fetched App Configurations: $_configData");
 
       locator<LocalStorageService>().setString(
         LocalStorageKeys.appConfigurations,
@@ -71,11 +72,19 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
 
       //set default payment type from api
       String paymentTypeString = getPaymentTypes;
+      log("Allowed Payment Types from API: $paymentTypeString");
       if (paymentTypeString.isNotEmpty) {
         List<PaymentType> paymentTypeList =
             PaymentType.getListFromValues(paymentTypeString);
+        log("Processed Payment Types from API: $paymentTypeList");
         AppEnvironment.appEnvironmentHelper.setPaymentTypeListFromApi =
             paymentTypeList;
+      }
+
+      //set other configurations if needed
+      String zenminutesUrl = getZenminutesUrl;
+      if (zenminutesUrl.isNotEmpty) {
+        AppEnvironment.appEnvironmentHelper.zenminutesUrl = zenminutesUrl;
       }
 
       if (!(_appConfigCompleter?.isCompleted ?? true)) {
@@ -145,6 +154,13 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     );
   }
 
+  @override
+  String get getZenminutesUrl {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.zenminutesUrl,
+    );
+  }
+
   String _getConfigData({required ConfigurationResponseKeys key}) {
     return _configData
             ?.firstWhere(
@@ -162,6 +178,6 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
       key: ConfigurationResponseKeys.referAndEarnAmount,
     );
     String currencyCode = getSelectedCurrencyCode();
-    return "$currencyCode $referralAmount";
+    return "$referralAmount $currencyCode";
   }
 }

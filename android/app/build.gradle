@@ -33,27 +33,32 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.BaseFlutter.BaseFlutter"
-    compileSdk flutter.compileSdkVersion
-    ndkVersion "27.0.12077973"
+    namespace = "com.BaseFlutter.BaseFlutter"
+    // compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
+    compileSdkVersion = 36
+    buildToolsVersion = "36.0.0"
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
-        coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled = true
+        // sourceCompatibility JavaVersion.VERSION_17
+        // targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     signingConfigs {
         release {
-            keyAlias keyAliasStr
-            keyPassword keyPasswordStr
-            storeFile file(storeFilePathStr)
-            storePassword storePasswordStr
+            keyAlias = keyAliasStr
+            keyPassword = keyPasswordStr
+            storeFile = file(storeFilePathStr)
+            storePassword = storePasswordStr
         }
     }
 
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '21' //17
     }
 
     sourceSets {
@@ -64,24 +69,25 @@ android {
 //        applicationId "com.luxe.esim"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 24
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion flutter.minSdkVersion
+        // targetSdkVersion = flutter.targetSdkVersion
+        targetSdkVersion 36
         print("target sdk version : $flutter.targetSdkVersion")
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode = flutterVersionCode.toInteger()
+        versionName = flutterVersionName
     }
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.release
-            minifyEnabled false
-            shrinkResources false
-            debuggable true
+            signingConfig = signingConfigs.release
+            minifyEnabled = false
+            shrinkResources = false
+            debuggable = true
         }
         release {
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
+            signingConfig = signingConfigs.release
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -148,13 +154,24 @@ android {
     }
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+kotlin {
+    jvmToolchain(21)
+}
+
 flutter {
-    source '../..'
+    source = '../..'
 }
 
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
-    implementation 'com.facebook.android:facebook-login:[version]'
+    // implementation 'com.facebook.android:facebook-login:[version]'
+    implementation 'com.facebook.android:facebook-login:18.0.3'
 }

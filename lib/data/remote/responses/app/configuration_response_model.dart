@@ -10,7 +10,8 @@ enum ConfigurationResponseKeys {
   defaultCurrency,
   paymentTypes,
   loginType,
-  referAndEarnAmount;
+  referAndEarnAmount,
+  zenminutesUrl;
 
   String get configurationKeyValue {
     switch (this) {
@@ -30,6 +31,8 @@ enum ConfigurationResponseKeys {
         return "login_type";
       case ConfigurationResponseKeys.referAndEarnAmount:
         return "REFERRAL_CODE_AMOUNT";
+      case ConfigurationResponseKeys.zenminutesUrl:
+        return "zenminutes_landing";
     }
   }
 }

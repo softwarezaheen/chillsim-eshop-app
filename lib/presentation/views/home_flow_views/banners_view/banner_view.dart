@@ -1,9 +1,11 @@
-import "package:esim_open_source/app/environment/environment_images.dart";
+// import "package:esim_open_source/app/environment/environment_images.dart";
+// import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banners_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/banners_view/banners_view_types.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
+// import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
@@ -38,7 +40,7 @@ class BannerView extends StatelessWidget {
                   top: 10,
                   start: 20,
                   bottom: 5,
-                  end: bannerView == BannersViewTypes.liveChat ? 0 : 30,
+                  end: 30, //bannerView == BannersViewTypes.liveChat ? 0 : 30
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -57,15 +59,31 @@ class BannerView extends StatelessWidget {
                           fontColor: mainWhiteTextColor(context: context),
                         ),
                       ),
-                      MainButton.bannerButton(
+                      // if (!(bannerView == BannersViewTypes.bannersZenminutes ||
+                      //     bannerView == BannersViewTypes.bannersReferral ||
+                      //     bannerView == BannersViewTypes.bannersSupport))
+                      (bannerView == BannersViewTypes.bannersZenminutes)
+                      ?
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: MainButton.bannerButton(
+                            action: () => bannerView.onTapGesture,
+                            themeColor: themeColor,
+                            title: bannerView.buttonText,
+                            textColor: context.appColors.primary_800,
+                            buttonColor: context.appColors.baseWhite,
+                            titleTextStyle: captionTwoBoldTextStyle(context: context),
+                          ),
+                        )
+                      : MainButton.bannerButton(
                         action: () => bannerView.onTapGesture,
                         themeColor: themeColor,
                         title: bannerView.buttonText,
-                        textColor: bannerView == BannersViewTypes.liveChat
+                        textColor: bannerView == BannersViewTypes.bannersSupport
                             ? bannersViewModel.textColor ??
                                 context.appColors.primary_800
                             : context.appColors.primary_800,
-                        buttonColor: bannerView == BannersViewTypes.liveChat
+                        buttonColor: bannerView == BannersViewTypes.bannersSupport
                             ? bannersViewModel.buttonColor ??
                                 context.appColors.baseWhite
                             : context.appColors.baseWhite,
@@ -76,21 +94,21 @@ class BannerView extends StatelessWidget {
                   ),
                 ),
               ),
-              bannerView == BannersViewTypes.liveChat
-                  ? Align(
-                      alignment: Alignment.bottomRight,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(12),
-                        ),
-                        child: Image.asset(
-                          EnvironmentImages
-                              .bannersChatWithUsPerson.fullImagePath,
-                          width: 160,
-                        ),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
+              // bannerView == BannersViewTypes.liveChat
+              //     ? Align(
+              //         alignment: Alignment.bottomRight,
+              //         child: ClipRRect(
+              //           borderRadius: const BorderRadius.only(
+              //             bottomRight: Radius.circular(12),
+              //           ),
+              //           child: Image.asset(
+              //             EnvironmentImages
+              //                 .bannersChatWithUsPerson.fullImagePath,
+              //             width: 160,
+              //           ),
+              //         ),
+              //       )
+              //     : const SizedBox.shrink(),
             ],
           ),
         ),

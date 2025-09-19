@@ -1,5 +1,6 @@
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
 import "package:esim_open_source/presentation/extensions/shimmer_extensions.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -118,6 +119,8 @@ class TopUpBottomSheet extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         BundleResponseModel item = viewModel.bundleItems[index];
         return EsimBundleTopUpWidget(
+          taxes: viewModel.bundleTaxes[item.bundleCode],
+          isTaxesLoading: viewModel.loadingTaxesBundleCodes.contains(item.bundleCode),
           priceButtonText: "${item.priceDisplay} - Buy Now",
           title: item.bundleName ?? "",
           data: item.gprsLimitDisplay ?? "",
@@ -163,9 +166,13 @@ class EsimBundleTopUpWidget extends StatelessWidget {
     required this.isLoading,
     required this.icon,
     required this.showUnlimitedData,
+    this.taxes,
+    this.isTaxesLoading = false,
     super.key,
   });
 
+  final BundleTaxesResponseModel? taxes;
+  final bool isTaxesLoading;
   final String priceButtonText;
   final String title;
   final String data;
@@ -229,6 +236,39 @@ class EsimBundleTopUpWidget extends StatelessWidget {
                 fontColor: contentTextColor(context: context),
               ),
             ).applyShimmer(context: context, enable: isLoading),
+            const BundleDivider(),
+            if (isTaxesLoading) ...[
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  horizontalSpaceSmall,
+                  Text(
+                    "loading...",
+                    style: captionTwoNormalTextStyle(
+                      context: context,
+                      fontColor: contentTextColor(context: context),
+                    ),
+                  ),
+                ],
+              ),
+            ] else if (taxes != null && taxes?.total != null) ...[
+              Text(
+                (taxes?.currency != taxes?.displayCurrency && 
+                  taxes?.exchangeRate != null &&
+                  taxes?.exchangeRate != 0)
+                    ? "${LocaleKeys.bundle_total_amount.tr()}: ${((taxes?.total! ?? 0) / (taxes?.exchangeRate! ?? 1)/ 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} (incl. ${((taxes?.fee! ?? 0) / (taxes?.exchangeRate! ?? 1) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_processing_fee.tr()}, ${((taxes?.vat! ?? 0) / (taxes?.exchangeRate! ?? 1) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_vat_amount.tr()}, ${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.currency ?? ""} ${LocaleKeys.bundle_total_amount.tr()})"
+                    : "${LocaleKeys.bundle_total_amount.tr()}: ${((taxes?.total! ?? 0)/100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} (incl. ${((taxes?.fee ?? 0)/100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_processing_fee.tr()}, ${((taxes?.vat ?? 0)/100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_vat_amount.tr()})",
+                style: captionTwoNormalTextStyle(
+                  context: context,
+                  fontColor: contentTextColor(context: context),
+                ),
+              ).applyShimmer(context: context, enable: isLoading),
+            ],
             verticalSpaceMedium,
             // Price Button
             Row(
@@ -236,7 +276,18 @@ class EsimBundleTopUpWidget extends StatelessWidget {
                 MainButton(
                   hideShadows: true,
                   horizontalPadding: 12,
-                  title: priceButtonText,
+                  title:
+                    (taxes?.currency != taxes?.displayCurrency && 
+                    taxes?.exchangeRate != null &&
+                    taxes?.exchangeRate != 0) ?
+                      LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
+                        "price": "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.currency ?? ""}",
+                      })
+                      : (( taxes != null && taxes?.total != null) ?
+                        LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
+                          "price": "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""}",
+                        })
+                        : priceButtonText),
                   themeColor: themeColor,
                   onPressed: onPriceButtonClick,
                   enabledTextColor:

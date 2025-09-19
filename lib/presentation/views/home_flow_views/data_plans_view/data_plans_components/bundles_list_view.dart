@@ -42,11 +42,12 @@ class BundlesListView extends StatelessWidget {
           validFor: bundles[index].validityDisplay ?? "",
           supportedCountries:
               bundles[index].countries ?? <CountryResponseModel>[],
-          priceButtonText: LocaleKeys.bundleInfo_priceText.tr(
-            namedArgs: <String, String>{
-              "price": bundles[index].priceDisplay ?? "",
-            },
+          priceButtonText: LocaleKeys.bundleInfo_priceText_noPrice.tr(
+            // namedArgs: <String, String>{
+            //   "price": bundles[index].priceDisplay ?? "",
+            // },
           ),
+          priceInfo: bundles[index].priceDisplay ?? "",
           availableCountries: <CountryResponseModel>[],
           onPriceButtonClick: () => onBundleSelected.call(bundles[index]),
         ).applyShimmer(

@@ -6,10 +6,12 @@ import "package:esim_open_source/data/data_source/esims_local_data_source.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
+import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
@@ -263,6 +265,56 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
         otp: otp,
         iccid: iccid,
         orderID: orderID,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<Resource<UserGetBillingInfoResponseModel?>> getUserBillingInfo() {
+    return responseToResource(
+      apiUserBundles.getUserBillingInfo(),
+    );
+  }
+  
+  @override
+  FutureOr<Resource<EmptyResponse?>> setUserBillingInfo({
+    required String email,
+    required String firstName, required String lastName, required String country, required String city, String? phone,
+    String? state,
+    String? billingAddress,
+    String? companyName,
+    String? vatCode,
+    String? tradeRegistry,
+    bool? confirm,
+    String? verifyBy,
+  }) {
+    final Map<String, dynamic> billingInfo = <String, dynamic>{
+      "email": email,
+      "phone": phone,
+      "firstName": firstName,
+      "lastName": lastName,
+      "country": country,
+      "state": state,
+      "city": city,
+      "billingAddress": billingAddress,
+      "companyName": companyName,
+      "vatCode": vatCode,
+      "tradeRegistry": tradeRegistry,
+      "confirm": confirm,
+      "verify_by": verifyBy,
+    };
+    return responseToResource(
+      apiUserBundles.setUserBillingInfo(billingInfo: billingInfo),
+    );
+  }
+
+  @override
+  FutureOr<Resource<BundleTaxesResponseModel?>> getTaxes({
+    required String bundleCode,
+  }) {
+    return responseToResource(
+      apiUserBundles.getTaxes(
+        bundleCode: bundleCode,
       ),
     );
   }

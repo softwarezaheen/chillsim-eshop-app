@@ -80,4 +80,14 @@ abstract interface class ApiUser {
     required String iccid,
     required String orderID,
   });
+
+  FutureOr<dynamic> setUserBillingInfo({
+    required Map<String, dynamic> billingInfo,
+  });
+
+  FutureOr<dynamic> getUserBillingInfo();
+
+  FutureOr<dynamic> getTaxes({
+    required String bundleCode,
+  });
 }

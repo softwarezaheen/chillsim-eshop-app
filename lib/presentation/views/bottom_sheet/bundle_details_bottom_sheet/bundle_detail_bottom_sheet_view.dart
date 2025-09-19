@@ -98,7 +98,15 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                                       ),
                                     ),
                               Text(
-                                bundle?.priceDisplay ?? "",
+                                viewModel.taxes?.originalAmount != null
+                                  ? (
+                                      (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
+                                      viewModel.taxes?.exchangeRate != null &&
+                                      viewModel.taxes?.exchangeRate != 0)
+                                        ? "${(viewModel.taxes!.originalAmount! / viewModel.taxes!.exchangeRate! /100).toStringAsFixed(2)} ${viewModel.taxes!.displayCurrency!}"
+                                        : "${(viewModel.taxes!.originalAmount! /100).toString()} ${viewModel.taxes!.currency!}"
+                                    )
+                                  : bundle?.priceDisplay ?? "",
                                 style: headerTwoMediumTextStyle(
                                   context: context,
                                   fontColor: bundleDataPriceTextColor(
@@ -106,8 +114,161 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              
                             ],
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(LocaleKeys.bundle_processing_fee.tr(), style: headerTwoSmallTextStyle(
+                                        context: context,
+                                        fontColor: bundleDataPriceTextColor(
+                                          context: context,
+                                        ),
+                                      ),
+                              ),
+                              Text(
+                                viewModel.taxes?.fee != null
+                                  ? (
+                                      (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
+                                      viewModel.taxes?.exchangeRate != null &&
+                                      viewModel.taxes?.exchangeRate != 0)
+                                        ? "${(viewModel.taxes!.fee! / viewModel.taxes!.exchangeRate! /100).toStringAsFixed(2)} ${viewModel.taxes!.displayCurrency!}"
+                                        : "${viewModel.taxes!.fee! /100} ${viewModel.taxes!.currency!}"
+                                    )
+                                  : "---",
+                                style: headerTwoSmallTextStyle(
+                                    context: context,
+                                    fontColor: bundleDataPriceTextColor(
+                                      context: context,
+                                    ),
+                                  ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(LocaleKeys.bundle_vat_amount.tr(), style: headerTwoSmallTextStyle(
+                                        context: context,
+                                        fontColor: bundleDataPriceTextColor(
+                                          context: context,
+                                        ),
+                                      ),
+                              ),
+                              Text(
+                                viewModel.taxes?.vat != null
+                                  ? (
+                                      (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
+                                      viewModel.taxes?.exchangeRate != null &&
+                                      viewModel.taxes?.exchangeRate != 0)
+                                        ? "${(viewModel.taxes!.vat! / viewModel.taxes!.exchangeRate! /100).toStringAsFixed(2)} ${viewModel.taxes!.displayCurrency!}"
+                                        : "${viewModel.taxes!.vat! /100} ${viewModel.taxes!.currency!}"
+                                    )
+                                  : "---",
+                                style: headerTwoSmallTextStyle(
+                                        context: context,
+                                        fontColor: bundleDataPriceTextColor(
+                                          context: context,
+                                        ),
+                                      ),
+                              ),
+                              
+                            ],
+                          ),
+                          const DividerLine(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                LocaleKeys.bundle_total_amount.tr(),
+                                style: headerTwoSmallTextStyle(
+                                  context: context,
+                                  fontColor: bundleDataPriceTextColor(
+                                    context: context,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                viewModel.taxes?.total != null
+                                  ? (
+                                      (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
+                                      viewModel.taxes?.exchangeRate != null &&
+                                      viewModel.taxes?.exchangeRate != 0)
+                                        ? "${(viewModel.taxes!.total! / viewModel.taxes!.exchangeRate! /100).toStringAsFixed(2)} ${viewModel.taxes!.displayCurrency!}"
+                                        : "${viewModel.taxes!.total! /100} ${viewModel.taxes!.currency!}"
+                                    )
+                                  : bundle?.priceDisplay ?? "",
+                                style: headerTwoSmallTextStyle(
+                                  context: context,
+                                  fontColor: bundleDataPriceTextColor(
+                                    context: context,
+                                  ),
+                                ),
+                              ),
+                          ],),
+                          viewModel.taxes?.total != null
+                              ? (
+                                  (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
+                                  viewModel.taxes?.exchangeRate != null &&
+                                  viewModel.taxes?.exchangeRate != 0)
+                                  ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        LocaleKeys.bundle_total_amount_in_your_currency.tr(
+                                          namedArgs: <String, String>{
+                                            "currency": viewModel.taxes!.currency!,
+                                          },
+                                        ),
+                                        style: headerTwoSmallTextStyle(
+                                          context: context,
+                                          fontColor: bundleDataPriceTextColor(
+                                            context: context,
+                                          ),
+                                        ),
+                                      ),
+                                      Text( 
+                                        "${(viewModel.taxes!.total! /100).toStringAsFixed(2)} ${viewModel.taxes!.currency!}",
+                                        style: headerTwoMediumTextStyle(
+                                          context: context,
+                                          fontColor: bundleDataPriceTextColor(
+                                            context: context,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                  :const SizedBox.shrink())
+                              : const SizedBox.shrink(),
+                          viewModel.taxes?.total != null
+                              ? (
+                                  (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
+                                  viewModel.taxes?.exchangeRate != null &&
+                                  viewModel.taxes?.exchangeRate != 0)
+                                  ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        LocaleKeys.bundle_exchange_rate_disclaimer.tr(
+                                          namedArgs: <String, String>{
+                                            "currency": viewModel.taxes!.currency!,
+                                            "rate": viewModel.taxes!.exchangeRate!.toString(),
+                                            "displayCurrency": viewModel.taxes!.displayCurrency!,
+                                          },
+                                        ),
+                                        style: headerTwoSmallTextStyle(
+                                          context: context,
+                                          fontColor: bundleDataPriceTextColor(
+                                            context: context,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox.shrink(),
+                                    ],
+                                  )
+                                  :const SizedBox.shrink())
+                              : const SizedBox.shrink(),
                           const DividerLine(),
                           BundleValidityView(
                             bundleValidity: bundle?.validityDisplay ?? "",
@@ -228,7 +389,12 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                     isEnabled: viewModel.isPurchaseButtonEnabled,
                     title: LocaleKeys.bundleInfo_priceText.tr(
                       namedArgs: <String, String>{
-                        "price": viewModel.bundle?.priceDisplay ?? "",
+                        "price": 
+                          (viewModel.taxes?.total != null
+                            ? 
+                                "${viewModel.taxes!.total! /100} ${viewModel.taxes!.currency!}"
+                              
+                            : (bundle?.priceDisplay ?? "0")),
                       },
                     ),
                     enabledTextColor:

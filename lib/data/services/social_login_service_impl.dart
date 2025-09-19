@@ -37,13 +37,16 @@ class SocialLoginServiceImpl extends SocialLoginService {
     required String url,
     required String anonKey,
   }) async {
+    log("Initialising Supabase with url: $url");
     await _initializeSupaBase(url: url, anonKey: anonKey);
+    log("Supabase initialised. Setting up auth state subscription.");
     _authStateSubscription =
         Supabase.instance.client.auth.onAuthStateChange.listen(
       (AuthState data) {
         log("Supabase authStateSubscription response:  $data");
         final Session? session = data.session;
         if (session != null) {
+          log("Session found: ${session.user.appMetadata}");
           String provider = session.user.appMetadata["provider"];
           SocialMediaLoginType socialMediaLoginType =
               SocialMediaLoginType.getSocialMediaLoginType(name: provider);
@@ -54,16 +57,17 @@ class SocialLoginServiceImpl extends SocialLoginService {
               socialType: socialMediaLoginType,
             ),
           );
+        } else {
+          log("No session found in auth state change.");
         }
       },
       onError: (dynamic error) {
         String errorMessage = error.toString();
-
+        log("Auth state subscription error: $errorMessage");
         if (errorMessage.contains("Error getting user email")) {
           errorMessage =
               "Facebook account has no email. Please try another account";
         }
-        log("SupaBase authStateSubscription error:  $errorMessage");
         _socialLoginResultStream.add(
           SocialLoginResult(
             socialType: SocialMediaLoginType.google,
@@ -72,16 +76,18 @@ class SocialLoginServiceImpl extends SocialLoginService {
         );
       },
     );
-
+    log("Auth state subscription set up.");
     return socialLoginResultStream;
   }
 
   //Apple Sign in
   @override
   Future<Stream<SocialLoginResult>> signInWithApple() async {
+    log("Starting Apple sign-in");
     try {
       String rawNonce = Supabase.instance.client.auth.generateRawNonce();
       String hashedNonce = sha256.convert(utf8.encode(rawNonce)).toString();
+      log("Generated nonce for Apple sign-in: $rawNonce, hashed: $hashedNonce");
       final AuthorizationCredentialAppleID credential =
           await SignInWithApple.getAppleIDCredential(
         scopes: <AppleIDAuthorizationScopes>[
@@ -90,16 +96,15 @@ class SocialLoginServiceImpl extends SocialLoginService {
         ],
         nonce: hashedNonce,
       );
-
+      log("Apple credential received: ${credential.identityToken}");
       Supabase.instance.client.auth.signInWithIdToken(
         provider: OAuthProvider.apple,
         idToken: credential.identityToken ?? "",
         nonce: rawNonce,
       );
-
-      //log("email ${credential.email}, name: ${credential.givenName} ${credential.familyName}, accessToken: ${credential.identityToken}");
+      log("Apple sign-in request sent to Supabase.");
     } on Object catch (error) {
-      log(error.toString());
+      log("Apple sign-in error: $error");
       _socialLoginResultStream.add(
         SocialLoginResult(
           socialType: SocialMediaLoginType.apple,
@@ -107,7 +112,6 @@ class SocialLoginServiceImpl extends SocialLoginService {
         ),
       );
     }
-
     return socialLoginResultStream;
   }
 
@@ -129,38 +133,41 @@ class SocialLoginServiceImpl extends SocialLoginService {
 
   @override
   Future<Stream<SocialLoginResult>> signInWithGoogle() async {
+    log("Starting Google sign-in");
     // Ensure initialization first
     await _initializeGoogleSignIn();
-
+    log("GoogleSignIn initialized.");
     GoogleSignInAccount? currentUser;
-
     try {
+      log("Authenticating with Google...");
       // Use authenticate() instead of signIn()
       currentUser = await googleSignIn.authenticate(
         scopeHint: <String>["email"], // Use scopeHint parameter
       );
-
+      log("GoogleSignInAccount: $currentUser");
       // Get authorization tokens through the authorization client
       final GoogleSignInClientAuthorization? authorization = await currentUser
           .authorizationClient
           .authorizationForScopes(<String>["email"]);
-
+      log("Google authorization: $authorization");
       if (authorization == null) {
+        log("Failed to get authorization from Google Sign In");
         throw Exception("Failed to get authorization from Google Sign In");
       }
 
       String? accessToken = authorization.accessToken;
       String? idToken = authorization.accessToken;
-
+      log("Google accessToken: $accessToken, idToken: $idToken");
       await Supabase.instance.client.auth.signInWithIdToken(
         provider: OAuthProvider.google,
         idToken: idToken,
         accessToken: accessToken,
       );
+      log("Google sign-in request sent to Supabase.");
     } on GoogleSignInException catch (error) {
       log("GoogleSignInException: ${error.code}");
       if (error.code == GoogleSignInExceptionCode.canceled) {
-        // User canceled the sign-in
+        log("Sign in was canceled by user");
         _socialLoginResultStream.add(
           SocialLoginResult(
             socialType: SocialMediaLoginType.google,
@@ -176,7 +183,7 @@ class SocialLoginServiceImpl extends SocialLoginService {
         ),
       );
     } on Object catch (error) {
-      log("General error: $error");
+      log("General error during Google sign-in: $error");
       _socialLoginResultStream.add(
         SocialLoginResult(
           socialType: SocialMediaLoginType.google,
@@ -184,7 +191,6 @@ class SocialLoginServiceImpl extends SocialLoginService {
         ),
       );
     }
-
     return socialLoginResultStream;
   }
 
@@ -193,23 +199,7 @@ class SocialLoginServiceImpl extends SocialLoginService {
 
   @override
   Future<Stream<SocialLoginResult>> signInWithFaceBook() async {
-    // final LoginResult result = await facebookAuth.login();
-    // if (result.status == LoginStatus.success) {
-    //   String accessToken = result.accessToken?.tokenString ?? "";
-    //
-    //   //log("accessToken: $accessToken");
-    //
-    //   return SocialLoginResult(
-    //     accessToken: accessToken,
-    //     socialType: SocialMediaLoginType.facebook,
-    //   );
-    // } else {
-    //   log("Login Failed! Please try again.");
-    //   return SocialLoginResult(
-    //     socialType: SocialMediaLoginType.facebook,
-    //   );
-    // }
-
+    log("Starting Facebook sign-in");
     try {
       await Supabase.instance.client.auth.signInWithOAuth(
         OAuthProvider.facebook,
@@ -218,8 +208,9 @@ class SocialLoginServiceImpl extends SocialLoginService {
         authScreenLaunchMode: LaunchMode.externalApplication,
         // scopes: "email public_profile",
       );
+      log("Facebook sign-in request sent to Supabase.");
     } on Object catch (error) {
-      log("signInWithFaceBook: $error");
+      log("Facebook sign-in error: $error");
       _socialLoginResultStream.add(
         SocialLoginResult(
           socialType: SocialMediaLoginType.facebook,
@@ -233,15 +224,18 @@ class SocialLoginServiceImpl extends SocialLoginService {
   //Logout
   @override
   Future<void> logOut() async {
+    log("Logging out from Supabase, Google, and Facebook.");
     Supabase.instance.client.auth.signOut();
     googleSignIn.signOut();
     facebookAuth.logOut();
+    log("Logout complete.");
   }
 
   Future<dynamic> _initializeSupaBase({
     required String url,
     required String anonKey,
   }) async {
+    log("Initializing Supabase with url: $url, anonKey: $anonKey");
     return Supabase.initialize(
       url: url,
       anonKey: anonKey,
@@ -259,8 +253,10 @@ class SocialLoginServiceImpl extends SocialLoginService {
 
   @override
   Future<void> onDispose() async {
+    log("Disposing SocialLoginServiceImpl.");
     await _authStateSubscription?.cancel();
     _authStateSubscription = null;
     await _socialLoginResultStream.close();
+    log("Dispose complete.");
   }
 }

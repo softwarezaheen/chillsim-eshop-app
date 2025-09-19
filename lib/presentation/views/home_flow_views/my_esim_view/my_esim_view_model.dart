@@ -67,27 +67,41 @@ class MyESimViewModel extends BaseModel {
 
   Future<void> onTopUpClick({required int index}) async {
     PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
-    SheetResponse<MainBottomSheetResponse>? sheetResponse =
+
+    // Step 1: Show billing info bottom sheet
+    SheetResponse<EmptyBottomSheetResponse>? billingSheetResponse =
         await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
-      variant: BottomSheetType.topUpBundle,
-      data: BundleTopUpBottomRequest(
-        iccID: item.iccid ?? "",
-        bundleCode: item.bundleCode ?? "",
+      variant: BottomSheetType.billingInfo,
+      data: PurchaseBundleBottomSheetArgs(
+        null,
+        null,
+        null,
       ),
-    );
+    );    
 
-    if (!(sheetResponse?.data?.canceled ?? true)) {
-      bottomSheetService.showCustomSheet(
+    if (billingSheetResponse?.confirmed ?? false) {
+      SheetResponse<MainBottomSheetResponse>? sheetResponse =
+          await bottomSheetService.showCustomSheet(
         isScrollControlled: true,
-        variant: BottomSheetType.successBottomSheet,
-        data: SuccessBottomRequest(
-          title: LocaleKeys.hurray.tr(),
-          description: LocaleKeys.top_up_success_message.tr(),
-          imagePath: EnvironmentImages.compatibleIcon.fullImagePath,
+        variant: BottomSheetType.topUpBundle,
+        data: BundleTopUpBottomRequest(
+          iccID: item.iccid ?? "",
+          bundleCode: item.bundleCode ?? "",
         ),
       );
 
+      if (!(sheetResponse?.data?.canceled ?? true)) {
+        bottomSheetService.showCustomSheet(
+          isScrollControlled: true,
+          variant: BottomSheetType.successBottomSheet,
+          data: SuccessBottomRequest(
+            title: LocaleKeys.hurray.tr(),
+            description: LocaleKeys.top_up_success_message.tr(),
+            imagePath: EnvironmentImages.compatibleIcon.fullImagePath,
+          ),
+        );
+    }
       refreshCurrentPlans();
     }
   }

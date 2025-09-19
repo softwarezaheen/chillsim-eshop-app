@@ -1,112 +1,70 @@
-import "dart:developer";
-
-import "package:easy_localization/easy_localization.dart";
-import "package:esim_open_source/app/environment/app_environment.dart";
-import "package:esim_open_source/di/locator.dart";
-import "package:esim_open_source/presentation/enums/login_type.dart";
-import "package:esim_open_source/presentation/extensions/context_extension.dart";
-import "package:esim_open_source/presentation/shared/shared_styles.dart";
+import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view_model.dart";
-import "package:esim_open_source/presentation/widgets/common_navigation_title.dart";
+import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
-import "package:esim_open_source/presentation/widgets/my_phone_input.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
-import "package:esim_open_source/translations/locale_keys.g.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
+import "package:stacked_services/stacked_services.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/billing_information_view/billing_info_bottomsheet_view_model.dart";
+import 'package:esim_open_source/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:esim_open_source/presentation/shared/shared_styles.dart';
 
-class AccountInformationView extends StatelessWidget {
-  const AccountInformationView({super.key});
+class BillingInfoBottomSheetView extends StatelessWidget {
+  const BillingInfoBottomSheetView({
+    required this.completer,
+    this.requestBase,
+    super.key,
+  });
 
-  static const String routeName = "AccountInformationView";
+  final dynamic requestBase;
+  final Function(SheetResponse<EmptyBottomSheetResponse>) completer;
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<AccountInformationViewModel>(
-      hideAppBar: true,
-      routeName: routeName,
-      viewModel: locator<AccountInformationViewModel>(),
+    return BaseView.bottomSheetBuilder(
+      viewModel: BillingInfoBottomSheetViewModel(),
       builder: (
         BuildContext context,
-        AccountInformationViewModel viewModel,
+        BillingInfoBottomSheetViewModel viewModel,
         Widget? childWidget,
         double screenHeight,
       ) {
-        // Logging for debugging dropdown issues
-        log("Dropdown counties: ${viewModel.countiesList.map((c) => '${c.name} (${c.alpha3}) [${c.hashCode}]').toList()}");
-        log("Dropdown selectedCounty: ${viewModel.selectedCounty?.name} (${viewModel.selectedCounty?.alpha3}) [${viewModel.selectedCounty?.hashCode}]");
-
-        return PaddingWidget.applyPadding(
-          top: 20,
-          child: Column(
-            children: <Widget>[
-              CommonNavigationTitle(
-                navigationTitle: LocaleKeys.accountInformation_titleText.tr(),
-                textStyle: headerTwoBoldTextStyle(
-                  context: context,
-                  fontColor: titleTextColor(context: context),
-                ),
-              ),
-              Expanded(
-                child: KeyboardDismissOnTap(
-                  dismissOnCapturedTaps: true,
-                  child: SingleChildScrollView(
-                    child: PaddingWidget.applySymmetricPadding(
-                      horizontal: 15,
+        // final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+        return KeyboardDismissOnTap(
+          child: PaddingWidget.applySymmetricPadding(
+            vertical: 15,
+            horizontal: 15,
+            child: SizedBox(
+              height: screenHeight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  BottomSheetCloseButton(
+                    onTap: () => completer(
+                      SheetResponse<EmptyBottomSheetResponse>(),
+                    ),
+                  ),
+                  PaddingWidget.applySymmetricPadding(
+                    horizontal: 0,
+                    vertical: 0,
+                    child: Text(
+                      LocaleKeys.billing_details_title.tr(),
+                      style: headerThreeBoldTextStyle(
+                        context: context,
+                        fontColor: titleTextColor(context: context),
+                      ),
+                    ),
+                  ),
+                  verticalSpaceSmallMedium,
+                  Expanded(
+                    child: SingleChildScrollView(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          verticalSpaceMedium,
-                          MainInputField.formField(
-                            themeColor: themeColor,
-                            hintText: LocaleKeys.accountInformation_namePlaceHolderText.tr(),
-                            hintLabelStyle: captionOneNormalTextStyle(
-                              context: context,
-                              fontColor: secondaryTextColor(context: context),
-                            ),
-                            controller: viewModel.nameController,
-                            backGroundColor: whiteBackGroundColor(context: context),
-                            labelStyle: bodyNormalTextStyle(
-                              context: context,
-                              fontColor: mainDarkTextColor(context: context),
-                            ),
-                          ),
-                          verticalSpaceSmall,
-                          MainInputField.formField(
-                            themeColor: themeColor,
-                            hintText: LocaleKeys.accountInformation_familyNamePlaceHolderText.tr(),
-                            hintLabelStyle: captionOneNormalTextStyle(
-                              context: context,
-                              fontColor: secondaryTextColor(context: context),
-                            ),
-                            controller: viewModel.familyNameController,
-                            backGroundColor: whiteBackGroundColor(context: context),
-                            labelStyle: bodyNormalTextStyle(
-                              context: context,
-                              fontColor: mainDarkTextColor(context: context),
-                            ),
-                          ),
-                          verticalSpaceSmall,
-                          MyPhoneInput(
-                            enabled: AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
-                                ? false
-                                : true,
-                            onChanged: viewModel.validateNumber,
-                            phoneController: viewModel.phoneController,
-                            validateRequired: true,
-                          ),
-                          getSpacersWidgets(context),
-                          Text(
-                            LocaleKeys.billing_details_title.tr(),
-                            style: headerThreeBoldTextStyle(
-                              context: context,
-                              fontColor: titleTextColor(context: context),
-                            ),
-                          ),
-                          verticalSpaceSmallMedium,
                           RadioGroup<BillingType>(
                             groupValue: viewModel.billingType,
                             onChanged: (BillingType? type) {
@@ -118,13 +76,13 @@ class AccountInformationView extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: TextStyle(fontSize: 14)),
+                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: TextStyle(fontSize: 12)),
                                     value: BillingType.individual,
                                   ),
                                 ),
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_company.tr(), style: TextStyle(fontSize: 14)),
+                                    title: Text(LocaleKeys.billing_type_company.tr(), style: TextStyle(fontSize: 12)),
                                     value: BillingType.business,
                                   ),
                                 ),
@@ -169,7 +127,7 @@ class AccountInformationView extends StatelessWidget {
                                 context: context,
                                 fontColor: secondaryTextColor(context: context),
                               ),
-                              controller: viewModel.registrationCodeController,
+                              controller: viewModel.registrationController,
                               backGroundColor: whiteBackGroundColor(context: context),
                               labelStyle: bodyNormalTextStyle(
                                 context: context,
@@ -178,7 +136,36 @@ class AccountInformationView extends StatelessWidget {
                             ),
                             verticalSpaceSmall,
                           ],
-                          
+                          MainInputField.formField(
+                            themeColor: themeColor,
+                            hintText: LocaleKeys.accountInformation_namePlaceHolderText.tr(),
+                            hintLabelStyle: captionOneNormalTextStyle(
+                              context: context,
+                              fontColor: secondaryTextColor(context: context),
+                            ),
+                            controller: viewModel.firstNameController,
+                            backGroundColor: whiteBackGroundColor(context: context),
+                            labelStyle: bodyNormalTextStyle(
+                              context: context,
+                              fontColor: mainDarkTextColor(context: context),
+                            ),
+                          ),
+                          verticalSpaceSmall,
+                          MainInputField.formField(
+                            themeColor: themeColor,
+                            hintText: LocaleKeys.accountInformation_familyNamePlaceHolderText.tr(),
+                            hintLabelStyle: captionOneNormalTextStyle(
+                              context: context,
+                              fontColor: secondaryTextColor(context: context),
+                            ),
+                            controller: viewModel.lastNameController,
+                            backGroundColor: whiteBackGroundColor(context: context),
+                            labelStyle: bodyNormalTextStyle(
+                              context: context,
+                              fontColor: mainDarkTextColor(context: context),
+                            ),
+                          ),
+                          verticalSpaceSmall,
                           DropdownButtonFormField<Country>(
                             value: viewModel.selectedCountryValue,
                             items: viewModel.countriesList.map((Country country) {
@@ -289,7 +276,7 @@ class AccountInformationView extends StatelessWidget {
                               context: context,
                               fontColor: secondaryTextColor(context: context),
                             ),
-                            controller: viewModel.billingAddressController,
+                            controller: viewModel.addressController,
                             backGroundColor: whiteBackGroundColor(context: context),
                             labelStyle: bodyNormalTextStyle(
                               context: context,
@@ -297,109 +284,36 @@ class AccountInformationView extends StatelessWidget {
                             ),
                           ),
                           verticalSpaceSmall,
-                          AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
-                              ? MainInputField.formField(
-                                  themeColor: themeColor,
-                                  hintText: LocaleKeys.email.tr(),
-                                  hintLabelStyle: captionOneNormalTextStyle(
-                                    context: context,
-                                    fontColor: secondaryTextColor(context: context),
-                                  ),
-                                  errorMessage: viewModel.emailErrorMessage,
-                                  controller: viewModel.emailController,
-                                  backGroundColor: whiteBackGroundColor(context: context),
-                                  labelStyle: bodyNormalTextStyle(
-                                    context: context,
-                                    fontColor: mainDarkTextColor(context: context),
-                                  ),
-                                )
-                              : Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: greyBackGroundColor(context: context),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: PaddingWidget.applySymmetricPadding(
-                                      vertical: 15,
-                                      horizontal: 20,
-                                      child: Text(
-                                        viewModel.userEmail,
-                                        style: bodyNormalTextStyle(
-                                          context: context,
-                                          fontColor: secondaryTextColor(context: context),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                          verticalSpaceSmallMedium,
-                          Row(
-                            children: <Widget>[
-                              CupertinoSwitch(
-                                value: viewModel.receiveUpdated,
-                                activeTrackColor: enabledSwitchColor(context: context),
-                                thumbColor: switchThumbColor(context: context),
-                                onChanged: (bool newValue) {
-                                  viewModel.updateSwitch(
-                                    newValue: newValue,
-                                  );
-                                },
-                              ),
-                              horizontalSpaceSmall,
-                              Expanded(
-                                child: Text(
-                                  LocaleKeys.accountInformation_contentText.tr(),
-                                  style: captionTwoNormalTextStyle(
-                                    context: context,
-                                    fontColor: secondaryTextColor(context: context),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),
                   ),
-                ),
+                  verticalSpaceSmallMedium,
+                  PaddingWidget.applySymmetricPadding(
+                    vertical: 20,
+                    horizontal: 20,
+                    child: MainButton(
+                      title: LocaleKeys.accountInformation_saveText.tr(),
+                      onPressed: () async {
+                        await viewModel.saveBillingInfoAndProceed(context, completer);
+                      },
+                      height: 53,
+                      hideShadows: true,
+                      themeColor: themeColor,
+                      isEnabled: viewModel.saveButtonEnabled,
+                      enabledTextColor: enabledMainButtonTextColor(context: context),
+                      disabledTextColor: disabledMainButtonTextColor(context: context),
+                      enabledBackgroundColor: enabledMainButtonColor(context: context),
+                      disabledBackgroundColor: disabledMainButtonColor(context: context),
+                    ),
+                  ),
+                ],
               ),
-              PaddingWidget.applySymmetricPadding(
-                vertical: 20,
-                horizontal: 20,
-                child: MainButton(
-                  title: LocaleKeys.accountInformation_saveText.tr(),
-                  onPressed: () async {
-                    await viewModel.saveButtonTapped();
-                  },
-                  height: 53,
-                  hideShadows: true,
-                  themeColor: themeColor,
-                  isEnabled: viewModel.saveButtonEnabled,
-                  enabledTextColor: enabledMainButtonTextColor(context: context),
-                  disabledTextColor: disabledMainButtonTextColor(context: context),
-                  enabledBackgroundColor: enabledMainButtonColor(context: context),
-                  disabledBackgroundColor: disabledMainButtonColor(context: context),
-                ),
-              ),
-            ],
+            ),
           ),
         );
       },
     );
   }
 
-  Widget getSpacersWidgets(BuildContext context) {
-    List<Widget> widgets = <Widget>[
-      verticalSpaceSmall,
-      Divider(
-        color: context.appColors.grey_200,
-      ),
-      verticalSpaceSmall,
-    ];
-    return Column(
-      children: widgets,
-    );
-  }
 }

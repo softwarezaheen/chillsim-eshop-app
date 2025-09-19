@@ -80,6 +80,9 @@ enum EnvironmentImages {
   bannersChatWithUsPerson,
   bannersLiveChat,
   bannersReferAndEarn,
+  bannersZenminutes,
+  bannersReferral,
+  bannersSupport,
   //icons
   iconCheck,
   iconWarning,
@@ -297,6 +300,9 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.bannersChatWithUsPerson:
       case EnvironmentImages.bannersLiveChat:
       case EnvironmentImages.bannersReferAndEarn:
+      case EnvironmentImages.bannersZenminutes:
+      case EnvironmentImages.bannersReferral:
+      case EnvironmentImages.bannersSupport:
         return "banners/$name";
       case EnvironmentImages.iconCheck:
       case EnvironmentImages.iconWarning:

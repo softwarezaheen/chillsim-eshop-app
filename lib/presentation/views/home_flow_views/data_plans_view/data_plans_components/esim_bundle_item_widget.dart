@@ -14,6 +14,7 @@ import "package:flutter/material.dart";
 class EsimBundleWidget extends StatelessWidget {
   const EsimBundleWidget({
     required this.priceButtonText,
+    required this.priceInfo,
     required this.title,
     required this.data,
     required this.validFor,
@@ -27,6 +28,7 @@ class EsimBundleWidget extends StatelessWidget {
   });
 
   final String priceButtonText;
+  final String? priceInfo;
   final String title;
   final String data;
   final String validFor;
@@ -156,21 +158,44 @@ class EsimBundleWidget extends StatelessWidget {
 
               const SizedBox(height: 15),
 
-              // Price Button
-              Container(
-                alignment: Alignment.centerLeft,
-                child: MainButton.bannerButton(
-                  title: priceButtonText,
-                  action: onPriceButtonClick,
-                  height: 42,
-                  themeColor: themeColor,
-                  textColor: enabledMainButtonTextColor(context: context),
-                  buttonColor: enabledMainButtonColor(context: context),
-                  titleTextStyle: captionOneBoldTextStyle(
-                    context: context,
-                  ),
+              // Disclaimer Text
+              Text(
+                LocaleKeys.bundleInfo_priceDisclaimerText.tr(),
+                style: captionTwoNormalTextStyle(
+                  context: context,
+                  fontColor: secondaryTextColor(context: context),
                 ),
               ),
+
+              const SizedBox(height: 15),
+
+              Row(
+                children: [
+                  Expanded(
+                    // Price Button
+                    child: MainButton.bannerButton(
+                      title: priceButtonText,
+                      action: onPriceButtonClick,
+                      height: 42,
+                      themeColor: themeColor,
+                      textColor: enabledMainButtonTextColor(context: context),
+                      buttonColor: enabledMainButtonColor(context: context),
+                      titleTextStyle: captionOneBoldTextStyle(
+                        context: context,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    priceInfo?.toString() ?? "",
+                    style: headerTwoBoldTextStyle(
+                      context: context,
+                      fontColor: bundleDataPriceTextColor(context: context),
+                    ),
+                  ),
+                ],
+              ),
+              
             ],
           ),
         ),
@@ -183,6 +208,7 @@ class EsimBundleWidget extends StatelessWidget {
     super.debugFillProperties(properties);
     properties
       ..add(StringProperty("priceButtonText", priceButtonText))
+      ..add(StringProperty("priceInfo", priceInfo))
       ..add(StringProperty("title", title))
       ..add(StringProperty("data", data))
       ..add(StringProperty("validFor", validFor))

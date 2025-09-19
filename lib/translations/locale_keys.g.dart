@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: type=lint
+// ignore_for_file: constant_identifier_names
 
 abstract class  LocaleKeys {
   static const appName = 'appName';
@@ -13,7 +13,6 @@ abstract class  LocaleKeys {
   static const feedback = 'feedback';
   static const email = 'email';
   static const cancel = 'cancel';
-  static const ok = 'ok';
   static const language = 'language';
   static const history = 'history';
   static const send = 'send';
@@ -24,6 +23,7 @@ abstract class  LocaleKeys {
   static const activate = 'activate';
   static const continueStr = 'continueStr';
   static const invalidNumberMessage = 'invalidNumberMessage';
+  static const ok = 'ok';
   static const mobileNumber = 'mobileNumber';
   static const password = 'password';
   static const yes = 'yes';
@@ -84,6 +84,12 @@ abstract class  LocaleKeys {
   static const dataPlans_liveChatBannerButtonText = 'dataPlans_liveChatBannerButtonText';
   static const dataPlans_referAndEarnBannerButtonText = 'dataPlans_referAndEarnBannerButtonText';
   static const dataPlans_cashbackRewardsBannerButtonText = 'dataPlans_cashbackRewardsBannerButtonText';
+  static const dataPlans_zenminutesBannerTitle = 'dataPlans_zenminutesBannerTitle';
+  static const dataPlans_zenminutesBannerContent = 'dataPlans_zenminutesBannerContent';
+  static const dataPlans_zenminutesBannerButtonText = 'dataPlans_zenminutesBannerButtonText';
+  static const dataPlans_supportBannerTitle = 'dataPlans_supportBannerTitle';
+  static const dataPlans_supportBannerContent = 'dataPlans_supportBannerContent';
+  static const dataPlans_supportBannerButtonText = 'dataPlans_supportBannerButtonText';
   static const myEsim_tabName = 'myEsim_tabName';
   static const profile_tabName = 'profile_tabName';
   static const profile_guest = 'profile_guest';
@@ -156,6 +162,9 @@ abstract class  LocaleKeys {
   static const orderReceiptBottomSheet_qty = 'orderReceiptBottomSheet_qty';
   static const orderReceiptBottomSheet_product = 'orderReceiptBottomSheet_product';
   static const orderReceiptBottomSheet_unitPrice = 'orderReceiptBottomSheet_unitPrice';
+  static const orderReceiptBottomSheet_fee = 'orderReceiptBottomSheet_fee';
+  static const orderReceiptBottomSheet_vat = 'orderReceiptBottomSheet_vat';
+  static const orderReceiptBottomSheet_total = 'orderReceiptBottomSheet_total';
   static const orderReceiptBottomSheet_amount = 'orderReceiptBottomSheet_amount';
   static const orderReceiptBottomSheet_download = 'orderReceiptBottomSheet_download';
   static const voucherCode_titleText = 'voucherCode_titleText';
@@ -243,7 +252,6 @@ abstract class  LocaleKeys {
   static const activation_code = 'activation_code';
   static const smdp_address = 'smdp_address';
   static const error_generating_qr_code = 'error_generating_qr_code';
-  static const copied_to_clipboard = 'copied_to_clipboard';
   static const top_up_plan = 'top_up_plan';
   static const faq_not_available = 'faq_not_available';
   static const your_message_has_been_sent = 'your_message_has_been_sent';
@@ -259,7 +267,9 @@ abstract class  LocaleKeys {
   static const one_week_ago = 'one_week_ago';
   static const yesterday = 'yesterday';
   static const bundleInfo_priceText = 'bundleInfo_priceText';
+  static const bundleInfo_priceText_noPrice = 'bundleInfo_priceText_noPrice';
   static const bundleInfo_validityText = 'bundleInfo_validityText';
+  static const bundleInfo_priceDisclaimerText = 'bundleInfo_priceDisclaimerText';
   static const supportedCountries_tittleText = 'supportedCountries_tittleText';
   static const supportedCountries_card_tittleText = 'supportedCountries_card_tittleText';
   static const promoCodeView_titleText = 'promoCodeView_titleText';
@@ -268,13 +278,13 @@ abstract class  LocaleKeys {
   static const bundleDetails_planTypeText = 'bundleDetails_planTypeText';
   static const bundleDetails_activationPolicyText = 'bundleDetails_activationPolicyText';
   static const bundleDetails_emptyText = 'bundleDetails_emptyText';
-  static const edit_name = 'edit_name';
   static const current_plans = 'current_plans';
   static const expired_plans = 'expired_plans';
   static const no_active_eSim = 'no_active_eSim';
   static const no_active_eSim_description = 'no_active_eSim_description';
   static const no_expired_eSim = 'no_expired_eSim';
   static const no_expired_eSim_description = 'no_expired_eSim_description';
+  static const edit_name = 'edit_name';
   static const bundle_validity = 'bundle_validity';
   static const last_purchase = 'last_purchase';
   static const top_up = 'top_up';
@@ -305,6 +315,7 @@ abstract class  LocaleKeys {
   static const bundleExistsView_contentText = 'bundleExistsView_contentText';
   static const bundleExistsView_buttonOneText = 'bundleExistsView_buttonOneText';
   static const bundleExistsView_buttonTwoText = 'bundleExistsView_buttonTwoText';
+  static const copied_to_clipboard = 'copied_to_clipboard';
   static const image_saved = 'image_saved';
   static const qr_code_saved = 'qr_code_saved';
   static const permission_required = 'permission_required';
@@ -375,5 +386,27 @@ abstract class  LocaleKeys {
   static const referral_code_activated = 'referral_code_activated';
   static const no_payment_method_available = 'no_payment_method_available';
   static const no_sufficient_balance_in_wallet = 'no_sufficient_balance_in_wallet';
+  static const billing_details_title = 'billing_details_title';
+  static const billing_type_individual = 'billing_type_individual';
+  static const billing_type_company = 'billing_type_company';
+  static const country_field_label = 'country_field_label';
+  static const county_field_label = 'county_field_label';
+  static const city_field_label = 'city_field_label';
+  static const company_name_field_label = 'company_name_field_label';
+  static const tax_id_field_label = 'tax_id_field_label';
+  static const registration_field_label = 'registration_field_label';
+  static const street_address_field_label = 'street_address_field_label';
+  static const validation_last_name_required = 'validation_last_name_required';
+  static const validation_first_name_required = 'validation_first_name_required';
+  static const validation_country_required = 'validation_country_required';
+  static const validation_county_required = 'validation_county_required';
+  static const validation_city_required = 'validation_city_required';
+  static const validation_vat_code_required = 'validation_vat_code_required';
+  static const validation_company_name_required = 'validation_company_name_required';
+  static const bundle_processing_fee = 'bundle_processing_fee';
+  static const bundle_vat_amount = 'bundle_vat_amount';
+  static const bundle_total_amount = 'bundle_total_amount';
+  static const bundle_total_amount_in_your_currency = 'bundle_total_amount_in_your_currency';
+  static const bundle_exchange_rate_disclaimer = 'bundle_exchange_rate_disclaimer';
 
 }

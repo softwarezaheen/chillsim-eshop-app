@@ -16,6 +16,7 @@ import "package:esim_open_source/utils/date_time_utils.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class OrderReceiptBottomSheetView extends StatelessWidget {
   const OrderReceiptBottomSheetView({
@@ -238,19 +239,7 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  TableRow(
-                                    children: <Widget>[
-                                      tableRowCell(
-                                        context: context,
-                                        titleText: LocaleKeys
-                                            .orderReceiptBottomSheet_unitPrice
-                                            .tr(),
-                                        contentText: viewModel.bundleOrderModel
-                                                ?.bundleDetails?.priceDisplay ??
-                                            "",
-                                      ),
-                                    ],
-                                  ),
+                                  
                                   TableRow(
                                     children: <Widget>[
                                       tableRowCell(
@@ -264,6 +253,53 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+                                  (viewModel.bundleOrderModel?.orderFee != null &&
+                                          viewModel.bundleOrderModel!
+                                                  .orderFee! >
+                                              0)  
+                                      ? TableRow(
+                                          children: <Widget>[
+                                            tableRowCell(
+                                              context: context,
+                                              titleText: LocaleKeys
+                                                  .orderReceiptBottomSheet_fee
+                                                  .tr(),
+                                              contentText:
+                                                  "${viewModel.bundleOrderModel?.orderFee.toString() ?? "0"} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
+                                            ),
+                                          ],
+                                        ) 
+                                      : const TableRow(),
+                                  (viewModel.bundleOrderModel?.orderFee != null &&
+                                          viewModel.bundleOrderModel!
+                                                  .orderFee! >
+                                              0)  
+                                      ?
+                                    TableRow(
+                                      children: <Widget>[
+                                        tableRowCell(
+                                          context: context,
+                                          titleText: LocaleKeys
+                                              .orderReceiptBottomSheet_vat
+                                              .tr(),
+                                          contentText:
+                                              "${viewModel.bundleOrderModel?.orderVat.toString() ?? "0"} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
+                                        ),
+                                      ],
+                                    )
+                                    : const TableRow(),
+                                  TableRow(
+                                    children: <Widget>[
+                                      tableRowCell(
+                                        context: context,
+                                        titleText: LocaleKeys
+                                            .orderReceiptBottomSheet_total
+                                            .tr(),
+                                        contentText:
+                                            "${((viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0) + (viewModel.bundleOrderModel?.orderVat ?? 0))} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
@@ -274,7 +310,18 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                   ),
                   MainButton(
                     title: LocaleKeys.orderReceiptBottomSheet_download.tr(),
-                    onPressed: viewModel.savePdf,
+                    onPressed: () async {
+                      if (viewModel.bundleOrderModel?.orderInvoice != null && viewModel.bundleOrderModel!.orderInvoice!.isNotEmpty) {
+                        // Open browser to download invoice
+                        final url = viewModel.bundleOrderModel!.orderInvoice!;
+                        if (await canLaunchUrl(Uri.parse(url))) {
+                          await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                        }
+                      } else {
+                        // Maintain savePdf logic
+                        await viewModel.savePdf();
+                      }
+                    },
                     hideShadows: true,
                     themeColor: themeColor,
                     enabledTextColor:

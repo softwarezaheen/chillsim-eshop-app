@@ -1,6 +1,7 @@
 // bundles_list_view_model.dart
 
 import "dart:async";
+import "dart:developer";
 
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
@@ -15,6 +16,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/bundles_list/navigation/esim_arguments.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:flutter/cupertino.dart";
+import "package:stacked_services/stacked_services.dart";
 
 class BundlesListViewModel extends EsimBaseModel {
   BundlesListViewModel(this.esimArguments);
@@ -109,6 +111,7 @@ class BundlesListViewModel extends EsimBaseModel {
   Future<void> navigateToEsimDetail(
     BundleResponseModel bundle,
   ) async {
+    log(  "navigateToEsimDetail from bundles list screeN");
     // fill regions
     RegionRequestModel? regionRequestModel =
         esimArguments.type == EsimArgumentType.region
@@ -146,7 +149,20 @@ class BundlesListViewModel extends EsimBaseModel {
       );
       return;
     }
-    await bottomSheetService.showCustomSheet(
+
+    SheetResponse<EmptyBottomSheetResponse>? billingSheetResponse =
+        await bottomSheetService.showCustomSheet(
+      isScrollControlled: true,
+      variant: BottomSheetType.billingInfo,
+      data: PurchaseBundleBottomSheetArgs(
+        regionRequestModel,
+        countriesRequestModel,
+        bundle,
+      ),
+    );
+
+    if (billingSheetResponse?.confirmed ?? false) {
+      await bottomSheetService.showCustomSheet(
       data: PurchaseBundleBottomSheetArgs(
         regionRequestModel,
         countriesRequestModel,
@@ -156,6 +172,8 @@ class BundlesListViewModel extends EsimBaseModel {
       isScrollControlled: true,
       variant: BottomSheetType.bundleDetails,
     );
+    }
+    
   }
 
   void _onSearchChanged() {

@@ -261,6 +261,21 @@ TextStyle headerTwoMediumTextStyle({
           fontFamily ?? Theme.of(context).textTheme.labelLarge?.fontFamily,
     );
 
+TextStyle headerTwoSmallTextStyle({
+  required BuildContext context,
+  String? fontFamily,
+  Color? fontColor,
+  bool isItalic = false,
+}) =>
+    TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: fontColor ?? context.appColors.baseBlack,
+      fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
+      fontFamily:
+          fontFamily ?? Theme.of(context).textTheme.labelLarge?.fontFamily,
+    );
+
 TextStyle headerTwoBoldTextStyle({
   required BuildContext context,
   String? fontFamily,

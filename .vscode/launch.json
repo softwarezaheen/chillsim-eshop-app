@@ -11,7 +11,7 @@
             "program": "lib/main.dart",
             "args": [
                 "--flavor",
-                "Dev",
+                "OpenSourceDev",
                 "--target",
                 "lib/main.dart"
             ]
@@ -23,7 +23,7 @@
             "program": "lib/main.dart",
             "args": [
                 "--flavor",
-                "Stg",
+                "OpenSourceStaging",
                 "--target",
                 "lib/main.dart"
             ]
@@ -35,7 +35,7 @@
             "program": "lib/main.dart",
             "args": [
                 "--flavor",
-                "PROD",
+                "OpenSourcePROD",
                 "--target",
                 "lib/main.dart"
             ]

@@ -9,4 +9,5 @@ abstract class AppConfigurationService {
   String get getPaymentTypes;
   String get getLoginType;
   String get referAndEarnAmount;
+  String get getZenminutesUrl;
 }

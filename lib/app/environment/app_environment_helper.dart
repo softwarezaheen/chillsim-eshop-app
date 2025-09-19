@@ -10,18 +10,21 @@ class AppEnvironmentHelper {
     required this.omniConfigApiKey,
     required this.omniConfigAppGuid,
     this.websiteUrl = "",
+    this.zenminutesUrl = "https://zenminutes.com",
     this.defaultLoginType = LoginType.email,
     this.enableBranchIO = false,
-    this.enablePromoCode = false,
-    this.enableWalletView = false,
-    this.enableBannersView = false,
-    this.enableCurrencySelection = false,
+    this.enablePromoCode = false, //was false
+    this.enableReferral = false,
+    this.enableWalletView = true, //was false
+    this.enableWalletRecharge = false, // adding this flag for disabling wallet recharge from wallet view
+    this.enableBannersView = true, //was false
+    this.enableCurrencySelection = true, //was false
     this.environmentTheme = EnvironmentTheme.openSource,
-    this.enableLanguageSelection = false,
+    this.enableLanguageSelection = true, //was false
     this.enableAppleSignIn = true,
     this.enableGoogleSignIn = true,
     this.enableFacebookSignIn = true,
-    this.enableGuestFlowPurchase = true,
+    this.enableGuestFlowPurchase = false, //was true
     this.environmentCornerRadius = 25,
     this.environmentFamilyName = "Poppins",
     this.isCruiseEnabled = false,
@@ -44,12 +47,15 @@ class AppEnvironmentHelper {
   String omniConfigApiKey;
   String omniConfigAppGuid;
   String websiteUrl;
+  String zenminutesUrl;
 
   //feature flags
   LoginType defaultLoginType;
   bool enableBranchIO;
   bool enablePromoCode;
+  bool enableReferral;
   bool enableWalletView;
+  bool enableWalletRecharge;
   bool enableBannersView;
   bool enableCurrencySelection;
   bool enableLanguageSelection;

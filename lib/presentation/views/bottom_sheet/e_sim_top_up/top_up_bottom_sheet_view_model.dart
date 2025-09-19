@@ -1,10 +1,14 @@
 import "dart:async";
 import "dart:io";
 import "dart:math";
+import 'dart:developer' as dev;
 
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
+import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
+import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/user/get_related_topup_use_case.dart";
@@ -21,6 +25,9 @@ import "package:stacked_services/stacked_services.dart";
 class TopUpBottomSheetViewModel extends EsimBaseModel {
   TopUpBottomSheetViewModel({required this.request, required this.completer});
 
+  final Map<String, BundleTaxesResponseModel?> bundleTaxes = <String, BundleTaxesResponseModel?>{};
+  final Set<String> loadingTaxesBundleCodes = <String>{};
+
   //#region UseCases
   final TopUpUserBundleUseCase topUpUserBundleUseCase =
       TopUpUserBundleUseCase(locator());
@@ -36,11 +43,13 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   //#region Functions
   @override
   void onViewModelReady() {
+    super.onViewModelReady();
     unawaited(fetchTopUpRelated());
   }
 
   void onBuyClick({required int index}) {
     BundleResponseModel item = bundleItems[index];
+    dev.log("Top up bundle code: ${item.bundleCode??""}");
     unawaited(
       _topUpBundle(
         iccId: request.data?.iccID ?? "",
@@ -60,7 +69,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       return 300;
     }
 
-    double cellHeight = 200;
+    double cellHeight = 300;
     double cellsHeight = 120 + (bundleItems.length * cellHeight);
 
     return min(cellsHeight, screenHeight);
@@ -110,6 +119,22 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           ..clear()
           ..addAll(result.data ?? <BundleResponseModel>[]);
         applyShimmer = false;
+
+        // Fetch taxes for each bundle
+        for (final bundle in bundleItems) {
+          if (bundle.bundleCode != null && bundle.bundleCode!.isNotEmpty) {
+            loadingTaxesBundleCodes.add(bundle.bundleCode!);
+          }
+        }
+        notifyListeners();
+
+        // Now start fetching taxes for each bundle
+        for (final bundle in bundleItems) {
+          if (bundle.bundleCode != null && bundle.bundleCode!.isNotEmpty) {
+            await loadTaxesForBundle(bundle.bundleCode!);
+          }
+        }
+        notifyListeners();
       },
       onFailure: (Resource<List<BundleResponseModel>?> result) async {
         await handleError(response);
@@ -211,4 +236,20 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     );
   }
 //#endregion
+  //#taxes
+  Future<void> loadTaxesForBundle(String bundleCode) async {
+    loadingTaxesBundleCodes.add(bundleCode);
+    notifyListeners();
+
+    final ResponseMain<BundleTaxesResponseModel> response =
+      await locator<ApiUser>().getTaxes(bundleCode: bundleCode);
+
+    if (response.status == "success" && response.data != null) {
+      bundleTaxes[bundleCode] = response.data;
+    } else {
+      bundleTaxes[bundleCode] = null;
+    }
+    loadingTaxesBundleCodes.remove(bundleCode);
+    notifyListeners();
+  }
 }

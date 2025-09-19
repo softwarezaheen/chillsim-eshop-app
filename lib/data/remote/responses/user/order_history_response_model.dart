@@ -8,6 +8,9 @@ class OrderHistoryResponseModel {
     this.orderStatus,
     this.orderAmount,
     this.orderCurrency,
+    this.orderFee,
+    this.orderVat,
+    this.orderInvoice,
     this.orderDate,
     this.orderType,
     this.quantity,
@@ -27,6 +30,9 @@ class OrderHistoryResponseModel {
       orderStatus: json["order_status"],
       orderAmount: (json["order_amount"] as num?)?.toDouble(),
       orderCurrency: json["order_currency"],
+      orderFee: (json["order_fee"] as num?)?.toDouble(),
+      orderVat: (json["order_vat"] as num?)?.toDouble(),
+      orderInvoice: json["order_invoice"],
       orderDate: json["order_date"],
       orderType: json["order_type"],
       quantity: json["quantity"],
@@ -48,6 +54,9 @@ class OrderHistoryResponseModel {
   final String? orderNumber;
   final String? orderStatus;
   final double? orderAmount;
+  final double? orderFee;
+  final double? orderVat;
+  final String? orderInvoice;
   final String? orderCurrency;
   final String? orderDate;
   final String? orderType;
@@ -66,6 +75,9 @@ class OrderHistoryResponseModel {
       "order_number": orderNumber,
       "order_status": orderStatus,
       "order_amount": orderAmount,
+      "order_fee": orderFee,
+      "order_vat": orderVat,
+      "order_invoice": orderInvoice,
       "order_currency": orderCurrency,
       "order_date": orderDate,
       "order_type": orderType,
