@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "845206888977-bluhh7oiqi42sbce6funme79o90sts0j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zaheen.esim.chillsim",
+            "certificate_hash": "eb3fa494e780c1241f9a50fd22b7323e2b2b0a12"
+          }
+        },
+        {
+          "client_id": "845206888977-tafqu5am794fnbekd5askk9gqhfvmb23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zaheen.esim.chillsim",
+            "certificate_hash": "c91cbe6cd5d01bde999f01979a97da1d295ba941"
+          }
+        },
+        {
           "client_id": "845206888977-ii501f8csag1j078g76ap7gbpjs0uo28.apps.googleusercontent.com",
           "client_type": 3
         }

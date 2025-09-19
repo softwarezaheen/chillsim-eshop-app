@@ -119,12 +119,13 @@ class SocialLoginServiceImpl extends SocialLoginService {
   final GoogleSignIn googleSignIn = GoogleSignIn.instance;
   bool _isInitialized = false;
 
-// Initialize Google Sign In (call this once, preferably in initState)
+  // Initialize Google Sign In (call this once, preferably in initState)
   Future<void> _initializeGoogleSignIn() async {
     if (!_isInitialized) {
       try {
         await googleSignIn.initialize();
         _isInitialized = true;
+        log("GoogleSignIn initialized with default configuration");
       } on Object catch (e) {
         log("Failed to initialize Google Sign-In: $e");
       }
@@ -155,9 +156,20 @@ class SocialLoginServiceImpl extends SocialLoginService {
         throw Exception("Failed to get authorization from Google Sign In");
       }
 
+      // Get access token from authorization
       String? accessToken = authorization.accessToken;
-      String? idToken = authorization.accessToken;
+      
+      // Get ID token from the authentication property of the user account
+      final GoogleSignInAuthentication authentication = currentUser.authentication;
+      String? idToken = authentication.idToken;
+      
       log("Google accessToken: $accessToken, idToken: $idToken");
+      
+      if (idToken == null) {
+        log("Failed to get ID token from Google Sign In");
+        throw Exception("Failed to get ID token from Google Sign In");
+      }
+      
       await Supabase.instance.client.auth.signInWithIdToken(
         provider: OAuthProvider.google,
         idToken: idToken,
