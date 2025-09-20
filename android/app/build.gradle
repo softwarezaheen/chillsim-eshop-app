@@ -24,12 +24,12 @@ def storePasswordStr = localProperties.getProperty("storePassword")
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = flutter.versionCode
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = flutter.versionName
 }
 
 android {
@@ -73,8 +73,8 @@ android {
         // targetSdkVersion = flutter.targetSdkVersion
         targetSdkVersion 36
         print("target sdk version : $flutter.targetSdkVersion")
-        versionCode = flutterVersionCode.toInteger()
-        versionName = flutterVersionName
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
 
     buildTypes {

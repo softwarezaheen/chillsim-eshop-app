@@ -44,8 +44,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/OpenSourceProd
+/android/app/OpenSourceDev
+/android/app/OpenSourceStaging
 android/app/montyMobileKeystore_playstore
 /android/app/.cxx
 ios/flutterfire_logs.txt
 *.orig
 /ios/build
+
+# Custom scripts related
+scanner-groovy.bat
