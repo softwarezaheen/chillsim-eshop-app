@@ -104,7 +104,7 @@ android {
             resValue "string", "fb_client_token", "81fcb9d78ec339bcb5be7b21b0a7d924"
             manifestPlaceholders = [
                     scheme          : "iosupabaseflutter",
-                    domain          : "chillsim-eshop-web.onrender.com",
+                    domain          : "chillsim.net",
                     branchScheme    : "",
                     branchDomain    : "",
                     branchTestDomain: "",
@@ -123,7 +123,7 @@ android {
             resValue "string", "fb_client_token", "81fcb9d78ec339bcb5be7b21b0a7d924"
             manifestPlaceholders = [
                     scheme          : "iosupabaseflutter",
-                    domain          : "chillsim-eshop-web.onrender.com",
+                    domain          : "chillsim.net",
                     branchScheme    : "",
                     branchDomain    : "",
                     branchTestDomain: "",
@@ -142,7 +142,7 @@ android {
             resValue "string", "fb_client_token", "81fcb9d78ec339bcb5be7b21b0a7d924"
             manifestPlaceholders = [
                     scheme          : "iosupabaseflutter",
-                    domain          : "chillsim-eshop-web.onrender.com",
+                    domain          : "chillsim.net",
                     branchScheme    : "",
                     branchDomain    : "",
                     branchTestDomain: "",

@@ -776,7 +776,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -892,7 +892,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1007,7 +1007,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1121,7 +1121,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim-eshop-web.r.com";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1231,7 +1231,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1340,7 +1340,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1449,7 +1449,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1557,7 +1557,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";
@@ -1664,7 +1664,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEEP_LINK_DOMAIN = "chillsim-eshop-web.onrender.com";
+				DEEP_LINK_DOMAIN = "chillsim.net";
 				DEVELOPMENT_TEAM = 5DR38G7748;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SELECTED_FILES = "";

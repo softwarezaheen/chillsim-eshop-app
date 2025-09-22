@@ -9,7 +9,8 @@ enum DeepLinkDecodeKeys {
   countryTab,
   referralCode,
   regionSelected,
-  countrySelected;
+  countrySelected,
+  esimDetail;
 
   String get pathKey {
     switch (this) {
@@ -23,6 +24,8 @@ enum DeepLinkDecodeKeys {
         return "regionSelected";
       case DeepLinkDecodeKeys.countrySelected:
         return "countrySelected";
+      case DeepLinkDecodeKeys.esimDetail:
+        return "esim";
     }
   }
 
@@ -34,6 +37,8 @@ enum DeepLinkDecodeKeys {
         return "regionCode";
       case DeepLinkDecodeKeys.countrySelected:
         return "countryCode";
+      case DeepLinkDecodeKeys.esimDetail:
+        return "iccid";
       default:
         return "";
     }

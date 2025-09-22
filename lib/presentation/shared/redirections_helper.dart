@@ -49,6 +49,9 @@ class RedirectionsHelper {
       String countryCode =
           params[DeepLinkDecodeKeys.countrySelected.decodingKey] ?? "";
       return CountrySelected(countryCode);
+    } else if (value.contains(DeepLinkDecodeKeys.esimDetail.pathKey)) {
+      String iccid = params[DeepLinkDecodeKeys.esimDetail.decodingKey] ?? "";
+      return ConsumptionBundleDetail(iccid);
     }
     return Empty();
   }

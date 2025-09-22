@@ -48,7 +48,7 @@ class DataPlansView extends StatelessWidget {
       routeName: routeName,
       enableBottomSafeArea: false,
       fireOnViewModelReadyOnce: true,
-      staticChild: const BannersView(),
+      staticChild: null,
       viewModel: locator<DataPlansViewModel>(),
       builder: (
         BuildContext context,
@@ -97,18 +97,27 @@ class DataPlansView extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(15),
-                AppEnvironment.appEnvironmentHelper.isCruiseEnabled
-                    ? getCruisePagerView(
-                        context: context,
-                        viewModel: viewModel,
-                        childWidget: childWidget,
-                      )
-                    : getTabSection(
-                        context: context,
-                        viewModel: viewModel,
-                        isCruiseEnabled: false,
-                        childWidget: childWidget,
-                      ),
+                KeyboardVisibilityBuilder(
+                  builder: (context, isKeyboardVisible) {
+                    final Widget? childWidget = (AppEnvironment.appEnvironmentHelper.enableBannersView &&
+                            !AppEnvironment.isFromAppClip && !isKeyboardVisible)
+                        ? const BannersView()
+                        : null;
+                        
+                    return AppEnvironment.appEnvironmentHelper.isCruiseEnabled
+                        ? getCruisePagerView(
+                            context: context,
+                            viewModel: viewModel,
+                            childWidget: childWidget,
+                          )
+                        : getTabSection(
+                            context: context,
+                            viewModel: viewModel,
+                            isCruiseEnabled: false,
+                            childWidget: childWidget,
+                          );
+                  },
+                ),
               ],
             ),
           ),
