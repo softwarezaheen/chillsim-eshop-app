@@ -68,11 +68,11 @@ sealed class AnalyticEvent {
           "order_id": orderId,
           "bundle_id": bundleId,
           "bundle_name": bundleName,
-          "amount": amount,
+          "amount": double.tryParse(amount) ?? 0.0,
           "currency": currency,
-          "fee": fee,
-          "tax": tax,
-          "total": total,
+          "fee": double.tryParse(fee) ?? 0.0,
+          "tax": double.tryParse(tax) ?? 0.0,
+          "total": double.tryParse(total) ?? 0.0,
         },
       );
   factory AnalyticEvent.purchasedBundleApp({
@@ -94,14 +94,14 @@ sealed class AnalyticEvent {
           "order_id": orderId,
           "product_id": productId,
           "product_name": productName,
-          "amount": amount,
+          "amount": double.tryParse(amount) ?? 0.0,
           "currency": currency,
-          "fee": fee,
-          "tax": tax,
-          "total": total,
+          "fee": double.tryParse(fee) ?? 0.0,
+          "tax": double.tryParse(tax) ?? 0.0,
+          "total": double.tryParse(total) ?? 0.0,
           "payment_type": paymentType,
           "promo_code": promoCode,
-          "discount": discount,
+          "discount": double.tryParse(discount) ?? 0.0,
         },
       );
   factory AnalyticEvent.purchasedTopupApp({
@@ -124,14 +124,14 @@ sealed class AnalyticEvent {
           "order_id": orderId,
           "product_id": productId,
           "product_name": productName,
-          "amount": amount,
+          "amount": double.tryParse(amount) ?? 0.0,
           "currency": currency,
-          "fee": fee,
-          "tax": tax,
-          "total": total,
+          "fee": double.tryParse(fee) ?? 0.0,
+          "tax": double.tryParse(tax) ?? 0.0,
+          "total": double.tryParse(total) ?? 0.0,
           "payment_type": paymentType,
           "promo_code": promoCode,
-          "discount": discount,
+          "discount": double.tryParse(discount) ?? 0.0,
           "iccid": iccid,
         },
       );
@@ -156,7 +156,7 @@ sealed class AnalyticEvent {
         ecommerce: <String, Object>{
           "bundle_id": bundleId,
           "bundle_name": bundleName,
-          "amount": amount,
+          "amount": double.tryParse(amount) ?? 0.0,
           "currency": currency,
           "iccid": iccid,
         },
@@ -172,7 +172,7 @@ sealed class AnalyticEvent {
         ecommerce: <String, Object>{
           "bundle_id": bundleId,
           "bundle_name": bundleName,
-          "amount": amount,
+          "amount": double.tryParse(amount) ?? 0.0, // Convert to double for Firebase
           "currency": currency,
         },
       );
@@ -189,7 +189,7 @@ sealed class AnalyticEvent {
         ecommerce: <String, Object>{
           "bundle_id": bundleId,
           "bundle_name": bundleName,
-          "amount": amount,
+          "amount": double.tryParse(amount) ?? 0.0,
           "currency": currency,
           "quantity": quantity,
           "iccid": iccid,
@@ -209,7 +209,7 @@ sealed class AnalyticEvent {
         ecommerce: <String, Object>{
           "bundle_id": bundleId,
           "bundle_name": bundleName,
-          "amount": amount,
+          "amount": double.tryParse(amount) ?? 0.0,
           "currency": currency,
           "quantity": quantity,
         },
@@ -289,9 +289,7 @@ class EcommerceEvent extends AnalyticEvent {
   final Map<String, Object> ecommerce;
 
   @override
-  Map<String, Object>? get parameters => <String, Object>{
-        "ecommerce": ecommerce,
-      };
+  Map<String, Object>? get parameters => ecommerce; // Return flattened parameters instead of wrapped in "ecommerce"
 }
 
 class AnalyticsEventWithParams extends AnalyticEvent {

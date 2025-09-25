@@ -356,12 +356,18 @@ class APIUserImpl extends APIService implements ApiUser {
 
   @override
   FutureOr<ResponseMain<BundleTaxesResponseModel?>> getTaxes(
-      {required String bundleCode,}
+      {required String bundleCode, String? promoCode,}
   ) async {
+    Map<String, dynamic> queryParams = <String, dynamic>{};
+    if (promoCode != null && promoCode.isNotEmpty) {
+      queryParams["promo_code"] = promoCode;
+    }
+
     ResponseMain<BundleTaxesResponseModel> response = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: UserApis.getTaxes,
         paramIDs: <String>[bundleCode],
+        queryParameters: queryParams,
       ),
       fromJson: ({dynamic json}) => BundleTaxesResponseModel.fromJson(json: json),
     );

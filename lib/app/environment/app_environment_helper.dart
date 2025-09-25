@@ -13,7 +13,7 @@ class AppEnvironmentHelper {
     this.zenminutesUrl = "https://zenminutes.com",
     this.defaultLoginType = LoginType.email,
     this.enableBranchIO = false,
-    this.enablePromoCode = false, //was false
+    this.enablePromoCode = true, //was false
     this.enableReferral = false,
     this.enableWalletView = true, //was false
     this.enableWalletRecharge = false, // adding this flag for disabling wallet recharge from wallet view

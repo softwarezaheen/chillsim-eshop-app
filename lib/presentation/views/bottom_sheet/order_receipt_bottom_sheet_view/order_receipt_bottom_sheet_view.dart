@@ -267,28 +267,22 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  (viewModel.bundleOrderModel?.orderFee != null &&
-                                          viewModel.bundleOrderModel!
-                                                  .orderFee! >
-                                              0)  
-                                      ? TableRow(
-                                          children: <Widget>[
-                                            tableRowCell(
-                                              context: context,
-                                              titleText: LocaleKeys
-                                                  .orderReceiptBottomSheet_fee
-                                                  .tr(),
-                                              contentText:
-                                                  "${viewModel.bundleOrderModel?.orderFee.toString() ?? "0"} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
-                                            ),
-                                          ],
-                                        ) 
-                                      : const TableRow(),
-                                  (viewModel.bundleOrderModel?.orderFee != null &&
-                                          viewModel.bundleOrderModel!
-                                                  .orderFee! >
-                                              0)  
-                                      ?
+                                  if (viewModel.bundleOrderModel?.orderFee != null &&
+                                      viewModel.bundleOrderModel!.orderFee! > 0)
+                                    TableRow(
+                                      children: <Widget>[
+                                        tableRowCell(
+                                          context: context,
+                                          titleText: LocaleKeys
+                                              .orderReceiptBottomSheet_fee
+                                              .tr(),
+                                          contentText:
+                                              "${viewModel.bundleOrderModel?.orderFee.toString() ?? "0"} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
+                                        ),
+                                      ],
+                                    ),
+                                  if (viewModel.bundleOrderModel?.orderVat != null &&
+                                      viewModel.bundleOrderModel!.orderVat! > 0)
                                     TableRow(
                                       children: <Widget>[
                                         tableRowCell(
@@ -300,8 +294,7 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                               "${viewModel.bundleOrderModel?.orderVat.toString() ?? "0"} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
                                         ),
                                       ],
-                                    )
-                                    : const TableRow(),
+                                    ),
                                   TableRow(
                                     children: <Widget>[
                                       tableRowCell(

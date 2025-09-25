@@ -89,5 +89,6 @@ abstract interface class ApiUser {
 
   FutureOr<dynamic> getTaxes({
     required String bundleCode,
+    String? promoCode,
   });
 }

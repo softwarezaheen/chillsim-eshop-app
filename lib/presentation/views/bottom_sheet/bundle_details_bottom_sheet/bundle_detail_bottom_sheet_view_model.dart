@@ -130,7 +130,19 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   void onViewModelReady() {
     super.onViewModelReady();
     _emailController.addListener(_validateForm);
-    _promoCodeController.addListener(notifyListeners);
+    _promoCodeController.addListener(() {
+      final String text = _promoCodeController.text;
+      if (text != text.toUpperCase()) {
+        final TextSelection selection = _promoCodeController.selection;
+        _promoCodeController.value = TextEditingValue(
+          text: text.toUpperCase(),
+          selection: selection,
+        );
+        notifyListeners(); // <-- This ensures the UI updates after text change
+      } else {
+        notifyListeners(); // Still notify on regular changes
+      }
+    });
 
     if (_referralCode.isNotEmpty) {
       unawaited(validatePromoCode(_referralCode));
@@ -580,12 +592,12 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     Resource<BundleResponseModel?> response =
         await validatePromoCodeUseCase.execute(
       ValidatePromoCodeUseCaseParams(
-        promoCode: promoCode.trim(),
+        promoCode: promoCode.trim().toUpperCase(),
         bundleCode: bundle?.bundleCode ?? "",
       ),
     );
 
-    handleResponse(
+    await handleResponse(
       response,
       onSuccess: (Resource<BundleResponseModel?> result) async {
         _bundle = result.data;
@@ -597,6 +609,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           isEnabled: false,
           fieldColor: Colors.green,
         );
+        //load taxes again
+        await loadTaxes(manageViewState: false);
       },
       onFailure: (Resource<BundleResponseModel?> result) async {
         _bundle = _tempBundle;
@@ -605,7 +619,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         _removePromoCodeFromLocalStorage();
         if (isPromoCodeExpanded) {
           updatePromoCodeView(
-            message: result.message ?? "",
+            message: result.message ?? "Not found",
             isEnabled: true,
             fieldColor: Colors.red,
           );
@@ -626,13 +640,15 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 //#endregion
 
 //#taxes
-  Future<void> loadTaxes() async {
+  Future<void> loadTaxes({bool manageViewState = true}) async {
     if (_bundle?.bundleCode == null || _bundle!.bundleCode!.isEmpty) {
       return;
     }
-    setViewState(ViewState.busy);
+    if (manageViewState) {
+      setViewState(ViewState.busy);
+    }
     final ResponseMain<BundleTaxesResponseModel> response =
-        await locator<ApiUser>().getTaxes(bundleCode: _bundle!.bundleCode!);
+        await locator<ApiUser>().getTaxes(bundleCode: _bundle!.bundleCode!, promoCode: _promoCode,);
 
     if (response.status == "success" && response.data != null ) {
       _taxes = response.data;
@@ -640,10 +656,11 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       notifyListeners();
     } else {
       // Optionally handle error
+      log("Failed to load taxes: ${response.message}");
+    }
+    if (manageViewState) {
       setViewState(ViewState.idle);
     }
-    notifyListeners();
-    setViewState(ViewState.idle);
   }
 
   Future<void> _refreshUserInfo() async {

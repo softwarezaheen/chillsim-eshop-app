@@ -311,10 +311,12 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
   @override
   FutureOr<Resource<BundleTaxesResponseModel?>> getTaxes({
     required String bundleCode,
+    String? promoCode
   }) {
     return responseToResource(
       apiUserBundles.getTaxes(
         bundleCode: bundleCode,
+        promoCode: promoCode
       ),
     );
   }
