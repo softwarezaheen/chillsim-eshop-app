@@ -5,6 +5,7 @@ import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
+// import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
@@ -293,6 +294,7 @@ class DataPlansView extends StatelessWidget {
       return MainButton.bannerButton(
         title: LocaleKeys.profile_login.tr(),
         action: () async {
+          // await ConsentInitializer.resetConsentDialogState();
           viewModel.loginButtonTapped();
         },
         themeColor: themeColor,

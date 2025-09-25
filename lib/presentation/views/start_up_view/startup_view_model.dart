@@ -4,6 +4,7 @@ import "dart:io";
 
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
+import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
@@ -47,6 +48,9 @@ class StartUpViewModel extends BaseModel {
     if (isUserLoggedIn) {
       unawaited(refreshTokenTrigger());
     }
+
+    // Show consent dialog if needed before handling initial redirections
+    await ConsentInitializer.showConsentDialogIfNeeded(context);
 
     redirectionsHandlerService.handleInitialRedirection(getInitialRoute);
   }

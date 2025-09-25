@@ -103,6 +103,7 @@ abstract class  LocaleKeys {
   static const profile_faq = 'profile_faq';
   static const profile_contactUs = 'profile_contactUs';
   static const profile_termsConditions = 'profile_termsConditions';
+  static const profile_privacySettings = 'profile_privacySettings';
   static const profile_userGuide = 'profile_userGuide';
   static const profile_language = 'profile_language';
   static const profile_account = 'profile_account';
@@ -149,6 +150,7 @@ abstract class  LocaleKeys {
   static const deleteAccount_buttonText = 'deleteAccount_buttonText';
   static const orderBottomSheet_orderID = 'orderBottomSheet_orderID';
   static const orderBottomSheet_paymentDetails = 'orderBottomSheet_paymentDetails';
+  static const orderBottomSheet_paymentType_wallet = 'orderBottomSheet_paymentType_wallet';
   static const orderBottomSheet_orderStatus = 'orderBottomSheet_orderStatus';
   static const orderBottomSheet_viewReceipt = 'orderBottomSheet_viewReceipt';
   static const orderReceiptBottomSheet_companyName = 'orderReceiptBottomSheet_companyName';
@@ -408,5 +410,22 @@ abstract class  LocaleKeys {
   static const bundle_total_amount = 'bundle_total_amount';
   static const bundle_total_amount_in_your_currency = 'bundle_total_amount_in_your_currency';
   static const bundle_exchange_rate_disclaimer = 'bundle_exchange_rate_disclaimer';
+  static const consentDialog_title = 'consentDialog_title';
+  static const consentDialog_description = 'consentDialog_description';
+  static const consentDialog_essentialTitle = 'consentDialog_essentialTitle';
+  static const consentDialog_essentialDescription = 'consentDialog_essentialDescription';
+  static const consentDialog_analyticsTitle = 'consentDialog_analyticsTitle';
+  static const consentDialog_analyticsDescription = 'consentDialog_analyticsDescription';
+  static const consentDialog_advertisingTitle = 'consentDialog_advertisingTitle';
+  static const consentDialog_advertisingDescription = 'consentDialog_advertisingDescription';
+  static const consentDialog_personalizationTitle = 'consentDialog_personalizationTitle';
+  static const consentDialog_personalizationDescription = 'consentDialog_personalizationDescription';
+  static const consentDialog_footerText = 'consentDialog_footerText';
+  static const consentDialog_acceptSelected = 'consentDialog_acceptSelected';
+  static const consentDialog_acceptAll = 'consentDialog_acceptAll';
+  static const consentDialog_essentialOnly = 'consentDialog_essentialOnly';
+  static const consentDialog_required = 'consentDialog_required';
+  static const consentDialog_switchOn = 'consentDialog_switchOn';
+  static const consentDialog_switchOff = 'consentDialog_switchOff';
 
 }

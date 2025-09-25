@@ -938,9 +938,13 @@ class _PaymentSelectionBottomSheet extends StatelessWidget {
 }
 
 class PaymentSelectionBottomRequest {
-  const PaymentSelectionBottomRequest({required this.paymentTypeList});
+  const PaymentSelectionBottomRequest({
+    required this.paymentTypeList,
+    this.amount,
+  });
 
   final List<PaymentType> paymentTypeList;
+  final double? amount;
 }
 
 class PaymentSelectionResponse {

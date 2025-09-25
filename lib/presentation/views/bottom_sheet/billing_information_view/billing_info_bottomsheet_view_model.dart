@@ -6,6 +6,7 @@ import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/use_case/auth/update_user_info_use_case.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
@@ -374,6 +375,12 @@ try {
               vatCode: vatCodeController.text,
               tradeRegistry: registrationController.text,
             );
+            
+            // Log cart save billing info event
+            await analyticsService.logEvent(
+              event: AnalyticEvent.cartSaveBillingInfoApp(),
+            );
+            
             setViewState(ViewState.idle);
           }
 

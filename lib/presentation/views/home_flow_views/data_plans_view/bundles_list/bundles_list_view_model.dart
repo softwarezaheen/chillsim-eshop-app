@@ -7,6 +7,7 @@ import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
+import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
@@ -80,6 +81,13 @@ class BundlesListViewModel extends EsimBaseModel {
   Future<void> addCountry(CountryResponseModel country) async {
     if (!_selectedCountryChips.contains(country)) {
       _selectedCountryChips.add(country);
+
+      // Log product search event
+      await analyticsService.logEvent(
+        event: AnalyticEvent.productSearchApp(
+          country: country.country ?? "",
+        ),
+      );
 
       notifyListeners();
 

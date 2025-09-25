@@ -15,9 +15,11 @@ import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/auth/tmp_login_use_case.dart";
+import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/validate_promo_code_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/assign_user_bundle_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_bundle_exists_use_case.dart";
+import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
@@ -53,7 +55,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       GetBundleExistsUseCase(locator());
   final ValidatePromoCodeUseCase validatePromoCodeUseCase =
       ValidatePromoCodeUseCase(locator());
-
+  final GetUserInfoUseCase getUserInfoUseCase =
+      GetUserInfoUseCase(locator());
   //#endregion
 
   //#region Variables
@@ -135,7 +138,17 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 
     if (_bundle != null && _bundle!.bundleCode != null) {
       unawaited(loadTaxes());
-    } 
+      
+      // Log view product details event
+      unawaited(analyticsService.logEvent(
+        event: AnalyticEvent.viewProductDetailsApp(
+          bundleId: _bundle!.bundleCode!,
+          bundleName: _bundle!.displayTitle ?? _bundle!.bundleName ?? "",
+          amount: (_bundle!.price ?? 0).toString(),
+          currency: _bundle!.currencyCode ?? "",
+        ),
+      ));
+    }
   }
 
   void updateTermsSelections() {
@@ -281,9 +294,13 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   Future<void> _choosePaymentMethod(
     List<PaymentType> paymentTypeList,
   ) async {
+    final double price = bundle?.price ?? 0;
     SheetResponse<PaymentType>? response =
         await bottomSheetService.showCustomSheet(
-      data: PaymentSelectionBottomRequest(paymentTypeList: paymentTypeList),
+      data: PaymentSelectionBottomRequest(
+        paymentTypeList: paymentTypeList,
+        amount: price,
+      ),
       enableDrag: false,
       isScrollControlled: true,
       variant: BottomSheetType.paymentSelection,
@@ -331,9 +348,42 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           return;
         }
 
+        // Log checkout event
+        final double originalAmount = (bundle?.price ?? 0) * 100; // Convert to cents like web
+        final double fee = 0; // TODO: Get fee from response if available
+        final double tax = 0; // TODO: Get tax from response if available
+        final double total = originalAmount + fee + tax;
+        
+        // Log add to cart event
+        await analyticsService.logEvent(
+          event: AnalyticEvent.addToCartBundleApp(
+            bundleId: bundle?.bundleCode ?? "",
+            bundleName: bundle?.displayTitle ?? bundle?.bundleName ?? "",
+            amount: (bundle?.price ?? 0).toString(),
+            currency: bundle?.currencyCode ?? "",
+            quantity: 1,
+          ),
+        );
+        
+        await analyticsService.logEvent(
+          event: AnalyticEvent.checkoutApp(
+            orderId: result.data?.orderId ?? "",
+            bundleId: bundle?.bundleCode ?? "",
+            bundleName: bundle?.displayTitle ?? bundle?.bundleName ?? "",
+            amount: (originalAmount / 100).toStringAsFixed(2),
+            currency: bundle?.currencyCode ?? "",
+            fee: (fee / 100).toStringAsFixed(2),
+            tax: (tax / 100).toStringAsFixed(2),
+            total: (total / 100).toStringAsFixed(2),
+          ),
+        );
+
         PaymentStatus paymentStatus =
             PaymentStatus.fromString(result.data?.paymentStatus);
         if (paymentStatus == PaymentStatus.completed) {
+          if (paymentType == PaymentType.wallet) {
+            await _refreshUserInfo();
+          }
           _navigateToLoading(
             result.data?.orderId ?? "",
             bearerToken,
@@ -594,5 +644,14 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     }
     notifyListeners();
     setViewState(ViewState.idle);
+  }
+
+  Future<void> _refreshUserInfo() async {
+    Resource<AuthResponseModel?> response =
+        await getUserInfoUseCase.execute(NoParams());
+    handleResponse(
+      response,
+      onSuccess: (Resource<AuthResponseModel?> result) async {},
+    );
   }
 }

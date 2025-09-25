@@ -142,6 +142,11 @@
         <!-- Set to `true` to use `BranchKey.test` -->
         <meta-data android:name="io.branch.sdk.TestMode" android:value="${branchUseTest}" />
 
+        <!-- Google Consent Mode v2 Configuration -->
+        <meta-data android:name="google_analytics_default_allow_analytics_storage" android:value="true" />
+        <meta-data android:name="google_analytics_default_allow_ad_storage" android:value="false" />
+        <meta-data android:name="google_analytics_default_allow_ad_user_data" android:value="false" />
+        <meta-data android:name="google_analytics_default_allow_ad_personalization_signals" android:value="false" />
 
        </application>
     <!-- Required to query activities that can process text, see:

@@ -103,9 +103,7 @@ class OrderBottomSheetView extends StatelessWidget {
               ),
               BundleTitleContentView(
                 titleText: LocaleKeys.orderBottomSheet_paymentDetails.tr(),
-                contentText:
-                    viewModel.bundleOrderModel?.paymentDetails?.cardDisplay ??
-                        "",
+                contentText: _getPaymentDetailsText(viewModel.bundleOrderModel),
                 showShimmer: viewModel.applyShimmer,
               ),
               Divider(
@@ -148,6 +146,22 @@ class OrderBottomSheetView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getPaymentDetailsText(OrderHistoryResponseModel? bundleOrderModel) {
+    if (bundleOrderModel == null || bundleOrderModel.paymentType == null) {
+      return "";
+    }
+
+    final paymentType = bundleOrderModel.paymentType!.toLowerCase();
+
+    if (paymentType == "card") {
+      return bundleOrderModel.paymentDetails?.cardDisplay ?? "";
+    } else if (paymentType == "wallet") {
+      return LocaleKeys.paymentSelection_walletText.tr();
+    } else {
+      return "";
+    }
   }
 
   @override

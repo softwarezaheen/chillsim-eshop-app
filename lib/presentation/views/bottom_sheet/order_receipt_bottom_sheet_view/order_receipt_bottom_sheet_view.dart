@@ -28,6 +28,22 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
   final SheetRequest<OrderHistoryResponseModel> requestBase;
   final Function(SheetResponse<EmptyBottomSheetResponse>) completer;
 
+  static String _getPaymentMethodText(OrderHistoryResponseModel? bundleOrderModel) {
+    if (bundleOrderModel == null || bundleOrderModel.paymentType == null) {
+      return "N/A";
+    }
+
+    final paymentType = bundleOrderModel.paymentType!.toLowerCase();
+
+    if (paymentType == "card") {
+      return bundleOrderModel.paymentDetails?.cardDisplay ?? "N/A";
+    } else if (paymentType == "wallet") {
+      return LocaleKeys.paymentSelection_walletText.tr();
+    } else {
+      return "N/A";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView.bottomSheetBuilder(
@@ -185,9 +201,7 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                 titleText: LocaleKeys
                                     .orderReceiptBottomSheet_paymentMethod
                                     .tr(),
-                                contentText: viewModel.bundleOrderModel
-                                        ?.paymentDetails?.cardDisplay ??
-                                    "N/A",
+                                contentText: _getPaymentMethodText(viewModel.bundleOrderModel),
                               ),
                               DividerLine(
                                 verticalPadding: 0,

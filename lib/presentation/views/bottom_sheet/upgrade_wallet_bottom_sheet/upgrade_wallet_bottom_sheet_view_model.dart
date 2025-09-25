@@ -103,7 +103,10 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
   ) async {
     SheetResponse<PaymentType>? response =
         await bottomSheetService.showCustomSheet(
-      data: PaymentSelectionBottomRequest(paymentTypeList: paymentTypeList),
+      data: PaymentSelectionBottomRequest(
+        paymentTypeList: paymentTypeList,
+        amount: amount,
+      ),
       enableDrag: false,
       isScrollControlled: true,
       variant: BottomSheetType.paymentSelection,

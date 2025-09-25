@@ -22,6 +22,7 @@ import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/setup_dialog_ui.dart";
 import "package:esim_open_source/presentation/setup_snackbar_ui.dart";
 import "package:esim_open_source/presentation/shared/deep_link_helper.dart";
+import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/presentation/theme/my_theme_builder.dart";
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
 import "package:esim_open_source/presentation/view_models/main_model.dart";
@@ -56,6 +57,7 @@ void main() async {
   FlutterNativeSplash.remove();
   await AppEnvironment.setupEnvironment();
   await initializeFirebaseApp();
+  await ConsentInitializer.initialize();
   await locator<AnalyticsService>().configure();
   await DeepLinkHandler.shared.init(({
     required Uri uri,

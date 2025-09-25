@@ -141,7 +141,7 @@ class ProfileView extends StatelessWidget {
     } else {
       return GestureDetector(
         onTap: () async {
-          section.tapAction(viewModel);
+          section.tapAction(context, viewModel);
         },
         child: ColoredBox(
           color: Colors.transparent,

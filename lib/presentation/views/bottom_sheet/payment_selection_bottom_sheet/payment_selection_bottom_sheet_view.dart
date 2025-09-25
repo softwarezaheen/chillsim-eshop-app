@@ -27,6 +27,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
     return BaseView.bottomSheetBuilder(
       viewModel: PaymentSelectionBottomSheetViewModel(
         completer: completer,
+        request: requestBase,
       ),
       builder: (
         BuildContext context,
@@ -111,37 +112,46 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
     BuildContext context,
     PaymentType paymentType,
     PaymentSelectionBottomSheetViewModel viewModel,
-  ) =>
-      GestureDetector(
-        onTap: () => viewModel.onPaymentTypeClick(paymentType),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: greyBackGroundColor(context: context),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: PaddingWidget.applySymmetricPadding(
-            vertical: 15,
-            horizontal: 20,
-            child: Row(
-              children: <Widget>[
-                Image.asset(
-                  paymentType.sectionImagePath,
-                  width: 50,
-                  height: 50,
-                ),
-                horizontalSpaceSmall,
-                Text(
-                  paymentType.titleText,
+  ) {
+    final bool isWallet = paymentType == PaymentType.wallet;
+    final double balance = viewModel.userAuthenticationService.walletAvailableBalance;
+    final String currency = viewModel.userAuthenticationService.walletCurrencyCode;
+    final double amount = viewModel.request.data?.amount ?? 0;
+    final bool hasSufficientBalance = !isWallet || balance >= amount;
+
+    return GestureDetector(
+      onTap: () => viewModel.onPaymentTypeClick(paymentType),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: hasSufficientBalance ? greyBackGroundColor(context: context) : Colors.grey.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: PaddingWidget.applySymmetricPadding(
+          vertical: 15,
+          horizontal: 20,
+          child: Row(
+            children: <Widget>[
+              Image.asset(
+                paymentType.sectionImagePath,
+                width: 50,
+                height: 50,
+              ),
+              horizontalSpaceSmall,
+              Expanded(
+                child: Text(
+                  isWallet ? "${paymentType.titleText} (${balance.toStringAsFixed(2)} $currency)" : paymentType.titleText,
                   style: bodyNormalTextStyle(
                     context: context,
-                    fontColor: bubbleCountryTextColor(context: context),
+                    fontColor: hasSufficientBalance ? bubbleCountryTextColor(context: context) : Colors.grey,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

@@ -1,7 +1,7 @@
 import "dart:async";
+import "dart:developer" as dev;
 import "dart:io";
 import "dart:math";
-import 'dart:developer' as dev;
 
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
@@ -11,6 +11,7 @@ import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_resp
 import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/domain/use_case/bundles/get_bundle_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_related_topup_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/top_up_user_bundle_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
@@ -31,6 +32,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   //#region UseCases
   final TopUpUserBundleUseCase topUpUserBundleUseCase =
       TopUpUserBundleUseCase(locator());
+  final GetBundleUseCase getBundleUseCase = GetBundleUseCase(locator());
   //#endregion
 
   //#region Variables
@@ -44,12 +46,50 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   @override
   void onViewModelReady() {
     super.onViewModelReady();
+    unawaited(_initializeView());
+  }
+
+  Future<void> _initializeView() async {
+    // Fetch bundle details for analytics
+    final bundleResource = await getBundleUseCase.execute(
+      BundleParams(code: request.data!.bundleCode),
+    );
+
+    if (bundleResource.resourceType == ResourceType.success && bundleResource.data != null) {
+      final bundle = bundleResource.data!;
+      
+      // Log view topup details event
+      unawaited(analyticsService.logEvent(
+        event: AnalyticEvent.viewTopupDetailsApp(
+          bundleId: bundle.bundleCode ?? "",
+          bundleName: bundle.displayTitle ?? bundle.bundleName ?? "",
+          amount: (bundle.price ?? 0).toString(),
+          currency: bundle.currencyCode ?? "",
+          iccid: request.data!.iccID,
+        ),
+      ));
+    }
+
+    // Fetch topup related bundles
     unawaited(fetchTopUpRelated());
   }
 
   void onBuyClick({required int index}) {
     BundleResponseModel item = bundleItems[index];
     dev.log("Top up bundle code: ${item.bundleCode??""}");
+    
+    // Log add to cart topup event
+    unawaited(analyticsService.logEvent(
+      event: AnalyticEvent.addToCartTopupApp(
+        bundleId: item.bundleCode ?? "",
+        bundleName: item.displayTitle ?? item.bundleName ?? "",
+        amount: (item.price ?? 0).toString(),
+        currency: item.currencyCode ?? "",
+        quantity: 1,
+        iccid: request.data?.iccID ?? "",
+      ),
+    ));
+    
     unawaited(
       _topUpBundle(
         iccId: request.data?.iccID ?? "",

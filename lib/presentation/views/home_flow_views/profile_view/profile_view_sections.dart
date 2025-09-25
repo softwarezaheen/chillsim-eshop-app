@@ -3,6 +3,7 @@ import "dart:developer";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
@@ -18,6 +19,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
 enum ProfileViewSections {
@@ -29,6 +31,7 @@ enum ProfileViewSections {
   faq,
   contactUs,
   termsAndConditions,
+  privacySettings,
   userGuide,
   language,
   currency,
@@ -90,6 +93,8 @@ enum ProfileViewSections {
         return LocaleKeys.profile_contactUs.tr();
       case ProfileViewSections.termsAndConditions:
         return LocaleKeys.profile_termsConditions.tr();
+      case ProfileViewSections.privacySettings:
+        return LocaleKeys.profile_privacySettings.tr();
       case ProfileViewSections.userGuide:
         return LocaleKeys.profile_userGuide.tr();
       case ProfileViewSections.language:
@@ -130,6 +135,8 @@ enum ProfileViewSections {
         return "contactUs";
       case ProfileViewSections.termsAndConditions:
         return "termsAndConditions";
+      case ProfileViewSections.privacySettings:
+        return "privacySettings";
       case ProfileViewSections.userGuide:
         return "userGuide";
       case ProfileViewSections.language:
@@ -145,7 +152,7 @@ enum ProfileViewSections {
     }
   }
 
-  Future<void> tapAction(ProfileViewModel viewModel) async {
+  Future<void> tapAction(BuildContext context, ProfileViewModel viewModel) async {
     switch (this) {
       case ProfileViewSections.accountInformation:
         viewModel.navigationService
@@ -169,6 +176,10 @@ enum ProfileViewSections {
         viewModel.navigationService.navigateTo(
           DynamicDataView.routeName,
           arguments: DynamicDataViewType.termsConditions,
+        );
+      case ProfileViewSections.privacySettings:
+        await ConsentInitializer.showConsentSettings(
+          context,
         );
       case ProfileViewSections.userGuide:
         viewModel.analyticsService

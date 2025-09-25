@@ -17,6 +17,7 @@ import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
 import "package:stacked_services/stacked_services.dart";
 
+import "../../../../../helpers/fake_build_context.dart";
 import "../../../../../helpers/view_helper.dart";
 import "../../../../../helpers/view_model_helper.dart";
 import "../../../../../locator_test.dart";
@@ -45,28 +46,28 @@ Future<void> main() async {
           .thenAnswer((_) {
         return null;
       });
-      await ProfileViewSections.myWallet.tapAction(viewModel);
+      await ProfileViewSections.myWallet.tapAction(FakeContext(), viewModel);
     });
     test("tap action faq", () async {
       when(locator<NavigationService>().navigateTo(FaqView.routeName))
           .thenAnswer((_) {
         return null;
       });
-      await ProfileViewSections.faq.tapAction(viewModel);
+      await ProfileViewSections.faq.tapAction(FakeContext(), viewModel);
     });
     test("tap action ContactUsView", () async {
       when(locator<NavigationService>().navigateTo(ContactUsView.routeName))
           .thenAnswer((_) {
         return null;
       });
-      await ProfileViewSections.contactUs.tapAction(viewModel);
+      await ProfileViewSections.contactUs.tapAction(FakeContext(), viewModel);
     });
     test("tap action OrderHistoryView", () async {
       when(locator<NavigationService>().navigateTo(OrderHistoryView.routeName))
           .thenAnswer((_) {
         return null;
       });
-      await ProfileViewSections.orderHistory.tapAction(viewModel);
+      await ProfileViewSections.orderHistory.tapAction(FakeContext(), viewModel);
     });
     test("tap action aboutUs", () async {
       when(
@@ -77,7 +78,7 @@ Future<void> main() async {
       ).thenAnswer((_) {
         return null;
       });
-      await ProfileViewSections.aboutUs.tapAction(viewModel);
+      await ProfileViewSections.aboutUs.tapAction(FakeContext(), viewModel);
     });
 
     test("tap action termsCondition", () async {
@@ -89,7 +90,7 @@ Future<void> main() async {
       ).thenAnswer((_) {
         return null;
       });
-      await ProfileViewSections.termsAndConditions.tapAction(viewModel);
+      await ProfileViewSections.termsAndConditions.tapAction(FakeContext(), viewModel);
     });
 
     test("tap action userGuide", () async {
@@ -100,7 +101,7 @@ Future<void> main() async {
       ).thenAnswer((_) {
         return null;
       });
-      await ProfileViewSections.userGuide.tapAction(viewModel);
+      await ProfileViewSections.userGuide.tapAction(FakeContext(), viewModel);
     });
 
     test("tap action logout", () async {
@@ -113,7 +114,7 @@ Future<void> main() async {
           variant: BottomSheetType.logout,
         ),
       ).thenAnswer((_) async => null);
-      await ProfileViewSections.logout.tapAction(viewModel);
+      await ProfileViewSections.logout.tapAction(FakeContext(), viewModel);
     });
 
     test("tap action deleteAccount", () async {
@@ -127,7 +128,7 @@ Future<void> main() async {
         ),
       ).thenAnswer((_) async =>
           SheetResponse<EmptyBottomSheetResponse>(),);
-      await ProfileViewSections.deleteAccount.tapAction(viewModel);
+      await ProfileViewSections.deleteAccount.tapAction(FakeContext(), viewModel);
     });
 
     group("Enum Values", () {

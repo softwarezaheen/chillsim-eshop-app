@@ -1,0 +1,145 @@
+import "package:firebase_analytics/firebase_analytics.dart";
+import "package:shared_preferences/shared_preferences.dart";
+
+enum ConsentType {
+  analytics,
+  advertising,
+  personalization,
+  functional,
+}
+
+class ConsentManagerService {
+  static const String _keyAnalyticsConsent = "consent_analytics";
+  static const String _keyAdvertisingConsent = "consent_advertising";
+  static const String _keyPersonalizationConsent = "consent_personalization";
+  static const String _keyFunctionalConsent = "consent_functional";
+  static const String _keyConsentTimestamp = "consent_timestamp";
+  static const String _keyConsentVersion = "consent_version";
+  static const String _keyConsentShown = "consent_shown";
+
+  static const String currentConsentVersion = "1.0";
+
+  Future<void> initializeConsent() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool hasShownConsent = prefs.getBool(_keyConsentShown) ?? false;
+
+    if (!hasShownConsent) {
+      // Set default denied state for Consent Mode v2
+      await _setFirebaseConsentMode(
+        analytics: false,
+        advertising: false,
+        personalization: false,
+        functional: true, // Usually required for basic functionality
+      );
+    } else {
+      // Load existing consent
+      await _loadAndApplyConsent();
+    }
+  }
+
+  Future<void> updateConsent({
+    required bool analytics,
+    required bool advertising,
+    required bool personalization,
+    required bool functional,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Save consent preferences
+    await prefs.setBool(_keyAnalyticsConsent, analytics);
+    await prefs.setBool(_keyAdvertisingConsent, advertising);
+    await prefs.setBool(_keyPersonalizationConsent, personalization);
+    await prefs.setBool(_keyFunctionalConsent, functional);
+    await prefs.setString(_keyConsentTimestamp, DateTime.now().toIso8601String());
+    await prefs.setString(_keyConsentVersion, currentConsentVersion);
+    await prefs.setBool(_keyConsentShown, true);
+
+    // Apply to Firebase
+    await _setFirebaseConsentMode(
+      analytics: analytics,
+      advertising: advertising,
+      personalization: personalization,
+      functional: functional,
+    );
+  }
+
+  Future<Map<ConsentType, bool>> getConsentStatus() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return <ConsentType, bool>{
+      ConsentType.analytics: prefs.getBool(_keyAnalyticsConsent) ?? false,
+      ConsentType.advertising: prefs.getBool(_keyAdvertisingConsent) ?? false,
+      ConsentType.personalization: prefs.getBool(_keyPersonalizationConsent) ?? false,
+      ConsentType.functional: prefs.getBool(_keyFunctionalConsent) ?? true,
+    };
+  }
+
+  Future<bool> hasShownConsentDialog() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyConsentShown) ?? false;
+  }
+
+  Future<DateTime?> getConsentTimestamp() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? timestamp = prefs.getString(_keyConsentTimestamp);
+    return timestamp != null ? DateTime.parse(timestamp) : null;
+  }
+
+  Future<void> _loadAndApplyConsent() async {
+    final Map<ConsentType, bool> consent = await getConsentStatus();
+    await _setFirebaseConsentMode(
+      analytics: consent[ConsentType.analytics]!,
+      advertising: consent[ConsentType.advertising]!,
+      personalization: consent[ConsentType.personalization]!,
+      functional: consent[ConsentType.functional]!,
+    );
+  }
+
+  Future<void> _setFirebaseConsentMode({
+    required bool analytics,
+    required bool advertising,
+    required bool personalization,
+    required bool functional,
+  }) async {
+    // Set consent mode for Firebase Analytics
+    await FirebaseAnalytics.instance.setConsent(
+      adStorageConsentGranted: advertising,
+      analyticsStorageConsentGranted: analytics,
+      adUserDataConsentGranted: personalization,
+    );
+  }
+
+  Future<void> resetConsent() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_keyAnalyticsConsent);
+    await prefs.remove(_keyAdvertisingConsent);
+    await prefs.remove(_keyPersonalizationConsent);
+    await prefs.remove(_keyFunctionalConsent);
+    await prefs.remove(_keyConsentTimestamp);
+    await prefs.remove(_keyConsentVersion);
+    await prefs.remove(_keyConsentShown);
+  }
+
+  // Additional methods for ConsentInitializer
+  Future<void> initialize() async {
+    await initializeConsent();
+  }
+
+  Future<bool> hasAnyConsent() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyConsentShown) ?? false;
+  }
+
+  Future<void> setDefaultConsent() async {
+    await updateConsent(
+      analytics: false,
+      advertising: false,
+      personalization: false,
+      functional: true,
+    );
+  }
+
+  Future<SharedPreferences> getPreferences() async {
+    return SharedPreferences.getInstance();
+  }
+}

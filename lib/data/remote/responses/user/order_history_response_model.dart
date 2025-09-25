@@ -10,6 +10,7 @@ class OrderHistoryResponseModel {
     this.orderCurrency,
     this.orderFee,
     this.orderVat,
+    this.orderDiscount,
     this.orderInvoice,
     this.orderDate,
     this.orderType,
@@ -21,6 +22,8 @@ class OrderHistoryResponseModel {
     this.companyWebsite,
     this.orderDisplayPrice,
     this.paymentDetails,
+    this.paymentType,
+    this.promoCode,
     this.bundleDetails,
   });
 
@@ -32,6 +35,7 @@ class OrderHistoryResponseModel {
       orderCurrency: json["order_currency"],
       orderFee: (json["order_fee"] as num?)?.toDouble(),
       orderVat: (json["order_vat"] as num?)?.toDouble(),
+      orderDiscount: (json["order_discount"] as num?)?.toDouble(),
       orderInvoice: json["order_invoice"],
       orderDate: json["order_date"],
       orderType: json["order_type"],
@@ -45,9 +49,11 @@ class OrderHistoryResponseModel {
       paymentDetails: json["payment_details"] != null
           ? PaymentDetailsResponseModel.fromJson(json["payment_details"])
           : null,
+      paymentType: json["payment_type"],
       bundleDetails: json["bundle_details"] != null
           ? BundleResponseModel.fromJson(json: json["bundle_details"])
           : null,
+      promoCode: json["promo_code"],
     );
   }
 
@@ -56,6 +62,7 @@ class OrderHistoryResponseModel {
   final double? orderAmount;
   final double? orderFee;
   final double? orderVat;
+  final double? orderDiscount;
   final String? orderInvoice;
   final String? orderCurrency;
   final String? orderDate;
@@ -68,7 +75,9 @@ class OrderHistoryResponseModel {
   final String? companyWebsite;
   final String? orderDisplayPrice;
   final PaymentDetailsResponseModel? paymentDetails;
+  final String? paymentType;
   final BundleResponseModel? bundleDetails;
+  final String? promoCode;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -77,6 +86,7 @@ class OrderHistoryResponseModel {
       "order_amount": orderAmount,
       "order_fee": orderFee,
       "order_vat": orderVat,
+      "order_discount": orderDiscount,
       "order_invoice": orderInvoice,
       "order_currency": orderCurrency,
       "order_date": orderDate,
@@ -89,7 +99,9 @@ class OrderHistoryResponseModel {
       "company_website": companyWebsite,
       "order_display_price": orderDisplayPrice,
       "payment_details": paymentDetails?.toJson(),
+      "payment_type": paymentType,
       "bundle_details": bundleDetails?.toJson(),
+      "promo_code": promoCode,
     };
   }
 

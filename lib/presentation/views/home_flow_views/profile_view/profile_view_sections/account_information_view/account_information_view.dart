@@ -118,13 +118,13 @@ class AccountInformationView extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: TextStyle(fontSize: 14)),
+                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: TextStyle(fontSize: 12)),
                                     value: BillingType.individual,
                                   ),
                                 ),
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_company.tr(), style: TextStyle(fontSize: 14)),
+                                    title: Text(LocaleKeys.billing_type_company.tr(), style: TextStyle(fontSize: 12)),
                                     value: BillingType.business,
                                   ),
                                 ),
