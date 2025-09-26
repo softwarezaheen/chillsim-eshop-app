@@ -4,6 +4,7 @@ import "package:easy_localization/easy_localization.dart";
 
 class DateTimeUtils {
   static const String ddMmYyyy = "dd/MM/yyyy";
+  static const String ddMmYyyyHi = "dd/MM/yyyy h:mm a"; 
 
   static String formatTimestampToDate({
     required int timestamp,
@@ -12,7 +13,7 @@ class DateTimeUtils {
     try {
       log("formatTimestampToDate timestamp: $timestamp");
       final DateTime dateTime =
-          DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+          DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toLocal();
       final DateFormat formatter = DateFormat(format);
       log("formatTimestampToDate return: ${formatter.format(dateTime)}");
       return formatter.format(dateTime);

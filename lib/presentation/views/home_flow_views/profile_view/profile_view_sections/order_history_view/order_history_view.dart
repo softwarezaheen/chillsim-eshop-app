@@ -132,7 +132,7 @@ class OrderHistoryView extends StatelessWidget {
                     bundleOrder.bundleDetails?.validityDisplay ?? "",
                 bundleExpiryDate: DateTimeUtils.formatTimestampToDate(
                   timestamp: int.parse(bundleOrder.orderDate ?? "0"),
-                  format: DateTimeUtils.ddMmYyyy,
+                  format: DateTimeUtils.ddMmYyyyHi,
                 ),
               ),
             ],

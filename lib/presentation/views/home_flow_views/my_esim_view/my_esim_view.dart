@@ -165,7 +165,7 @@ class MyESimView extends StatelessWidget {
               validity: item.validityDisplay ?? "",
               expiryDate: DateTimeUtils.formatTimestampToDate(
                 timestamp: int.parse(item.paymentDate ?? "0"),
-                format: DateTimeUtils.ddMmYyyy,
+                format: DateTimeUtils.ddMmYyyyHi,
               ),
               supportedCountries: item.countries ?? <CountryResponseModel>[],
               onEditName: () =>

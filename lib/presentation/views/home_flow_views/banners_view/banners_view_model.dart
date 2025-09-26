@@ -43,8 +43,13 @@ class BannersViewModel extends BaseModel {
   }
 
   void setUpBannersAnimation() {
+    // Don't start animation if there are no banners or only one banner
+    if (banners.isEmpty || banners.length <= 1) {
+      return;
+    }
+
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
-      if (_currentPage < BannersViewTypes.values.length - 1) {
+      if (_currentPage < banners.length - 1) {
         _currentPage++;
       } else {
         _currentPage = 0;
