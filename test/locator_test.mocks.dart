@@ -1680,6 +1680,15 @@ class MockAppConfigurationService extends _i1.Mock
       ) as String);
 
   @override
+  String get getZenminutesUrl => (super.noSuchMethod(
+        Invocation.getter(#getZenminutesUrl),
+        returnValue: _i39.dummyValue<String>(
+          this,
+          Invocation.getter(#getZenminutesUrl),
+        ),
+      ) as String);
+
+  @override
   _i20.Future<void> getAppConfigurations() => (super.noSuchMethod(
         Invocation.method(
           #getAppConfigurations,
@@ -2239,6 +2248,29 @@ class MockApiUser extends _i1.Mock implements _i50.ApiUser {
           #orderID: orderID,
         },
       )) as _i20.FutureOr<dynamic>);
+
+  @override
+  _i20.FutureOr<dynamic> setUserBillingInfo(
+          {required Map<String, dynamic>? billingInfo}) =>
+      (super.noSuchMethod(Invocation.method(
+        #setUserBillingInfo,
+        [],
+        {#billingInfo: billingInfo},
+      )) as _i20.FutureOr<dynamic>);
+
+  @override
+  _i20.FutureOr<dynamic> getTaxes({
+    required String? bundleCode,
+    String? promoCode,
+  }) =>
+      (super.noSuchMethod(Invocation.method(
+        #getTaxes,
+        [],
+        {
+          #bundleCode: bundleCode,
+          #promoCode: promoCode,
+        },
+      )) as _i20.FutureOr<dynamic>);
 }
 
 /// A class which mocks [ApiBundlesRepository].
@@ -2570,6 +2602,50 @@ class MockApiUserRepository extends _i1.Mock implements _i6.ApiUserRepository {
           #iccid: iccid,
           #orderID: orderID,
         },
+      )) as _i20.FutureOr<dynamic>);
+
+  @override
+  _i20.FutureOr<dynamic> setUserBillingInfo({
+    required String? email,
+    required String? firstName,
+    required String? lastName,
+    required String? country,
+    required String? city,
+    String? phone,
+    String? state,
+    String? billingAddress,
+    String? companyName,
+    String? vatCode,
+    String? tradeRegistry,
+    bool? confirm,
+    String? verifyBy,
+  }) =>
+      (super.noSuchMethod(Invocation.method(
+        #setUserBillingInfo,
+        [],
+        {
+          #email: email,
+          #firstName: firstName,
+          #lastName: lastName,
+          #country: country,
+          #city: city,
+          #phone: phone,
+          #state: state,
+          #billingAddress: billingAddress,
+          #companyName: companyName,
+          #vatCode: vatCode,
+          #tradeRegistry: tradeRegistry,
+          #confirm: confirm,
+          #verifyBy: verifyBy,
+        },
+      )) as _i20.FutureOr<dynamic>);
+
+  @override
+  _i20.FutureOr<dynamic> getTaxes({required String? bundleCode}) =>
+      (super.noSuchMethod(Invocation.method(
+        #getTaxes,
+        [],
+        {#bundleCode: bundleCode},
       )) as _i20.FutureOr<dynamic>);
 }
 
@@ -4527,13 +4603,18 @@ class MockAndroidUserGuideViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -6068,13 +6149,18 @@ class MockMyESimViewModel extends _i1.Mock implements _i23.MyESimViewModel {
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -6987,13 +7073,18 @@ class MockProfileViewModel extends _i1.Mock implements _i76.ProfileViewModel {
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -8029,13 +8120,18 @@ class MockDataPlansViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -8954,13 +9050,18 @@ class MockHomePagerViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -9882,13 +9983,18 @@ class MockStartUpViewModel extends _i1.Mock implements _i81.StartUpViewModel {
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -10865,13 +10971,18 @@ class MockContinueWithEmailViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -11785,13 +11896,18 @@ class MockPurchaseLoadingViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -12679,13 +12795,18 @@ class MockDeviceCompabilityCheckViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -13655,13 +13776,18 @@ class MockLoginViewModel extends _i1.Mock implements _i85.LoginViewModel {
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -14654,13 +14780,18 @@ class MockVerifyLoginViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -15653,13 +15784,18 @@ class MockVerifyPurchaseViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -16614,13 +16750,18 @@ class MockSkeletonViewModel extends _i1.Mock implements _i88.SkeletonViewModel {
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -17547,13 +17688,18 @@ class MockUserGuideDetailedViewModel extends _i1.Mock
       );
 
   @override
-  _i20.Future<void> navigateToHomePager<T>(
-          {_i42.InAppRedirection? redirection}) =>
+  _i20.Future<void> navigateToHomePager<T>({
+    _i42.InAppRedirection? redirection,
+    _i24.BuildContext? context,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToHomePager,
           [],
-          {#redirection: redirection},
+          {
+            #redirection: redirection,
+            #context: context,
+          },
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
