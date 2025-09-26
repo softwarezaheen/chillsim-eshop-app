@@ -32,3 +32,90 @@
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningActivityStarter$Error
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningActivityStarter
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningEphemeralKeyProvider
+
+# This is generated automatically by the Android Gradle plugin.
+-dontwarn com.google.android.play.core.splitcompat.SplitCompatApplication
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallManager
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallRequest$Builder
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallRequest
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
+-dontwarn com.google.android.play.core.tasks.OnFailureListener
+-dontwarn com.google.android.play.core.tasks.OnSuccessListener
+-dontwarn com.google.android.play.core.tasks.Task
+
+# Flutter and Android Fragment rules
+-keep class androidx.fragment.app.Fragment { *; }
+-keep class * extends androidx.fragment.app.Fragment { 
+    public <init>(...);
+}
+
+# Keep all Flutter Fragment classes
+-keep class io.flutter.embedding.android.** { *; }
+-keep class io.flutter.plugin.** { *; }
+
+# Firebase rules
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**
+
+# Facebook SDK rules
+-keep class com.facebook.** { *; }
+-dontwarn com.facebook.**
+
+# Flutter plugins
+-keep class io.flutter.plugins.** { *; }
+-keep class ** implements io.flutter.plugin.common.MethodCallHandler { *; }
+-keep class ** implements io.flutter.plugin.common.StreamHandler { *; }
+
+# Keep all classes with native methods
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# Flutter WebView
+-keep class io.flutter.plugins.webviewflutter.** { *; }
+
+# Keep Fragment constructors specifically
+-keepclassmembers class * extends androidx.fragment.app.Fragment {
+    public <init>();
+    public <init>(android.os.Bundle);
+}
+
+# ObjectBox
+-keep class io.objectbox.** { *; }
+-dontwarn io.objectbox.**
+
+# QR Code Scanner
+-keep class net.sourceforge.zbar.** { *; }
+-dontwarn net.sourceforge.zbar.**
+
+# Branch SDK
+-keep class io.branch.** { *; }
+-dontwarn io.branch.**
+
+# Additional Fragment safety rules
+-keep class * extends androidx.fragment.app.DialogFragment { *; }
+-keep class * extends androidx.fragment.app.ListFragment { *; }
+-keep class * extends androidx.fragment.app.PreferenceFragmentCompat { *; }
+
+# Ensure Fragment state can be restored
+-keepnames class * extends androidx.fragment.app.Fragment
+-keepclassmembers class * extends androidx.fragment.app.Fragment {
+    public void setArguments(android.os.Bundle);
+    public android.os.Bundle getArguments();
+}
+
+# Keep FlutterFragmentActivity specifically
+-keep class io.flutter.embedding.android.FlutterFragmentActivity { *; }
+-keepclassmembers class io.flutter.embedding.android.FlutterFragmentActivity {
+    *;
+}
+
+# Keep all constructor parameters for Fragments
+-keepclassmembers class * extends androidx.fragment.app.Fragment {
+    public <init>();
+    public <init>(...);
+}
+
+# Prevent obfuscation of Fragment class names used in XML or reflection
+-keepnames class * extends androidx.fragment.app.Fragment

@@ -16,6 +16,7 @@ import "package:esim_open_source/presentation/extensions/helper_extensions.dart"
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:esim_open_source/utils/phone_number_utils.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/services.dart" show rootBundle;
 import "package:phone_input/phone_input_package.dart";
@@ -219,23 +220,8 @@ class AccountInformationViewModel extends BaseModel {
     await loadCountries();
     await loadCounties();
 
-    PhoneNumber? parsed;
-    
-    bool isValidMsisdn(String msisdn) {
-      // Basic validation: starts with + and has at least 8 digits after country code
-      final RegExp regex = RegExp(r"^\+\d{8,}$");
-      return regex.hasMatch(msisdn);
-    }
-
-    if (isValidMsisdn(userMsisdn)) {
-      try {
-        parsed = PhoneNumber.parse(userMsisdn);
-      } catch (e) {
-        log("Error parsing phone number: $e");
-      }
-    } else {
-      log("userMsisdn is not a valid international phone number: $userMsisdn");
-    }
+    // Use the safe phone number parsing utility
+    PhoneNumber? parsed = PhoneNumberUtils.safeParse(userMsisdn);
     try {
       setViewState( ViewState.busy );
       final dynamic billingInfoResource = await locator<ApiUserRepository>().getUserBillingInfo();
@@ -397,11 +383,12 @@ class AccountInformationViewModel extends BaseModel {
     }
     setViewState(ViewState.busy);
 
+    String safePhoneNumber = PhoneNumberUtils.getFullPhoneNumber(phoneController);
+    
     Resource<AuthResponseModel> updateInfoResponse = await updateUserInfoUseCase.execute(
         UpdateUserInfoParams(
           email: _emailController.text,
-          msisdn:
-              "+${phoneController.value?.countryCode}${phoneController.value?.nsn}",
+          msisdn: safePhoneNumber,
           firstName: _nameController.text,
           lastName: _familyNameController.text,
           isNewsletterSubscribed: _receiveUpdates,
@@ -411,7 +398,7 @@ class AccountInformationViewModel extends BaseModel {
     // Update billing info
     await locator<ApiUserRepository>().setUserBillingInfo(
       email: _emailController.text,
-      phone: "+${phoneController.value?.countryCode}${phoneController.value?.nsn}",
+      phone: safePhoneNumber,
       firstName: _nameController.text,
       lastName: _familyNameController.text,
       country: _countryController.text,

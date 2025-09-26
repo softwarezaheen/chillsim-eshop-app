@@ -129,13 +129,16 @@ class PushNotificationServiceImpl implements PushNotificationService {
         _serialiseAndNavigate(payload, false, true);
       });
 
-    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
-      _firebaseMessagingBackgroundHandler(
-        message,
-        false,
-        true,
-      );
-    });
+    // Code below throws error if backgroundMessageHandler is null
+    // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+    //   _firebaseMessagingBackgroundHandler(
+    //     message,
+    //     false,
+    //     true,
+    //   );
+    // });
+    // end of code that throws error. Replaced with below
+    FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessageWrapper);
 
     // Handle when user taps on notification to open app
     FirebaseMessaging.onMessageOpenedApp.listen(
@@ -173,6 +176,13 @@ class PushNotificationServiceImpl implements PushNotificationService {
       isClicked: isClicked,
     );
   }
+}
+
+// Add a new wrapper function for Firebase background messages
+@pragma("vm:entry-point")
+Future<void> _firebaseBackgroundMessageWrapper(RemoteMessage message) async {
+  // Call the existing function with appropriate default values for background messages
+  await _firebaseMessagingBackgroundHandler(message, false, true);
 }
 
 @pragma("vm:entry-point")

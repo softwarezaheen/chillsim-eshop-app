@@ -11,6 +11,7 @@ import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:esim_open_source/utils/phone_number_utils.dart";
 import "package:flutter/cupertino.dart";
 import "package:phone_input/phone_input_package.dart";
 
@@ -29,11 +30,11 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
   @override
   void onViewModelReady() {
     super.onViewModelReady();
-    PhoneNumber parsed = PhoneNumber.parse(userMsisdn);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      phoneController.value = PhoneNumber(
-        isoCode: parsed.isoCode,
-        nsn: "",
+      // Use the safe phone number creation utility
+      phoneController.value = PhoneNumberUtils.createSafePhoneNumber(
+        phoneNumberString: userMsisdn,
+        fallbackCountry: IsoCode.RO,
       );
       _emailController.addListener(_validateForm);
     });
@@ -68,9 +69,23 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
     required String phoneNumber,
     required bool isValid,
   }) {
-    log(userMsisdn);
-    bool phoneNumberMatches = userMsisdn == "+$code$phoneNumber";
-    _isButtonEnabled = isValid && phoneNumberMatches;
+    log("User MSISDN: $userMsisdn");
+    try {
+      // Ensure all inputs are valid before comparison
+      if (PhoneNumberUtils.isValidMsisdn(userMsisdn) && code.isNotEmpty) {
+        String fullPhoneNumber = "+$code$phoneNumber";
+        bool phoneNumberMatches = PhoneNumberUtils.phoneNumbersMatch(
+          userMsisdn,
+          fullPhoneNumber,
+        );
+        _isButtonEnabled = isValid && phoneNumberMatches;
+      } else {
+        _isButtonEnabled = false;
+      }
+    } catch (e) {
+      log("Error validating phone number: $e");
+      _isButtonEnabled = false;
+    }
     notifyListeners();
   }
 

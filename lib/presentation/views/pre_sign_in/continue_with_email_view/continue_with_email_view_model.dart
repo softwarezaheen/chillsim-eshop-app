@@ -14,6 +14,7 @@ import "package:esim_open_source/presentation/shared/in_app_redirection_heper.da
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/verify_login_view/verify_login_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:esim_open_source/utils/phone_number_utils.dart";
 import "package:flutter/material.dart";
 import "package:phone_input/phone_input_package.dart";
 import "package:stacked_services/stacked_services.dart";
@@ -124,13 +125,13 @@ class ContinueWithEmailViewModel extends BaseModel {
   Future<void> _loginWithEmail() async {
     setViewState(ViewState.busy);
 
+    String safePhoneNumber = PhoneNumberUtils.getFullPhoneNumber(phoneController);
+    String username = AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
+        ? safePhoneNumber
+        : _state.emailController.text;
+    
     Resource<EmptyResponse?> loginResponse = await loginUseCase.execute(
-      LoginParams(
-        username: AppEnvironment.appEnvironmentHelper.loginType ==
-                LoginType.phoneNumber
-            ? "+${phoneController.value?.countryCode}${phoneController.value?.nsn}"
-            : _state.emailController.text,
-      ),
+      LoginParams(username: username),
     );
 
     await handleResponse(
@@ -138,10 +139,7 @@ class ContinueWithEmailViewModel extends BaseModel {
       onSuccess: (Resource<EmptyResponse?> response) async {
         final ContinueWithEmailViewModelArgs args = ContinueWithEmailViewModelArgs(
           redirection: redirection,
-          username: AppEnvironment.appEnvironmentHelper.loginType ==
-                  LoginType.phoneNumber
-              ? "+${phoneController.value?.countryCode}${phoneController.value?.nsn}"
-              : _state.emailController.text,
+          username: username,
         );
         debugPrint("args: $args");
         navigationService.navigateTo(
