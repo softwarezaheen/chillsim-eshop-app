@@ -13,6 +13,7 @@ import "package:esim_open_source/data/remote/responses/user/order_history_respon
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
 import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
+import "package:esim_open_source/data/remote/responses/user/wallet_transaction_response.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
 
 class APIUserImpl extends APIService implements ApiUser {
@@ -370,6 +371,26 @@ class APIUserImpl extends APIService implements ApiUser {
         queryParameters: queryParams,
       ),
       fromJson: ({dynamic json}) => BundleTaxesResponseModel.fromJson(json: json),
+    );
+    return response;
+  }
+
+  @override
+  FutureOr<ResponseMain<List<WalletTransactionResponse>?>> getWalletTransactions({
+    required int pageIndex,
+    required int pageSize,
+  }) async {
+    ResponseMain<List<WalletTransactionResponse>> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: UserApis.getWalletTransactions,
+        queryParameters: <String, dynamic>{
+          "page_index": pageIndex,
+          "page_size": pageSize,
+        },
+      ),
+      fromJson: ({dynamic json}) => (json as List<dynamic>)
+          .map((item) => WalletTransactionResponse.fromJson(json: item))
+          .toList(),
     );
     return response;
   }

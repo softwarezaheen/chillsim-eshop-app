@@ -1,0 +1,1 @@
+dart run easy_localization:generate -S assets/translations/open_source -f keys -O lib/translations -o locale_keys.g.dart

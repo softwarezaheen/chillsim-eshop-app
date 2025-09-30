@@ -108,7 +108,7 @@ Future<void> main() async {
         MyWalletViewSections.voucherCode,
         MyWalletViewSections.referEarn,
         MyWalletViewSections.cashbackRewards,
-        MyWalletViewSections.rewardHistory,
+        MyWalletViewSections.walletTransactions,
         MyWalletViewSections.upgradeWallet,
       ];
 
@@ -128,7 +128,7 @@ Future<void> main() async {
       expect(viewModel.walletSections[2],
           equals(MyWalletViewSections.cashbackRewards),);
       expect(viewModel.walletSections[3],
-          equals(MyWalletViewSections.rewardHistory),);
+          equals(MyWalletViewSections.walletTransactions),);
       expect(viewModel.walletSections[4],
           equals(MyWalletViewSections.upgradeWallet),);
     });

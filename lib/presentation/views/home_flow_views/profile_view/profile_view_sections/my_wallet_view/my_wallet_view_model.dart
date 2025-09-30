@@ -19,8 +19,8 @@ class MyWalletViewModel extends BaseModel {
         if (element == MyWalletViewSections.referEarn) {
           return AppEnvironment.appEnvironmentHelper.enableReferral;
         }
-        if (element == MyWalletViewSections.rewardHistory) {
-          return AppEnvironment.appEnvironmentHelper.enableReferral;
+        if (element == MyWalletViewSections.cashbackRewards) {
+          return AppEnvironment.appEnvironmentHelper.enableCashBack;
         }
         return true;
       })

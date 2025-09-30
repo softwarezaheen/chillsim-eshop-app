@@ -13,6 +13,7 @@ import "package:esim_open_source/data/remote/responses/user/order_history_respon
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
 import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
+import "package:esim_open_source/data/remote/responses/user/wallet_transaction_response.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
@@ -317,6 +318,19 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
       apiUserBundles.getTaxes(
         bundleCode: bundleCode,
         promoCode: promoCode
+      ),
+    );
+  }
+
+  @override
+  FutureOr<Resource<List<WalletTransactionResponse>?>> getWalletTransactions({
+    required int pageIndex,
+    required int pageSize,
+  }) {
+    return responseToResource(
+      apiUserBundles.getWalletTransactions(
+        pageIndex: pageIndex,
+        pageSize: pageSize,
       ),
     );
   }

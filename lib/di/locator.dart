@@ -53,6 +53,7 @@ import "package:esim_open_source/domain/repository/services/remote_config_servic
 import "package:esim_open_source/domain/repository/services/secure_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
 import "package:esim_open_source/domain/use_case/user/get_order_history_pagination_use_case.dart";
+import "package:esim_open_source/domain/use_case/user/get_wallet_transactions_pagination_use_case.dart";
 import "package:esim_open_source/objectbox.g.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
 import "package:esim_open_source/presentation/view_models/main_model.dart";
@@ -71,6 +72,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/wallet_transactions_view/wallet_transactions_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view_model.dart";
@@ -207,7 +209,8 @@ Future<void> appAPIServicesModule() async {
         return DynamicLinkingServiceEmptyImpl() as DynamicLinkingService;
       },
     )
-    ..registerLazySingleton(() => GetOrderHistoryPaginationUseCase(locator()));
+    ..registerLazySingleton(() => GetOrderHistoryPaginationUseCase(locator()))
+    ..registerLazySingleton(() => GetWalletTransactionsPaginationUseCase(locator()));
   // ..registerLazySingleton(() => GetBundlesByRegionUseCase(locator()))
   // ..registerLazySingleton(() => GetBundlesByCountryUseCase(locator()))
   // ..registerLazySingleton(() => GetBundlesGlobalUseCase(locator()))
@@ -284,6 +287,9 @@ Future<void> viewModelInjectionModules() async {
     )
     ..registerFactory<VerifyPurchaseViewModel>(
       VerifyPurchaseViewModel.new,
+    )
+    ..registerFactory<WalletTransactionsViewModel>(
+      WalletTransactionsViewModel.new,
     );
 }
 

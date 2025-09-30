@@ -5,7 +5,7 @@ import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view_model.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/wallet_transactions_view/wallet_transactions_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
@@ -17,7 +17,7 @@ enum MyWalletViewSections {
   voucherCode,
   referEarn,
   cashbackRewards,
-  rewardHistory,
+  walletTransactions,
   upgradeWallet;
 
   bool get isSectionHidden => false;
@@ -30,8 +30,8 @@ enum MyWalletViewSections {
         return LocaleKeys.myWallet_referSectionText.tr();
       case MyWalletViewSections.cashbackRewards:
         return LocaleKeys.myWallet_cashbackSectionText.tr();
-      case MyWalletViewSections.rewardHistory:
-        return LocaleKeys.myWallet_rewardsSectionText.tr();
+      case MyWalletViewSections.walletTransactions:
+        return LocaleKeys.myWallet_transactionsSectionText.tr();
       case MyWalletViewSections.upgradeWallet:
         return LocaleKeys.myWallet_upgradeSectionText.tr();
     }
@@ -53,8 +53,8 @@ enum MyWalletViewSections {
         return "walletReferEarn";
       case MyWalletViewSections.cashbackRewards:
         return "walletCashback";
-      case MyWalletViewSections.rewardHistory:
-        return "walletRewardHistory";
+      case MyWalletViewSections.walletTransactions:
+        return "wallet";
       case MyWalletViewSections.upgradeWallet:
         return "walletUpgrade";
     }
@@ -83,8 +83,8 @@ enum MyWalletViewSections {
           StoryViewer.routeName,
           arguments: CashbackStoriesView().storyViewerArgs,
         );
-      case MyWalletViewSections.rewardHistory:
-        viewModel.navigationService.navigateTo(RewardsHistoryView.routeName);
+      case MyWalletViewSections.walletTransactions:
+        viewModel.navigationService.navigateTo(WalletTransactionsView.routeName);
       case MyWalletViewSections.upgradeWallet:
         SheetResponse<EmptyBottomSheetResponse>? upgradeWalletResponse =
             await viewModel.bottomSheetService.showCustomSheet(

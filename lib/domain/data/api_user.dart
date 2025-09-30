@@ -91,4 +91,9 @@ abstract interface class ApiUser {
     required String bundleCode,
     String? promoCode,
   });
+
+  FutureOr<dynamic> getWalletTransactions({
+    required int pageIndex,
+    required int pageSize,
+  });
 }

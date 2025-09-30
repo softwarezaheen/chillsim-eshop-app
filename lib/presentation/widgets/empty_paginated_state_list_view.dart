@@ -63,9 +63,12 @@ class EmptyPaginatedStateListView<T> extends StatefulWidget {
 
 class _EmptyPaginatedStateListViewState<T>
     extends State<EmptyPaginatedStateListView<T>> {
+  VoidCallback? _listener;
+
   @override
   void initState() {
     super.initState();
+    
     bool getDataFirstTime = widget.paginationService.notifier.items.isEmpty &&
         !widget.paginationService.notifier.isLoading &&
         widget.paginationService.notifier.currentPage == 1;
@@ -75,17 +78,32 @@ class _EmptyPaginatedStateListViewState<T>
     }
 
     log("EmptyPaginatedStateListView initState: start");
-    widget.paginationService.addListener(() {
+    
+    // Store the listener so we can remove it later
+    _listener = () {
       log(
         "EmptyPaginatedStateListView initState: start state: ${widget.paginationService.notifier}",
       );
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        // Put your state-changing logic here
-        setState(() {
-          // Update state safely
-        });
+        // Check if widget is still mounted before calling setState
+        if (mounted) {
+          setState(() {
+            // Update state safely
+          });
+        }
       });
-    });
+    };
+    
+    widget.paginationService.addListener(_listener!);
+  }
+
+  @override
+  void dispose() {
+    // Remove listener safely
+    if (_listener != null) {
+      widget.paginationService.removeListener(_listener!);
+    }
+    super.dispose();
   }
 
   @override

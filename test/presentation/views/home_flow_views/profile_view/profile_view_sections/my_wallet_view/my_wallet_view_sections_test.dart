@@ -2,7 +2,7 @@ import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view_sections.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/wallet_transactions_view/wallet_transactions_view.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
 import "package:stacked_services/stacked_services.dart";
@@ -44,7 +44,7 @@ Future<void> main() async {
       });
 
       test("enum contains all expected sections", () {
-        expect(MyWalletViewSections.values.length, equals(5));
+        expect(MyWalletViewSections.values.length, equals(4));
         expect(
           MyWalletViewSections.values,
           contains(MyWalletViewSections.voucherCode),
@@ -57,10 +57,7 @@ Future<void> main() async {
           MyWalletViewSections.values,
           contains(MyWalletViewSections.cashbackRewards),
         );
-        expect(
-          MyWalletViewSections.values,
-          contains(MyWalletViewSections.rewardHistory),
-        );
+
         expect(
           MyWalletViewSections.values,
           contains(MyWalletViewSections.upgradeWallet),
@@ -72,7 +69,7 @@ Future<void> main() async {
           MyWalletViewSections.voucherCode,
           MyWalletViewSections.referEarn,
           MyWalletViewSections.cashbackRewards,
-          MyWalletViewSections.rewardHistory,
+          MyWalletViewSections.walletTransactions,
           MyWalletViewSections.upgradeWallet,
         ];
 
@@ -83,7 +80,8 @@ Future<void> main() async {
         expect(MyWalletViewSections.voucherCode.index, equals(0));
         expect(MyWalletViewSections.referEarn.index, equals(1));
         expect(MyWalletViewSections.cashbackRewards.index, equals(2));
-        expect(MyWalletViewSections.rewardHistory.index, equals(3));
+
+        expect(MyWalletViewSections.walletTransactions.index, equals(3));
         expect(MyWalletViewSections.upgradeWallet.index, equals(4));
       });
     });
@@ -108,8 +106,8 @@ Future<void> main() async {
         expect(section.sectionTitle, isA<String>());
       });
 
-      test("rewardHistory section has correct title", () {
-        const MyWalletViewSections section = MyWalletViewSections.rewardHistory;
+      test("walletTransactions section has correct title", () {
+        const MyWalletViewSections section = MyWalletViewSections.walletTransactions;
         expect(section.sectionTitle, isNotEmpty);
         expect(section.sectionTitle, isA<String>());
       });
@@ -177,15 +175,15 @@ Future<void> main() async {
         ).called(1);
       });
 
-      test("rewardHistory tap action navigates to rewards history view",
+      test("walletTransactions tap action navigates to wallet transactions view",
           () async {
-        when(mockNavigationService.navigateTo(RewardsHistoryView.routeName))
+        when(mockNavigationService.navigateTo(WalletTransactionsView.routeName))
             .thenAnswer((_) async => true);
 
-        await MyWalletViewSections.rewardHistory
+        await MyWalletViewSections.walletTransactions
             .tapAction(FakeContext(), mockViewModel);
 
-        verify(mockNavigationService.navigateTo(RewardsHistoryView.routeName))
+        verify(mockNavigationService.navigateTo(WalletTransactionsView.routeName))
             .called(1);
       });
 
@@ -248,8 +246,8 @@ Future<void> main() async {
               return "refer";
             case MyWalletViewSections.cashbackRewards:
               return "cashback";
-            case MyWalletViewSections.rewardHistory:
-              return "history";
+            case MyWalletViewSections.walletTransactions:
+              return "transactions";
             case MyWalletViewSections.upgradeWallet:
               return "upgrade";
           }
@@ -262,8 +260,8 @@ Future<void> main() async {
           equals("cashback"),
         );
         expect(
-          testSwitch(MyWalletViewSections.rewardHistory),
-          equals("history"),
+          testSwitch(MyWalletViewSections.walletTransactions),
+          equals("transactions"),
         );
         expect(
           testSwitch(MyWalletViewSections.upgradeWallet),

@@ -3,7 +3,10 @@ import "dart:developer" as dev;
 import "dart:io";
 import "dart:math";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
@@ -11,16 +14,22 @@ import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_resp
 import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/bundles/get_bundle_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_related_topup_use_case.dart";
+import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/top_up_user_bundle_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
+import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/esim_base_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/verify_purchase_view/verify_purchase_view.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:esim_open_source/utils/order_status_enum.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class TopUpBottomSheetViewModel extends EsimBaseModel {
@@ -90,12 +99,94 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       ),
     ));
     
+    // Start payment method selection flow
+    unawaited(_initializeTopUpFlow(item));
+  }
+
+  Future<void> _initializeTopUpFlow(BundleResponseModel item) async {
+    List<PaymentType> paymentTypeList = AppEnvironment.appEnvironmentHelper
+        .paymentTypeList(isUserLoggedIn: isUserLoggedIn);
+
+    final double price = item.price ?? 0;
+
+    //check 100% discount
+    if (price == 0) {
+      //payment type does not matter
+      _triggerTopUpFlow(
+        item: item,
+        paymentType: PaymentType.card,
+      );
+      return;
+    }
+
+    if (paymentTypeList.isEmpty) {
+      //no payment type available
+      showToast(LocaleKeys.no_payment_method_available.tr());
+      return;
+    }
+
+    //choose payment method
+    if (paymentTypeList.length == 1) {
+      //check if it's wallet, then check if wallet available
+      PaymentType paymentType = paymentTypeList.first;
+
+      switch (paymentType) {
+        case PaymentType.wallet:
+          if (isUserLoggedIn) {
+            final bool hasSufficientBalance =
+                userAuthenticationService.walletAvailableBalance >= price;
+            if (!hasSufficientBalance) {
+              showToast(LocaleKeys.no_sufficient_balance_in_wallet.tr());
+              return;
+            }
+            _triggerTopUpFlow(item: item, paymentType: paymentType);
+          } else {
+            //case not valid
+            showToast(LocaleKeys.no_payment_method_available.tr());
+          }
+        case PaymentType.dcb:
+        case PaymentType.card:
+          _triggerTopUpFlow(item: item, paymentType: paymentType);
+      }
+    } else {
+      _choosePaymentMethod(paymentTypeList, item);
+    }
+  }
+
+  Future<void> _choosePaymentMethod(
+    List<PaymentType> paymentTypeList,
+    BundleResponseModel item,
+  ) async {
+    final double price = item.price ?? 0;
+    SheetResponse<PaymentType>? response =
+        await bottomSheetService.showCustomSheet(
+      data: PaymentSelectionBottomRequest(
+        paymentTypeList: paymentTypeList,
+        amount: price,
+      ),
+      enableDrag: false,
+      isScrollControlled: true,
+      variant: BottomSheetType.paymentSelection,
+    );
+    if (response?.confirmed ?? false) {
+      _triggerTopUpFlow(
+        item: item,
+        paymentType: response?.data ?? PaymentType.card,
+      );
+    }
+  }
+
+  Future<void> _triggerTopUpFlow({
+    required BundleResponseModel item,
+    required PaymentType paymentType,
+  }) async {
     unawaited(
       _topUpBundle(
         iccId: request.data?.iccID ?? "",
         bundleCode: item.bundleCode ?? "",
         bundlePrice: item.priceDisplay ?? "",
         bundleCurrency: item.currencyCode ?? "",
+        paymentType: paymentType,
       ),
     );
   }
@@ -188,10 +279,15 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     required String bundleCode,
     required String bundlePrice,
     required String bundleCurrency,
+    required PaymentType paymentType,
   }) async {
     setViewState(ViewState.busy);
     Resource<BundleAssignResponseModel?> response = await topUpUserBundleUseCase
-        .execute(TopUpUserBundleParam(iccID: iccId, bundleCode: bundleCode));
+        .execute(TopUpUserBundleParam(
+          iccID: iccId, 
+          bundleCode: bundleCode,
+          paymentType: paymentType.type,
+        ));
     handleResponse(
       response,
       onSuccess: (Resource<BundleAssignResponseModel?> result) async {
@@ -199,7 +295,25 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           handleError(response);
           return;
         }
+        
+        // Check if payment was completed immediately (e.g., wallet payment)
+        PaymentStatus paymentStatus =
+            PaymentStatus.fromString(result.data?.paymentStatus);
+        if (paymentStatus == PaymentStatus.completed) {
+          if (paymentType == PaymentType.wallet) {
+            await _refreshUserInfo();
+          }
+          _handleSuccessfulPayment(
+            result.data?.orderId ?? "",
+            bundlePrice,
+            bundleCurrency,
+          );
+          return;
+        }
+        
+        // Proceed with payment flow for non-wallet payments
         initiatePaymentRequest(
+          paymentType: paymentType,
           orderID: result.data?.orderId ?? "",
           publishableKey: result.data?.publishableKey ?? "",
           merchantIdentifier: result.data?.merchantIdentifier ?? "",
@@ -218,6 +332,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   }
 
   Future<void> initiatePaymentRequest({
+    required PaymentType paymentType,
     required String orderID,
     required String publishableKey,
     required String merchantIdentifier,
@@ -231,13 +346,13 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   }) async {
     try {
       await paymentService.prepareCheckout(
-        paymentType: PaymentType.card,
+        paymentType: paymentType,
         publishableKey: publishableKey,
         merchantIdentifier: merchantIdentifier,
       );
 
-      await paymentService.processOrderPayment(
-        paymentType: PaymentType.card,
+      PaymentResult paymentResult = await paymentService.processOrderPayment(
+        paymentType: paymentType,
         iccID: request.data?.iccID ?? "",
         orderID: orderID,
         billingCountryCode: billingCountryCode,
@@ -246,6 +361,33 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         customerEphemeralKeySecret: customerEphemeralKeySecret,
         testEnv: test,
       );
+
+      setViewState(ViewState.idle);
+
+      switch (paymentResult) {
+        case PaymentResult.completed:
+          _handleSuccessfulPayment(orderID, bundlePrice, bundleCurrency);
+
+        case PaymentResult.canceled:
+          cancelOrder(orderID: orderID);
+
+        case PaymentResult.otpRequested:
+          //must send api for request otp , not implemented from backend
+          bool result = await locator<NavigationService>().navigateTo(
+            VerifyPurchaseView.routeName,
+            arguments: VerifyPurchaseViewArgs(
+              iccid: request.data?.iccID ?? "",
+              orderID: orderID,
+            ),
+            preventDuplicates: false,
+          );
+
+          if (result) {
+            _handleSuccessfulPayment(orderID, bundlePrice, bundleCurrency);
+          } else {
+            cancelOrder(orderID: orderID);
+          }
+      }
     } on Exception catch (e) {
       unawaited(cancelOrder(orderID: orderID));
       closeBottomSheet();
@@ -255,7 +397,21 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       hideKeyboard();
       return;
     }
+  }
 
+  Future<void> _refreshUserInfo() async {
+    try {
+      final Resource<AuthResponseModel?> response = await GetUserInfoUseCase(locator()).execute(NoParams());
+      handleResponse(
+        response,
+        onSuccess: (Resource<AuthResponseModel?> result) async {},
+      );
+    } catch (e) {
+      dev.log("Error refreshing user info: $e");
+    }
+  }
+
+  void _handleSuccessfulPayment(String orderID, String bundlePrice, String bundleCurrency) {
     hideKeyboard();
     String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
     analyticsService.logEvent(

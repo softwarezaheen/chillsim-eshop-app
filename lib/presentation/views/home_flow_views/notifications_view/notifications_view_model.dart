@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:developer";
 
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/di/locator.dart";
@@ -32,9 +33,18 @@ class NotificationsViewModel extends BaseModel {
   //#region Functions
   @override
   void onViewModelReady() {
-    // super.onViewModelReady();
+    super.onViewModelReady();
+    
+    try {
+      // Initialize safely
+      _initializeNotifications();
+    } catch (e) {
+      log("Error initializing notifications: $e");
+    }
+  }
+  
+  void _initializeNotifications() {
     unawaited(setNotificationsRead());
-    // unawaited(getNotifications());
     GetUserNotificationsUseCase.resetCachedData();
   }
 
@@ -67,11 +77,19 @@ class NotificationsViewModel extends BaseModel {
   }
 
   Future<void> getNotifications() async {
-    await getUserNotificationsPaginationUseCase.loadNextPage(NoParams());
+    try {
+      await getUserNotificationsPaginationUseCase.loadNextPage(NoParams());
+    } catch (e) {
+      log("Error loading notifications: $e");
+    }
   }
 
   Future<void> refreshNotifications() async {
-    await getUserNotificationsPaginationUseCase.refreshData(NoParams());
+    try {
+      await getUserNotificationsPaginationUseCase.refreshData(NoParams());
+    } catch (e) {
+      log("Error refreshing notifications: $e");
+    }
   }
 
 //#endregion

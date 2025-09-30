@@ -66,12 +66,14 @@ class ConsentManagerService {
   Future<Map<ConsentType, bool>> getConsentStatus() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return <ConsentType, bool>{
-      ConsentType.analytics: prefs.getBool(_keyAnalyticsConsent) ?? false,
+    final Map<ConsentType, bool> consent = <ConsentType, bool>{
+      ConsentType.analytics: prefs.getBool(_keyAnalyticsConsent) ?? true,
       ConsentType.advertising: prefs.getBool(_keyAdvertisingConsent) ?? false,
       ConsentType.personalization: prefs.getBool(_keyPersonalizationConsent) ?? false,
       ConsentType.functional: prefs.getBool(_keyFunctionalConsent) ?? true,
     };
+    
+    return consent;
   }
 
   Future<bool> hasShownConsentDialog() async {
@@ -101,12 +103,19 @@ class ConsentManagerService {
     required bool personalization,
     required bool functional,
   }) async {
-    // Set consent mode for Firebase Analytics
-    await FirebaseAnalytics.instance.setConsent(
-      adStorageConsentGranted: advertising,
-      analyticsStorageConsentGranted: analytics,
-      adUserDataConsentGranted: personalization,
-    );
+    try {
+      // Set consent mode for Firebase Analytics
+      await FirebaseAnalytics.instance.setConsent(
+        adStorageConsentGranted: advertising,
+        analyticsStorageConsentGranted: analytics,
+        adUserDataConsentGranted: personalization,
+      );
+      
+      // Also set analytics collection enabled/disabled
+      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(analytics);
+    } catch (e) {
+      // Handle error silently
+    }
   }
 
   Future<void> resetConsent() async {

@@ -206,30 +206,41 @@ class _MyFlutterActivityState extends State<MyFlutterActivity>
               ThemeMode? themeMode,
             ) =>
                 KeyboardVisibilityProvider(
-              child: MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: LocaleKeys.appName,
-                theme: regularTheme,
-                // ThemeData(
-                //   primarySwatch: Colors.lightGreen,
-                //   textTheme: Theme.of(context).textTheme.apply(
-                //         fontFamily: 'Open Sans',
-                //       ),
-                // ),
-                darkTheme: darkTheme,
-                themeMode: themeMode,
-                navigatorKey: StackedService.navigatorKey,
-                navigatorObservers: <NavigatorObserver>[
-                  StackedService.routeObserver,
-                  locator<CustomRouteObserver>(),
-                  ChuckerFlutter.navigatorObserver,
-                ],
-                // navigatorObservers: [locator<AnalyticsService>().getAnalyticsObserver()],
-                home: widget.defaultWidget,
-                onGenerateRoute: generateRoute,
-                locale: context.locale,
-                supportedLocales: context.supportedLocales,
-                localizationsDelegates: context.localizationDelegates,
+              child: MediaQuery(
+                // Override system font scaling to prevent layout issues
+                // Allow scaling up to 1.2x maximum for better accessibility balance
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: TextScaler.linear(
+                    MediaQuery.of(context).textScaler.scale(1.0) > 1.2 
+                        ? 1.2 
+                        : MediaQuery.of(context).textScaler.scale(1.0),
+                  ),
+                ),
+                child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: LocaleKeys.appName,
+                  theme: regularTheme,
+                  // ThemeData(
+                  //   primarySwatch: Colors.lightGreen,
+                  //   textTheme: Theme.of(context).textTheme.apply(
+                  //         fontFamily: 'Open Sans',
+                  //       ),
+                  // ),
+                  darkTheme: darkTheme,
+                  themeMode: themeMode,
+                  navigatorKey: StackedService.navigatorKey,
+                  navigatorObservers: <NavigatorObserver>[
+                    StackedService.routeObserver,
+                    locator<CustomRouteObserver>(),
+                    ChuckerFlutter.navigatorObserver,
+                  ],
+                  // navigatorObservers: [locator<AnalyticsService>().getAnalyticsObserver()],
+                  home: widget.defaultWidget,
+                  onGenerateRoute: generateRoute,
+                  locale: context.locale,
+                  supportedLocales: context.supportedLocales,
+                  localizationsDelegates: context.localizationDelegates,
+                ),
               ),
             ),
           ),

@@ -289,11 +289,13 @@ class EsimBundleTopUpWidget extends StatelessWidget {
                         })
                         : priceButtonText),
                   themeColor: themeColor,
-                  onPressed: onPriceButtonClick,
+                  onPressed: isTaxesLoading ? () {} : onPriceButtonClick,
                   enabledTextColor:
                       enabledMainButtonTextColor(context: context),
                   enabledBackgroundColor:
                       enabledMainButtonColor(context: context),
+                  disabledTextColor: Colors.grey,
+                  disabledBackgroundColor: Colors.grey.withValues(alpha: 0.3),
                   titleTextStyle: captionOneMediumTextStyle(
                     context: context,
                   ),

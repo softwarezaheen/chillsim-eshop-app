@@ -17,8 +17,10 @@ class AppEnvironmentHelper {
     this.enableReferral = false,
     this.enableWalletView = true, //was false
     this.enableWalletRecharge = false, // adding this flag for disabling wallet recharge from wallet view
+    this.enableRewardsHistory = true,
     this.enableBannersView = true, //was false
     this.enableCurrencySelection = true, //was false
+    this.enableCashBack = false,
     this.environmentTheme = EnvironmentTheme.openSource,
     this.enableLanguageSelection = true, //was false
     this.enableAppleSignIn = true,
@@ -56,8 +58,10 @@ class AppEnvironmentHelper {
   bool enableReferral;
   bool enableWalletView;
   bool enableWalletRecharge;
+  bool enableRewardsHistory;
   bool enableBannersView;
   bool enableCurrencySelection;
+  bool enableCashBack;
   bool enableLanguageSelection;
   bool enableGuestFlowPurchase;
   List<PaymentType> defaultPaymentTypeList;

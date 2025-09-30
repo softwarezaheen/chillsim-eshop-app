@@ -3,6 +3,7 @@ import "dart:async";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
+import "package:esim_open_source/data/remote/responses/user/wallet_transaction_response.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 
 abstract interface class ApiUserRepository {
@@ -98,5 +99,10 @@ abstract interface class ApiUserRepository {
 
   FutureOr<dynamic> getTaxes({
     required String bundleCode,
+  });
+
+  FutureOr<Resource<List<WalletTransactionResponse>?>> getWalletTransactions({
+    required int pageIndex,
+    required int pageSize,
   });
 }

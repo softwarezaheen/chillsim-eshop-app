@@ -19,9 +19,39 @@ class _ConsentDialogState extends State<ConsentDialog> {
   bool _advertisingConsent = false;
   bool _personalizationConsent = false;
   final bool _functionalConsent = true; // Always required
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentConsentState();
+  }
+
+  Future<void> _loadCurrentConsentState() async {
+    final ConsentManagerService consentService = ConsentManagerService();
+    final Map<ConsentType, bool> currentConsent = await consentService.getConsentStatus();
+    
+    setState(() {
+      _analyticsConsent = currentConsent[ConsentType.analytics] ?? true;
+      _advertisingConsent = currentConsent[ConsentType.advertising] ?? false;
+      _personalizationConsent = currentConsent[ConsentType.personalization] ?? false;
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Container(
+          height: 200,
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
+    }
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
@@ -161,6 +191,16 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () async {
+                            // Update the dialog state first
+                            setState(() {
+                              _analyticsConsent = true;
+                              _advertisingConsent = true;
+                              _personalizationConsent = true;
+                            });
+                            
+                            // Wait a moment to show the updated state
+                            await Future.delayed(const Duration(milliseconds: 300));
+                            
                             // Accept all
                             await ConsentManagerService().updateConsent(
                               analytics: true,
@@ -180,6 +220,16 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () async {
+                            // Update the dialog state first
+                            setState(() {
+                              _analyticsConsent = false;
+                              _advertisingConsent = false;
+                              _personalizationConsent = false;
+                            });
+                            
+                            // Wait a moment to show the updated state
+                            await Future.delayed(const Duration(milliseconds: 300));
+                            
                             // Essential only
                             await ConsentManagerService().updateConsent(
                               analytics: false,
@@ -295,18 +345,15 @@ class _ConsentDialogState extends State<ConsentDialog> {
 
 // Helper function to show consent dialog
 Future<void> showConsentDialog(BuildContext context) async {
-  print('showConsentDialog: About to show dialog');
   try {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        print('showConsentDialog: Building ConsentDialog widget');
         return const ConsentDialog();
       },
     );
-    print('showConsentDialog: Dialog completed');
   } catch (e) {
-    print('showConsentDialog: Error showing dialog: $e');
+    // Handle error silently
   }
 }

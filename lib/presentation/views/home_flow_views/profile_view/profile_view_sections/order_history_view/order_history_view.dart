@@ -56,7 +56,7 @@ class OrderHistoryView extends StatelessWidget {
                         EnvironmentImages.emptyOrderHistory.fullImagePath,
                   ),
                   paginationService:
-                      viewModel.getOrderHistoryUseCase.paginationService,
+                      viewModel.orderHistoryPaginationService,
                   onRefresh: viewModel.refreshOrderHistory,
                   onLoadItems: viewModel.getOrderHistory,
                   loadingWidget: getShimmerData(),
