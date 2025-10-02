@@ -5,31 +5,21 @@ import "package:flutter_test/flutter_test.dart";
 
 import "../../../../../../helpers/view_helper.dart";
 import "../../../../../../helpers/view_model_helper.dart";
-import "../../../../../../locator_test.dart";
 
 Future<void> main() async {
   await prepareTest();
-  late AccountInformationViewModel viewModel;
-
-  setUp(() async {
-    await setupTest();
-    viewModel = locator<AccountInformationViewModel>();
-  });
-
-  tearDown(() async {
-    await tearDownTest();
-  });
-
-  tearDownAll(() async {
-    await tearDownAllTest();
-  });
 
   group("AccountInformationViewModel Tests", () {
     late AccountInformationViewModel viewModel;
 
-    setUp(() {
+    setUp(() async {
+      await setupTest();
       onViewModelReadyMock(viewName: "AccountInformationView");
       viewModel = AccountInformationViewModel();
+    });
+
+    tearDown(() async {
+      await tearDownTest();
     });
 
     test("initial values", () {

@@ -1,9 +1,10 @@
 import "dart:async";
+import "dart:io";
 
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
-import "package:esim_open_source/domain/repository/services/analytics_service.dart";
+import "package:esim_open_source/domain/analytics/ecommerce_events.dart";
 import "package:esim_open_source/domain/use_case/user/get_order_by_id.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_purchased_esim_by_order_id_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
@@ -63,21 +64,26 @@ class PurchaseLoadingViewModel extends BaseModel {
           final double amount = ((orderData.orderAmount ?? 0)).toDouble();
           final double fee = ((orderData.orderFee ?? 0)).toDouble();
           final double tax = ((orderData.orderVat ?? 0)).toDouble();
-          final double total = amount + fee + tax;
+          // total can be derived if needed: amount + fee + tax
           final String discount = "0"; // TODO: Add discount field if available
+          final item = EcommerceItem(
+            id: orderData.bundleDetails?.bundleCode ?? '',
+            name: orderData.bundleDetails?.displayTitle ?? '',
+            category: 'esim_bundle',
+            price: amount / 100,
+            quantity: 1,
+          );
           await analyticsService.logEvent(
-            event: AnalyticEvent.purchasedBundleApp(
-              orderId: orderData.orderNumber ?? "",
-              productId: orderData.bundleDetails?.bundleCode ?? "",
-              productName: orderData.bundleDetails?.displayTitle ?? "",
-              amount: (amount / 100).toStringAsFixed(2),
-              currency: orderData.orderCurrency ?? "",
-              fee: (fee / 100).toStringAsFixed(2),
-              tax: (tax / 100).toStringAsFixed(2),
-              total: (total / 100).toStringAsFixed(2),
-              paymentType: orderData.paymentType ?? "",
-              promoCode: "", // TODO: Add promoCode field if available
-              discount: discount,
+            event: PurchaseEvent(
+              items: [item],
+              platform: Platform.isIOS ? 'iOS' : 'Android',
+              currency: orderData.orderCurrency ?? 'EUR',
+              transactionId: orderData.orderNumber ?? '',
+              purchaseType: 'bundle',
+              coupon: orderData.promoCode, // Use actual promo code from order
+              shipping: fee / 100,
+              tax: tax / 100,
+              discount: double.tryParse(discount) ?? 0,
             ),
           );
         }

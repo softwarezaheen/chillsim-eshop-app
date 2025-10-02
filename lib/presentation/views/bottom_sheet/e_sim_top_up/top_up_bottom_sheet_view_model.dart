@@ -11,6 +11,7 @@ import "package:esim_open_source/data/remote/responses/base_response_model.dart"
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
+import "package:esim_open_source/domain/analytics/ecommerce_events.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -69,12 +70,15 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       
       // Log view topup details event
       unawaited(analyticsService.logEvent(
-        event: AnalyticEvent.viewTopupDetailsApp(
-          bundleId: bundle.bundleCode ?? "",
-          bundleName: bundle.displayTitle ?? bundle.bundleName ?? "",
-          amount: (bundle.price ?? 0).toString(),
-          currency: bundle.currencyCode ?? "",
-          iccid: request.data!.iccID,
+        event: ViewItemEvent(
+          item: EcommerceItem(
+            id: bundle.bundleCode ?? '',
+            name: bundle.displayTitle ?? bundle.bundleName ?? '',
+            category: 'topup',
+            price: (bundle.price ?? 0).toDouble(),
+          ),
+          platform: Platform.isIOS ? 'iOS' : 'Android',
+          currency: bundle.currencyCode,
         ),
       ));
     }
@@ -89,13 +93,16 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     
     // Log add to cart topup event
     unawaited(analyticsService.logEvent(
-      event: AnalyticEvent.addToCartTopupApp(
-        bundleId: item.bundleCode ?? "",
-        bundleName: item.displayTitle ?? item.bundleName ?? "",
-        amount: (item.price ?? 0).toString(),
-        currency: item.currencyCode ?? "",
-        quantity: 1,
-        iccid: request.data?.iccID ?? "",
+      event: AddToCartEvent(
+        item: EcommerceItem(
+          id: item.bundleCode ?? '',
+          name: item.displayTitle ?? item.bundleName ?? '',
+          category: 'topup',
+          price: (item.price ?? 0).toDouble(),
+          quantity: 1,
+        ),
+        platform: Platform.isIOS ? 'iOS' : 'Android',
+        currency: item.currencyCode ?? 'EUR',
       ),
     ));
     
@@ -250,6 +257,9 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           ..clear()
           ..addAll(result.data ?? <BundleResponseModel>[]);
         applyShimmer = false;
+
+        // Log ViewItemListEvent now that we have actual topup options data
+        await _logTopupOptionsListView();
 
         // Fetch taxes for each bundle
         for (final bundle in bundleItems) {
@@ -447,5 +457,31 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     }
     loadingTaxesBundleCodes.remove(bundleCode);
     notifyListeners();
+  }
+
+  /// Log ViewItemListEvent with actual topup options data when bundles are loaded and displayed
+  Future<void> _logTopupOptionsListView() async {
+    if (bundleItems.isEmpty) return;
+
+    // Convert topup bundles to EcommerceItem format
+    final List<EcommerceItem> items = bundleItems.take(10).map((BundleResponseModel bundle) {
+      return EcommerceItem(
+        id: bundle.bundleCode ?? bundle.bundleName ?? '',
+        name: bundle.displayTitle ?? bundle.bundleName ?? bundle.bundleMarketingName ?? 'Unknown Topup',
+        category: 'topup_options',
+        price: bundle.price ?? 0.0,
+      );
+    }).toList();
+
+    await analyticsService.logEvent(
+      event: ViewItemListEvent(
+        listType: 'topup',
+        listId: request.data?.iccID, // The SIM card being topped up
+        listName: 'Topup Options',
+        items: items,
+        platform: Platform.isIOS ? 'iOS' : 'Android',
+        currency: bundleItems.first.currencyCode, // Use first bundle's currency
+      ),
+    );
   }
 }

@@ -16,7 +16,7 @@ Future<void> main() async {
   await prepareTest();
   late ProfileViewModel viewModel;
   late MockNavigationService mockNavigationService;
-  late UserAuthenticationService mockUserAuthenticationService;
+  late UserAuthenticationService _mockUserAuthenticationService;
 
   setUp(() async {
     await setupTest();
@@ -24,7 +24,7 @@ Future<void> main() async {
     viewModel = ProfileViewModel();
     mockNavigationService =
         locator<NavigationService>() as MockNavigationService;
-    mockUserAuthenticationService = locator<UserAuthenticationService>();
+  _mockUserAuthenticationService = locator<UserAuthenticationService>();
   });
 
   tearDown(() async {
@@ -36,6 +36,10 @@ Future<void> main() async {
       test("initializes with correct default values", () {
         expect(viewModel.appVersion, isEmpty);
         expect(viewModel.buildNumber, isEmpty);
+      });
+
+      test("mock user auth service exists", () {
+        expect(_mockUserAuthenticationService, isNotNull);
       });
 
       test("onViewModelReady method exists and can be called", () {

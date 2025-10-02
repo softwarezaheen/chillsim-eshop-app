@@ -7,7 +7,6 @@ import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view_model.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:mockito/mockito.dart";
@@ -24,7 +23,7 @@ Future<void> main() async {
   late DynamicSelectionViewModel viewModel;
   late MockNavigationService mockNavigationService;
   late MockBottomSheetService mockBottomSheetService;
-  late HomePagerViewModel homePagerViewModel;
+  // Removed unused HomePagerViewModel reference
   late MockDataSource mockDataSource;
   late ApiAuthRepository authRepo;
 
@@ -35,7 +34,6 @@ Future<void> main() async {
         locator<NavigationService>() as MockNavigationService;
     mockBottomSheetService =
         locator<BottomSheetService>() as MockBottomSheetService;
-    homePagerViewModel = locator<HomePagerViewModel>();
 
     authRepo = locator<ApiAuthRepository>();
     mockDataSource = MockDataSource();

@@ -142,7 +142,7 @@ void setupBottomSheetUi() {
       Function(SheetResponse<EmptyBottomSheetResponse>) completer,
     ) =>
         BundleDetailBottomSheetView(
-          requestBase: sheetRequest,
+          requestBase: sheetRequest as SheetRequest<PurchaseBundleBottomSheetArgs>,
           completer: completer,
         ),
     BottomSheetType.billingInfo: (

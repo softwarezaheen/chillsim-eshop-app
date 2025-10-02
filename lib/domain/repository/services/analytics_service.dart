@@ -1,4 +1,4 @@
-sealed class AnalyticEvent {
+abstract class AnalyticEvent {
   const AnalyticEvent(this.eventName);
   factory AnalyticEvent.appCheckApp() => AnalyticsEvent("app_check_app");
   factory AnalyticEvent.appCheckBackend() =>
@@ -8,6 +8,9 @@ sealed class AnalyticEvent {
   factory AnalyticEvent.userGuideOpened() =>
       AnalyticsEvent("user_guide_opened");
   factory AnalyticEvent.regionsClicked() => AnalyticsEvent("regions_clicked");
+  // Restored non-ecommerce event (was removed inadvertently): used when user saves billing info during checkout
+  factory AnalyticEvent.cartSaveBillingInfoApp() =>
+    AnalyticsEvent("cart_save_billing_info_app");
   factory AnalyticEvent.firstOpenCampaign({
     required String utm,
     required String platform,
@@ -52,189 +55,13 @@ sealed class AnalyticEvent {
         amount: amount,
         currency: currency,
       );
-  factory AnalyticEvent.checkoutApp({
-    required String orderId,
-    required String bundleId,
-    required String bundleName,
-    required String amount,
-    required String currency,
-    required String fee,
-    required String tax,
-    required String total,
-  }) =>
-      EcommerceEvent(
-        "checkout_app",
-        ecommerce: <String, Object>{
-          "order_id": orderId,
-          "bundle_id": bundleId,
-          "bundle_name": bundleName,
-          "amount": double.tryParse(amount) ?? 0.0,
-          "currency": currency,
-          "fee": double.tryParse(fee) ?? 0.0,
-          "tax": double.tryParse(tax) ?? 0.0,
-          "total": double.tryParse(total) ?? 0.0,
-        },
-      );
-  factory AnalyticEvent.purchasedBundleApp({
-    required String orderId,
-    required String productId,
-    required String productName,
-    required String amount,
-    required String currency,
-    required String fee,
-    required String tax,
-    required String total,
-    required String paymentType,
-    required String promoCode,
-    required String discount,
-  }) =>
-      EcommerceEvent(
-        "purchased_bundle_app",
-        ecommerce: <String, Object>{
-          "order_id": orderId,
-          "product_id": productId,
-          "product_name": productName,
-          "amount": double.tryParse(amount) ?? 0.0,
-          "currency": currency,
-          "fee": double.tryParse(fee) ?? 0.0,
-          "tax": double.tryParse(tax) ?? 0.0,
-          "total": double.tryParse(total) ?? 0.0,
-          "payment_type": paymentType,
-          "promo_code": promoCode,
-          "discount": double.tryParse(discount) ?? 0.0,
-        },
-      );
-  factory AnalyticEvent.purchasedTopupApp({
-    required String orderId,
-    required String productId,
-    required String productName,
-    required String amount,
-    required String currency,
-    required String fee,
-    required String tax,
-    required String total,
-    required String paymentType,
-    required String promoCode,
-    required String discount,
-    required String iccid,
-  }) =>
-      EcommerceEvent(
-        "purchased_topup_app",
-        ecommerce: <String, Object>{
-          "order_id": orderId,
-          "product_id": productId,
-          "product_name": productName,
-          "amount": double.tryParse(amount) ?? 0.0,
-          "currency": currency,
-          "fee": double.tryParse(fee) ?? 0.0,
-          "tax": double.tryParse(tax) ?? 0.0,
-          "total": double.tryParse(total) ?? 0.0,
-          "payment_type": paymentType,
-          "promo_code": promoCode,
-          "discount": double.tryParse(discount) ?? 0.0,
-          "iccid": iccid,
-        },
-      );
-  factory AnalyticEvent.productSearchApp({
-    required String country,
-  }) =>
-      AnalyticsEventWithParams(
-        "product_search_app",
-        parameters: <String, Object>{
-          "country": country,
-        },
-      );
-  factory AnalyticEvent.viewTopupDetailsApp({
-    required String bundleId,
-    required String bundleName,
-    required String amount,
-    required String currency,
-    required String iccid,
-  }) =>
-      EcommerceEvent(
-        "view_topup_details_app",
-        ecommerce: <String, Object>{
-          "bundle_id": bundleId,
-          "bundle_name": bundleName,
-          "amount": double.tryParse(amount) ?? 0.0,
-          "currency": currency,
-          "iccid": iccid,
-        },
-      );
-  factory AnalyticEvent.viewProductDetailsApp({
-    required String bundleId,
-    required String bundleName,
-    required String amount,
-    required String currency,
-  }) =>
-      EcommerceEvent(
-        "view_product_details_app",
-        ecommerce: <String, Object>{
-          "bundle_id": bundleId,
-          "bundle_name": bundleName,
-          "amount": double.tryParse(amount) ?? 0.0, // Convert to double for Firebase
-          "currency": currency,
-        },
-      );
-  factory AnalyticEvent.addToCartTopupApp({
-    required String bundleId,
-    required String bundleName,
-    required String amount,
-    required String currency,
-    required int quantity,
-    required String iccid,
-  }) =>
-      EcommerceEvent(
-        "add_to_cart_topup_app",
-        ecommerce: <String, Object>{
-          "bundle_id": bundleId,
-          "bundle_name": bundleName,
-          "amount": double.tryParse(amount) ?? 0.0,
-          "currency": currency,
-          "quantity": quantity,
-          "iccid": iccid,
-        },
-      );
-  factory AnalyticEvent.cartSaveBillingInfoApp() =>
-      AnalyticsEvent("cart_save_billing_info_app");
-  factory AnalyticEvent.addToCartBundleApp({
-    required String bundleId,
-    required String bundleName,
-    required String amount,
-    required String currency,
-    required int quantity,
-  }) =>
-      EcommerceEvent(
-        "add_to_cart_bundle_app",
-        ecommerce: <String, Object>{
-          "bundle_id": bundleId,
-          "bundle_name": bundleName,
-          "amount": double.tryParse(amount) ?? 0.0,
-          "currency": currency,
-          "quantity": quantity,
-        },
-      );
-  factory AnalyticEvent.viewRegionProducts({
-    required String region,
-  }) =>
-      AnalyticsEventWithParams(
-        "view_region_products",
-        parameters: <String, Object>{
-          "region": region,
-        },
-      );
-  factory AnalyticEvent.viewCountryProducts({
-    required String country,
-  }) =>
-      AnalyticsEventWithParams(
-        "view_country_products",
-        parameters: <String, Object>{
-          "country": country,
-        },
-      );
+  // Deprecated ecommerce factories removed in favor of strongly typed dual-provider events.
+  // Use new classes from ecommerce_events.dart: ViewItemListEvent, ViewItemEvent, AddToCartEvent,
+  // BeginCheckoutEvent, PurchaseEvent.
   final String eventName;
   Map<String, Object>? get parameters;
 }
+
 
 class AnalyticsEvent extends AnalyticEvent {
   AnalyticsEvent(super.eventName);
@@ -281,16 +108,6 @@ class PurchaseSuccessEvent extends AnalyticEvent {
       };
 }
 
-class EcommerceEvent extends AnalyticEvent {
-  EcommerceEvent(
-    super.eventName, {
-    required this.ecommerce,
-  });
-  final Map<String, Object> ecommerce;
-
-  @override
-  Map<String, Object>? get parameters => ecommerce; // Return flattened parameters instead of wrapped in "ecommerce"
-}
 
 class AnalyticsEventWithParams extends AnalyticEvent {
   AnalyticsEventWithParams(

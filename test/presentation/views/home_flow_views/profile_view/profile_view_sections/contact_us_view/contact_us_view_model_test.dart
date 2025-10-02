@@ -1,26 +1,18 @@
-import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/use_case/app/contact_us_use_case.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/contact_us_view/contact_us_view_model.dart";
 import "package:flutter_test/flutter_test.dart";
-import "package:stacked_services/stacked_services.dart";
 
 import "../../../../../../helpers/view_helper.dart";
 import "../../../../../../helpers/view_model_helper.dart";
-import "../../../../../../locator_test.dart";
-import "../../../../../../locator_test.mocks.dart";
 
 Future<void> main() async {
   await prepareTest();
   late ContactUsViewModel viewModel;
-  late MockApiAppRepository mockApiAppRepository;
-  late MockNavigationService mockNavigationService;
 
   setUp(() async {
     await setupTest();
     
-    mockApiAppRepository = locator<ApiAppRepository>() as MockApiAppRepository;
-    mockNavigationService = locator<NavigationService>() as MockNavigationService;
     
     onViewModelReadyMock(viewName: "ContactUsView");
     viewModel = ContactUsViewModel();

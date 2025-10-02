@@ -7,7 +7,6 @@ import "package:esim_open_source/data/remote/responses/bundles/country_response_
 import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
-import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_notifications_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
@@ -184,13 +183,6 @@ class DataPlansViewModel extends BaseModel {
   }
 
   Future<void> navigateToCountryBundles(CountryResponseModel country) async {
-    // Log view country products event
-    await analyticsService.logEvent(
-      event: AnalyticEvent.viewCountryProducts(
-        country: country.country ?? country.id ?? "",
-      ),
-    );
-    
     final EsimArguments args = EsimArguments(
       type: EsimArgumentType.country,
       id: country.id ?? "",
@@ -215,13 +207,6 @@ class DataPlansViewModel extends BaseModel {
   }
 
   Future<void> navigateToRegionBundles(RegionsResponseModel region) async {
-    // Log view region products event
-    await analyticsService.logEvent(
-      event: AnalyticEvent.viewRegionProducts(
-        region: region.regionName ?? region.regionCode ?? "",
-      ),
-    );
-    
     final EsimArguments args = EsimArguments(
       type: EsimArgumentType.region,
       id: region.regionCode ?? "",

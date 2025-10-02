@@ -11,6 +11,7 @@ import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_res
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/domain/analytics/ecommerce_events.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -153,11 +154,15 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       
       // Log view product details event
       unawaited(analyticsService.logEvent(
-        event: AnalyticEvent.viewProductDetailsApp(
-          bundleId: _bundle!.bundleCode!,
-          bundleName: _bundle!.displayTitle ?? _bundle!.bundleName ?? "",
-          amount: (_bundle!.price ?? 0).toString(),
-          currency: _bundle!.currencyCode ?? "",
+        event: ViewItemEvent(
+          item: EcommerceItem(
+            id: _bundle!.bundleCode!,
+            name: _bundle!.displayTitle ?? _bundle!.bundleName ?? '',
+            category: 'esim_bundle',
+            price: (_bundle!.price ?? 0).toDouble(),
+          ),
+          platform: Platform.isIOS ? 'iOS' : 'Android',
+          currency: _bundle!.currencyCode ?? "EUR",
         ),
       ));
     }
@@ -361,32 +366,32 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         }
 
         // Log checkout event
-        final double originalAmount = (bundle?.price ?? 0) * 100; // Convert to cents like web
         final double fee = 0; // TODO: Get fee from response if available
         final double tax = 0; // TODO: Get tax from response if available
-        final double total = originalAmount + fee + tax;
         
         // Log add to cart event
-        await analyticsService.logEvent(
-          event: AnalyticEvent.addToCartBundleApp(
-            bundleId: bundle?.bundleCode ?? "",
-            bundleName: bundle?.displayTitle ?? bundle?.bundleName ?? "",
-            amount: (bundle?.price ?? 0).toString(),
-            currency: bundle?.currencyCode ?? "",
+        final item = EcommerceItem(
+          id: bundle?.bundleCode ?? '',
+            name: bundle?.displayTitle ?? bundle?.bundleName ?? '',
+            category: 'esim_bundle',
+            price: (bundle?.price ?? 0).toDouble(),
             quantity: 1,
+        );
+        await analyticsService.logEvent(
+          event: AddToCartEvent(
+            item: item,
+            platform: Platform.isIOS ? 'iOS' : 'Android',
+            currency: bundle?.currencyCode ?? 'EUR',
           ),
         );
-        
         await analyticsService.logEvent(
-          event: AnalyticEvent.checkoutApp(
-            orderId: result.data?.orderId ?? "",
-            bundleId: bundle?.bundleCode ?? "",
-            bundleName: bundle?.displayTitle ?? bundle?.bundleName ?? "",
-            amount: (originalAmount / 100).toStringAsFixed(2),
-            currency: bundle?.currencyCode ?? "",
-            fee: (fee / 100).toStringAsFixed(2),
-            tax: (tax / 100).toStringAsFixed(2),
-            total: (total / 100).toStringAsFixed(2),
+          event: BeginCheckoutEvent(
+            items: [item],
+            platform: Platform.isIOS ? 'iOS' : 'Android',
+            currency: bundle?.currencyCode ?? 'EUR',
+            shipping: fee / 100,
+            tax: tax / 100,
+            coupon: _promoCode,
           ),
         );
 

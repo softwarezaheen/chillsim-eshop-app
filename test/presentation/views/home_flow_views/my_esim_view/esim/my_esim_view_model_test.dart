@@ -6,7 +6,6 @@ import "package:esim_open_source/domain/use_case/user/get_bundle_label_use_case.
 import "package:esim_open_source/domain/use_case/user/get_user_notifications_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/notifications_view/notifications_view.dart";
 import "package:flutter/material.dart";
@@ -25,7 +24,6 @@ Future<void> main() async {
   late MockApiUserRepository mockApiUserRepository;
   late MockNavigationService mockNavigationService;
   late MockBottomSheetService mockBottomSheetService;
-  late HomePagerViewModel homePagerViewModel;
   late MockFlutterChannelHandlerService mockFlutterChannelHandlerService;
 
   setUp(() async {
@@ -37,7 +35,6 @@ Future<void> main() async {
         locator<NavigationService>() as MockNavigationService;
     mockBottomSheetService =
         locator<BottomSheetService>() as MockBottomSheetService;
-    homePagerViewModel = locator<HomePagerViewModel>();
     mockFlutterChannelHandlerService = locator<FlutterChannelHandlerService>()
         as MockFlutterChannelHandlerService;
 
