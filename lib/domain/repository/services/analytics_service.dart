@@ -312,4 +312,6 @@ abstract class AnalyticsService {
   Future<void> logEvent({
     required AnalyticEvent event,
   });
+
+  Future<void> dispose();
 }

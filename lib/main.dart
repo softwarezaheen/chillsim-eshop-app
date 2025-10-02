@@ -6,6 +6,8 @@ import "dart:ui";
 import "package:chucker_flutter/chucker_flutter.dart";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/data/services/analytics_service_impl.dart";
+import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/dynamic_linking_service.dart";
@@ -22,7 +24,6 @@ import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/setup_dialog_ui.dart";
 import "package:esim_open_source/presentation/setup_snackbar_ui.dart";
 import "package:esim_open_source/presentation/shared/deep_link_helper.dart";
-import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/presentation/theme/my_theme_builder.dart";
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
 import "package:esim_open_source/presentation/view_models/main_model.dart";
@@ -161,6 +162,8 @@ class _MyFlutterActivityState extends State<MyFlutterActivity>
         DeviceOrientation.portraitDown,
       ]),
     );
+    //Adding analytics service dispose
+    unawaited(AnalyticsServiceImpl.instance.dispose());
     super.dispose();
   }
 

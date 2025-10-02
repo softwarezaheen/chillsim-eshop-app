@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:firebase_analytics/firebase_analytics.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
@@ -9,6 +11,13 @@ enum ConsentType {
 }
 
 class ConsentManagerService {
+  factory ConsentManagerService() {
+    return _instance;
+  }
+  ConsentManagerService._internal();
+  static final ConsentManagerService _instance = ConsentManagerService._internal();
+  static ConsentManagerService get instance => _instance;
+
   static const String _keyAnalyticsConsent = "consent_analytics";
   static const String _keyAdvertisingConsent = "consent_advertising";
   static const String _keyPersonalizationConsent = "consent_personalization";
@@ -18,6 +27,10 @@ class ConsentManagerService {
   static const String _keyConsentShown = "consent_shown";
 
   static const String currentConsentVersion = "1.0";
+
+  // Stream for consent changes
+  final StreamController<Map<ConsentType, bool>> _consentController = StreamController<Map<ConsentType, bool>>.broadcast();
+  Stream<Map<ConsentType, bool>> get consentStream => _consentController.stream;
 
   Future<void> initializeConsent() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -61,6 +74,15 @@ class ConsentManagerService {
       personalization: personalization,
       functional: functional,
     );
+
+    // Emit consent change to stream
+    final Map<ConsentType, bool> consentMap = <ConsentType, bool>{
+      ConsentType.analytics: analytics,
+      ConsentType.advertising: advertising,
+      ConsentType.personalization: personalization,
+      ConsentType.functional: functional,
+    };
+    _consentController.add(consentMap);
   }
 
   Future<Map<ConsentType, bool>> getConsentStatus() async {
@@ -141,7 +163,7 @@ class ConsentManagerService {
 
   Future<void> setDefaultConsent() async {
     await updateConsent(
-      analytics: false,
+      analytics: true,
       advertising: false,
       personalization: false,
       functional: true,
@@ -150,5 +172,10 @@ class ConsentManagerService {
 
   Future<SharedPreferences> getPreferences() async {
     return SharedPreferences.getInstance();
+  }
+
+  // Dispose method to clean up resources
+  Future<void> dispose() async {
+    await _consentController.close();
   }
 }
