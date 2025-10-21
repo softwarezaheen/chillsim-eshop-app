@@ -1,3 +1,4 @@
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_info_use_case.dart";
@@ -34,10 +35,10 @@ Future<void> main() async {
   group("MyWalletViewModel Tests", () {
     test("initialization sets wallet sections correctly", () {
       expect(viewModel.walletSections, isNotEmpty);
-      expect(viewModel.walletSections.length,
-          equals(MyWalletViewSections.values.length),);
-      expect(
-          viewModel.walletSections, containsAll(MyWalletViewSections.values),);
+      // Should have at least voucherCode and walletTransactions (upgradeWallet depends on enableWalletRecharge)
+      expect(viewModel.walletSections.length, greaterThanOrEqualTo(2));
+      expect(viewModel.walletSections, contains(MyWalletViewSections.voucherCode));
+      expect(viewModel.walletSections, contains(MyWalletViewSections.walletTransactions));
     });
 
     test("getUserInfoUseCase is initialized correctly", () {
@@ -102,18 +103,15 @@ Future<void> main() async {
       expect(listenerCalled, isTrue);
     });
 
-    test("wallet sections contain all expected sections", () {
-      final List<MyWalletViewSections> expectedSections =
-          <MyWalletViewSections>[
-        MyWalletViewSections.voucherCode,
-        MyWalletViewSections.referEarn,
-        MyWalletViewSections.cashbackRewards,
-        MyWalletViewSections.walletTransactions,
-        MyWalletViewSections.upgradeWallet,
-      ];
-
-      expect(viewModel.walletSections, containsAll(expectedSections));
-      expect(viewModel.walletSections.length, equals(expectedSections.length));
+    test("wallet sections contain expected sections based on feature flags", () {
+      // These sections should always be present
+      expect(viewModel.walletSections, contains(MyWalletViewSections.voucherCode));
+      expect(viewModel.walletSections, contains(MyWalletViewSections.walletTransactions));
+      
+      // upgradeWallet is only present when enableWalletRecharge is true
+      if (AppEnvironment.appEnvironmentHelper.enableWalletRecharge) {
+        expect(viewModel.walletSections, contains(MyWalletViewSections.upgradeWallet));
+      }
     });
 
     test("viewModel extends BaseModel", () {
@@ -124,13 +122,13 @@ Future<void> main() async {
       expect(viewModel.walletSections[0],
           equals(MyWalletViewSections.voucherCode),);
       expect(
-          viewModel.walletSections[1], equals(MyWalletViewSections.referEarn),);
-      expect(viewModel.walletSections[2],
-          equals(MyWalletViewSections.cashbackRewards),);
-      expect(viewModel.walletSections[3],
-          equals(MyWalletViewSections.walletTransactions),);
-      expect(viewModel.walletSections[4],
-          equals(MyWalletViewSections.upgradeWallet),);
+          viewModel.walletSections[1], equals(MyWalletViewSections.walletTransactions),);
+      
+      // Only check third section if it exists (depends on enableWalletRecharge)
+      if (viewModel.walletSections.length > 2) {
+        expect(viewModel.walletSections[2],
+            equals(MyWalletViewSections.upgradeWallet),);
+      }
     });
 
     test("wallet sections are properly typed", () {

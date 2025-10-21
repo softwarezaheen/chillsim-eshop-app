@@ -20,7 +20,7 @@ enum PromotionApis implements URlRequestBuilder {
       case PromotionApis.validatePromoCode:
         return "/api/v1/promotion/validation";
       case PromotionApis.getRewardsHistory:
-        return "/api/v1/promotion/history";
+        return "/api/v1/promotion/usage-history"; // Updated to new endpoint
     }
   }
 

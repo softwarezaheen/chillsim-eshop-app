@@ -17,7 +17,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/faq_view/faq_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_view/rewards_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
@@ -28,7 +28,7 @@ enum ProfileViewSections {
   accountInformation,
   myWallet,
   orderHistory,
-  rewardsHistory,
+  rewards,
   aboutUs,
   faq,
   contactUs,
@@ -60,9 +60,11 @@ enum ProfileViewSections {
           return false;
         }
         return true;
-      case ProfileViewSections.rewardsHistory:
+      case ProfileViewSections.rewards:
         if (viewModel.isUserLoggedIn &&
-            AppEnvironment.appEnvironmentHelper.enableRewardsHistory) {
+            (AppEnvironment.appEnvironmentHelper.enableReferral ||
+             AppEnvironment.appEnvironmentHelper.enableCashBack ||
+             AppEnvironment.appEnvironmentHelper.enableRewardsHistory)) {
           return false;
         }
         return true;
@@ -93,8 +95,8 @@ enum ProfileViewSections {
         return LocaleKeys.profile_myWallet.tr();
       case ProfileViewSections.orderHistory:
         return LocaleKeys.profile_orderHistory.tr();
-      case ProfileViewSections.rewardsHistory:
-        return LocaleKeys.myWallet_rewardsSectionText.tr();
+      case ProfileViewSections.rewards:
+        return LocaleKeys.profile_rewards.tr();
       case ProfileViewSections.aboutUs:
         return LocaleKeys.profile_aboutUs.tr();
       case ProfileViewSections.faq:
@@ -137,8 +139,8 @@ enum ProfileViewSections {
         return "wallet";
       case ProfileViewSections.orderHistory:
         return "orderHistory";
-      case ProfileViewSections.rewardsHistory:
-        return "walletRewardHistory";
+      case ProfileViewSections.rewards:
+        return "walletReferEarn";
       case ProfileViewSections.aboutUs:
         return "aboutUs";
       case ProfileViewSections.faq:
@@ -179,8 +181,8 @@ enum ProfileViewSections {
         viewModel.navigationService.navigateTo(ContactUsView.routeName);
       case ProfileViewSections.orderHistory:
         viewModel.navigationService.navigateTo(OrderHistoryView.routeName);
-      case ProfileViewSections.rewardsHistory:
-        viewModel.navigationService.navigateTo(RewardsHistoryView.routeName);
+      case ProfileViewSections.rewards:
+        viewModel.navigationService.navigateTo(RewardsView.routeName);
       case ProfileViewSections.aboutUs:
         viewModel.navigationService.navigateTo(
           DynamicDataView.routeName,

@@ -44,18 +44,10 @@ Future<void> main() async {
       });
 
       test("enum contains all expected sections", () {
-        expect(MyWalletViewSections.values.length, equals(4));
+        expect(MyWalletViewSections.values.length, equals(3));
         expect(
           MyWalletViewSections.values,
           contains(MyWalletViewSections.voucherCode),
-        );
-        expect(
-          MyWalletViewSections.values,
-          contains(MyWalletViewSections.referEarn),
-        );
-        expect(
-          MyWalletViewSections.values,
-          contains(MyWalletViewSections.cashbackRewards),
         );
 
         expect(
@@ -67,8 +59,6 @@ Future<void> main() async {
       test("sections are properly ordered", () {
         final List<MyWalletViewSections> expectedOrder = <MyWalletViewSections>[
           MyWalletViewSections.voucherCode,
-          MyWalletViewSections.referEarn,
-          MyWalletViewSections.cashbackRewards,
           MyWalletViewSections.walletTransactions,
           MyWalletViewSections.upgradeWallet,
         ];
@@ -78,30 +68,15 @@ Future<void> main() async {
 
       test("enum index values are correct", () {
         expect(MyWalletViewSections.voucherCode.index, equals(0));
-        expect(MyWalletViewSections.referEarn.index, equals(1));
-        expect(MyWalletViewSections.cashbackRewards.index, equals(2));
 
-        expect(MyWalletViewSections.walletTransactions.index, equals(3));
-        expect(MyWalletViewSections.upgradeWallet.index, equals(4));
+        expect(MyWalletViewSections.walletTransactions.index, equals(1));
+        expect(MyWalletViewSections.upgradeWallet.index, equals(2));
       });
     });
 
     group("Section Titles", () {
       test("voucherCode section has correct title", () {
         const MyWalletViewSections section = MyWalletViewSections.voucherCode;
-        expect(section.sectionTitle, isNotEmpty);
-        expect(section.sectionTitle, isA<String>());
-      });
-
-      test("referEarn section has correct title", () {
-        const MyWalletViewSections section = MyWalletViewSections.referEarn;
-        expect(section.sectionTitle, isNotEmpty);
-        expect(section.sectionTitle, isA<String>());
-      });
-
-      test("cashbackRewards section has correct title", () {
-        const MyWalletViewSections section =
-            MyWalletViewSections.cashbackRewards;
         expect(section.sectionTitle, isNotEmpty);
         expect(section.sectionTitle, isA<String>());
       });
@@ -242,10 +217,6 @@ Future<void> main() async {
           switch (section) {
             case MyWalletViewSections.voucherCode:
               return "voucher";
-            case MyWalletViewSections.referEarn:
-              return "refer";
-            case MyWalletViewSections.cashbackRewards:
-              return "cashback";
             case MyWalletViewSections.walletTransactions:
               return "transactions";
             case MyWalletViewSections.upgradeWallet:
@@ -254,11 +225,6 @@ Future<void> main() async {
         }
 
         expect(testSwitch(MyWalletViewSections.voucherCode), equals("voucher"));
-        expect(testSwitch(MyWalletViewSections.referEarn), equals("refer"));
-        expect(
-          testSwitch(MyWalletViewSections.cashbackRewards),
-          equals("cashback"),
-        );
         expect(
           testSwitch(MyWalletViewSections.walletTransactions),
           equals("transactions"),
@@ -284,7 +250,7 @@ Future<void> main() async {
           isTrue,
         );
         expect(
-          MyWalletViewSections.voucherCode != MyWalletViewSections.referEarn,
+          MyWalletViewSections.voucherCode != MyWalletViewSections.walletTransactions,
           isTrue,
         );
       });

@@ -11,6 +11,7 @@ enum ConfigurationResponseKeys {
   paymentTypes,
   loginType,
   referAndEarnAmount,
+  referredDiscountPercentage,
   zenminutesUrl;
 
   String get configurationKeyValue {
@@ -31,6 +32,8 @@ enum ConfigurationResponseKeys {
         return "login_type";
       case ConfigurationResponseKeys.referAndEarnAmount:
         return "REFERRAL_CODE_AMOUNT";
+      case ConfigurationResponseKeys.referredDiscountPercentage:
+        return "REFERRED_DISCOUNT_PERCENTAGE";
       case ConfigurationResponseKeys.zenminutesUrl:
         return "zenminutes_landing";
     }

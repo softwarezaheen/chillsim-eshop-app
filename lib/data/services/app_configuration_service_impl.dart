@@ -180,4 +180,11 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     String currencyCode = getSelectedCurrencyCode();
     return "$referralAmount $currencyCode";
   }
+
+  @override
+  String get referredDiscountPercentage {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.referredDiscountPercentage,
+    );
+  }
 }

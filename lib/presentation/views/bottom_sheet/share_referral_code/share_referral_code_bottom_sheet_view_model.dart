@@ -16,7 +16,7 @@ class ShareReferralCodeBottomSheetViewModel extends BaseModel {
   String get deepLink =>
       "https://${AppEnvironment.appEnvironmentHelper.websiteUrl}/${DeepLinkDecodeKeys.referralCode.pathKey}?${DeepLinkDecodeKeys.referralCode.decodingKey}=$referralCode";
 
-  String get amount => locator<AppConfigurationService>().referAndEarnAmount;
+  String get amount => locator<AppConfigurationService>().referredDiscountPercentage;
 
   Future<void> shareButtonTapped() async {
     String? link = await locator<DynamicLinkingService>()

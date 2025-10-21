@@ -14,7 +14,7 @@ class AppEnvironmentHelper {
     this.defaultLoginType = LoginType.email,
     this.enableBranchIO = false,
     this.enablePromoCode = true, //was false
-    this.enableReferral = false,
+    this.enableReferral = true, //was false
     this.enableWalletView = true, //was false
     this.enableWalletRecharge = false, // adding this flag for disabling wallet recharge from wallet view
     this.enableRewardsHistory = true,

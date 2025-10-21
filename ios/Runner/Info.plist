@@ -41,7 +41,7 @@
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>luxesim</string>
+				<string>chillsim</string>
 			</array>
 		</dict>
 	</array>

@@ -18,7 +18,6 @@ class _ConsentDialogState extends State<ConsentDialog> {
   bool _analyticsConsent = true;
   bool _advertisingConsent = false;
   bool _personalizationConsent = false;
-  final bool _functionalConsent = true; // Always required
   bool _isLoading = true;
 
   @override
@@ -43,7 +42,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
           height: 200,
           child: const Center(
@@ -53,37 +52,44 @@ class _ConsentDialogState extends State<ConsentDialog> {
       );
     }
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: screenWidth(context) * 0.9,
-          maxHeight: screenHeight(context) * 0.85,
+          maxWidth: screenWidth(context) * 0.92,
+          maxHeight: screenHeight(context) * 0.90,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // Header
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                color: Theme.of(context).primaryColor.withOpacity(0.08),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
               ),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.privacy_tip_outlined,
-                    color: Theme.of(context).primaryColor,
-                    size: 28,
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.privacy_tip_outlined,
+                      color: Theme.of(context).primaryColor,
+                      size: 22,
+                    ),
                   ),
                   horizontalSpaceSmall,
                   Expanded(
                     child: Text(
                       LocaleKeys.consentDialog_title.tr(),
-                      style: headerTwoBoldTextStyle(context: context),
+                      style: headerThreeBoldTextStyle(context: context),
                     ),
                   ),
                 ],
@@ -93,27 +99,18 @@ class _ConsentDialogState extends State<ConsentDialog> {
             // Content
             Flexible(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       LocaleKeys.consentDialog_description.tr(),
-                      style: bodyNormalTextStyle(context: context),
+                      style: captionOneMediumTextStyle(
+                        context: context,
+                        fontColor: contentTextColor(context: context),
+                      ),
                     ),
-                    verticalSpaceMedium,
-
-                    // Essential/Functional (Always required)
-                    _buildConsentTile(
-                      title: LocaleKeys.consentDialog_essentialTitle.tr(),
-                      description: LocaleKeys.consentDialog_essentialDescription.tr(),
-                      value: _functionalConsent,
-                      onChanged: null, // Can't be disabled
-                      required: true,
-                      icon: Icons.security,
-                    ),
-
-                    verticalSpaceSmall,
+                    const SizedBox(height: 16),
 
                     // Analytics
                     _buildConsentTile(
@@ -124,7 +121,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       icon: Icons.analytics_outlined,
                     ),
 
-                    verticalSpaceSmall,
+                    const SizedBox(height: 10),
 
                     // Advertising
                     _buildConsentTile(
@@ -135,7 +132,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       icon: Icons.ads_click_outlined,
                     ),
 
-                    verticalSpaceSmall,
+                    const SizedBox(height: 10),
 
                     // Personalization
                     _buildConsentTile(
@@ -146,13 +143,20 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       icon: Icons.person_outline,
                     ),
 
-                    verticalSpaceMedium,
+                    const SizedBox(height: 14),
 
-                    Text(
-                      LocaleKeys.consentDialog_footerText.tr(),
-                      style: captionOneNormalTextStyle(
-                        context: context,
-                        fontColor: Theme.of(context).hintColor,
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: lightGreyBackGroundColor(context: context),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        LocaleKeys.consentDialog_footerText.tr(),
+                        style: captionTwoNormalTextStyle(
+                          context: context,
+                          fontColor: secondaryTextColor(context: context),
+                        ),
                       ),
                     ),
                   ],
@@ -161,8 +165,15 @@ class _ConsentDialogState extends State<ConsentDialog> {
             ),
 
             // Buttons
-            Padding(
-              padding: const EdgeInsets.all(20),
+            Container(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+              decoration: BoxDecoration(
+                color: lightGreyBackGroundColor(context: context).withOpacity(0.3),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+              ),
               child: Column(
                 children: [
                   // Accept Selected
@@ -173,7 +184,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                         analytics: _analyticsConsent,
                         advertising: _advertisingConsent,
                         personalization: _personalizationConsent,
-                        functional: _functionalConsent,
+                        functional: true,
                       );
                       await ConsentInitializer.markConsentDialogShown();
                       if (context.mounted && Navigator.of(context).canPop()) {
@@ -183,13 +194,23 @@ class _ConsentDialogState extends State<ConsentDialog> {
                     themeColor: Theme.of(context).primaryColor,
                   ),
                   
-                  verticalSpaceSmall,
+                  const SizedBox(height: 8),
                   
                   // Quick options row
                   Row(
                     children: [
                       Expanded(
                         child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColor.withOpacity(0.3),
+                              width: 1,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
                           onPressed: () async {
                             // Update the dialog state first
                             setState(() {
@@ -213,12 +234,25 @@ class _ConsentDialogState extends State<ConsentDialog> {
                               Navigator.of(context).pop();
                             }
                           },
-                          child: Text(LocaleKeys.consentDialog_acceptAll.tr()),
+                          child: Text(
+                            LocaleKeys.consentDialog_acceptAll.tr(),
+                            style: captionOneMediumTextStyle(context: context),
+                          ),
                         ),
                       ),
-                      horizontalSpaceSmall,
+                      const SizedBox(width: 8),
                       Expanded(
                         child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            side: BorderSide(
+                              color: Theme.of(context).dividerColor,
+                              width: 1,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
                           onPressed: () async {
                             // Update the dialog state first
                             setState(() {
@@ -242,7 +276,10 @@ class _ConsentDialogState extends State<ConsentDialog> {
                               Navigator.of(context).pop();
                             }
                           },
-                          child: Text(LocaleKeys.consentDialog_essentialOnly.tr()),
+                          child: Text(
+                            LocaleKeys.consentDialog_essentialOnly.tr(),
+                            style: captionOneMediumTextStyle(context: context),
+                          ),
                         ),
                       ),
                     ],
@@ -265,77 +302,83 @@ class _ConsentDialogState extends State<ConsentDialog> {
     required IconData icon,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).dividerColor, width: 1.5),
+        border: Border.all(
+          color: value 
+            ? Theme.of(context).primaryColor.withOpacity(0.3)
+            : Theme.of(context).dividerColor,
+          width: 1,
+        ),
         borderRadius: BorderRadius.circular(12),
-        color: Theme.of(context).cardColor,
+        color: value 
+          ? Theme.of(context).primaryColor.withOpacity(0.03)
+          : Theme.of(context).cardColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                size: 20,
-                color: Theme.of(context).primaryColor,
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  icon,
+                  size: 16,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-              horizontalSpaceSmall,
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   title,
-                  style: bodyMediumTextStyle(context: context),
+                  style: captionOneBoldTextStyle(context: context),
                 ),
               ),
               if (required)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).primaryColor.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     LocaleKeys.consentDialog_required.tr(),
-                    style: captionTwoNormalTextStyle(
+                    style: captionTwoMediumTextStyle(
                       context: context,
                       fontColor: Theme.of(context).primaryColor,
                     ),
                   ),
                 )
               else
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      value ? LocaleKeys.consentDialog_switchOn.tr() : LocaleKeys.consentDialog_switchOff.tr(),
-                      style: captionTwoNormalTextStyle(
-                        context: context,
-                        fontColor: value ? Theme.of(context).primaryColor : Colors.grey,
-                      ),
-                    ),
-                    horizontalSpaceSmall,
-                    Transform.scale(
-                      scale: 1.3, // Make switches even larger
-                      child: Switch.adaptive(
-                        value: value,
-                        onChanged: onChanged,
-                        activeColor: Theme.of(context).primaryColor,
-                        activeTrackColor: Theme.of(context).primaryColor.withOpacity(0.5),
-                        inactiveThumbColor: Colors.grey,
-                        inactiveTrackColor: Colors.grey.withOpacity(0.3),
-                        materialTapTargetSize: MaterialTapTargetSize.padded,
-                      ),
-                    ),
-                  ],
+                Transform.scale(
+                  scale: 0.85,
+                  child: Switch.adaptive(
+                    value: value,
+                    onChanged: onChanged,
+                    activeColor: Theme.of(context).primaryColor,
+                    activeTrackColor: Theme.of(context).primaryColor.withOpacity(0.4),
+                    inactiveThumbColor: Colors.grey,
+                    inactiveTrackColor: Colors.grey.withOpacity(0.3),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
                 ),
             ],
           ),
-          verticalSpaceSmall,
-          Text(
-            description,
-            style: captionOneNormalTextStyle(context: context),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.only(left: 32),
+            child: Text(
+              description,
+              style: captionTwoNormalTextStyle(
+                context: context,
+                fontColor: secondaryTextColor(context: context),
+              ),
+            ),
           ),
         ],
       ),

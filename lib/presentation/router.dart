@@ -19,11 +19,12 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_view/rewards_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/android_user_guide_view/android_gallery_user_guide_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/wallet_transactions_view/wallet_transactions_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_data_source/android_user_guide_enum.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/wallet_transactions_view/wallet_transactions_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view.dart";
@@ -186,6 +187,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settingsName,
         viewToShow: const MyWalletView(),
+      );
+
+    case RewardsView.routeName:
+      return _getPageRoute(
+        routeName: settingsName,
+        viewToShow: const RewardsView(),
       );
 
     case FaqView.routeName:

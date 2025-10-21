@@ -96,7 +96,7 @@ class ApplyPromoCode extends StatelessWidget {
                           hideShadows: true,
                           title: buttonText,
                           onPressed: () => callback.call(controller.text),
-                          isEnabled: controller.text.trim().isNotEmpty,
+                          isEnabled: !isFieldEnabled || controller.text.trim().isNotEmpty,
                           themeColor: themeColor,
                           enabledTextColor:
                               mainWhiteTextColor(context: context),

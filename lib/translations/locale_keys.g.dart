@@ -99,6 +99,8 @@ abstract class  LocaleKeys {
   static const profile_accountInformation = 'profile_accountInformation';
   static const profile_myWallet = 'profile_myWallet';
   static const profile_orderHistory = 'profile_orderHistory';
+  static const profile_rewards = 'profile_rewards';
+  static const profile_referAndEarn = 'profile_referAndEarn';
   static const profile_aboutUs = 'profile_aboutUs';
   static const profile_faq = 'profile_faq';
   static const profile_contactUs = 'profile_contactUs';

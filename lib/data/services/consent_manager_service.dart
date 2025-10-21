@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:developer";
 
 import "package:firebase_analytics/firebase_analytics.dart";
 import "package:shared_preferences/shared_preferences.dart";
@@ -25,6 +26,7 @@ class ConsentManagerService {
   static const String _keyConsentTimestamp = "consent_timestamp";
   static const String _keyConsentVersion = "consent_version";
   static const String _keyConsentShown = "consent_shown";
+  static const String _keyHasUserSetConsent = "has_user_set_consent"; // CRITICAL FIX
 
   static const String currentConsentVersion = "1.0";
 
@@ -37,12 +39,12 @@ class ConsentManagerService {
     final bool hasShownConsent = prefs.getBool(_keyConsentShown) ?? false;
 
     if (!hasShownConsent) {
-      // Set default denied state for Consent Mode v2
+      // Set default consent state - analytics defaults to TRUE
       await _setFirebaseConsentMode(
-        analytics: false,
+        analytics: true,
         advertising: false,
         personalization: false,
-        functional: true, // Usually required for basic functionality
+        functional: true, // Always required for basic functionality
       );
     } else {
       // Load existing consent
@@ -58,6 +60,8 @@ class ConsentManagerService {
   }) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    log("[ConsentManager] Updating consent - Analytics: $analytics, Advertising: $advertising");
+
     // Save consent preferences
     await prefs.setBool(_keyAnalyticsConsent, analytics);
     await prefs.setBool(_keyAdvertisingConsent, advertising);
@@ -66,6 +70,11 @@ class ConsentManagerService {
     await prefs.setString(_keyConsentTimestamp, DateTime.now().toIso8601String());
     await prefs.setString(_keyConsentVersion, currentConsentVersion);
     await prefs.setBool(_keyConsentShown, true);
+    
+    // CRITICAL FIX: Set explicit flag that user has set consent
+    await prefs.setBool(_keyHasUserSetConsent, true);
+    
+    log("[ConsentManager] Consent saved. hasUserSetConsent flag set to true");
 
     // Apply to Firebase
     await _setFirebaseConsentMode(
@@ -149,6 +158,9 @@ class ConsentManagerService {
     await prefs.remove(_keyConsentTimestamp);
     await prefs.remove(_keyConsentVersion);
     await prefs.remove(_keyConsentShown);
+    await prefs.remove(_keyHasUserSetConsent); // CRITICAL: Also remove the new flag
+    
+    log("[ConsentManager] Consent reset - all flags cleared");
   }
 
   // Additional methods for ConsentInitializer
@@ -156,9 +168,24 @@ class ConsentManagerService {
     await initializeConsent();
   }
 
-  Future<bool> hasAnyConsent() async {
+  /// CRITICAL METHOD: Check if user has explicitly set consent
+  /// This is what determines if the dialog should show
+  Future<bool> hasUserSetConsent() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyConsentShown) ?? false;
+    
+    // Check both new and old flags for backwards compatibility
+    final bool hasSetConsent = prefs.getBool(_keyHasUserSetConsent) ?? false;
+    final bool hasShownConsent = prefs.getBool(_keyConsentShown) ?? false;
+    
+    final bool result = hasSetConsent || hasShownConsent;
+    
+    log("[ConsentManager] hasUserSetConsent: $result (hasSet: $hasSetConsent, hasShown: $hasShownConsent)");
+    
+    return result;
+  }
+
+  Future<bool> hasAnyConsent() async {
+    return hasUserSetConsent(); // Use the new method
   }
 
   Future<void> setDefaultConsent() async {

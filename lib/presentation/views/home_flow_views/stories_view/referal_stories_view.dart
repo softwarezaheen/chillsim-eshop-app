@@ -147,8 +147,8 @@ class ReferalStoriesView {
                         verticalSpaceSmallMedium,
                         Text(
                           LocaleKeys.storiesView_referralContent2.tr(namedArgs: {
-                            "referral_bonus": locator<AppConfigurationService>()
-                                .referAndEarnAmount,
+                            "referred_discount": locator<AppConfigurationService>()
+                                .referredDiscountPercentage,
                           }),
                           style: headerFourNormalTextStyle(
                             context: context,
@@ -202,7 +202,7 @@ class ReferalStoriesView {
                         verticalSpaceSmallMedium,
                         Text(
                           LocaleKeys.storiesView_referralContent3.tr(namedArgs: {
-                            "referral_bonus": locator<AppConfigurationService>()
+                            "referral_amount": locator<AppConfigurationService>()
                                 .referAndEarnAmount,
                           }),
                           style: headerFourNormalTextStyle(

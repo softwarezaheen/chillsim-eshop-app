@@ -57,16 +57,27 @@ import FBSDKCoreKit
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
-//    override func application(_ application: UIApplication,
-//                              continue userActivity: NSUserActivity,
-//                              restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-//        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-//           let url = userActivity.webpageURL {
-//            print("App Clip launched via URL: \(url)")
-//            return true
-//        }
-//        return false
-//    }
+    override func application(_ application: UIApplication,
+                              continue userActivity: NSUserActivity,
+                              restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        // CRITICAL: Forward to Flutter plugins first (handles app_links plugin)
+        let handledByFlutter = super.application(application, continue: userActivity, restorationHandler: restorationHandler)
+        
+        if handledByFlutter {
+            print("✅ Universal Link handled by Flutter plugins")
+            return true
+        }
+        
+        // Fallback: Manual handling for Universal Links and custom schemes
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+           let url = userActivity.webpageURL {
+            print("✅ Received Universal Link: \(url)")
+            return true
+        }
+        
+        print("❌ Universal Link not handled")
+        return false
+    }
     
     
     private func openSimProfilesSettings(result: FlutterResult) {

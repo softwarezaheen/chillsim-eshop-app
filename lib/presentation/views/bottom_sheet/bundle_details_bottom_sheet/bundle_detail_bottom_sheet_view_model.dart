@@ -588,6 +588,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       _bundle = _tempBundle;
       _promoCodeController.clear();
       updatePromoCodeView(isEnabled: true);
+      // Reload taxes without promo code
+      await loadTaxes(manageViewState: false);
       notifyListeners();
       return;
     }
