@@ -194,6 +194,11 @@ void setDefaultStatusBarColor() {
       statusBarColor: templateAppColors.defPrimary_900,
       statusBarIconBrightness: Brightness.light, // for Android
       statusBarBrightness: Brightness.light, // for iOS (this is the inverse)
+      // Android navigation bar configuration
+      systemNavigationBarColor: Colors.white, // Match bottom nav background
+      systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemNavigationBarContrastEnforced: false,
     ),
   );
 }

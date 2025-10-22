@@ -151,24 +151,26 @@ class _MainTabPageState extends State<MainTabPage>
     required bool isKeyboardVisible,
     required LockableTabController tabController,
   }) {
-    return BaseFlutterBottomNavBar(
-      height: 90,
-      swipeEnabled: false,
-      tabController: tabController,
-      isKeyboardVisible: isKeyboardVisible,
-      selectedColor: bottomNavbarSelectedBackGroundColor(context: context),
-      unselectedColor: bottomNavbarUnselectedBackGroundColor(context: context),
-      tabsWidgets: generateTabWidgets(
-        context: context,
-        isLoggedIn: widget.viewModel.isUserLoggedIn,
-      ),
-      tabsIconData: generateTabIcons(
-        context: context,
-        isLoggedIn: widget.viewModel.isUserLoggedIn,
-      ),
-      tabsText: generateTabNames(
-        context: context,
-        isLoggedIn: widget.viewModel.isUserLoggedIn,
+    return SafeArea(
+      child: BaseFlutterBottomNavBar(
+        height: 90,
+        swipeEnabled: false,
+        tabController: tabController,
+        isKeyboardVisible: isKeyboardVisible,
+        selectedColor: bottomNavbarSelectedBackGroundColor(context: context),
+        unselectedColor: bottomNavbarUnselectedBackGroundColor(context: context),
+        tabsWidgets: generateTabWidgets(
+          context: context,
+          isLoggedIn: widget.viewModel.isUserLoggedIn,
+        ),
+        tabsIconData: generateTabIcons(
+          context: context,
+          isLoggedIn: widget.viewModel.isUserLoggedIn,
+        ),
+        tabsText: generateTabNames(
+          context: context,
+          isLoggedIn: widget.viewModel.isUserLoggedIn,
+        ),
       ),
     );
   }
