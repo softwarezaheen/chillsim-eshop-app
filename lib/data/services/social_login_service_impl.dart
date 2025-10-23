@@ -115,17 +115,24 @@ class SocialLoginServiceImpl extends SocialLoginService {
     return socialLoginResultStream;
   }
 
-  // Google Sign in - Use singleton instance
+  // Google Sign in - Use singleton instance with server client ID for Supabase
+  // IMPORTANT: For iOS, we need to use the serverClientId to get ID tokens that Supabase accepts
   final GoogleSignIn googleSignIn = GoogleSignIn.instance;
   bool _isInitialized = false;
 
-  // Initialize Google Sign In (call this once, preferably in initState)
+  // Initialize Google Sign In with server client ID for Supabase compatibility
   Future<void> _initializeGoogleSignIn() async {
     if (!_isInitialized) {
       try {
-        await googleSignIn.initialize();
+        // Use the Web Client ID as serverClientId - this ensures the ID token
+        // has the correct audience that Supabase expects (not the iOS client ID)
+        await googleSignIn.initialize(
+          // Web Client ID from environment configuration
+          // This must match what's configured in Supabase Google provider settings
+          serverClientId: AppEnvironment.appEnvironmentHelper.googleWebClientId,
+        );
         _isInitialized = true;
-        log("GoogleSignIn initialized with default configuration");
+        log("GoogleSignIn initialized with Web Client ID: ${AppEnvironment.appEnvironmentHelper.googleWebClientId}");
       } on Object catch (e) {
         log("Failed to initialize Google Sign-In: $e");
       }

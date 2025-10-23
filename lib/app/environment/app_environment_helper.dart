@@ -9,6 +9,7 @@ class AppEnvironmentHelper {
     required this.omniConfigBaseUrl,
     required this.omniConfigApiKey,
     required this.omniConfigAppGuid,
+    required this.googleWebClientId,
     this.websiteUrl = "",
     this.zenminutesUrl = "https://zenminutes.com",
     this.defaultLoginType = LoginType.email,
@@ -48,6 +49,7 @@ class AppEnvironmentHelper {
   String omniConfigBaseUrl;
   String omniConfigApiKey;
   String omniConfigAppGuid;
+  String googleWebClientId;
   String websiteUrl;
   String zenminutesUrl;
 
