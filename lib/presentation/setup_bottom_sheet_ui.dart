@@ -43,6 +43,20 @@ class ConfirmationSheetRequest {
   final String selectedText;
 }
 
+class SearchableSelectionSheetRequest<T> {
+  SearchableSelectionSheetRequest({
+    required this.title,
+    required this.items,
+    required this.displayTextExtractor,
+    this.currentValue,
+  });
+
+  final String title;
+  final List<T> items;
+  final String Function(T item) displayTextExtractor;
+  final T? currentValue;
+}
+
 void setupBottomSheetUi() {
   final BottomSheetService bottomSheetService = locator<BottomSheetService>();
 

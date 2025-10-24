@@ -7,4 +7,9 @@ ThemeData get themeLight => ThemeData(
           ColorScheme.fromSwatch(backgroundColor: Colors.white).copyWith(),
       extensions: <ThemeExtension<AppColors>>[AppColors.lightThemeColors],
       fontFamily: AppEnvironment.appEnvironmentHelper.environmentFamilyName,
+      listTileTheme: ListTileThemeData(
+        selectedTileColor: Colors.transparent,
+        selectedColor: Colors.black87,
+        textColor: AppColors.lightThemeColors.baseBlack,
+      ),
     );

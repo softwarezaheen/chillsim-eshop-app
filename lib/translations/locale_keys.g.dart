@@ -18,6 +18,7 @@ abstract class  LocaleKeys {
   static const send = 'send';
   static const request = 'request';
   static const skip = 'skip';
+  static const search = 'search';
   static const whatDoYouWantToDo = 'whatDoYouWantToDo';
   static const pleaseChooseContactNumber = 'pleaseChooseContactNumber';
   static const activate = 'activate';
