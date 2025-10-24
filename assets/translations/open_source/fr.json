@@ -324,7 +324,7 @@
   "the_qr_code_was_sent": "Le code QR a été envoyé à votre email, veuillez le scanner pour l’installer sur votre téléphone. Consultez le guide utilisateur pour des instructions détaillées.",
   "gotoMyESim": "Aller à mon eSIM",
   "installYourESim": "Installer votre eSIM",
-  "check_user_guide": "Consulter le guide utilisateur",
+  "check_user_guide": "Guide utilisateur",
   "bundleExistsView_titleText": "Vous avez déjà acheté une eSIM similaire",
   "bundleExistsView_contentText": "Si vous avez encore cette eSIM sur votre appareil et que vous souhaitez l’utiliser, il est plus rapide de la recharger !",
   "bundleExistsView_buttonOneText": "Acheter une nouvelle eSIM",

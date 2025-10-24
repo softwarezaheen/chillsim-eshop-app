@@ -323,7 +323,7 @@
   "the_qr_code_was_sent": "تم إرسال رمز الاستجابة إلى بريدك الإلكتروني، يُرجى مسحه ضوئيًا لتثبيته على هاتفك. يرجى الرجوع إلى دليل المستخدم للحصول على تعليمات مفصلة.",
   "gotoMyESim": "الانتقال إلى شريحة eSIM",
   "installYourESim": "قم بتثبيت شريحة eSIM الخاصة بك",
-  "check_user_guide": "اطلع على دليل المستخدم",
+  "check_user_guide": "دليل المستخدم",
   "bundleExistsView_titleText": "لقد اشتريت شريحة eSIM مماثلة من قبل",
   "bundleExistsView_contentText": "إذا كان لا يزال لديك eSIM في جهازك وستستخدمها من هناك، فمن الأفضل الإسراع بشحنها!",
   "bundleExistsView_buttonOneText": "شراء شريحة eSIM جديدة",

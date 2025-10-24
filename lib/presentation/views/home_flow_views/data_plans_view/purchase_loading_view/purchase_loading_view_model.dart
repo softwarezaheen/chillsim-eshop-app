@@ -70,7 +70,7 @@ class PurchaseLoadingViewModel extends BaseModel {
             id: orderData.bundleDetails?.bundleCode ?? '',
             name: orderData.bundleDetails?.displayTitle ?? '',
             category: 'esim_bundle',
-            price: amount / 100,
+            price: amount,
             quantity: 1,
           );
           await analyticsService.logEvent(
@@ -81,8 +81,8 @@ class PurchaseLoadingViewModel extends BaseModel {
               transactionId: orderData.orderNumber ?? '',
               purchaseType: 'bundle',
               coupon: orderData.promoCode, // Use actual promo code from order
-              shipping: fee / 100,
-              tax: tax / 100,
+              shipping: fee,
+              tax: tax,
               discount: double.tryParse(discount) ?? 0,
             ),
           );
