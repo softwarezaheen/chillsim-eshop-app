@@ -7,9 +7,9 @@ ThemeData get themeDark => ThemeData(
           ColorScheme.fromSwatch(backgroundColor: Colors.blue).copyWith(),
       extensions: <ThemeExtension<AppColors>>[AppColors.darkThemeColors],
       fontFamily: AppEnvironment.appEnvironmentHelper.environmentFamilyName,
-      listTileTheme: ListTileThemeData(
+      listTileTheme: const ListTileThemeData(
         selectedTileColor: Colors.transparent,
-        selectedColor: Colors.white,
-        textColor: AppColors.darkThemeColors.baseWhite,
+        selectedColor: Color(0XFF122544), // baseBlack - bottom sheet is always white background
+        textColor: Color(0XFF122544), // baseBlack - bottom sheet is always white background
       ),
     );

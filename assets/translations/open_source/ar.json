@@ -444,5 +444,12 @@
   "payment_error_network": "لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة.",
   "payment_error_timeout": "انتهت مهلة الدفع. يرجى إعادة المحاولة.",
   "payment_error_platform": "حدث خطأ في النظام",
-  "payment_error_unexpected": "حدث خطأ غير متوقع"
+  "payment_error_unexpected": "حدث خطأ غير متوقع",
+  "payment_error_configuration": "خطأ في تكوين الدفع. اتصل بالدعم.",
+  "payment_error_stripe_config": "فشل تكوين Stripe. يرجى المحاولة مرة أخرى.",
+  "payment_error_merchant_id_missing": "معرف التاجر Apple Pay مفقود",
+  "payment_error_publishable_key_missing": "مفتاح Stripe العام مفقود",
+  "payment_preparing_apple_pay": "جاري تحضير Apple Pay...",
+  "payment_preparing": "جاري تحضير الدفع...",
+  "payment_error_unknown": "خطأ غير معروف. يرجى المحاولة مرة أخرى."
 }

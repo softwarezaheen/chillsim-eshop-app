@@ -1682,6 +1682,15 @@ class MockAppConfigurationService extends _i1.Mock
       ) as String);
 
   @override
+  String get referredDiscountPercentage => (super.noSuchMethod(
+        Invocation.getter(#referredDiscountPercentage),
+        returnValue: _i39.dummyValue<String>(
+          this,
+          Invocation.getter(#referredDiscountPercentage),
+        ),
+      ) as String);
+
+  @override
   String get getZenminutesUrl => (super.noSuchMethod(
         Invocation.getter(#getZenminutesUrl),
         returnValue: _i39.dummyValue<String>(
@@ -18134,6 +18143,15 @@ class MockBundlesDataService extends _i1.Mock
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>

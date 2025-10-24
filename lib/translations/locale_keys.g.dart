@@ -449,5 +449,12 @@ abstract class  LocaleKeys {
   static const payment_error_timeout = 'payment_error_timeout';
   static const payment_error_platform = 'payment_error_platform';
   static const payment_error_unexpected = 'payment_error_unexpected';
+  static const payment_error_configuration = 'payment_error_configuration';
+  static const payment_error_stripe_config = 'payment_error_stripe_config';
+  static const payment_error_merchant_id_missing = 'payment_error_merchant_id_missing';
+  static const payment_error_publishable_key_missing = 'payment_error_publishable_key_missing';
+  static const payment_preparing_apple_pay = 'payment_preparing_apple_pay';
+  static const payment_preparing = 'payment_preparing';
+  static const payment_error_unknown = 'payment_error_unknown';
 
 }

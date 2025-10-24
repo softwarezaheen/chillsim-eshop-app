@@ -99,4 +99,9 @@ class AppEnvironmentHelper {
     }
     return list;
   }
+
+  // MERCHANT ID CONFIGURATION
+  // iOS requires: merchant.zaheen.esim.chillsim (from entitlements)
+  // Android/Google Pay: uses backend value (works fine)
+  String get iosMerchantIdentifier => "merchant.zaheen.esim.chillsim";
 }

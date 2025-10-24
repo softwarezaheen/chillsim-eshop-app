@@ -3,10 +3,13 @@ import "dart:developer";
 import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
+import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/services.dart";
 import "package:flutter_stripe/flutter_stripe.dart";
+import "package:fluttertoast/fluttertoast.dart";
 
 /// Helper function to safely get translated string with fallback
 /// Handles cases where easy_localization context is not available (e.g., tests)
@@ -63,6 +66,17 @@ class ApplePayService {
       log("🍎 Preparing Apple Pay Checkout");
       log("═══════════════════════════════════════");
       
+      // CRITICAL FIX: iOS requires specific merchant ID from entitlements
+      // Backend returns "chillsim-eshop" but iOS needs "merchant.zaheen.esim.chillsim"
+      // Use platform-specific merchant ID from AppEnvironmentHelper
+      final String effectiveMerchantId = Platform.isIOS
+          ? AppEnvironment.appEnvironmentHelper.iosMerchantIdentifier
+          : (merchantIdentifier ?? ""); // Android/Google Pay uses backend value
+      
+      log("   Platform: ${Platform.isIOS ? 'iOS' : 'Android'}");
+      log("   Backend Merchant ID: $merchantIdentifier");
+      log("   Effective Merchant ID: $effectiveMerchantId");
+      
       // DEFENSIVE CODING: Safe string preview that handles any length
       // Why: substring(0, 20) crashes if string < 20 chars
       // Security: Only show first 15 chars to prevent full key exposure in logs
@@ -71,7 +85,6 @@ class ApplePayService {
           : publishableKey;
       
       log("   Publishable Key: $keyPreview");
-      log("   Merchant ID: $merchantIdentifier");
       log("   URL Scheme: $urlScheme");
       log("───────────────────────────────────────");
 
@@ -79,6 +92,15 @@ class ApplePayService {
       // Why: Stripe SDK will fail with cryptic error if key is invalid
       // Better to fail fast with clear message
       if (publishableKey.isEmpty) {
+        final errorMsg = _safeTranslate(
+          LocaleKeys.payment_error_failed, 
+          "Payment configuration error. Please contact support."
+        );
+        await showToast(
+          errorMsg,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+        );
         throw ArgumentError(
           'Publishable key cannot be empty. '
           'Please provide a valid Stripe publishable key (pk_test_... or pk_live_...).'
@@ -95,25 +117,43 @@ class ApplePayService {
       // Why: Stripe Payment Sheet requires merchant ID for Apple Pay
       // Impact: Without it, Apple Pay won't appear and payments may fail
       // Strategy: Warn but don't fail (for backward compatibility)
-      if (merchantIdentifier == null || merchantIdentifier.isEmpty) {
-        log("⚠️ WARNING: Merchant identifier not provided!");
-        log("   Impact: Apple Pay will NOT be available");
-        log("   Action: Set Stripe.merchantIdentifier to enable Apple Pay");
-        log("   Format: merchant.{domain}.{app} (e.g., merchant.zaheen.esim.chillsim)");
+      if (effectiveMerchantId.isEmpty) {
+        log("❌ ERROR: No merchant identifier available!");
+        log("   This should NEVER happen on iOS with configured ID");
+        log("   Apple Pay will NOT work");
+        final errorMsg = _safeTranslate(
+          LocaleKeys.payment_error_failed,
+          "Apple Pay configuration error"
+        );
+        await showToast(
+          errorMsg,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+        );
+        throw ArgumentError('Merchant identifier is required for Apple Pay');
+      }
+      
+      if (!effectiveMerchantId.startsWith('merchant.')) {
+        log("⚠️ Warning: Merchant identifier format may be invalid.");
+        log("   Expected format: merchant.{domain}.{app}");
+        log("   Current value: $effectiveMerchantId");
+        log("   This may cause Apple Pay to fail.");
       } else {
-        // Validate format if provided
-        if (!merchantIdentifier.startsWith('merchant.')) {
-          log("⚠️ Warning: Merchant identifier format may be invalid.");
-          log("   Expected format: merchant.{domain}.{app}");
-          log("   Current value: $merchantIdentifier");
-          log("   This may cause Apple Pay to fail.");
-        } else {
-          log("✅ Merchant identifier validated: $merchantIdentifier");
-        }
+        log("✅ Merchant identifier validated: $effectiveMerchantId");
       }
 
+      // USER-FACING FEEDBACK: Show preparing message
+      await showToast(
+        _safeTranslate(
+          LocaleKeys.payment_success, // Reusing existing key, fallback provides message
+          "Preparing Apple Pay..."
+        ),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+
       Stripe.publishableKey = publishableKey;
-      Stripe.merchantIdentifier = merchantIdentifier;
+      Stripe.merchantIdentifier = effectiveMerchantId;
       Stripe.urlScheme = urlScheme;
       await Stripe.instance.applySettings();
 
@@ -122,21 +162,71 @@ class ApplePayService {
     } on StripeException catch (e) {
       log("❌ Stripe configuration error: ${e.error.localizedMessage ?? e.error.message}");
       log("   Code: ${e.error.code}");
+      
+      await showToast(
+        _safeTranslate(
+          LocaleKeys.payment_error_failed,
+          "Payment system error. Please try again."
+        ),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+      );
+      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_platform, "Platform error occurred"));
     } on PlatformException catch (e) {
       log("❌ Platform error during Stripe initialization: ${e.message}");
       log("   Code: ${e.code}");
+      
+      await showToast(
+        _safeTranslate(
+          LocaleKeys.payment_error_platform,
+          "Platform error. Please try again."
+        ),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+      );
+      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_platform, "Platform error occurred"));
     } on SocketException catch (e) {
       log("❌ Network error during Stripe initialization: ${e.message}");
+      
+      await showToast(
+        _safeTranslate(
+          LocaleKeys.payment_error_network,
+          "No internet connection"
+        ),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+      );
+      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_network, "No internet connection"));
     } on TimeoutException catch (_) {
       log("❌ Timeout during Stripe initialization");
+      
+      await showToast(
+        _safeTranslate(
+          LocaleKeys.payment_error_timeout,
+          "Payment timed out"
+        ),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+      );
+      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_timeout, "Payment timed out"));
     } catch (e, stackTrace) {
       log("❌ Unexpected error preparing Apple Pay checkout: $e");
       log("   Stack trace: $stackTrace");
-      throw Exception(_safeTranslate(LocaleKeys.payment_error_unexpected, "Unexpected error occurred"));
+      
+      await showToast(
+        _safeTranslate(
+          LocaleKeys.payment_error_unexpected,
+          "Unexpected error. Please try again."
+        ),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+      );
+      
+      throw Exception(_safeTranslate(LocaleKeys.payment_error_unexpected, "Unknown error occurred"));
     }
   }
 

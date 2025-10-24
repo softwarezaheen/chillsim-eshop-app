@@ -444,5 +444,12 @@
   "payment_error_network": "Sin conexión a Internet. Verifica tu red.",
   "payment_error_timeout": "El pago ha expirado. Por favor, reinténtalo.",
   "payment_error_platform": "Ocurrió un error de plataforma",
-  "payment_error_unexpected": "Ocurrió un error inesperado"
+  "payment_error_unexpected": "Ocurrió un error inesperado",
+  "payment_error_configuration": "Error de configuración de pago. Contacta soporte.",
+  "payment_error_stripe_config": "La configuración de Stripe falló. Inténtalo de nuevo.",
+  "payment_error_merchant_id_missing": "Falta el ID de comerciante de Apple Pay",
+  "payment_error_publishable_key_missing": "Falta la clave pública de Stripe",
+  "payment_preparing_apple_pay": "Preparando Apple Pay...",
+  "payment_preparing": "Preparando pago...",
+  "payment_error_unknown": "Error desconocido. Inténtalo de nuevo."
 }

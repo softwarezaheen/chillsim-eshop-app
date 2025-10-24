@@ -444,5 +444,12 @@
   "payment_error_network": "Pas de connexion Internet. Vérifiez votre réseau.",
   "payment_error_timeout": "Le paiement a expiré. Veuillez réessayer.",
   "payment_error_platform": "Une erreur de plateforme s'est produite",
-  "payment_error_unexpected": "Une erreur inattendue s'est produite"
+  "payment_error_unexpected": "Une erreur inattendue s'est produite",
+  "payment_error_configuration": "Erreur de configuration du paiement. Contactez le support.",
+  "payment_error_stripe_config": "La configuration Stripe a échoué. Réessayez.",
+  "payment_error_merchant_id_missing": "L'identifiant marchand Apple Pay est manquant",
+  "payment_error_publishable_key_missing": "La clé publique Stripe est manquante",
+  "payment_preparing_apple_pay": "Préparation d'Apple Pay...",
+  "payment_preparing": "Préparation du paiement...",
+  "payment_error_unknown": "Erreur inconnue. Veuillez réessayer."
 }

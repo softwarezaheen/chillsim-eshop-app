@@ -435,5 +435,12 @@
   "payment_error_network": "Fără conexiune la internet. Verificați rețeaua.",
   "payment_error_timeout": "Plata a expirat. Vă rugăm să reîncercați.",
   "payment_error_platform": "A apărut o eroare de platformă",
-  "payment_error_unexpected": "A apărut o eroare neașteptată"
+  "payment_error_unexpected": "A apărut o eroare neașteptată",
+  "payment_error_configuration": "Eroare de configurare plată. Contactați suportul.",
+  "payment_error_stripe_config": "Configurarea Stripe a eșuat. Vă rugăm încercați din nou.",
+  "payment_error_merchant_id_missing": "ID-ul comerciant Apple Pay lipsește",
+  "payment_error_publishable_key_missing": "Cheia publică Stripe lipsește",
+  "payment_preparing_apple_pay": "Se pregătește Apple Pay...",
+  "payment_preparing": "Se pregătește plata...",
+  "payment_error_unknown": "Eroare necunoscută. Vă rugăm încercați din nou."
 }

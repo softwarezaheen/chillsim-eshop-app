@@ -444,5 +444,12 @@
   "payment_error_network": "No internet connection. Please check your network.",
   "payment_error_timeout": "Payment timed out. Please retry.",
   "payment_error_platform": "Platform error occurred",
-  "payment_error_unexpected": "Unexpected error occurred"
+  "payment_error_unexpected": "Unexpected error occurred",
+  "payment_error_configuration": "Payment configuration error. Contact support.",
+  "payment_error_stripe_config": "Stripe configuration failed. Please try again.",
+  "payment_error_merchant_id_missing": "Apple Pay merchant ID is missing",
+  "payment_error_publishable_key_missing": "Stripe publishable key is missing",
+  "payment_preparing_apple_pay": "Preparing Apple Pay...",
+  "payment_preparing": "Preparing payment...",
+  "payment_error_unknown": "Unknown error. Please try again."
 }
