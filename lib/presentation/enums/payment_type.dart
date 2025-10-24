@@ -5,7 +5,8 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 enum PaymentType {
   wallet("Wallet"),
   dcb("DCB"),
-  card("Card");
+  card("Card"),
+  applePay("ApplePay");
 
   const PaymentType(this.type);
 
@@ -19,6 +20,8 @@ enum PaymentType {
         return LocaleKeys.paymentSelection_dcbText.tr();
       case wallet:
         return LocaleKeys.paymentSelection_walletText.tr();
+      case applePay:
+        return LocaleKeys.paymentSelection_applePayText.tr();
     }
   }
 
@@ -30,6 +33,8 @@ enum PaymentType {
         return "payByWallet";
       case dcb:
         return "payByDcb";
+      case applePay:
+        return "payByCard"; // Reuse card image or create new one
     }
   }
 

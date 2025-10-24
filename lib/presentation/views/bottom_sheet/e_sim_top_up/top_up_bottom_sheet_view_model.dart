@@ -153,6 +153,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           }
         case PaymentType.dcb:
         case PaymentType.card:
+        case PaymentType.applePay:
           _triggerTopUpFlow(item: item, paymentType: paymentType);
       }
     } else {

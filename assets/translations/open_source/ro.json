@@ -378,6 +378,7 @@
   "paymentSelection_titleText": "Alege metoda de plată",
   "paymentSelection_cardText": "Card de credit/debit",
   "paymentSelection_walletText": "Portofel",
+  "paymentSelection_applePayText": "Apple Pay",
   "topUpWallet_error": "Alimentarea portofelului a eșuat",
   "topUpWallet_success": "Alimentarea portofelului a reușit",
   "confirmation_languageTitle": "Schimbă limba",
@@ -427,5 +428,11 @@
   "consentDialog_essentialOnly": "Doar esențial",
   "consentDialog_required": "Obligatoriu",
   "consentDialog_switchOn": "ON",
-  "consentDialog_switchOff": "OFF"
+  "consentDialog_switchOff": "OFF",
+  "payment_error_canceled": "Plata anulată",
+  "payment_error_failed": "Plata a eșuat. Vă rugăm să încercați din nou.",
+  "payment_error_network": "Fără conexiune la internet. Verificați rețeaua.",
+  "payment_error_timeout": "Plata a expirat. Vă rugăm să reîncercați.",
+  "payment_error_platform": "A apărut o eroare de platformă",
+  "payment_error_unexpected": "A apărut o eroare neașteptată"
 }

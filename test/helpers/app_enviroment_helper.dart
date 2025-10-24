@@ -7,5 +7,6 @@ AppEnvironmentHelper createTestEnvironmentHelper() {
     omniConfigBaseUrl: "https://test.omni.com",
     omniConfigApiKey: "test_api_key",
     omniConfigAppGuid: "test_app_guid",
+    googleWebClientId: "test_google_web_client_id",
   );
 }

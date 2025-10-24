@@ -121,6 +121,11 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<!-- Apple Pay Configuration -->
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.zaheen.esim.chillsim</string>
+	</array>
 	<!-- Google Consent Mode v2 Configuration -->
 	<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE</key>
 	<true/>

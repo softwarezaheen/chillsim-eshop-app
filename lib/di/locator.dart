@@ -25,6 +25,7 @@ import "package:esim_open_source/data/services/device_info_service_impl.dart";
 import "package:esim_open_source/data/services/dynamic_linking_service_empty_impl.dart";
 import "package:esim_open_source/data/services/dynamic_linking_service_impl.dart";
 import "package:esim_open_source/data/services/flutter_channel_handler_service_impl.dart";
+import "package:esim_open_source/data/services/payment/apple_pay/apple_pay_service_impl.dart";
 import "package:esim_open_source/data/services/payment/payment_service_impl.dart";
 import "package:esim_open_source/data/services/push_notification_service_impl.dart";
 import "package:esim_open_source/data/services/redirections_handler_service_impl.dart";
@@ -125,6 +126,9 @@ Future<void> appServicesModule() async {
     // )
     ..registerLazySingleton(
       () => PaymentServiceImpl.instance as PaymentService,
+    )
+    ..registerLazySingleton(
+      () => ApplePayService.instance,
     )
     ..registerLazySingleton(
       () => SecureStorageServiceImpl.instance as SecureStorageService,

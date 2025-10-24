@@ -79,8 +79,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                         verticalSpaceMedium,
                         ListView.separated(
                           shrinkWrap: true,
-                          itemCount:
-                              requestBase.data?.paymentTypeList.length ?? 0,
+                          itemCount: viewModel.paymentTypeList.length,
                           separatorBuilder: (
                             BuildContext context,
                             int index,
@@ -92,7 +91,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                           ) =>
                               buildPaymentSelectionView(
                             context,
-                            requestBase.data!.paymentTypeList[index],
+                            viewModel.paymentTypeList[index],
                             viewModel,
                           ),
                         ),

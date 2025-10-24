@@ -379,6 +379,7 @@
   "paymentSelection_cardText": "Tarjeta de Crédito/Débito",
   "paymentSelection_walletText": "Cartera",
   "paymentSelection_dcbText": "Facturación Directa del Operador",
+  "paymentSelection_applePayText": "Apple Pay",
   "topUpWallet_error": "Recarga de cartera falló",
   "topUpWallet_success": "Recarga de cartera exitosa",
   "confirmation_languageTitle": "Cambiar Idioma",
@@ -436,5 +437,11 @@
   "consentDialog_essentialOnly": "Solo Esenciales",
   "consentDialog_required": "Requerido",
   "consentDialog_switchOn": "ON",
-  "consentDialog_switchOff": "OFF"
+  "consentDialog_switchOff": "OFF",
+  "payment_error_canceled": "Pago cancelado",
+  "payment_error_failed": "El pago falló. Por favor, inténtalo de nuevo.",
+  "payment_error_network": "Sin conexión a Internet. Verifica tu red.",
+  "payment_error_timeout": "El pago ha expirado. Por favor, reinténtalo.",
+  "payment_error_platform": "Ocurrió un error de plataforma",
+  "payment_error_unexpected": "Ocurrió un error inesperado"
 }

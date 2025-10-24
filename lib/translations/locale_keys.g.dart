@@ -383,6 +383,7 @@ abstract class  LocaleKeys {
   static const paymentSelection_cardText = 'paymentSelection_cardText';
   static const paymentSelection_walletText = 'paymentSelection_walletText';
   static const paymentSelection_dcbText = 'paymentSelection_dcbText';
+  static const paymentSelection_applePayText = 'paymentSelection_applePayText';
   static const topUpWallet_error = 'topUpWallet_error';
   static const topUpWallet_success = 'topUpWallet_success';
   static const confirmation_languageTitle = 'confirmation_languageTitle';
@@ -441,5 +442,11 @@ abstract class  LocaleKeys {
   static const consentDialog_required = 'consentDialog_required';
   static const consentDialog_switchOn = 'consentDialog_switchOn';
   static const consentDialog_switchOff = 'consentDialog_switchOff';
+  static const payment_error_canceled = 'payment_error_canceled';
+  static const payment_error_failed = 'payment_error_failed';
+  static const payment_error_network = 'payment_error_network';
+  static const payment_error_timeout = 'payment_error_timeout';
+  static const payment_error_platform = 'payment_error_platform';
+  static const payment_error_unexpected = 'payment_error_unexpected';
 
 }

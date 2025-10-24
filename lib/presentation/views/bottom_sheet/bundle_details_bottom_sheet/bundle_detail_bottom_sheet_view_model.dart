@@ -301,6 +301,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           }
         case PaymentType.dcb:
         case PaymentType.card:
+        case PaymentType.applePay:
           _triggerAssignFlow(paymentType: paymentType);
       }
     } else {

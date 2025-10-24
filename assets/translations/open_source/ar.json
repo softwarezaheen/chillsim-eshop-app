@@ -379,6 +379,7 @@
   "paymentSelection_cardText": "بطاقة الائتمان / الخصم",
   "paymentSelection_walletText": "محفظتي",
   "paymentSelection_dcbText": "الفوترة عبر مزود الخدمة",
+  "paymentSelection_applePayText": "آبل باي",
   "topUpWallet_error": "فشل في تعبئة المحفظة",
   "topUpWallet_success": "تم تعبئة المحفظة بنجاح",
   "confirmation_languageTitle": "تغيير اللغة",
@@ -436,5 +437,11 @@
   "consentDialog_essentialOnly": "الأساسي فقط",
   "consentDialog_required": "مطلوب",
   "consentDialog_switchOn": "ON",
-  "consentDialog_switchOff": "OFF"
+  "consentDialog_switchOff": "OFF",
+  "payment_error_canceled": "تم إلغاء الدفع",
+  "payment_error_failed": "فشل الدفع. يرجى المحاولة مرة أخرى.",
+  "payment_error_network": "لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة.",
+  "payment_error_timeout": "انتهت مهلة الدفع. يرجى إعادة المحاولة.",
+  "payment_error_platform": "حدث خطأ في النظام",
+  "payment_error_unexpected": "حدث خطأ غير متوقع"
 }

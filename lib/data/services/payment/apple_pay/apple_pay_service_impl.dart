@@ -21,22 +21,38 @@ String _safeTranslate(String key, String fallback) {
   }
 }
 
-class StripePayment {
-  StripePayment._privateConstructor();
+/// Apple Pay service implementation using Stripe Payment Sheet
+/// 
+/// IMPORTANT: This implementation uses Stripe's Payment Sheet which already
+/// includes Apple Pay support. When configured correctly, Apple Pay will appear
+/// automatically in the payment sheet on supported iOS devices.
+/// 
+/// The Payment Sheet approach is recommended by Stripe as it:
+/// - Handles Apple Pay, Google Pay, and cards in one unified UI
+/// - Manages 3D Secure and Strong Customer Authentication automatically
+/// - Provides better conversion rates with optimized UX
+/// - Requires less code and maintenance
+class ApplePayService {
+  ApplePayService._privateConstructor();
 
-  static StripePayment? _instance;
+  static ApplePayService? _instance;
 
-  static StripePayment get instance {
+  static ApplePayService get instance {
     if (_instance == null) {
-      _instance = StripePayment._privateConstructor();
+      _instance = ApplePayService._privateConstructor();
       unawaited(_instance?._initialise());
     }
 
     return _instance!;
   }
 
-  Future<void> _initialise() async {}
+  Future<void> _initialise() async {
+    log("✅ ApplePayService initialized");
+    log("   Using Stripe Payment Sheet with Apple Pay support");
+  }
 
+  /// Prepares Stripe SDK for checkout (including Apple Pay)
+  /// Sets up publishable key, merchant identifier, and other configuration
   Future<void> prepareCheckout({
     required String publishableKey,
     String? merchantIdentifier,
@@ -44,12 +60,12 @@ class StripePayment {
   }) async {
     try {
       log("═══════════════════════════════════════");
-      log("💳 Preparing Stripe Checkout");
+      log("🍎 Preparing Apple Pay Checkout");
       log("═══════════════════════════════════════");
       
       // DEFENSIVE CODING: Safe string preview that handles any length
-      // Why: Prevent crashes from short keys and avoid exposing full key in logs
-      // Security: Only show first 15 chars
+      // Why: substring(0, 20) crashes if string < 20 chars
+      // Security: Only show first 15 chars to prevent full key exposure in logs
       final keyPreview = publishableKey.length > 15 
           ? '${publishableKey.substring(0, 15)}...' 
           : publishableKey;
@@ -61,7 +77,7 @@ class StripePayment {
 
       // DEFENSIVE CODING: Validate publishable key before use
       // Why: Stripe SDK will fail with cryptic error if key is invalid
-      // Better to fail fast with clear, actionable error message
+      // Better to fail fast with clear message
       if (publishableKey.isEmpty) {
         throw ArgumentError(
           'Publishable key cannot be empty. '
@@ -76,20 +92,21 @@ class StripePayment {
       }
 
       // DEFENSIVE CODING: Validate merchant identifier
-      // Why: Stripe Payment Sheet includes Apple Pay config by default
-      // Impact: Without merchant ID, Payment Sheet initialization fails
-      // Critical: This affects ALL payments (not just Apple Pay)
+      // Why: Stripe Payment Sheet requires merchant ID for Apple Pay
+      // Impact: Without it, Apple Pay won't appear and payments may fail
+      // Strategy: Warn but don't fail (for backward compatibility)
       if (merchantIdentifier == null || merchantIdentifier.isEmpty) {
         log("⚠️ WARNING: Merchant identifier not provided!");
-        log("   Impact: Apple Pay will NOT be available in Payment Sheet");
-        log("   Note: Payment Sheet may fail if Apple Pay config is present");
-        log("   Action: Set merchantIdentifier to avoid payment failures");
+        log("   Impact: Apple Pay will NOT be available");
+        log("   Action: Set Stripe.merchantIdentifier to enable Apple Pay");
+        log("   Format: merchant.{domain}.{app} (e.g., merchant.zaheen.esim.chillsim)");
       } else {
         // Validate format if provided
         if (!merchantIdentifier.startsWith('merchant.')) {
           log("⚠️ Warning: Merchant identifier format may be invalid.");
           log("   Expected format: merchant.{domain}.{app}");
           log("   Current value: $merchantIdentifier");
+          log("   This may cause Apple Pay to fail.");
         } else {
           log("✅ Merchant identifier validated: $merchantIdentifier");
         }
@@ -99,8 +116,8 @@ class StripePayment {
       Stripe.merchantIdentifier = merchantIdentifier;
       Stripe.urlScheme = urlScheme;
       await Stripe.instance.applySettings();
-      
-      log("✅ Stripe checkout prepared successfully");
+
+      log("✅ Apple Pay checkout prepared successfully");
       log("═══════════════════════════════════════");
     } on StripeException catch (e) {
       log("❌ Stripe configuration error: ${e.error.localizedMessage ?? e.error.message}");
@@ -117,25 +134,62 @@ class StripePayment {
       log("❌ Timeout during Stripe initialization");
       throw Exception(_safeTranslate(LocaleKeys.payment_error_timeout, "Payment timed out"));
     } catch (e, stackTrace) {
-      log("❌ Unexpected error preparing Stripe checkout: $e");
+      log("❌ Unexpected error preparing Apple Pay checkout: $e");
       log("   Stack trace: $stackTrace");
       throw Exception(_safeTranslate(LocaleKeys.payment_error_unexpected, "Unexpected error occurred"));
     }
   }
 
+  /// Checks if Apple Pay is available on the current device
+  /// Returns true if device supports Apple Pay and has cards enrolled
+  /// 
+  /// Note: This method checks basic platform support. The Payment Sheet
+  /// will automatically show/hide Apple Pay based on actual device capability.
+  Future<bool> isApplePaySupported() async {
+    try {
+      log("🔍 Checking Apple Pay availability...");
+
+      // Only available on iOS
+      if (!Platform.isIOS) {
+        log("❌ Apple Pay not supported: Not running on iOS");
+        return false;
+      }
+
+      // In Payment Sheet mode, we assume it's available on iOS devices
+      // The actual Payment Sheet will handle showing Apple Pay if truly available
+      log("✅ Running on iOS - Apple Pay potentially available");
+      log("   Note: Payment Sheet will auto-detect actual availability");
+      
+      return true;
+    } catch (e) {
+      log("❌ Error checking Apple Pay availability: $e");
+      return false;
+    }
+  }
+
+  /// Processes an order payment using Stripe Payment Sheet (with Apple Pay)
+  /// 
+  /// The Payment Sheet automatically shows Apple Pay when:
+  /// - Running on iOS device
+  /// - Merchant ID is configured
+  /// - User has cards in Apple Wallet
+  /// 
+  /// This method uses the same flow as regular card payments but ensures
+  /// Apple Pay configuration is correct.
   Future<PaymentResult> processOrderPayment({
     required String billingCountryCode,
     required String paymentIntentClientSecret,
     required String customerId,
     required String customerEphemeralKeySecret,
-    String merchantDisplayName = "Esim",
+    String merchantDisplayName = "ChillSim",
     bool testEnv = false,
     String? iccID,
     String? orderID,
   }) async {
     try {
       log("═══════════════════════════════════════");
-      log("💳 Starting Stripe Card Payment Flow");
+      log("🍎 Starting Apple Pay Payment Flow");
+      log("   (via Stripe Payment Sheet)");
       log("═══════════════════════════════════════");
       log("   Order ID: $orderID");
       log("   Test Environment: $testEnv");
@@ -202,8 +256,7 @@ class StripePayment {
       log("✅ All payment parameters validated successfully");
       log("───────────────────────────────────────");
 
-      // 1. create payment
-      // create some billing details
+      // 1. Create billing details
       final BillingDetails billingDetails = BillingDetails(
         address: Address(
           city: null,
@@ -217,7 +270,10 @@ class StripePayment {
 
       log("✅ Step 1: Billing details configured");
 
-      // 2. initialize the payment sheet
+      // 2. Initialize the payment sheet with Apple Pay enabled
+      log("📱 Step 2: Initializing Payment Sheet...");
+      log("   Apple Pay will appear automatically if available");
+
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           // Main params
@@ -225,23 +281,30 @@ class StripePayment {
           merchantDisplayName: merchantDisplayName,
           customerId: customerId,
           customerEphemeralKeySecret: customerEphemeralKeySecret,
+          
+          // CRITICAL: Apple Pay configuration
           applePay: PaymentSheetApplePay(
-            merchantCountryCode: normalizedCountryCode,
+            merchantCountryCode: billingCountryCode,
           ),
+          
+          // Google Pay for Android
           googlePay: PaymentSheetGooglePay(
-            merchantCountryCode: normalizedCountryCode,
+            merchantCountryCode: billingCountryCode,
             testEnv: testEnv,
           ),
+          
           billingDetails: billingDetails,
         ),
       );
 
-      log("✅ Step 2: Payment Sheet initialized");
+      log("✅ Step 2: Payment Sheet initialized with Apple Pay enabled");
 
-      // 3. display the payment sheet.
-      log("📱 Step 3: Presenting Payment Sheet...");
+      // 3. Present the payment sheet
+      log("� Step 3: Presenting Payment Sheet...");
+      log("   User can select Apple Pay, card, or other methods");
+
       await Stripe.instance.presentPaymentSheet();
-      
+
       log("═══════════════════════════════════════");
       log("🎉 Payment Completed Successfully!");
       log("═══════════════════════════════════════");

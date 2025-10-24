@@ -378,7 +378,8 @@
   "paymentSelection_titleText": "Choisissez le mode de paiement",
   "paymentSelection_cardText": "Carte de crédit/débit",
   "paymentSelection_walletText": "Portefeuille",
-  "paymentSelection_dcbText": "Facturation directe par l’opérateur",
+  "paymentSelection_dcbText": "Facturation directe par l'opérateur",
+  "paymentSelection_applePayText": "Apple Pay",
   "topUpWallet_error": "Échec de la recharge du portefeuille",
   "topUpWallet_success": "Recharge du portefeuille réussie",
   "confirmation_languageTitle": "Changer de langue",
@@ -436,5 +437,11 @@
   "consentDialog_essentialOnly": "Essentiel uniquement",
   "consentDialog_required": "Requis",
   "consentDialog_switchOn": "ON",
-  "consentDialog_switchOff": "OFF"
+  "consentDialog_switchOff": "OFF",
+  "payment_error_canceled": "Paiement annulé",
+  "payment_error_failed": "Le paiement a échoué. Veuillez réessayer.",
+  "payment_error_network": "Pas de connexion Internet. Vérifiez votre réseau.",
+  "payment_error_timeout": "Le paiement a expiré. Veuillez réessayer.",
+  "payment_error_platform": "Une erreur de plateforme s'est produite",
+  "payment_error_unexpected": "Une erreur inattendue s'est produite"
 }
