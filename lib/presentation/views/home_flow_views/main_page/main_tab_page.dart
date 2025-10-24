@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
@@ -6,6 +7,7 @@ import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/presentation/helpers/view_state_utils.dart";
+import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/haptic_feedback.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -63,6 +65,11 @@ class _MainTabPageState extends State<MainTabPage>
     if (tabController.indexIsChanging) {
       setState(() {});
       playHapticFeedback(HapticFeedbackType.tabBarSelectionChange);
+    }
+    
+    // Trigger refresh when Data Plans tab becomes active (index 0)
+    if (!tabController.indexIsChanging && tabController.index == 0) {
+      unawaited(locator<BundlesDataService>().refreshData());
     }
   }
 

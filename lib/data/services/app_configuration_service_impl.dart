@@ -11,7 +11,6 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
-import "package:esim_open_source/utils/generation_helper.dart";
 
 class AppConfigurationServiceImpl extends AppConfigurationService {
   AppConfigurationServiceImpl._privateConstructor();
@@ -49,12 +48,18 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     //   _appConfigCompleter?.complete();
     // }
 
+    log("Fetching fresh app configurations from server...");
+    // Clear the cached response to force a fresh network call
+    GetConfigurationsUseCase.previousResponse = null;
     Resource<List<ConfigurationResponseModel>?> response =
         await GetConfigurationsUseCase(locator()).execute(NoParams());
 
     if (response.resourceType == ResourceType.success) {
       _configData = response.data;
-      log(  "Fetched App Configurations: $_configData");
+      String catalogVersion = _getConfigData(
+        key: ConfigurationResponseKeys.catalogBundleCashVersion,
+      );
+      log("Fetched App Configurations from server - Catalog Version: $catalogVersion");
 
       locator<LocalStorageService>().setString(
         LocalStorageKeys.appConfigurations,
@@ -177,8 +182,9 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     String referralAmount = _getConfigData(
       key: ConfigurationResponseKeys.referAndEarnAmount,
     );
-    String currencyCode = getSelectedCurrencyCode();
-    return "$referralAmount $currencyCode";
+    // Use system default currency, not user's selected currency
+    String defaultCurrency = getDefaultCurrency;
+    return "$referralAmount $defaultCurrency";
   }
 
   @override

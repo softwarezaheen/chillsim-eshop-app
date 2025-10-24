@@ -1,5 +1,4 @@
 import "dart:async";
-import "dart:developer" as dev;
 import "dart:math";
 
 import "package:esim_open_source/app/app.locator.dart";
@@ -28,7 +27,6 @@ Future<String> getUniqueDeviceID(
 String getSelectedCurrencyCode() {
   String? currencyCode = locator<LocalStorageService>().currencyCode;
   if (currencyCode != null && currencyCode.isNotEmpty) {
-    dev.log("Selected currency from storage: $currencyCode");
     return currencyCode;
   }
   String defaultCurrency =
@@ -40,10 +38,8 @@ String getSelectedCurrencyCode() {
         defaultCurrency,
       ),
     );
-    dev.log("Selected currency from configs: $currencyCode");
-    return locator<AppConfigurationService>().getDefaultCurrency;
+    return defaultCurrency;
   }
-  dev.log("Selected currency empty: $currencyCode");
   return "";
 }
 

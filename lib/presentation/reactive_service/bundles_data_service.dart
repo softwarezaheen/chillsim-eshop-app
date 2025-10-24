@@ -42,6 +42,9 @@ class BundlesDataService with ListenableServiceMixin {
   final ApiBundlesRepository _apiBundlesRepository =
       locator<ApiBundlesRepository>();
 
+  // Stream subscription - MUST be canceled to prevent memory leak and rebuild loops
+  StreamSubscription<BundleServicesStreamModel>? _homeDataStreamSubscription;
+
   // Reactive values
   final ReactiveValue<HomeDataResponseModel?> _homeData =
       ReactiveValue<HomeDataResponseModel?>(null);
@@ -86,7 +89,10 @@ class BundlesDataService with ListenableServiceMixin {
 
       Future<HomeDataVersionResult> version = _fetchHomeDataVersion();
 
-      _apiBundlesRepository.homeDataStream.listen(
+      // CRITICAL FIX: Cancel old subscription before creating new one
+      // This prevents memory leaks and infinite rebuild loops
+      await _homeDataStreamSubscription?.cancel();
+      _homeDataStreamSubscription = _apiBundlesRepository.homeDataStream.listen(
         (BundleServicesStreamModel streamResponse) {
           if (streamResponse.shouldRenderShimmer) {
             _isLoading.value = true;
@@ -179,18 +185,36 @@ class BundlesDataService with ListenableServiceMixin {
 
   // Data refresh methods
   Future<void> refreshData() async {
-    log("App refreshing started");
-    if (_isLoading.value) {
-      return;
-    }
+    log("App refreshing started - checking for updates");
+    
+    // IMPORTANT: Always fetch fresh config from server to check for version changes
+    // This is NOT cached - it makes a network call every time
     await locator<AppConfigurationService>().getAppConfigurations();
+    
+    // Fetch the latest bundle version from server
     final HomeDataVersionResult version = await _fetchHomeDataVersion();
+    
+    // Get the currently cached version (includes currency and language)
     String cachedVersion = _homeData.value?.version ?? "";
+    
+    // Build the version string to compare (catalog version + currency + language)
     String versionToCheck = version.version.appendAppCurrency.appendAppLanguage;
 
-    if (cachedVersion == versionToCheck && version.version.isNotEmpty) {
+    log("Version check - Cached: $cachedVersion, Server: $versionToCheck");
+
+    // Only refresh if version has changed OR if we have no data yet
+    if (cachedVersion == versionToCheck && version.version.isNotEmpty && _homeData.value != null) {
+      log("Version unchanged - skipping refresh");
       return;
     }
+
+    // If already loading, don't start another load
+    if (_isLoading.value) {
+      log("Already loading - skipping duplicate refresh");
+      return;
+    }
+
+    log("Version changed or no data - triggering refresh");
     _initializeData(isFromRefresh: true);
   }
 
@@ -227,6 +251,11 @@ class BundlesDataService with ListenableServiceMixin {
       version: "",
       isSuccess: false,
     );
+  }
+
+  // Dispose method to clean up subscriptions and prevent memory leaks
+  void dispose() {
+    _homeDataStreamSubscription?.cancel();
   }
 }
 
