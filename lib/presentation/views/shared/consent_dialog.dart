@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:esim_open_source/data/services/analytics_service_impl.dart';
 import 'package:esim_open_source/data/services/consent_initializer.dart';
 import 'package:esim_open_source/data/services/consent_manager_service.dart';
 import 'package:esim_open_source/presentation/shared/shared_styles.dart';
@@ -6,6 +10,7 @@ import 'package:esim_open_source/presentation/widgets/main_button.dart';
 import 'package:esim_open_source/translations/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConsentDialog extends StatefulWidget {
   const ConsentDialog({super.key});
@@ -19,6 +24,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
   bool _advertisingConsent = false;
   bool _personalizationConsent = false;
   bool _isLoading = true;
+  
+  // ATT guidance dialog state
+  bool _isShowingAttGuidance = false;
 
   @override
   void initState() {
@@ -36,6 +44,229 @@ class _ConsentDialogState extends State<ConsentDialog> {
       _personalizationConsent = currentConsent[ConsentType.personalization] ?? false;
       _isLoading = false;
     });
+  }
+
+  /// Check ATT status before allowing tracking toggle
+  /// Returns true if toggle is allowed, false if guidance should be shown
+  Future<bool> _checkAttStatusForTracking({
+    required bool isEnabling,
+    required String trackingType,
+  }) async {
+    // Only check on iOS and only when ENABLING tracking
+    if (!Platform.isIOS || !isEnabling) {
+      return true; // Allow toggle
+    }
+
+    try {
+      final AnalyticsServiceImpl analyticsService = AnalyticsServiceImpl.instance;
+      
+      // Check if tracking is blocked by ATT
+      if (analyticsService.isTrackingBlockedByATT()) {
+        // Show guidance dialog
+        await _showAttGuidanceDialog();
+        return false; // Don't allow toggle
+      }
+
+      return true; // Allow toggle
+    } catch (e) {
+      print('Error checking ATT status: $e');
+      return true; // Allow toggle on error
+    }
+  }
+
+  /// Show ATT guidance dialog with iOS Settings navigation
+  Future<void> _showAttGuidanceDialog() async {
+    if (_isShowingAttGuidance) return; // Prevent multiple dialogs
+    
+    setState(() {
+      _isShowingAttGuidance = true;
+    });
+
+    try {
+      final AnalyticsServiceImpl analyticsService = AnalyticsServiceImpl.instance;
+      final String messageKey = analyticsService.getAttGuidanceMessageKey();
+      
+      // Default to general message if no specific key
+      final String message = messageKey.isNotEmpty 
+          ? messageKey.tr() 
+          : LocaleKeys.attGuidance_general_message.tr();
+
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Row(
+              children: [
+                Icon(
+                  Icons.privacy_tip_outlined,
+                  color: Theme.of(context).primaryColor,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    LocaleKeys.attGuidance_title.tr(),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            content: Text(
+              message,
+              style: const TextStyle(fontSize: 16),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(LocaleKeys.attGuidance_understood.tr()),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await _openIOSSettings();
+                },
+                child: Text(LocaleKeys.attGuidance_goToSettings.tr()),
+              ),
+            ],
+          );
+        },
+      );
+    } finally {
+      setState(() {
+        _isShowingAttGuidance = false;
+      });
+    }
+  }
+
+  /// Open iOS Settings for the app
+  Future<void> _openIOSSettings() async {
+    try {
+      final Uri settingsUri = Uri.parse('app-settings:');
+      await launchUrl(settingsUri, mode: LaunchMode.externalApplication);
+      print('📱 Opened iOS Settings');
+    } catch (e) {
+      print('Error opening iOS Settings: $e');
+    }
+  }
+
+  /// Handle analytics toggle with ATT checking
+  Future<void> _handleAnalyticsToggle(bool value) async {
+    if (value) {
+      // User is enabling analytics - check ATT
+      final bool allowed = await _checkAttStatusForTracking(
+        isEnabling: true,
+        trackingType: 'analytics',
+      );
+      
+      if (!allowed) return; // ATT guidance was shown
+    }
+    
+    setState(() {
+      _analyticsConsent = value;
+    });
+  }
+
+  /// Handle advertising toggle with ATT checking
+  Future<void> _handleAdvertisingToggle(bool value) async {
+    if (value) {
+      // User is enabling advertising - check ATT
+      final bool allowed = await _checkAttStatusForTracking(
+        isEnabling: true,
+        trackingType: 'advertising',
+      );
+      
+      if (!allowed) return; // ATT guidance was shown
+    }
+    
+    setState(() {
+      _advertisingConsent = value;
+    });
+  }
+
+  /// Handle Accept All with ATT checking
+  /// REASONING: Accept All should also trigger ATT if tracking is being enabled
+  Future<void> _handleAcceptAll() async {
+    // Check current consent status
+    final ConsentManagerService consentService = ConsentManagerService();
+    final Map<ConsentType, bool> currentConsent = await consentService.getConsentStatus();
+    
+    final bool currentAnalytics = currentConsent[ConsentType.analytics] ?? false;
+    final bool currentAdvertising = currentConsent[ConsentType.advertising] ?? false;
+    
+    // Check if we're enabling any tracking that's currently disabled
+    final bool enablingAnalytics = !currentAnalytics; // Accept All enables analytics
+    final bool enablingAdvertising = !currentAdvertising; // Accept All enables advertising
+    
+    if (enablingAnalytics || enablingAdvertising) {
+      final bool allowed = await _checkAttStatusForTracking(
+        isEnabling: true,
+        trackingType: 'all',
+      );
+      
+      if (!allowed) {
+        // ATT guidance was shown and user didn't enable ATT
+        // Do NOT update UI state - keep current state
+        return;
+      }
+    }
+
+    // ATT check passed or not needed - update UI state and proceed
+    setState(() {
+      _analyticsConsent = true;
+      _advertisingConsent = true;
+      _personalizationConsent = true;
+    });
+
+    // Save the consent
+    await ConsentManagerService().updateConsent(
+      analytics: true,
+      advertising: true,
+      personalization: true,
+      functional: true,
+    );
+
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  /// Handle Accept Selected with ATT checking
+  Future<void> _handleAcceptSelected() async {
+    // Check if we're enabling any tracking that's currently disabled
+    final ConsentManagerService consentService = ConsentManagerService();
+    final Map<ConsentType, bool> currentConsent = await consentService.getConsentStatus();
+    
+    final bool currentAnalytics = currentConsent[ConsentType.analytics] ?? false;
+    final bool currentAdvertising = currentConsent[ConsentType.advertising] ?? false;
+    
+    final bool enablingAnalytics = _analyticsConsent && !currentAnalytics;
+    final bool enablingAdvertising = _advertisingConsent && !currentAdvertising;
+    
+    if (enablingAnalytics || enablingAdvertising) {
+      final bool allowed = await _checkAttStatusForTracking(
+        isEnabling: true,
+        trackingType: 'selected',
+      );
+      
+      if (!allowed) return; // ATT guidance was shown
+    }
+
+    // Proceed with Accept Selected
+    await ConsentManagerService().updateConsent(
+      analytics: _analyticsConsent,
+      advertising: _advertisingConsent,
+      personalization: _personalizationConsent,
+      functional: true,
+    );
+
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -117,7 +348,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       title: LocaleKeys.consentDialog_analyticsTitle.tr(),
                       description: LocaleKeys.consentDialog_analyticsDescription.tr(),
                       value: _analyticsConsent,
-                      onChanged: (value) => setState(() => _analyticsConsent = value),
+                      onChanged: (value) => _handleAnalyticsToggle(value),
                       icon: Icons.analytics_outlined,
                     ),
 
@@ -128,7 +359,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       title: LocaleKeys.consentDialog_advertisingTitle.tr(),
                       description: LocaleKeys.consentDialog_advertisingDescription.tr(),
                       value: _advertisingConsent,
-                      onChanged: (value) => setState(() => _advertisingConsent = value),
+                      onChanged: (value) => _handleAdvertisingToggle(value),
                       icon: Icons.ads_click_outlined,
                     ),
 
@@ -180,16 +411,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                   MainButton(
                     title: LocaleKeys.consentDialog_acceptSelected.tr(),
                     onPressed: () async {
-                      await ConsentManagerService().updateConsent(
-                        analytics: _analyticsConsent,
-                        advertising: _advertisingConsent,
-                        personalization: _personalizationConsent,
-                        functional: true,
-                      );
-                      await ConsentInitializer.markConsentDialogShown();
-                      if (context.mounted && Navigator.of(context).canPop()) {
-                        Navigator.of(context).pop();
-                      }
+                      await _handleAcceptSelected();
                     },
                     themeColor: Theme.of(context).primaryColor,
                   ),
@@ -212,27 +434,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
                             ),
                           ),
                           onPressed: () async {
-                            // Update the dialog state first
-                            setState(() {
-                              _analyticsConsent = true;
-                              _advertisingConsent = true;
-                              _personalizationConsent = true;
-                            });
-                            
-                            // Wait a moment to show the updated state
-                            await Future.delayed(const Duration(milliseconds: 300));
-                            
-                            // Accept all
-                            await ConsentManagerService().updateConsent(
-                              analytics: true,
-                              advertising: true,
-                              personalization: true,
-                              functional: true,
-                            );
-                            await ConsentInitializer.markConsentDialogShown();
-                            if (context.mounted && Navigator.of(context).canPop()) {
-                              Navigator.of(context).pop();
-                            }
+                            // Use ATT-aware Accept All handler
+                            // This will handle UI updates only after ATT succeeds
+                            await _handleAcceptAll();
                           },
                           child: Text(
                             LocaleKeys.consentDialog_acceptAll.tr(),

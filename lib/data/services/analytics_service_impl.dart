@@ -3,8 +3,9 @@ import "dart:convert";
 import "dart:developer";
 import "dart:io";
 
-import "package:app_tracking_transparency/app_tracking_transparency.dart";
+
 import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/data/services/analytics_service_att_extension.dart";
 import "package:esim_open_source/data/services/consent_manager_service.dart";
 import "package:esim_open_source/domain/analytics/ecommerce_events.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
@@ -13,7 +14,7 @@ import "package:firebase_analytics/firebase_analytics.dart";
 import "package:flutter/services.dart";
 import "package:meta/meta.dart";
 
-class AnalyticsServiceImpl extends AnalyticsService {
+class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixin {
   // When true, skips platform/channel calls so internal state logic can be unit tested.
   @visibleForTesting
   static bool testMode = false;
@@ -21,10 +22,6 @@ class AnalyticsServiceImpl extends AnalyticsService {
   bool _useFirebaseAnalytics = true;
   bool _useFacebookAnalytics = true;
 
-    // ATT related
-  TrackingStatus? _attStatus;
-  bool _attAuthorized = false;
-  bool _attRequestAttempted = false; // prevent repeated silent requests
   FacebookAppEvents? _facebookAppEvents; // lazily created (skipped in test mode)
   FirebaseAnalytics? _firebaseAppEvents; // lazily created (skipped in test mode)
 
@@ -42,7 +39,7 @@ class AnalyticsServiceImpl extends AnalyticsService {
 
   bool get _isIOS => Platform.isIOS;
   bool get _effectiveFacebookTracking =>
-      _useFacebookAnalytics && (!_isIOS || _attAuthorized);
+      _useFacebookAnalytics && (!_isIOS || attAuthorizedForTesting);
 
   // Lazy getters (avoid touching plugins in test mode)
   FacebookAppEvents get _fbEvents =>
@@ -57,7 +54,7 @@ class AnalyticsServiceImpl extends AnalyticsService {
   }) async {
     _useFirebaseAnalytics = firebaseAnalytics;
     _useFacebookAnalytics = facebookAnalytics;
-    log("Analytics service initialized with Facebook Events: $facebookAnalytics and Firebase Events: $firebaseAnalytics");
+    log("🔥 Analytics service initializing - Firebase: $firebaseAnalytics, Facebook: $facebookAnalytics");
 
     // Enable GA4 DebugView for dev flavor (without using deprecated setAnalyticsCollectionEnabled false/true toggles).
     // GA4 DebugView picks up events if the instance is put into debug mode. We attempt both recommended approaches:
@@ -77,15 +74,18 @@ class AnalyticsServiceImpl extends AnalyticsService {
       }
     }
 
+    // Initialize ATT system (iOS only)
+    await initializeATT();
+
     // Set up consent observer
     await _setupConsentObserver();
 
-    // Evaluate ATT only if user already consented to advertising
-    if (_isIOS && _useFacebookAnalytics) {
-      await _evaluateAtt(requestIfNeeded: true);
-    }
+    // Check for iOS Settings changes on startup
+    await checkForIOSSettingsChange();
 
     await _applyFacebookTrackingState();
+    
+    log("🔥 Analytics service configuration complete");
   }
 
   @override
@@ -485,54 +485,54 @@ class AnalyticsServiceImpl extends AnalyticsService {
     _useFirebaseAnalytics = newFirebase;
     _useFacebookAnalytics = newFacebook;
 
-    log("Consent ${initialLoad ? "initial" : "updated"} -> Firebase=$_useFirebaseAnalytics Facebook=$_useFacebookAnalytics ATT=$_attStatus auth=$_attAuthorized");
+    log("🔥 Consent ${initialLoad ? "INITIAL" : "UPDATE"} -> Analytics: $newFirebase (changed: $firebaseChanged) | Advertising: $newFacebook (changed: $facebookChanged)");
 
-    // ⚠️ APPLE ATT COMPLIANCE: Request ATT when user enables ANY tracking (analytics OR advertising)
-    // This addresses Apple's requirement that tracking permission is requested before enabling analytics
-    if (_isIOS &&
-        !_attRequestAttempted &&
-        (_attStatus == null || _attStatus == TrackingStatus.notDetermined)) {
-      // User enabled analytics or advertising for the first time
+    // ⚠️ APPLE ATT COMPLIANCE: Request ATT when user enables tracking
+    if (Platform.isIOS) {
       final bool userWantsTracking = newFirebase || newFacebook;
       final bool justEnabledTracking = 
           (firebaseChanged && newFirebase) || (facebookChanged && newFacebook);
       
       if (userWantsTracking && justEnabledTracking) {
-        log("🍎 iOS: User enabled tracking (analytics=$newFirebase, ads=$newFacebook), requesting ATT...");
-        await _evaluateAtt(requestIfNeeded: true)
-            .then((_) => _applyFacebookTrackingState());
-        return; // Exit early, ATT dialog is showing
+        log("🍎 User enabled tracking - checking ATT requirements");
+        
+        final AttRequestResult result = await requestAttIfNeeded(
+          userWantsTracking: userWantsTracking,
+          justEnabledTracking: justEnabledTracking,
+        );
+        
+        // Handle ATT request results
+        switch (result) {
+          case AttRequestResult.authorized:
+            log("🍎 ✅ ATT authorized - enabling tracking");
+            break;
+          case AttRequestResult.denied:
+            log("🍎 ❌ ATT denied - disabling tracking");
+            await handleAttDenial();
+            return; // Exit early - consent was updated
+          case AttRequestResult.previouslyDenied:
+            log("🍎 ⚠️ ATT previously denied - UI should show guidance");
+            // This will be handled by the UI layer
+            break;
+          case AttRequestResult.notNeeded:
+            log("🍎 ATT request not needed");
+            break;
+          default:
+            log("🍎 ATT result: $result");
+        }
+      }
+      
+      // Check for iOS Settings changes if user re-enabled tracking
+      if (userWantsTracking && justEnabledTracking && !initialLoad) {
+        await checkForIOSSettingsChange();
       }
     }
     
-    // Standard path: Re-evaluate Facebook tracking state
-    _applyFacebookTrackingState();
+    // Apply tracking state
+    await _applyFacebookTrackingState();
   }
 
-  Future<void> _evaluateAtt({required bool requestIfNeeded}) async {
-    if (!_isIOS) {
-      return;
-    }
-    try {
-      _attStatus = await AppTrackingTransparency.trackingAuthorizationStatus;
-      _attAuthorized = _attStatus == TrackingStatus.authorized;
-      log("ATT status pre-request: $_attStatus");
-
-      if (requestIfNeeded &&
-          !_attAuthorized &&
-          !_attRequestAttempted &&
-          _attStatus == TrackingStatus.notDetermined) {
-        _attRequestAttempted = true;
-        final TrackingStatus result =
-            await AppTrackingTransparency.requestTrackingAuthorization();
-        _attStatus = result;
-        _attAuthorized = result == TrackingStatus.authorized;
-        log("ATT request result: $result");
-      }
-    } on Object catch (e) {
-      log("ATT evaluation error: $e");
-    }
-  }
+  // ATT handling is now managed by AnalyticsServiceATTMixin
 
   Future<void> _applyFacebookTrackingState() async {
     final bool enable = _effectiveFacebookTracking;
@@ -542,18 +542,15 @@ class AnalyticsServiceImpl extends AnalyticsService {
         return;
       }
       await _fbEvents.setAdvertiserTracking(enabled: enable);
-      log("Facebook advertiser tracking set to $enable (consent=$_useFacebookAnalytics attAuth=$_attAuthorized)");
+      log("Facebook advertiser tracking set to $enable (consent=$_useFacebookAnalytics attAuth=${attAuthorizedForTesting})");
     } on Object catch (e) {
       log("Failed to set Facebook advertiser tracking: $e");
     }
   }
 
-  // Optional public helper if you want to manually trigger an ATT re-check from UI
+  // Optional public helper to check for iOS Settings changes
   Future<void> refreshAttIfNeeded() async {
-    if (_isIOS && _useFacebookAnalytics && !_attAuthorized) {
-      await _evaluateAtt(requestIfNeeded: true);
-      await _applyFacebookTrackingState();
-    }
+    await checkForIOSSettingsChange();
   }
 
   // Dispose method to clean up resources
@@ -568,7 +565,7 @@ class AnalyticsServiceImpl extends AnalyticsService {
   @visibleForTesting
   bool get facebookEnabledFlag => _useFacebookAnalytics;
   @visibleForTesting
-  bool get attAuthorizedFlag => _attAuthorized;
+  bool get attAuthorizedFlag => attAuthorizedForTesting;
   @visibleForTesting
   Future<void> applyConsentForTest(Map<ConsentType, bool> consent,
           {bool initialLoad = false}) async =>
@@ -577,8 +574,6 @@ class AnalyticsServiceImpl extends AnalyticsService {
   void resetTestState() {
     _useFirebaseAnalytics = true;
     _useFacebookAnalytics = true;
-    _attStatus = null;
-    _attAuthorized = false;
-    _attRequestAttempted = false;
+    resetAttStateForTesting();
   }
 }
