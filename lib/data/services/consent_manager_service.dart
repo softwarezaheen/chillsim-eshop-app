@@ -1,5 +1,6 @@
 import "dart:async";
 import "dart:developer";
+import "dart:io";
 
 import "package:firebase_analytics/firebase_analytics.dart";
 import "package:shared_preferences/shared_preferences.dart";
@@ -39,16 +40,40 @@ class ConsentManagerService {
     final bool hasShownConsent = prefs.getBool(_keyConsentShown) ?? false;
 
     if (!hasShownConsent) {
-      // Set default consent state - analytics defaults to TRUE
+      // Set default consent state
+      // iOS: analytics defaults to FALSE (Apple ATT compliance)
+      // Android: analytics defaults to TRUE (Google allows this)
+      final bool defaultAnalytics = await _getDefaultAnalyticsConsent();
+      
       await _setFirebaseConsentMode(
-        analytics: true,
+        analytics: defaultAnalytics,
         advertising: false,
         personalization: false,
         functional: true, // Always required for basic functionality
       );
+      
+      log("[ConsentManager] Initialized default consent - analytics: $defaultAnalytics (iOS requires false until user consent)");
     } else {
       // Load existing consent
       await _loadAndApplyConsent();
+    }
+  }
+  
+  /// Get platform-specific default analytics consent
+  /// iOS: false (Apple ATT compliance - must request permission first)
+  /// Android/Web: true (Google allows analytics by default)
+  Future<bool> _getDefaultAnalyticsConsent() async {
+    try {
+      if (Platform.isIOS) {
+        // iOS requires explicit consent FIRST due to ATT requirements
+        return false;
+      }
+      // Android and other platforms can default to true
+      return true;
+    } catch (e) {
+      // If Platform is not available (web), default to false (safest)
+      log("[ConsentManager] Platform detection failed, defaulting to false: $e");
+      return false;
     }
   }
 
@@ -96,9 +121,12 @@ class ConsentManagerService {
 
   Future<Map<ConsentType, bool>> getConsentStatus() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    // Get platform-specific default for analytics
+    final bool defaultAnalytics = await _getDefaultAnalyticsConsent();
 
     final Map<ConsentType, bool> consent = <ConsentType, bool>{
-      ConsentType.analytics: prefs.getBool(_keyAnalyticsConsent) ?? true,
+      ConsentType.analytics: prefs.getBool(_keyAnalyticsConsent) ?? defaultAnalytics,
       ConsentType.advertising: prefs.getBool(_keyAdvertisingConsent) ?? false,
       ConsentType.personalization: prefs.getBool(_keyPersonalizationConsent) ?? false,
       ConsentType.functional: prefs.getBool(_keyFunctionalConsent) ?? true,

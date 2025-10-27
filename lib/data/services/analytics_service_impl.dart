@@ -480,24 +480,33 @@ class AnalyticsServiceImpl extends AnalyticsService {
     final bool newFacebook = consent[ConsentType.advertising] ?? false;
 
     final bool facebookChanged = newFacebook != _useFacebookAnalytics;
+    final bool firebaseChanged = newFirebase != _useFirebaseAnalytics;
 
     _useFirebaseAnalytics = newFirebase;
     _useFacebookAnalytics = newFacebook;
 
     log("Consent ${initialLoad ? "initial" : "updated"} -> Firebase=$_useFirebaseAnalytics Facebook=$_useFacebookAnalytics ATT=$_attStatus auth=$_attAuthorized");
 
-    // If user now enabled advertising on iOS and we have not yet requested ATT, do it once.
+    // ⚠️ APPLE ATT COMPLIANCE: Request ATT when user enables ANY tracking (analytics OR advertising)
+    // This addresses Apple's requirement that tracking permission is requested before enabling analytics
     if (_isIOS &&
-        facebookChanged &&
-        _useFacebookAnalytics &&
         !_attRequestAttempted &&
         (_attStatus == null || _attStatus == TrackingStatus.notDetermined)) {
-      await _evaluateAtt(requestIfNeeded: true)
-          .then((_) => _applyFacebookTrackingState());
-    } else {
-      // Re-evaluate Facebook tracking state
-      _applyFacebookTrackingState();
+      // User enabled analytics or advertising for the first time
+      final bool userWantsTracking = newFirebase || newFacebook;
+      final bool justEnabledTracking = 
+          (firebaseChanged && newFirebase) || (facebookChanged && newFacebook);
+      
+      if (userWantsTracking && justEnabledTracking) {
+        log("🍎 iOS: User enabled tracking (analytics=$newFirebase, ads=$newFacebook), requesting ATT...");
+        await _evaluateAtt(requestIfNeeded: true)
+            .then((_) => _applyFacebookTrackingState());
+        return; // Exit early, ATT dialog is showing
+      }
     }
+    
+    // Standard path: Re-evaluate Facebook tracking state
+    _applyFacebookTrackingState();
   }
 
   Future<void> _evaluateAtt({required bool requestIfNeeded}) async {
