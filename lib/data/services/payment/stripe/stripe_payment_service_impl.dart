@@ -219,7 +219,7 @@ class StripePayment {
     required String paymentIntentClientSecret,
     required String customerId,
     required String customerEphemeralKeySecret,
-    String merchantDisplayName = "Esim",
+    String merchantDisplayName = "ChillSIM",
     bool testEnv = false,
     String? iccID,
     String? orderID,
@@ -227,12 +227,54 @@ class StripePayment {
     try {
       log("═══════════════════════════════════════");
       log("💳 Starting Stripe Card Payment Flow");
+      log("   (Payment Sheet includes Apple Pay/Google Pay)");
       log("═══════════════════════════════════════");
       log("   Order ID: $orderID");
       log("   Test Environment: $testEnv");
       log("   Country Code: $billingCountryCode");
       log("   Merchant Display Name: $merchantDisplayName");
       log("───────────────────────────────────────");
+
+      // Check Apple Pay availability on iOS devices
+      // Payment Sheet automatically shows Apple Pay if available
+      if (Platform.isIOS) {
+        log("🍎 iOS Device Detected - Checking Apple Pay Capability...");
+        try {
+          log("   Platform: iOS ${Platform.operatingSystemVersion}");
+          log("   Locale: ${Platform.localeName}");
+          
+          // ACTUAL Apple Pay capability check using Stripe SDK
+          final bool isSupported = await Stripe.instance.isPlatformPaySupported();
+          
+          log("───────────────────────────────────────");
+          log("📱 Apple Pay Capability Result:");
+          log("   Device Supports Apple Pay: ${isSupported ? '✅ YES' : '❌ NO'}");
+          
+          if (isSupported) {
+            log("───────────────────────────────────────");
+            log("✅ APPLE PAY AVAILABLE");
+            log("   • Device has Apple Pay capability");
+            log("   • Payment Sheet will show Apple Pay button");
+            log("   • User must have cards in Wallet to use it");
+          } else {
+            log("───────────────────────────────────────");
+            log("❌ APPLE PAY NOT AVAILABLE");
+            log("   Possible Reasons:");
+            log("   • Device doesn't support Apple Pay hardware");
+            log("   • iOS version too old (need iOS 9.0+)");
+            log("   • Device model doesn't have NFC chip");
+            log("   • Region restrictions");
+          }
+          
+          log("───────────────────────────────────────");
+          log("ℹ️  Note: Even if supported, Apple Pay button");
+          log("   only appears if user has cards in Wallet app");
+        } catch (e) {
+          log("⚠️  Apple Pay capability check failed: $e");
+          log("   Payment Sheet will still work with card payments");
+        }
+        log("───────────────────────────────────────");
+      }
 
       // DEFENSIVE CODING: Validate all required payment parameters
       // Why: Stripe SDK gives cryptic errors if parameters are invalid
@@ -294,11 +336,12 @@ class StripePayment {
       log("───────────────────────────────────────");
 
       // 1. create payment
-      // create some billing details
+      // Note: billingDetails parameter is only used to save info AFTER payment
+      // Pre-filling in Payment Sheet comes from the backend PaymentIntent's shipping address
       final BillingDetails billingDetails = BillingDetails(
         address: Address(
-          city: null,
           country: normalizedCountryCode,
+          city: null,
           line1: null,
           line2: null,
           postalCode: null,
@@ -306,7 +349,9 @@ class StripePayment {
         ),
       );
 
-      log("✅ Step 1: Billing details configured");
+      log("✅ Step 1: Payment configuration prepared");
+      log("   📍 Merchant Country: $normalizedCountryCode");
+      log("   ⚠️  Note: Payment Sheet pre-fill comes from backend PaymentIntent shipping address");
 
       // 2. initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
@@ -328,6 +373,7 @@ class StripePayment {
       );
 
       log("✅ Step 2: Payment Sheet initialized");
+      log("   ⚠️  Note: Stripe pre-fills country from PaymentIntent (backend)");
 
       // 3. display the payment sheet.
       log("📱 Step 3: Presenting Payment Sheet...");

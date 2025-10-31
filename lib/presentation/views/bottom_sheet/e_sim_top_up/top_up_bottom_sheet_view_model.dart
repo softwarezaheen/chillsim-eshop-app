@@ -337,6 +337,8 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           billingCountryCode: result.data?.billingCountryCode ?? "",
           bundlePrice: bundlePrice,
           bundleCurrency: bundleCurrency,
+          merchantDisplayName: result.data?.merchantDisplayName,
+          stripeUrlScheme: result.data?.stripeUrlScheme,
         );
       },
     );
@@ -353,6 +355,8 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     required String billingCountryCode,
     required String bundlePrice,
     required String bundleCurrency,
+    String? merchantDisplayName,
+    String? stripeUrlScheme,
     bool test = false,
   }) async {
     try {
@@ -360,6 +364,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         paymentType: paymentType,
         publishableKey: publishableKey,
         merchantIdentifier: merchantIdentifier,
+        urlScheme: stripeUrlScheme,
       );
 
       PaymentResult paymentResult = await paymentService.processOrderPayment(
@@ -370,6 +375,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         paymentIntentClientSecret: paymentIntentClientSecret,
         customerId: customerId,
         customerEphemeralKeySecret: customerEphemeralKeySecret,
+        merchantDisplayName: merchantDisplayName ?? "ChillSIM",
         testEnv: test,
       );
 

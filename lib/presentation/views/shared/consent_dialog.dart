@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:esim_open_source/data/services/analytics_service_impl.dart';
 import 'package:esim_open_source/data/services/consent_initializer.dart';
 import 'package:esim_open_source/data/services/consent_manager_service.dart';

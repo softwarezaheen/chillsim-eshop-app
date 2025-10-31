@@ -237,22 +237,71 @@ class ApplePayService {
   /// will automatically show/hide Apple Pay based on actual device capability.
   Future<bool> isApplePaySupported() async {
     try {
-      log("🔍 Checking Apple Pay availability...");
+      log("═══════════════════════════════════════");
+      log("🔍 Apple Pay Device Capability Check");
+      log("═══════════════════════════════════════");
 
       // Only available on iOS
       if (!Platform.isIOS) {
         log("❌ Apple Pay not supported: Not running on iOS");
+        log("   Current Platform: ${Platform.operatingSystem}");
+        log("═══════════════════════════════════════");
         return false;
       }
 
-      // In Payment Sheet mode, we assume it's available on iOS devices
-      // The actual Payment Sheet will handle showing Apple Pay if truly available
-      log("✅ Running on iOS - Apple Pay potentially available");
-      log("   Note: Payment Sheet will auto-detect actual availability");
+      log("✅ Platform: iOS ${Platform.operatingSystemVersion}");
+      log("   Locale: ${Platform.localeName}");
+      log("───────────────────────────────────────");
+
+      // ACTUAL Apple Pay capability check using Stripe SDK
+      try {
+        log("🔧 Checking device Apple Pay capability...");
+        
+        // Use Stripe's isPlatformPaySupported method
+        // This checks if the device actually supports Apple Pay
+        final bool isSupported = await Stripe.instance.isPlatformPaySupported();
+        
+        log("───────────────────────────────────────");
+        log("📱 Apple Pay Capability Result:");
+        log("   Device Supports Apple Pay: ${isSupported ? '✅ YES' : '❌ NO'}");
+        
+        if (isSupported) {
+          log("───────────────────────────────────────");
+          log("✅ APPLE PAY AVAILABLE");
+          log("   • Device has Apple Pay capability");
+          log("   • Payment Sheet will show Apple Pay button");
+          log("   • User must have cards in Wallet to use it");
+        } else {
+          log("───────────────────────────────────────");
+          log("❌ APPLE PAY NOT AVAILABLE");
+          log("   Possible Reasons:");
+          log("   • Device doesn't support Apple Pay hardware");
+          log("   • iOS version too old (need iOS 9.0+)");
+          log("   • Device model doesn't have NFC chip");
+          log("   • Region restrictions");
+        }
+        
+        log("───────────────────────────────────────");
+        log("ℹ️  Note: Even if supported, Apple Pay button");
+        log("   only appears if user has cards in Wallet app");
+        log("═══════════════════════════════════════");
+        
+        return isSupported;
+        
+      } catch (e, stackTrace) {
+        log("❌ Error checking Apple Pay capability: $e");
+        log("   Stack trace: $stackTrace");
+        log("───────────────────────────────────────");
+        log("⚠️  Falling back to platform-only check");
+        log("   Assuming iOS device supports Apple Pay");
+        log("═══════════════════════════════════════");
+        // If the check fails, assume iOS devices support Apple Pay
+        return true;
+      }
       
-      return true;
     } catch (e) {
-      log("❌ Error checking Apple Pay availability: $e");
+      log("❌ Unexpected error in Apple Pay check: $e");
+      log("═══════════════════════════════════════");
       return false;
     }
   }
@@ -271,7 +320,7 @@ class ApplePayService {
     required String paymentIntentClientSecret,
     required String customerId,
     required String customerEphemeralKeySecret,
-    String merchantDisplayName = "ChillSim",
+    String merchantDisplayName = "ChillSIM",
     bool testEnv = false,
     String? iccID,
     String? orderID,
@@ -285,6 +334,17 @@ class ApplePayService {
       log("   Test Environment: $testEnv");
       log("   Country Code: $billingCountryCode");
       log("   Merchant Display Name: $merchantDisplayName");
+      log("───────────────────────────────────────");
+
+      // CRITICAL: Check Apple Pay availability before proceeding
+      // This logs detailed device information for App Review team
+      final bool isSupported = await isApplePaySupported();
+      log("───────────────────────────────────────");
+      log("Apple Pay Availability Check Result: ${isSupported ? '✅ Supported' : '❌ Not Supported'}");
+      if (!isSupported) {
+        log("⚠️  WARNING: Apple Pay not available on this device");
+        log("   Payment Sheet will only show card payment options");
+      }
       log("───────────────────────────────────────");
 
       // DEFENSIVE CODING: Validate all required payment parameters
@@ -347,10 +407,12 @@ class ApplePayService {
       log("───────────────────────────────────────");
 
       // 1. Create billing details
+      // Note: billingDetails parameter is only used to save info AFTER payment
+      // Pre-filling in Payment Sheet comes from the backend PaymentIntent's shipping address
       final BillingDetails billingDetails = BillingDetails(
         address: Address(
-          city: null,
           country: normalizedCountryCode,
+          city: null,
           line1: null,
           line2: null,
           postalCode: null,
@@ -358,7 +420,9 @@ class ApplePayService {
         ),
       );
 
-      log("✅ Step 1: Billing details configured");
+      log("✅ Step 1: Payment configuration prepared");
+      log("   📍 Merchant Country: $normalizedCountryCode");
+      log("   ⚠️  Note: Payment Sheet pre-fill comes from backend PaymentIntent shipping address");
 
       // 2. Initialize the payment sheet with Apple Pay enabled
       log("📱 Step 2: Initializing Payment Sheet...");
@@ -388,6 +452,7 @@ class ApplePayService {
       );
 
       log("✅ Step 2: Payment Sheet initialized with Apple Pay enabled");
+      log("   ⚠️  Note: Stripe pre-fills country from PaymentIntent (backend)");
 
       // 3. Present the payment sheet
       log("� Step 3: Presenting Payment Sheet...");

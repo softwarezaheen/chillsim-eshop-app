@@ -147,6 +147,8 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
               result.data?.customerEphemeralKeySecret ?? "",
           test: result.data?.testEnv ?? false,
           billingCountryCode: result.data?.billingCountryCode ?? "",
+          merchantDisplayName: result.data?.merchantDisplayName,
+          stripeUrlScheme: result.data?.stripeUrlScheme,
         );
       },
     );
@@ -162,6 +164,8 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
     required String merchantIdentifier,
     required String paymentIntentClientSecret,
     required String customerEphemeralKeySecret,
+    String? merchantDisplayName,
+    String? stripeUrlScheme,
     bool test = false,
   }) async {
     try {
@@ -169,6 +173,7 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
         paymentType: paymentType,
         publishableKey: publishableKey,
         merchantIdentifier: merchantIdentifier,
+        urlScheme: stripeUrlScheme,
       );
 
       PaymentResult paymentResult = await paymentService.processOrderPayment(
@@ -178,6 +183,7 @@ class UpgradeWalletBottomSheetViewModel extends BaseModel {
         billingCountryCode: billingCountryCode,
         paymentIntentClientSecret: paymentIntentClientSecret,
         customerEphemeralKeySecret: customerEphemeralKeySecret,
+        merchantDisplayName: merchantDisplayName ?? "ChillSIM",
       );
 
       switch (paymentResult) {

@@ -77,7 +77,7 @@ class PaymentServiceImpl extends PaymentService {
     required String paymentIntentClientSecret,
     required String customerId,
     required String customerEphemeralKeySecret,
-    String merchantDisplayName = "Esim",
+    String merchantDisplayName = "ChillSIM",
     bool testEnv = false,
     String? iccID,
     String? orderID,

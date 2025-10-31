@@ -422,6 +422,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
               result.data?.customerEphemeralKeySecret ?? "",
           test: result.data?.testEnv ?? false,
           billingCountryCode: result.data?.billingCountryCode ?? "",
+          merchantDisplayName: result.data?.merchantDisplayName,
+          stripeUrlScheme: result.data?.stripeUrlScheme,
         );
       },
     );
@@ -437,6 +439,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     required String customerEphemeralKeySecret,
     required String billingCountryCode,
     String? bearerToken,
+    String? merchantDisplayName,
+    String? stripeUrlScheme,
     bool test = false,
   }) async {
     try {
@@ -444,6 +448,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         paymentType: paymentType,
         publishableKey: publishableKey,
         merchantIdentifier: merchantIdentifier,
+        urlScheme: stripeUrlScheme,
       );
 
       PaymentResult paymentResult = await paymentService.processOrderPayment(
@@ -453,6 +458,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         paymentIntentClientSecret: paymentIntentClientSecret,
         customerId: customerId,
         customerEphemeralKeySecret: customerEphemeralKeySecret,
+        merchantDisplayName: merchantDisplayName ?? "ChillSIM",
         testEnv: test,
       );
 
