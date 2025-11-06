@@ -16,6 +16,9 @@ class MyWalletViewModel extends BaseModel {
         if (element == MyWalletViewSections.upgradeWallet) {
           return AppEnvironment.appEnvironmentHelper.enableWalletRecharge;
         }
+        if (element == MyWalletViewSections.cashbackRewards) {
+          return AppEnvironment.appEnvironmentHelper.enableCashBack;
+        }
         return true;
       })
       .toList();

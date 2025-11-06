@@ -58,22 +58,6 @@ Future<void> main() async {
         }
       });
 
-      test("cashbackRewards section is included when enableCashBack is true", () {
-        final RewardsViewModel testViewModel = RewardsViewModel();
-        
-        if (AppEnvironment.appEnvironmentHelper.enableCashBack) {
-          expect(
-            testViewModel.rewardsSections,
-            contains(RewardsViewSections.cashbackRewards),
-          );
-        } else {
-          expect(
-            testViewModel.rewardsSections,
-            isNot(contains(RewardsViewSections.cashbackRewards)),
-          );
-        }
-      });
-
       test("rewardsHistory section is included when enableRewardsHistory is true", () {
         final RewardsViewModel testViewModel = RewardsViewModel();
         
@@ -101,12 +85,6 @@ Future<void> main() async {
                 isTrue,
               );
               break;
-            case RewardsViewSections.cashbackRewards:
-              expect(
-                AppEnvironment.appEnvironmentHelper.enableCashBack,
-                isTrue,
-              );
-              break;
             case RewardsViewSections.rewardsHistory:
               expect(
                 AppEnvironment.appEnvironmentHelper.enableRewardsHistory,
@@ -121,19 +99,14 @@ Future<void> main() async {
     group("Section Order Tests", () {
       test("rewards sections maintain correct order when all enabled", () {
         if (AppEnvironment.appEnvironmentHelper.enableReferral &&
-            AppEnvironment.appEnvironmentHelper.enableCashBack &&
             AppEnvironment.appEnvironmentHelper.enableRewardsHistory) {
-          expect(viewModel.rewardsSections.length, equals(3));
+          expect(viewModel.rewardsSections.length, equals(2));
           expect(
             viewModel.rewardsSections[0],
             equals(RewardsViewSections.referAndEarn),
           );
           expect(
             viewModel.rewardsSections[1],
-            equals(RewardsViewSections.cashbackRewards),
-          );
-          expect(
-            viewModel.rewardsSections[2],
             equals(RewardsViewSections.rewardsHistory),
           );
         }
@@ -187,16 +160,6 @@ Future<void> main() async {
         expect(viewModel.rewardsSections, isNotNull);
         // This test documents the intentional simplicity
       });
-
-      test("rewards sections contain different items than wallet sections", () {
-        // Verify that cashback is now in rewards, not wallet
-        if (AppEnvironment.appEnvironmentHelper.enableCashBack) {
-          expect(
-            viewModel.rewardsSections,
-            contains(RewardsViewSections.cashbackRewards),
-          );
-        }
-      });
     });
 
     group("Feature Flag Integration Tests", () {
@@ -206,9 +169,6 @@ Future<void> main() async {
         // Count expected sections based on flags
         int expectedCount = 0;
         if (AppEnvironment.appEnvironmentHelper.enableReferral) {
-          expectedCount++;
-        }
-        if (AppEnvironment.appEnvironmentHelper.enableCashBack) {
           expectedCount++;
         }
         if (AppEnvironment.appEnvironmentHelper.enableRewardsHistory) {
@@ -222,7 +182,6 @@ Future<void> main() async {
         // If the Rewards menu is visible in the profile, at least one section should exist
         // This aligns with the ProfileViewSections visibility logic
         if (AppEnvironment.appEnvironmentHelper.enableReferral ||
-            AppEnvironment.appEnvironmentHelper.enableCashBack ||
             AppEnvironment.appEnvironmentHelper.enableRewardsHistory) {
           expect(viewModel.rewardsSections, isNotEmpty);
         }

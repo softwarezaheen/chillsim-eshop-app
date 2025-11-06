@@ -13,7 +13,6 @@ abstract class  LocaleKeys {
   static const feedback = 'feedback';
   static const email = 'email';
   static const cancel = 'cancel';
-  static const ok = 'ok';
   static const language = 'language';
   static const history = 'history';
   static const send = 'send';
@@ -25,6 +24,7 @@ abstract class  LocaleKeys {
   static const activate = 'activate';
   static const continueStr = 'continueStr';
   static const invalidNumberMessage = 'invalidNumberMessage';
+  static const ok = 'ok';
   static const mobileNumber = 'mobileNumber';
   static const password = 'password';
   static const yes = 'yes';
@@ -269,7 +269,6 @@ abstract class  LocaleKeys {
   static const activation_code = 'activation_code';
   static const smdp_address = 'smdp_address';
   static const error_generating_qr_code = 'error_generating_qr_code';
-  static const copied_to_clipboard = 'copied_to_clipboard';
   static const top_up_plan = 'top_up_plan';
   static const faq_not_available = 'faq_not_available';
   static const your_message_has_been_sent = 'your_message_has_been_sent';
@@ -296,13 +295,13 @@ abstract class  LocaleKeys {
   static const bundleDetails_planTypeText = 'bundleDetails_planTypeText';
   static const bundleDetails_activationPolicyText = 'bundleDetails_activationPolicyText';
   static const bundleDetails_emptyText = 'bundleDetails_emptyText';
-  static const edit_name = 'edit_name';
   static const current_plans = 'current_plans';
   static const expired_plans = 'expired_plans';
   static const no_active_eSim = 'no_active_eSim';
   static const no_active_eSim_description = 'no_active_eSim_description';
   static const no_expired_eSim = 'no_expired_eSim';
   static const no_expired_eSim_description = 'no_expired_eSim_description';
+  static const edit_name = 'edit_name';
   static const bundle_validity = 'bundle_validity';
   static const last_purchase = 'last_purchase';
   static const top_up = 'top_up';
@@ -333,6 +332,7 @@ abstract class  LocaleKeys {
   static const bundleExistsView_contentText = 'bundleExistsView_contentText';
   static const bundleExistsView_buttonOneText = 'bundleExistsView_buttonOneText';
   static const bundleExistsView_buttonTwoText = 'bundleExistsView_buttonTwoText';
+  static const copied_to_clipboard = 'copied_to_clipboard';
   static const image_saved = 'image_saved';
   static const qr_code_saved = 'qr_code_saved';
   static const permission_required = 'permission_required';
@@ -360,6 +360,12 @@ abstract class  LocaleKeys {
   static const storiesView_startSharing = 'storiesView_startSharing';
   static const storiesView_cashbackTitle = 'storiesView_cashbackTitle';
   static const storiesView_cashbackContent = 'storiesView_cashbackContent';
+  static const storiesView_cashbackTitle1 = 'storiesView_cashbackTitle1';
+  static const storiesView_cashbackContent1 = 'storiesView_cashbackContent1';
+  static const storiesView_cashbackTitle2 = 'storiesView_cashbackTitle2';
+  static const storiesView_cashbackContent2 = 'storiesView_cashbackContent2';
+  static const storiesView_cashbackTitle3 = 'storiesView_cashbackTitle3';
+  static const storiesView_cashbackContent3 = 'storiesView_cashbackContent3';
   static const storiesView_referralTitle1 = 'storiesView_referralTitle1';
   static const storiesView_referralContent1 = 'storiesView_referralContent1';
   static const storiesView_referralTitle2 = 'storiesView_referralTitle2';

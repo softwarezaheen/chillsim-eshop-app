@@ -8,9 +8,6 @@ class RewardsViewModel extends BaseModel {
         if (element == RewardsViewSections.referAndEarn) {
           return AppEnvironment.appEnvironmentHelper.enableReferral;
         }
-        if (element == RewardsViewSections.cashbackRewards) {
-          return AppEnvironment.appEnvironmentHelper.enableCashBack;
-        }
         if (element == RewardsViewSections.rewardsHistory) {
           return AppEnvironment.appEnvironmentHelper.enableRewardsHistory;
         }

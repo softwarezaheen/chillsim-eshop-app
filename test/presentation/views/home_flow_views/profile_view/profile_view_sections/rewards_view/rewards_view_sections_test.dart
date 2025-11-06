@@ -23,10 +23,6 @@ Future<void> main() async {
         );
         expect(
           RewardsViewSections.values,
-          contains(RewardsViewSections.cashbackRewards),
-        );
-        expect(
-          RewardsViewSections.values,
           contains(RewardsViewSections.rewardsHistory),
         );
       });
@@ -34,7 +30,6 @@ Future<void> main() async {
       test("sections are properly ordered", () {
         final List<RewardsViewSections> expectedOrder = <RewardsViewSections>[
           RewardsViewSections.referAndEarn,
-          RewardsViewSections.cashbackRewards,
           RewardsViewSections.rewardsHistory,
         ];
 
@@ -43,20 +38,13 @@ Future<void> main() async {
 
       test("enum index values are correct", () {
         expect(RewardsViewSections.referAndEarn.index, equals(0));
-        expect(RewardsViewSections.cashbackRewards.index, equals(1));
-        expect(RewardsViewSections.rewardsHistory.index, equals(2));
+        expect(RewardsViewSections.rewardsHistory.index, equals(1));
       });
     });
 
     group("Section Titles", () {
       test("referAndEarn section has correct title", () {
         const RewardsViewSections section = RewardsViewSections.referAndEarn;
-        expect(section.sectionTitle, isNotEmpty);
-        expect(section.sectionTitle, isA<String>());
-      });
-
-      test("cashbackRewards section has correct title", () {
-        const RewardsViewSections section = RewardsViewSections.cashbackRewards;
         expect(section.sectionTitle, isNotEmpty);
         expect(section.sectionTitle, isA<String>());
       });
@@ -73,12 +61,6 @@ Future<void> main() async {
         const RewardsViewSections section = RewardsViewSections.referAndEarn;
         expect(section.sectionImagePath, isNotEmpty);
         expect(section.sectionImagePath, contains("walletReferEarn"));
-      });
-
-      test("cashbackRewards section has valid image path", () {
-        const RewardsViewSections section = RewardsViewSections.cashbackRewards;
-        expect(section.sectionImagePath, isNotEmpty);
-        expect(section.sectionImagePath, contains("walletCashback"));
       });
 
       test("rewardsHistory section has valid image path", () {
@@ -101,10 +83,6 @@ Future<void> main() async {
         expect(RewardsViewSections.referAndEarn.tapAction, isNotNull);
       });
 
-      test("cashbackRewards has tapAction method", () {
-        expect(RewardsViewSections.cashbackRewards.tapAction, isNotNull);
-      });
-
       test("rewardsHistory has tapAction method", () {
         expect(RewardsViewSections.rewardsHistory.tapAction, isNotNull);
       });
@@ -124,8 +102,6 @@ Future<void> main() async {
           switch (section) {
             case RewardsViewSections.referAndEarn:
               return "refer";
-            case RewardsViewSections.cashbackRewards:
-              return "cashback";
             case RewardsViewSections.rewardsHistory:
               return "history";
           }
@@ -134,10 +110,6 @@ Future<void> main() async {
         expect(
           testSwitch(RewardsViewSections.referAndEarn),
           equals("refer"),
-        );
-        expect(
-          testSwitch(RewardsViewSections.cashbackRewards),
-          equals("cashback"),
         );
         expect(
           testSwitch(RewardsViewSections.rewardsHistory),
@@ -161,7 +133,7 @@ Future<void> main() async {
         );
         expect(
           RewardsViewSections.referAndEarn !=
-              RewardsViewSections.cashbackRewards,
+              RewardsViewSections.rewardsHistory,
           isTrue,
         );
       });

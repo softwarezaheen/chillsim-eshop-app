@@ -16,6 +16,9 @@ class BannersViewModel extends BaseModel {
         if (element == BannersViewTypes.bannersReferral) {
           return AppEnvironment.appEnvironmentHelper.enableReferral;
         }
+        if (element == BannersViewTypes.bannersCashback) {
+          return AppEnvironment.appEnvironmentHelper.enableCashBack;
+        }
         return true;
       })
       .toList();

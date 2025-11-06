@@ -193,4 +193,18 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
       key: ConfigurationResponseKeys.referredDiscountPercentage,
     );
   }
+
+  @override
+  String get cashbackOrdersThreshold {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.cashbackOrdersThreshold,
+    );
+  }
+
+  @override
+  String get cashbackPercentage {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.cashbackPercentage,
+    );
+  }
 }

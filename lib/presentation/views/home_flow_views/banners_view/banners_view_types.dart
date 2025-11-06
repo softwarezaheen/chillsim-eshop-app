@@ -8,6 +8,7 @@ import "package:esim_open_source/domain/repository/services/app_configuration_se
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
@@ -16,7 +17,7 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:stacked_services/stacked_services.dart";
 import "package:url_launcher/url_launcher.dart";
 
-enum BannersViewTypes { /* liveChat, referAndEarn,*/ bannersZenminutes, bannersReferral, bannersSupport /*, cashBackRewards*/ }
+enum BannersViewTypes { /* liveChat, referAndEarn,*/ bannersZenminutes, bannersReferral, bannersCashback, bannersSupport }
 
 extension BannersViewTypesExtension on BannersViewTypes {
   String get titleText {
@@ -29,6 +30,8 @@ extension BannersViewTypesExtension on BannersViewTypes {
         return LocaleKeys.dataPlans_zenminutesBannerTitle.tr();
       case BannersViewTypes.bannersReferral:
         return LocaleKeys.dataPlans_referAndEarnBannerTitle.tr();
+      case BannersViewTypes.bannersCashback:
+        return LocaleKeys.dataPlans_cashbackRewardsBannerTitle.tr();
       case BannersViewTypes.bannersSupport:
         return LocaleKeys.dataPlans_supportBannerTitle.tr();
       // case BannersViewTypes.cashBackRewards:
@@ -54,10 +57,16 @@ extension BannersViewTypesExtension on BannersViewTypes {
           "referAndEarnAmount":
               locator<AppConfigurationService>().referAndEarnAmount,
         });
+      case BannersViewTypes.bannersCashback:
+        return LocaleKeys.dataPlans_cashbackRewardsBannerContent.tr(namedArgs: {
+          "percentage": locator<AppConfigurationService>().cashbackPercentage,
+        });
       case BannersViewTypes.bannersSupport:
         return LocaleKeys.dataPlans_supportBannerContent.tr();
       // case BannersViewTypes.cashBackRewards:
-      //   return LocaleKeys.dataPlans_cashbackRewardsBannerContent.tr();
+      //   return LocaleKeys.dataPlans_cashbackRewardsBannerContent.tr(namedArgs: {
+      //     "percentage": locator<AppConfigurationService>().cashbackPercentage,
+      //   });
     }
   }
 
@@ -71,6 +80,8 @@ extension BannersViewTypesExtension on BannersViewTypes {
         return LocaleKeys.dataPlans_zenminutesBannerButtonText.tr();
       case BannersViewTypes.bannersReferral:
         return LocaleKeys.dataPlans_referAndEarnBannerButtonText.tr();
+      case BannersViewTypes.bannersCashback:
+        return LocaleKeys.dataPlans_cashbackRewardsBannerButtonText.tr();
       case BannersViewTypes.bannersSupport:
         return LocaleKeys.dataPlans_supportBannerButtonText.tr();
       // case BannersViewTypes.cashBackRewards:
@@ -88,6 +99,8 @@ extension BannersViewTypesExtension on BannersViewTypes {
         return EnvironmentImages.bannersZenminutes.fullImagePath;
       case BannersViewTypes.bannersReferral:
         return EnvironmentImages.bannersReferral.fullImagePath;
+      case BannersViewTypes.bannersCashback:
+        return EnvironmentImages.bannersCashback.fullImagePath;
       case BannersViewTypes.bannersSupport:
         return EnvironmentImages.bannersSupport.fullImagePath;
       // case BannersViewTypes.cashBackRewards:
@@ -141,6 +154,18 @@ extension BannersViewTypesExtension on BannersViewTypes {
             LoginView.routeName,
             arguments: InAppRedirection.referral(),
           );
+      case BannersViewTypes.bannersCashback:
+        if (locator<UserAuthenticationService>().isUserLoggedIn) {
+          locator<NavigationService>().navigateTo(
+            StoryViewer.routeName,
+            arguments: CashbackStoriesView().storyViewerArgs,
+          );
+          return;
+        }
+        locator<NavigationService>().navigateTo(
+          LoginView.routeName,
+          arguments: InAppRedirection.cashback(),
+        );
       case BannersViewTypes.bannersSupport:
         openWhatsApp(
             phoneNumber:

@@ -21,7 +21,7 @@ class AppEnvironmentHelper {
     this.enableRewardsHistory = true,
     this.enableBannersView = true, //was false
     this.enableCurrencySelection = true, //was false
-    this.enableCashBack = false,
+    this.enableCashBack = true, //was false
     this.environmentTheme = EnvironmentTheme.openSource,
     this.enableLanguageSelection = true, //was false
     this.enableAppleSignIn = true,

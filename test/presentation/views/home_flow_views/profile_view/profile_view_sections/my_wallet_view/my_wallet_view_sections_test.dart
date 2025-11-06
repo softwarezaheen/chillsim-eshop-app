@@ -221,6 +221,8 @@ Future<void> main() async {
               return "transactions";
             case MyWalletViewSections.upgradeWallet:
               return "upgrade";
+            case MyWalletViewSections.cashbackRewards:
+              return "cashback";
           }
         }
 
@@ -232,6 +234,10 @@ Future<void> main() async {
         expect(
           testSwitch(MyWalletViewSections.upgradeWallet),
           equals("upgrade"),
+        );
+        expect(
+          testSwitch(MyWalletViewSections.cashbackRewards),
+          equals("cashback"),
         );
       });
     });
