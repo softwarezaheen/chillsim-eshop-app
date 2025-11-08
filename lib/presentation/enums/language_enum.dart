@@ -3,7 +3,9 @@ enum LanguageEnum {
   english,
   french,
   romanian,
-  spanish;
+  spanish,
+  german,
+  hindi;
 
   static LanguageEnum fromString(String language) {
     if (language == LanguageEnum.english.languageText) {
@@ -14,6 +16,10 @@ enum LanguageEnum {
       return LanguageEnum.romanian;
     } else if (language == LanguageEnum.spanish.languageText) {
       return LanguageEnum.spanish;
+    } else if (language == LanguageEnum.german.languageText) {
+      return LanguageEnum.german;
+    } else if (language == LanguageEnum.hindi.languageText) {
+      return LanguageEnum.hindi;
     } else {
       return LanguageEnum.arabic;
     }
@@ -28,6 +34,10 @@ enum LanguageEnum {
       return LanguageEnum.romanian;
     } else if (languageCode == LanguageEnum.spanish.code) {
       return LanguageEnum.spanish;
+    } else if (languageCode == LanguageEnum.german.code) {
+      return LanguageEnum.german;
+    } else if (languageCode == LanguageEnum.hindi.code) {
+      return LanguageEnum.hindi;
     } else {
       return LanguageEnum.arabic;
     }
@@ -45,6 +55,10 @@ enum LanguageEnum {
         return "ro";
       case LanguageEnum.spanish:
         return "es";
+      case LanguageEnum.german:
+        return "de";
+      case LanguageEnum.hindi:
+        return "hi";
     }
   }
 
@@ -60,6 +74,10 @@ enum LanguageEnum {
         return "Română";
       case LanguageEnum.spanish:
         return "Español";
+      case LanguageEnum.german:
+        return "Deutsch";
+      case LanguageEnum.hindi:
+        return "हिंदी";
     }
   }
 
@@ -71,6 +89,8 @@ enum LanguageEnum {
       case LanguageEnum.english:
       case LanguageEnum.romanian:
       case LanguageEnum.spanish:
+      case LanguageEnum.german:
+      case LanguageEnum.hindi:
         return false;
     }
   }
