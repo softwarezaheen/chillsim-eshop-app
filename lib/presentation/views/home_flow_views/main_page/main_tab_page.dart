@@ -63,7 +63,10 @@ class _MainTabPageState extends State<MainTabPage>
   void _handleTabChange() {
     // Only rebuild when the tab actually changes
     if (tabController.indexIsChanging) {
-      setState(() {});
+      // Safety check: only setState if widget is still mounted
+      if (mounted) {
+        setState(() {});
+      }
       playHapticFeedback(HapticFeedbackType.tabBarSelectionChange);
     }
     
@@ -85,15 +88,22 @@ class _MainTabPageState extends State<MainTabPage>
       currentIndex++;
     }
     if (tabController.length != neededLength) {
+      // Remove listener before disposing controller
+      tabController.removeListener(_handleTabChange);
       tabController.dispose();
       tabController = LockableTabController(
         length: neededLength,
         vsync: this,
       );
+      // Re-attach listener to new controller
+      tabController.addListener(_handleTabChange);
 
       tabController.animateTo(
         currentIndex >= neededLength ? neededLength - 1 : currentIndex,
       );
+      
+      // Update view model reference
+      widget.viewModel.tabController = tabController;
     }
     super.didUpdateWidget(oldWidget);
   }

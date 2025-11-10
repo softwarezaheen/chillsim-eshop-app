@@ -60,9 +60,15 @@ class _BaseFlutterBottomNavBarState extends State<BaseFlutterBottomNavBar> {
   @override
   void initState() {
     super.initState();
+    // Attach listener on initialization
+    widget.tabController?.addListener(indexUpdated);
   }
 
   void indexUpdated() {
+    // Prevent setState on disposed widget (critical for iOS background/foreground transitions)
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _currentIndex = widget.tabController?.index ?? _currentIndex;
     });
@@ -70,13 +76,18 @@ class _BaseFlutterBottomNavBarState extends State<BaseFlutterBottomNavBar> {
 
   @override
   void didUpdateWidget(covariant BaseFlutterBottomNavBar oldWidget) {
-    widget.tabController?.removeListener(indexUpdated);
-    widget.tabController?.addListener(indexUpdated);
+    // Remove listener from old controller and add to new one
+    if (oldWidget.tabController != widget.tabController) {
+      oldWidget.tabController?.removeListener(indexUpdated);
+      widget.tabController?.addListener(indexUpdated);
+    }
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
+    // Critical: Remove listener to prevent memory leaks and crashes on iOS
+    widget.tabController?.removeListener(indexUpdated);
     super.dispose();
   }
 
@@ -110,27 +121,33 @@ class _BaseFlutterBottomNavBarState extends State<BaseFlutterBottomNavBar> {
               ),
             ),
           ),
-          widget.isKeyboardVisible
-              ? Container()
-              : Stack(
-                  children: <Widget>[
-                    // Positioned.fill(
-                    //   child: Align(
-                    //       alignment: Alignment.topCenter,
-                    //       child: Container(
-                    //           height: 0.5,
-                    //           decoration: BoxDecoration(
-                    //             boxShadow: [
-                    //               BoxShadow(
-                    //                 color: Colors.grey.withValues(alpha:0.2),
-                    //                 blurRadius: 5.0,
-                    //                 spreadRadius: 2,
-                    //                 offset: Offset(0, -8.0),
-                    //               ),
-                    //             ],
-                    //           ))),
-                    // ),
-                    DecoratedBox(
+          // Use AnimatedSwitcher to prevent sudden disappearance on iOS
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: widget.isKeyboardVisible
+                ? const SizedBox.shrink(
+                    key: ValueKey('hidden'),
+                  )
+                : Stack(
+                    key: const ValueKey('visible'),
+                    children: <Widget>[
+                      // Positioned.fill(
+                      //   child: Align(
+                      //       alignment: Alignment.topCenter,
+                      //       child: Container(
+                      //           height: 0.5,
+                      //           decoration: BoxDecoration(
+                      //             boxShadow: [
+                      //               BoxShadow(
+                      //                 color: Colors.grey.withValues(alpha:0.2),
+                      //                 blurRadius: 5.0,
+                      //                 spreadRadius: 2,
+                      //                 offset: Offset(0, -8.0),
+                      //               ),
+                      //             ],
+                      //           ))),
+                      // ),
+                      DecoratedBox(
                       decoration: BoxDecoration(
                         boxShadow: <BoxShadow>[
                           BoxShadow(
@@ -180,6 +197,7 @@ class _BaseFlutterBottomNavBarState extends State<BaseFlutterBottomNavBar> {
                     ),
                   ],
                 ),
+          ),
         ],
       ),
     );
