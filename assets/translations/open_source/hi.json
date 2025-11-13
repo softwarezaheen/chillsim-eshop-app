@@ -155,7 +155,7 @@
   "logout_buttonTitleText": "हां, लॉग आउट करें",
   "common_cancelButtonText": "रद्द करें",
   "deleteAccount_titleText": "खाता हटाएं",
-  "deleteAccount_ContentText": "आपको जाते देख हमें दुख हुआ!\nयह आपका Monty eSIM खाता हटा देगा। हालांकि, आपका eSIM प्रोफाइल सक्रिय रहेगा और आप वैधता अवधि के दौरान अपनी eSIM लाइन का उपयोग कर सकेंगे।",
+  "deleteAccount_ContentText": "आपको जाते देख हमें दुख हुआ!\nयह आपका ChillSIM खाता हटा देगा। हालांकि, आपका eSIM प्रोफाइल सक्रिय रहेगा और आप वैधता अवधि के दौरान अपनी eSIM लाइन का उपयोग कर सकेंगे।",
   "deleteAccount_ConfirmText": "खाता हटाने की पुष्टि के लिए अपना ईमेल दर्ज करें।",
   "deleteAccount_placeHolderText": "ईमेल पता",
   "deleteAccount_buttonText": "हटाएं",

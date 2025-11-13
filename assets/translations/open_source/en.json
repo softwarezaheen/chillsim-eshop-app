@@ -155,7 +155,7 @@
   "logout_buttonTitleText": "Yes, Logout",
   "common_cancelButtonText": "Cancel",
   "deleteAccount_titleText": "Delete Account",
-  "deleteAccount_ContentText": "We are sorry to see you go!\nThis will delete your Monty eSIM account. However, your eSIM profile will remain active and you will be able To use your eSIM line during its validity period.",
+  "deleteAccount_ContentText": "We are sorry to see you go!\nThis will delete your ChillSIM account. However, your eSIM profile will remain active and you will be able To use your eSIM line during its validity period.",
   "deleteAccount_ConfirmText": "Enter your email to confirm deleting your account.",
   "deleteAccount_placeHolderText": "Email Address",
   "deleteAccount_buttonText": "Delete",
