@@ -10,7 +10,7 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
 
   // Define the method channel
   static const MethodChannel flutterToNativePlatform =
-      MethodChannel("com.luxe.esim/flutter_to_native");
+      MethodChannel("zaheen.esim.chillsim/flutter_to_native");
 
   static FlutterChannelHandlerServiceImpl getInstance() {
     _instance ??= FlutterChannelHandlerServiceImpl.initialize();
@@ -58,7 +58,7 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
   Future<bool> openEsimSetupForAndroid({
     required String smdpAddress,
     required String activationCode,
-    bool isSHAExist = true,
+    bool isSHAExist = false,
   }) async {
     try {
       String cardData = "LPA:1\$$smdpAddress\$$activationCode";
@@ -70,12 +70,16 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
         },
       );
       if (!result) {
-        throw Exception("eSIM installation not supported");
+        throw Exception("eSIM installation is not supported on this Android version. Please upgrade to Android 9 or higher.");
       }
       return result;
     } on PlatformException catch (e) {
       log("openEsimSetupForAndroid Error : ${e.message}");
-      throw Exception(errorMessage);
+      // Provide more helpful error messages
+      if (e.message?.contains("not supported") ?? false) {
+        throw Exception("eSIM is not supported on this device");
+      }
+      throw Exception(e.message ?? errorMessage);
     } on Object catch (e) {
       log("openEsimSetupForAndroid Error: $e");
       throw Exception(errorMessage);
