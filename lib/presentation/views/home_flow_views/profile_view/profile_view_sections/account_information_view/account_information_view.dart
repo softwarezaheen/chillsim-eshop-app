@@ -14,6 +14,7 @@ import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
 import "package:esim_open_source/presentation/widgets/my_phone_input.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
+import "package:esim_open_source/presentation/widgets/searchable_dropdown_field.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
@@ -179,53 +180,26 @@ class AccountInformationView extends StatelessWidget {
                             verticalSpaceSmall,
                           ],
                           
-                          DropdownButtonFormField<Country>(
-                            value: viewModel.selectedCountryValue,
-                            items: viewModel.countriesList.map((Country country) {
-                              return DropdownMenuItem<Country>(
-                                value: country,
-                                child: Text(country.name),
-                              );
-                            }).toList(),
-                            onChanged: (Country? newCountry) async{
+                          SearchableDropdownField<Country>(
+                            labelText: LocaleKeys.country_field_label.tr(),
+                            items: viewModel.countriesList,
+                            value: viewModel.selectedCountry,
+                            onChanged: (Country? newCountry) async {
                               await viewModel.onCountryChanged(newCountry);
                             },
-                            decoration: InputDecoration(
-                              labelText: LocaleKeys.country_field_label.tr(),
-                              border: const OutlineInputBorder(),
-                              filled: true,
-                              fillColor: whiteBackGroundColor(context: context),
-                              labelStyle: bodyNormalTextStyle(
-                                context: context,
-                                fontColor: secondaryTextColor(context: context),
-                              ),
-                            ),
+                            displayTextExtractor: (Country country) => country.name,
                           ),
                           verticalSpaceSmall,
                           viewModel.isRomania
-                              ? DropdownButtonFormField<County>(
+                              ? SearchableDropdownField<County>(
+                                  labelText: LocaleKeys.county_field_label.tr(),
+                                  items: viewModel.countiesList,
                                   value: viewModel.selectedCounty,
-                                  items: viewModel.countiesList.map((County county) {
-                                    return DropdownMenuItem<County>(
-                                      value: county,
-                                      child: Text(county.name),
-                                    );
-                                  }).toList(),
-                                  onChanged: viewModel.isCountyDropdownEnabled
-                                      ? (County? newCounty) async {
-                                          await viewModel.onCountyChanged(newCounty);
-                                        }
-                                      : null,
-                                  decoration: InputDecoration(
-                                    labelText: LocaleKeys.county_field_label.tr(),
-                                    border: const OutlineInputBorder(),
-                                    filled: true,
-                                    fillColor: whiteBackGroundColor(context: context),
-                                    labelStyle: captionOneNormalTextStyle(
-                                      context: context,
-                                      fontColor: secondaryTextColor(context: context),
-                                    ),
-                                  ),
+                                  enabled: viewModel.isCountyDropdownEnabled,
+                                  onChanged: (County? newCounty) async {
+                                    await viewModel.onCountyChanged(newCounty);
+                                  },
+                                  displayTextExtractor: (County county) => county.name,
                                 )
                               : MainInputField.formField(
                                   themeColor: themeColor,
@@ -243,29 +217,15 @@ class AccountInformationView extends StatelessWidget {
                                 ),
                           verticalSpaceSmall,
                           viewModel.isRomania
-                              ? DropdownButtonFormField<String>(
+                              ? SearchableDropdownField<String>(
+                                  labelText: LocaleKeys.city_field_label.tr(),
+                                  items: viewModel.citiesList,
                                   value: viewModel.selectedCity,
-                                  items: viewModel.citiesList.map((String city) {
-                                    return DropdownMenuItem<String>(
-                                      value: city,
-                                      child: Text(city),
-                                    );
-                                  }).toList(),
-                                  onChanged: viewModel.isCityDropdownEnabled
-                                      ? (String? newCity) {
-                                          viewModel.onCityChanged(newCity);
-                                        }
-                                      : null,
-                                  decoration: InputDecoration(
-                                    labelText: LocaleKeys.city_field_label.tr(),
-                                    border: const OutlineInputBorder(),
-                                    filled: true,
-                                    fillColor: whiteBackGroundColor(context: context),
-                                    labelStyle: captionOneNormalTextStyle(
-                                      context: context,
-                                      fontColor: secondaryTextColor(context: context),
-                                    ),
-                                  ),
+                                  enabled: viewModel.isCityDropdownEnabled,
+                                  onChanged: (String? newCity) {
+                                    viewModel.onCityChanged(newCity);
+                                  },
+                                  displayTextExtractor: (String city) => city,
                                 )
                               : MainInputField.formField(
                                   themeColor: themeColor,

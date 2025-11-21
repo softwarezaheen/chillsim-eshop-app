@@ -43,18 +43,16 @@ class SearchableSelectionBottomSheetView<T> extends StatelessWidget {
           horizontal: 15,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               BottomSheetCloseButton(
                 onTap: () => viewModel.onCloseClick(),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  data.title,
-                  style: headerThreeBoldTextStyle(
-                    context: context,
-                    fontColor: titleTextColor(context: context),
-                  ),
+              Text(
+                data.title,
+                style: headerThreeBoldTextStyle(
+                  context: context,
+                  fontColor: titleTextColor(context: context),
                 ),
               ),
               verticalSpaceSmallMedium,
@@ -77,47 +75,47 @@ class SearchableSelectionBottomSheetView<T> extends StatelessWidget {
                 height: 1,
                 color: Colors.grey[300],
               ),
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: screenHeight * 0.5,
-                ),
-                child: viewModel.filteredItems.isEmpty
-                    ? Padding(
-                        padding: const EdgeInsets.all(40),
-                        child: Text(
-                          LocaleKeys.noDataAvailableYet.tr(),
-                          style: bodyNormalTextStyle(
-                            context: context,
-                            fontColor: secondaryTextColor(context: context),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    : ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: viewModel.filteredItems.length,
-                        separatorBuilder: (BuildContext context, int index) => Divider(
-                          height: 1,
-                          color: Colors.grey[200],
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          final T item = viewModel.filteredItems[index];
-                          final bool isSelected = item == data.currentValue;
-                          
-                          return ListTile(
-                            title: Text(
-                              data.displayTextExtractor(item),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: viewModel.filteredItems.isEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.all(40),
+                          child: Text(
+                            LocaleKeys.noDataAvailableYet.tr(),
+                            style: bodyNormalTextStyle(
+                              context: context,
+                              fontColor: secondaryTextColor(context: context),
                             ),
-                            trailing: isSelected
-                                ? Icon(
-                                    Icons.check,
-                                    color: themeColor,
-                                  )
-                                : null,
-                            onTap: () => viewModel.onItemSelected(item),
-                          );
-                        },
-                      ),
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: viewModel.filteredItems.length,
+                          separatorBuilder: (BuildContext context, int index) => Divider(
+                            height: 1,
+                            color: Colors.grey[200],
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            final T item = viewModel.filteredItems[index];
+                            final bool isSelected = item == data.currentValue;
+                            
+                            return ListTile(
+                              title: Text(
+                                data.displayTextExtractor(item),
+                              ),
+                              trailing: isSelected
+                                  ? Icon(
+                                      Icons.check,
+                                      color: themeColor,
+                                    )
+                                  : null,
+                              onTap: () => viewModel.onItemSelected(item),
+                            );
+                          },
+                        ),
+                ),
               ),
             ],
           ),

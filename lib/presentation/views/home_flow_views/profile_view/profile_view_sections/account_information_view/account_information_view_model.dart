@@ -20,7 +20,6 @@ import "package:esim_open_source/utils/phone_number_utils.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/services.dart" show rootBundle;
 import "package:phone_input/phone_input_package.dart";
-// import "package:phone_input/src/number_parser/models/phone_number_exceptions.dart";
 
 class Country {
   Country({required this.name, required this.alpha2, required this.alpha3});
@@ -98,6 +97,16 @@ class AccountInformationViewModel extends BaseModel {
   bool isRomania = false;
   bool isCountyDropdownEnabled = false;
   bool isCityDropdownEnabled = false;
+
+  // Original billing values for change detection
+  String _originalCountry = "";
+  String _originalState = "";
+  String _originalCity = "";
+  String _originalBillingAddress = "";
+  String _originalCompanyName = "";
+  String _originalVatCode = "";
+  String _originalRegistrationCode = "";
+  BillingType _originalBillingType = BillingType.individual;
 
   Future<void> loadCountries() async {
     final String jsonString = await rootBundle.loadString("assets/data/countries.json");
@@ -298,6 +307,17 @@ class AccountInformationViewModel extends BaseModel {
         isCountyDropdownEnabled = false;
         isCityDropdownEnabled = false;
       }
+      
+      // Store original billing values for change detection
+      _originalCountry = _countryController.text;
+      _originalState = selectedCounty?.alpha3 ?? _stateController.text;
+      _originalCity = _cityController.text;
+      _originalBillingAddress = _billingAddressController.text;
+      _originalCompanyName = _companyNameController.text;
+      _originalVatCode = _vatCodeController.text;
+      _originalRegistrationCode = _registrationCodeController.text;
+      _originalBillingType = billingType;
+      
       setViewState( ViewState.idle );
     } on Exception catch (e) {
       log("Error fetching billing info: $e");
@@ -322,6 +342,10 @@ class AccountInformationViewModel extends BaseModel {
       _cityController.addListener(updateButtonState);
       _countryController.addListener(updateButtonState);
       _billingAddressController.addListener(updateButtonState);
+      _companyNameController.addListener(updateButtonState);
+      _vatCodeController.addListener(updateButtonState);
+      _registrationCodeController.addListener(updateButtonState);
+      _stateController.addListener(updateButtonState);
       _validateForm();
       notifyListeners();
     });
@@ -329,6 +353,7 @@ class AccountInformationViewModel extends BaseModel {
 
   void setBillingType(BillingType type) {
     billingType = type;
+    updateButtonState();
     notifyListeners();
   }
 
@@ -423,18 +448,28 @@ class AccountInformationViewModel extends BaseModel {
         ? true
         : ((userPhoneNumber != userMsisdn) && isPhoneValid);
 
-    _saveButtonEnabled =
-        AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
-            ? ((_receiveUpdates != isNewsletterSubscribed) ||
-                    (_nameController.text != userFirstName) ||
-                    (_familyNameController.text != userLastName) ||
-                    (_emailController.text != userEmailAddress)) &&
-                isValidEmail
-            : ((_receiveUpdates != isNewsletterSubscribed) ||
-                    (_nameController.text != userFirstName) ||
-                    (_familyNameController.text != userLastName) ||
-                    (userPhoneNumber != userMsisdn)) &&
-                isValidPhone;
+    // Check for changes in personal info
+    bool personalInfoChanged = (_receiveUpdates != isNewsletterSubscribed) ||
+        (_nameController.text != userFirstName) ||
+        (_familyNameController.text != userLastName);
+    
+    // Check for email/phone changes based on login type
+    bool contactInfoChanged = AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber
+        ? (_emailController.text != userEmailAddress)
+        : (userPhoneNumber != userMsisdn);
+    
+    // Check for changes in billing info
+    bool billingInfoChanged = (_countryController.text != _originalCountry) ||
+        ((selectedCounty?.alpha3 ?? _stateController.text) != _originalState) ||
+        (_cityController.text != _originalCity) ||
+        (_billingAddressController.text != _originalBillingAddress) ||
+        (_companyNameController.text != _originalCompanyName) ||
+        (_vatCodeController.text != _originalVatCode) ||
+        (_registrationCodeController.text != _originalRegistrationCode) ||
+        (billingType != _originalBillingType);
+
+    _saveButtonEnabled = ((personalInfoChanged || contactInfoChanged || billingInfoChanged) && 
+        (AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber ? isValidEmail : isValidPhone));
 
     if (isPhoneValid) {
       _validationError = null;
