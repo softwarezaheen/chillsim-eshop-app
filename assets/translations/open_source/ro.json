@@ -454,5 +454,7 @@
   "payment_error_publishable_key_missing": "Cheia publică Stripe lipsește",
   "payment_preparing_apple_pay": "Se pregătește Apple Pay...",
   "payment_preparing": "Se pregătește plata...",
-  "payment_error_unknown": "Eroare necunoscută. Vă rugăm încercați din nou."
+  "payment_error_unknown": "Eroare necunoscută. Încercați din nou.",
+  "device_security_notice_title": "Notificare de Securitate",
+  "device_security_notice_message": "Din motive de securitate, această aplicație nu poate rula pe dispozitive rootate sau în modul dezvoltator. Vă rugăm să utilizați o configurație standard a dispozitivului."
 }

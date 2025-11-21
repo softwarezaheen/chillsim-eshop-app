@@ -463,5 +463,7 @@
   "payment_error_publishable_key_missing": "Stripe publishable key is missing",
   "payment_preparing_apple_pay": "Preparing Apple Pay...",
   "payment_preparing": "Preparing payment...",
-  "payment_error_unknown": "Unknown error. Please try again."
+  "payment_error_unknown": "Unknown error. Please try again.",
+  "device_security_notice_title": "Security Notice",
+  "device_security_notice_message": "For security reasons, this app cannot run on rooted devices or in developer mode. Please use a standard device configuration."
 }

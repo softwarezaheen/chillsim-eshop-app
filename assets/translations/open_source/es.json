@@ -462,6 +462,8 @@
   "payment_error_merchant_id_missing": "Falta el ID de comerciante de Apple Pay",
   "payment_error_publishable_key_missing": "Falta la clave pública de Stripe",
   "payment_preparing_apple_pay": "Preparando Apple Pay...",
-  "payment_preparing": "Preparando pago...",
-  "payment_error_unknown": "Error desconocido. Inténtalo de nuevo."
+  "payment_preparing": "Preparando el pago...",
+  "payment_error_unknown": "Error desconocido. Inténtalo de nuevo.",
+  "device_security_notice_title": "Aviso de Seguridad",
+  "device_security_notice_message": "Por razones de seguridad, esta aplicación no puede ejecutarse en dispositivos rooteados o en modo desarrollador. Por favor, use una configuración de dispositivo estándar."
 }

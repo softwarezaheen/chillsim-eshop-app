@@ -463,5 +463,7 @@
   "payment_error_publishable_key_missing": "Stripe प्रकाशन योग्य कुंजी गायब है",
   "payment_preparing_apple_pay": "Apple Pay तैयार हो रहा है...",
   "payment_preparing": "भुगतान तैयार हो रहा है...",
-  "payment_error_unknown": "अज्ञात त्रुटि। कृपया पुनः प्रयास करें।"
+  "payment_error_unknown": "अज्ञात त्रुटि। कृपया पुनः प्रयास करें।",
+  "device_security_notice_title": "सुरक्षा सूचना",
+  "device_security_notice_message": "सुरक्षा कारणों से, यह ऐप रूटेड डिवाइस या डेवलपर मोड में नहीं चल सकता। कृपया एक मानक डिवाइस कॉन्फ़िगरेशन का उपयोग करें।"
 }

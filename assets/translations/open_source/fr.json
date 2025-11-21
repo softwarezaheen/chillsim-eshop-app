@@ -463,5 +463,7 @@
   "payment_error_publishable_key_missing": "La clé publique Stripe est manquante",
   "payment_preparing_apple_pay": "Préparation d'Apple Pay...",
   "payment_preparing": "Préparation du paiement...",
-  "payment_error_unknown": "Erreur inconnue. Veuillez réessayer."
+  "payment_error_unknown": "Erreur inconnue. Veuillez réessayer.",
+  "device_security_notice_title": "Avis de Sécurité",
+  "device_security_notice_message": "Pour des raisons de sécurité, cette application ne peut pas fonctionner sur des appareils rootés ou en mode développeur. Veuillez utiliser une configuration d'appareil standard."
 }

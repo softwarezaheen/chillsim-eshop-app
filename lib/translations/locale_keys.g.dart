@@ -468,5 +468,7 @@ abstract class  LocaleKeys {
   static const payment_preparing_apple_pay = 'payment_preparing_apple_pay';
   static const payment_preparing = 'payment_preparing';
   static const payment_error_unknown = 'payment_error_unknown';
+  static const device_security_notice_title = 'device_security_notice_title';
+  static const device_security_notice_message = 'device_security_notice_message';
 
 }

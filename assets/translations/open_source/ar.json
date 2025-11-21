@@ -463,5 +463,7 @@
   "payment_error_publishable_key_missing": "مفتاح Stripe العام مفقود",
   "payment_preparing_apple_pay": "جاري تحضير Apple Pay...",
   "payment_preparing": "جاري تحضير الدفع...",
-  "payment_error_unknown": "خطأ غير معروف. يرجى المحاولة مرة أخرى."
+  "payment_error_unknown": "خطأ غير معروف. يرجى المحاولة مرة أخرى.",
+  "device_security_notice_title": "إشعار أمني",
+  "device_security_notice_message": "لأسباب أمنية، لا يمكن تشغيل هذا التطبيق على الأجهزة المكسورة الحماية أو في وضع المطور. يرجى استخدام تكوين جهاز قياسي."
 }

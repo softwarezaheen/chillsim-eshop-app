@@ -463,5 +463,7 @@
   "payment_error_publishable_key_missing": "Stripe-Veröffentlichungsschlüssel fehlt",
   "payment_preparing_apple_pay": "Apple Pay wird vorbereitet...",
   "payment_preparing": "Zahlung wird vorbereitet...",
-  "payment_error_unknown": "Unbekannter Fehler. Bitte erneut versuchen."
+  "payment_error_unknown": "Unbekannter Fehler. Bitte erneut versuchen.",
+  "device_security_notice_title": "Sicherheitshinweis",
+  "device_security_notice_message": "Aus Sicherheitsgründen kann diese App nicht auf gerooteten Geräten oder im Entwicklermodus ausgeführt werden. Bitte verwenden Sie eine Standardgerätekonfiguration."
 }

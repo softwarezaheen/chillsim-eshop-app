@@ -2,6 +2,7 @@ import "dart:async";
 import "dart:developer";
 import "dart:io";
 
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/data/services/consent_initializer.dart";
@@ -20,6 +21,7 @@ import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/views/app_clip_start/app_clip_selection/app_clip_selection_view.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
 
@@ -60,8 +62,8 @@ class StartUpViewModel extends BaseModel {
     if (context.mounted) {
       showNativeDialog(
         context: context,
-        titleText: "Warning",
-        contentText: "Your device is compromised",
+        titleText: LocaleKeys.device_security_notice_title.tr(),
+        contentText: LocaleKeys.device_security_notice_message.tr(),
       );
     }
   }
