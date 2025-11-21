@@ -207,4 +207,11 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
       key: ConfigurationResponseKeys.cashbackPercentage,
     );
   }
+
+  @override
+  String get clickIdExpiry {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.clickIdExpiry,
+    );
+  }
 }

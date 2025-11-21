@@ -14,6 +14,7 @@ enum ConfigurationResponseKeys {
   referredDiscountPercentage,
   cashbackOrdersThreshold,
   cashbackPercentage,
+  clickIdExpiry,
   zenminutesUrl;
 
   String get configurationKeyValue {
@@ -40,6 +41,8 @@ enum ConfigurationResponseKeys {
         return "CASHBACK_ORDERS_THRESHOLD";
       case ConfigurationResponseKeys.cashbackPercentage:
         return "CASHBACK_PERCENTAGE";
+      case ConfigurationResponseKeys.clickIdExpiry:
+        return "click_id_expiry";
       case ConfigurationResponseKeys.zenminutesUrl:
         return "zenminutes_landing";
     }

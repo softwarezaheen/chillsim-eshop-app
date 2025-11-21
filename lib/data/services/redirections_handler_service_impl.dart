@@ -5,6 +5,7 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/redirections_handler_service.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
@@ -114,6 +115,24 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
 
     await locator<LocalStorageService>()
         .setString(LocalStorageKeys.utm, uri.path);
+
+    // Check for affiliate tracking parameter (im_ref)
+    String? affiliateRef = uri.queryParameters[DeepLinkDecodeKeys.affiliateRef.decodingKey];
+    if (affiliateRef != null && affiliateRef.isNotEmpty) {
+      log("Affiliate ref (im_ref): $affiliateRef");
+      await locator<LocalStorageService>()
+          .setString(LocalStorageKeys.affiliateClickId, affiliateRef);
+      log("Affiliate click ID saved: $affiliateRef");
+      
+      // Calculate and store click ID expiry date
+      String clickIdExpiryDays = locator<AppConfigurationService>().clickIdExpiry;
+      int expiryDays = int.tryParse(clickIdExpiryDays) ?? 30;
+      DateTime expiryDate = DateTime.now().add(Duration(days: expiryDays));
+      String expiryDateString = expiryDate.toIso8601String();
+      await locator<LocalStorageService>()
+          .setString(LocalStorageKeys.affiliateClickIdExpiry, expiryDateString);
+      log("Affiliate click ID expiry saved: $expiryDateString (${expiryDays} days from now)");
+    }
 
     if (redirectionCategoryType is ReferAndEarn) {
       //save referral code

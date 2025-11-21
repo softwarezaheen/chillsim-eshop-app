@@ -9,7 +9,9 @@ enum LocalStorageKeys {
   appCurrency("appCurrency"),
   referralCode("referralCode"),
   appLanguage("appLanguage"),
-  utm("utm");
+  utm("utm"),
+  affiliateClickId("affiliateClickId"),
+  affiliateClickIdExpiry("affiliateClickIdExpiry");
 
   const LocalStorageKeys(this.value);
 

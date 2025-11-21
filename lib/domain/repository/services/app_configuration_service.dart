@@ -12,5 +12,6 @@ abstract class AppConfigurationService {
   String get referredDiscountPercentage;
   String get cashbackOrdersThreshold;
   String get cashbackPercentage;
+  String get clickIdExpiry;
   String get getZenminutesUrl;
 }
