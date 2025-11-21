@@ -70,6 +70,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                         100 -
                         (viewModel.isKeyboardVisible(context) ? 200 : 0),
                     child: SingleChildScrollView(
+                      controller: viewModel.scrollController,
                       child: Column(
                         children: <Widget>[
                           BundleHeaderView(
@@ -285,20 +286,23 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                             ),
                           if (viewModel.isPromoCodeEnabled &&
                               viewModel.isUserLoggedIn)
-                            PaddingWidget.applySymmetricPadding(
-                              vertical: 10,
-                              child: ApplyPromoCode(
-                                callback: viewModel.validatePromoCode,
-                                message: viewModel.promoCodeMessage,
-                                isFieldEnabled: viewModel.promoCodeFieldEnabled,
-                                textFieldBorderColor:
-                                    viewModel.promoCodeFieldColor ??
-                                        greyBackGroundColor(context: context),
-                                textFieldIcon: viewModel.promoCodeFieldIcon,
-                                buttonText: viewModel.promoCodeButtonText,
-                                controller: viewModel.promoCodeController,
-                                isExpanded: viewModel.isPromoCodeExpanded,
-                                expandedCallBack: viewModel.expandedCallBack,
+                            Container(
+                              key: viewModel.promoCodeKey,
+                              child: PaddingWidget.applySymmetricPadding(
+                                vertical: 10,
+                                child: ApplyPromoCode(
+                                  callback: viewModel.validatePromoCode,
+                                  message: viewModel.promoCodeMessage,
+                                  isFieldEnabled: viewModel.promoCodeFieldEnabled,
+                                  textFieldBorderColor:
+                                      viewModel.promoCodeFieldColor ??
+                                          greyBackGroundColor(context: context),
+                                  textFieldIcon: viewModel.promoCodeFieldIcon,
+                                  buttonText: viewModel.promoCodeButtonText,
+                                  controller: viewModel.promoCodeController,
+                                  isExpanded: viewModel.isPromoCodeExpanded,
+                                  expandedCallBack: viewModel.expandedCallBack,
+                                ),
                               ),
                             ),
                           BundleTitleContentView(

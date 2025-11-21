@@ -4,6 +4,7 @@ import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
+import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
@@ -72,6 +73,8 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   bool _isLoginEnabled = false;
 
   final TextEditingController _emailController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
+  final GlobalKey promoCodeKey = GlobalKey();
 
   String? _promoCode;
   String? _emailErrorMessage;
@@ -177,6 +180,25 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   void expandedCallBack() {
     isPromoCodeExpanded = !isPromoCodeExpanded;
     notifyListeners();
+    
+    // Scroll to promo code field when expanded
+    if (isPromoCodeExpanded) {
+      Future<void>.delayed(const Duration(milliseconds: 300), () {
+        final RenderBox? renderBox =
+            promoCodeKey.currentContext?.findRenderObject() as RenderBox?;
+        if (renderBox != null) {
+          final double position = renderBox.localToGlobal(Offset.zero).dy;
+          final double currentScroll = scrollController.offset;
+          final double targetScroll = currentScroll + position - 150;
+          
+          scrollController.animateTo(
+            targetScroll,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        }
+      });
+    }
   }
 
   void updatePromoCodeView({
@@ -597,6 +619,16 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       updatePromoCodeView(isEnabled: true);
       // Reload taxes without promo code
       await loadTaxes(manageViewState: false);
+      // Show success bottom sheet for removal
+      unawaited(bottomSheetService.showCustomSheet(
+        isScrollControlled: true,
+        variant: BottomSheetType.successBottomSheet,
+        data: SuccessBottomRequest(
+          title: LocaleKeys.promo_code_removed_title.tr(),
+          description: LocaleKeys.promo_code_removed_description.tr(),
+          imagePath: EnvironmentImages.iconWarning.fullImagePath,
+        ),
+      ));
       notifyListeners();
       return;
     }
@@ -623,6 +655,25 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           isEnabled: false,
           fieldColor: Colors.green,
         );
+        
+        // Calculate discount percentage
+        double originalPrice = _tempBundle?.price ?? 0;
+        double discountedPrice = result.data?.price ?? 0;
+        int discountPercentage = 0;
+        if (originalPrice > 0) {
+          discountPercentage = (((originalPrice - discountedPrice) / originalPrice) * 100).round();
+        }
+        
+        // Show success bottom sheet with discount
+        unawaited(bottomSheetService.showCustomSheet(
+          isScrollControlled: true,
+          variant: BottomSheetType.successBottomSheet,
+          data: SuccessBottomRequest(
+            title: LocaleKeys.promo_code_applied_title.tr(),
+            description: LocaleKeys.promo_code_applied_description.tr(namedArgs: {"discount": "$discountPercentage"}),
+            imagePath: EnvironmentImages.iconCheck.fullImagePath,
+          ),
+        ));
         //load taxes again
         await loadTaxes(manageViewState: false);
       },
@@ -640,6 +691,16 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         } else {
           updatePromoCodeView(isEnabled: true);
         }
+        // Show error bottom sheet
+        unawaited(bottomSheetService.showCustomSheet(
+          isScrollControlled: true,
+          variant: BottomSheetType.successBottomSheet,
+          data: SuccessBottomRequest(
+            title: LocaleKeys.promo_code_invalid_title.tr(),
+            description: result.message ?? LocaleKeys.promo_code_invalid_description.tr(),
+            imagePath: EnvironmentImages.iconWarning.fullImagePath,
+          ),
+        ));
       },
     );
 

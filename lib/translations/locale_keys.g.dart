@@ -292,6 +292,12 @@ abstract class  LocaleKeys {
   static const promoCodeView_titleText = 'promoCodeView_titleText';
   static const promoCodeView_buttonText = 'promoCodeView_buttonText';
   static const promoCodeView_cancelButtonText = 'promoCodeView_cancelButtonText';
+  static const promo_code_applied_title = 'promo_code_applied_title';
+  static const promo_code_applied_description = 'promo_code_applied_description';
+  static const promo_code_removed_title = 'promo_code_removed_title';
+  static const promo_code_removed_description = 'promo_code_removed_description';
+  static const promo_code_invalid_title = 'promo_code_invalid_title';
+  static const promo_code_invalid_description = 'promo_code_invalid_description';
   static const bundleDetails_planTypeText = 'bundleDetails_planTypeText';
   static const bundleDetails_activationPolicyText = 'bundleDetails_activationPolicyText';
   static const bundleDetails_emptyText = 'bundleDetails_emptyText';
