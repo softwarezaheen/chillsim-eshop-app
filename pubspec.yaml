@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.9+36
+version: 1.0.10+37
 
 environment:
   sdk: '>=3.3.2 <4.0.0'
@@ -31,7 +31,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  http: ^1.4.0
+  http: 1.4.0  # Pinned to 1.4.0 for chucker_flutter compatibility (1.5.0+ breaks Abortable API)
   path_provider: ^2.1.5
   # stacked_themes depends on rxdart ^0.27.1
   rxdart: ^0.27.1
