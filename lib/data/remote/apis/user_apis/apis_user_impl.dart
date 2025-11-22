@@ -394,5 +394,4 @@ class APIUserImpl extends APIService implements ApiUser {
     );
     return response;
   }
-  
 }

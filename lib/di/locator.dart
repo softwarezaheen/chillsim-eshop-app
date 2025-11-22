@@ -6,18 +6,21 @@ import "package:esim_open_source/data/data_source/esims_local_data_source.dart";
 import "package:esim_open_source/data/data_source/home_local_data_source.dart";
 import "package:esim_open_source/data/data_source/local_storage_service_impl.dart";
 import "package:esim_open_source/data/data_source/secure_storage_service_impl.dart";
+import "package:esim_open_source/data/remote/apis/affiliates/api_affiliates_impl.dart";
 import "package:esim_open_source/data/remote/apis/app_apis/api_app_impl.dart";
 import "package:esim_open_source/data/remote/apis/auth_apis/api_auth_impl.dart";
 import "package:esim_open_source/data/remote/apis/bundles_apis/api_bundles_impl.dart";
 import "package:esim_open_source/data/remote/apis/device_apis/api_device_impl.dart";
 import "package:esim_open_source/data/remote/apis/promotion_apis/api_promotion_impl.dart";
 import "package:esim_open_source/data/remote/apis/user_apis/apis_user_impl.dart";
+import "package:esim_open_source/data/repository/api_affiliate_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_app_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_auth_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_bundles_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_device_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_promotion_repository_impl.dart";
 import "package:esim_open_source/data/repository/api_user_repository_impl.dart";
+import "package:esim_open_source/data/services/affiliate_click_id_service_impl.dart";
 import "package:esim_open_source/data/services/analytics_service_impl.dart";
 import "package:esim_open_source/data/services/app_configuration_service_impl.dart";
 import "package:esim_open_source/data/services/connectivity_service_impl.dart";
@@ -31,15 +34,18 @@ import "package:esim_open_source/data/services/push_notification_service_impl.da
 import "package:esim_open_source/data/services/redirections_handler_service_impl.dart";
 import "package:esim_open_source/data/services/remote_config_service_impl.dart";
 import "package:esim_open_source/data/services/social_login_service_impl.dart";
+import "package:esim_open_source/domain/data/api_affiliate.dart";
 import "package:esim_open_source/domain/data/api_bundles.dart";
 import "package:esim_open_source/domain/data/api_promotion.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
+import "package:esim_open_source/domain/repository/api_affiliate_repository.dart";
 import "package:esim_open_source/domain/repository/api_app_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/api_bundles_repository.dart";
 import "package:esim_open_source/domain/repository/api_device_repository.dart";
 import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
+import "package:esim_open_source/domain/repository/services/affiliate_click_id_service.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
@@ -143,6 +149,11 @@ Future<void> appServicesModule() async {
       () async => await LocalStorageServiceImpl.instance as LocalStorageService,
     )
     ..registerLazySingleton(
+      () => AffiliateClickIdServiceImpl(
+        localStorage: locator(),
+      ) as AffiliateClickIdService,
+    )
+    ..registerLazySingleton(
       () => AppConfigurationServiceImpl.instance as AppConfigurationService,
     )
     ..registerLazySingleton(
@@ -181,6 +192,9 @@ Future<void> appAPIServicesModule() async {
       () => APIUserImpl.instance as ApiUser,
     )
     ..registerLazySingleton(
+      () => APIAffiliateImpl.privateConstructor() as ApiAffiliate,
+    )
+    ..registerLazySingleton(
       () => ApiBundlesRepositoryImpl(
         apiBundles: locator(),
         repository: HomeLocalDataSource(locator()),
@@ -192,6 +206,11 @@ Future<void> appAPIServicesModule() async {
         apiUserBundles: locator(),
         repository: EsimsLocalDataSource(locator()),
       ) as ApiUserRepository,
+    )
+    ..registerLazySingleton(
+      () => ApiAffiliateRepositoryImpl(
+        apiAffiliate: locator(),
+      ) as ApiAffiliateRepository,
     )
     ..registerLazySingleton(
       () => ApiDeviceRepositoryImpl(ApiDeviceImpl.instance)

@@ -4,7 +4,9 @@ import "dart:developer";
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
+import "package:esim_open_source/domain/repository/api_affiliate_repository.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/services/affiliate_click_id_service.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/redirections_handler_service.dart";
@@ -120,18 +122,26 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
     String? affiliateRef = uri.queryParameters[DeepLinkDecodeKeys.affiliateRef.decodingKey];
     if (affiliateRef != null && affiliateRef.isNotEmpty) {
       log("Affiliate ref (im_ref): $affiliateRef");
-      await locator<LocalStorageService>()
-          .setString(LocalStorageKeys.affiliateClickId, affiliateRef);
-      log("Affiliate click ID saved: $affiliateRef");
       
-      // Calculate and store click ID expiry date
+      // Calculate and store click ID with expiry date using the service
       String clickIdExpiryDays = locator<AppConfigurationService>().clickIdExpiry;
       int expiryDays = int.tryParse(clickIdExpiryDays) ?? 30;
       DateTime expiryDate = DateTime.now().add(Duration(days: expiryDays));
-      String expiryDateString = expiryDate.toIso8601String();
-      await locator<LocalStorageService>()
-          .setString(LocalStorageKeys.affiliateClickIdExpiry, expiryDateString);
-      log("Affiliate click ID expiry saved: $expiryDateString (${expiryDays} days from now)");
+      
+      await locator<AffiliateClickIdService>().storeClickId(affiliateRef, expiryDate);
+      log("Affiliate click ID saved with expiry: ${expiryDays} days from now");
+      
+      // Track the click ID with the backend API (fire-and-forget)
+      unawaited(
+        Future<void>(() async {
+          try {
+            await locator<ApiAffiliateRepository>().trackAffiliateClick(clickId: affiliateRef);
+            log("Affiliate click tracked successfully via API");
+          } on Object catch (e) {
+            log("Failed to track affiliate click via API: $e");
+          }
+        }),
+      );
     }
 
     if (redirectionCategoryType is ReferAndEarn) {

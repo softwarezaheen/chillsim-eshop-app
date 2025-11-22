@@ -11,6 +11,7 @@ import "package:esim_open_source/data/remote/http_request.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
+import "package:esim_open_source/domain/repository/services/affiliate_click_id_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -235,6 +236,13 @@ class APIService {
       "accept-language",
       () => locator<LocalStorageService>().languageCode,
     );
+
+    // Add affiliate click ID header if valid (not expired)
+    String? clickId =
+        await locator<AffiliateClickIdService>().getValidClickId();
+    if (clickId != null && clickId.isNotEmpty) {
+      request.headers.putIfAbsent("X-Affiliate-Click-Id", () => clickId);
+    }
 
     return request;
   }
