@@ -476,5 +476,15 @@ abstract class  LocaleKeys {
   static const payment_error_unknown = 'payment_error_unknown';
   static const device_security_notice_title = 'device_security_notice_title';
   static const device_security_notice_message = 'device_security_notice_message';
+  static const android_manual_install_title = 'android_manual_install_title';
+  static const android_manual_install_description = 'android_manual_install_description';
+  static const android_manual_install_link_label = 'android_manual_install_link_label';
+  static const android_manual_install_steps_title = 'android_manual_install_steps_title';
+  static const android_manual_install_steps_body = 'android_manual_install_steps_body';
+  static const android_manual_install_link_tip = 'android_manual_install_link_tip';
+  static const android_manual_install_open_settings = 'android_manual_install_open_settings';
+  static const android_manual_install_close = 'android_manual_install_close';
+  static const android_manual_install_option_qr_title = 'android_manual_install_option_qr_title';
+  static const android_manual_install_option_qr_steps = 'android_manual_install_option_qr_steps';
 
 }

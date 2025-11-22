@@ -471,5 +471,15 @@
   "payment_preparing": "भुगतान तैयार हो रहा है...",
   "payment_error_unknown": "अज्ञात त्रुटि। कृपया पुनः प्रयास करें।",
   "device_security_notice_title": "सुरक्षा सूचना",
-  "device_security_notice_message": "सुरक्षा कारणों से, यह ऐप रूटेड डिवाइस या डेवलपर मोड में नहीं चल सकता। कृपया एक मानक डिवाइस कॉन्फ़िगरेशन का उपयोग करें।"
+  "device_security_notice_message": "सुरक्षा कारणों से, यह ऐप रूटेड डिवाइस या डेवलपर मोड में नहीं चल सकता। कृपया एक मानक डिवाइस कॉन्फ़िगरेशन का उपयोग करें।",
+  "android_manual_install_title": "मैनुअल इंस्टॉल",
+  "android_manual_install_description": "Android पर eSIM ऑटो-इंस्टॉल फिलहाल उपलब्ध नहीं है। सक्रियण पूरा करने के लिए नीचे से एक विकल्प चुनें।",
+  "android_manual_install_link_label": "सक्रियण लिंक",
+  "android_manual_install_steps_title": "विकल्प 2 · लिंक उपयोग करें",
+  "android_manual_install_steps_body": "1. सेटिंग्स > कनेक्शंस > SIM मैनेजर (या नेटवर्क व इंटरनेट > SIMs) खोलें।\n2. \"eSIM जोड़ें\" या \"SIM डाउनलोड करें\" पर टैप करें।\n3. \"सक्रियण कोड दर्ज करें\" चुनें, लिंक चिपकाएँ और पुष्टि करें।",
+  "android_manual_install_link_tip": "सुझाव: \"सक्रियण कोड दर्ज करें\" विकल्प अक्सर QR स्कैन के पीछे छिपा होता है.",
+  "android_manual_install_open_settings": "eSIM सेटिंग्स खोलें",
+  "android_manual_install_close": "बंद करें",
+  "android_manual_install_option_qr_title": "विकल्प 1 · QR स्कैन करें",
+  "android_manual_install_option_qr_steps": "1. कैमरा या QR स्कैनर खोलें।\n2. इसे प्राप्त QR पर रखें।\n3. eSIM लगाने के निर्देशों का पालन करें।\nटिप: कुछ फोन में स्कैनर कैमरा > More या क्विक टॉगल्स में मिलता है.",
 }

@@ -17,6 +17,7 @@ import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
+import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/validation_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view.dart";
@@ -63,6 +64,21 @@ class MyESimViewModel extends BaseModel {
 
   void notificationsButtonTapped() {
     unawaited(navigationService.navigateTo(NotificationsView.routeName));
+  }
+
+  Future<void> copyToClipboard(String text) async {
+    if (isBusy) {
+      return;
+    }
+    copyText(text);
+  }
+
+  Future<void> openAndroidEsimSettings() async {
+    try {
+      await locator<FlutterChannelHandlerService>().openSimProfilesSettings();
+    } on Object catch (ex) {
+      showNativeErrorMessage("", ex.toString().replaceAll("Exception:", ""));
+    }
   }
 
   Future<void> onTopUpClick({required int index}) async {
@@ -160,7 +176,19 @@ class MyESimViewModel extends BaseModel {
       _state.showInstallButton = false;
       notifyListeners();
       isInstallationFailed = true;
-      showNativeErrorMessage("", ex.toString().replaceAll("Exception:", ""));
+      
+      // Provide user-friendly error message
+      String errorMsg = ex.toString().replaceAll("Exception:", "").trim();
+      
+      // Check for specific error types and provide helpful guidance
+      if (errorMsg.contains("No Activity found") || errorMsg.contains("not supported")) {
+        errorMsg = "Your device doesn't support automatic eSIM installation. Please:\n\n"
+            "1. Go to Settings > Network & Internet > SIMs\n"
+            "2. Tap 'Add eSIM' or 'Download a SIM instead'\n"
+            "3. Scan the QR code shown in the app";
+      }
+      
+      showNativeErrorMessage("", errorMsg);
     }
   }
 

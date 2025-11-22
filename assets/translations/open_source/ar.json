@@ -471,5 +471,15 @@
   "payment_preparing": "جاري تحضير الدفع...",
   "payment_error_unknown": "خطأ غير معروف. يرجى المحاولة مرة أخرى.",
   "device_security_notice_title": "إشعار أمني",
-  "device_security_notice_message": "لأسباب أمنية، لا يمكن تشغيل هذا التطبيق على الأجهزة المكسورة الحماية أو في وضع المطور. يرجى استخدام تكوين جهاز قياسي."
+  "device_security_notice_message": "لأسباب أمنية، لا يمكن تشغيل هذا التطبيق على الأجهزة المكسورة الحماية أو في وضع المطور. يرجى استخدام تكوين جهاز قياسي.",
+  "android_manual_install_title": "تثبيت يدوي",
+  "android_manual_install_description": "التثبيت التلقائي لـ eSIM غير متاح حاليًا على Android. اختر إحدى الطرق أدناه لإكمال التفعيل.",
+  "android_manual_install_link_label": "رابط التفعيل",
+  "android_manual_install_steps_title": "الخيار 2 · استخدم الرابط",
+  "android_manual_install_steps_body": "1. افتح الإعدادات > الاتصالات > مدير الشرائح (أو الشبكة والإنترنت > شرائح SIM).\n2. اضغط \"إضافة eSIM\" أو \"تنزيل شريحة\".\n3. اختر \"إدخال رمز التفعيل\"، الصق الرابط ثم أكد.",
+  "android_manual_install_link_tip": "ملاحظة: قد يكون \"إدخال رمز التفعيل\" داخل خيار مسح QR.",
+  "android_manual_install_open_settings": "افتح إعدادات eSIM",
+  "android_manual_install_close": "إغلاق",
+  "android_manual_install_option_qr_title": "الخيار 1 · امسح رمز QR",
+  "android_manual_install_option_qr_steps": "1. افتح الكاميرا أو ماسح QR.\n2. وجّهها نحو رمز QR الذي وصلك.\n3. اتبع التعليمات لتثبيت eSIM.\nتلميح: قد يوجد الماسح داخل الكاميرا > المزيد أو لوحة الاختصارات."
 }

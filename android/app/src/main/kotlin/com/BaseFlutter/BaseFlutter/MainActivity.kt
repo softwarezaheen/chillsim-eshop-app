@@ -14,6 +14,7 @@ import com.BaseFlutter.BaseFlutter.managers.ESIMManager
 
 class MainActivity : FlutterFragmentActivity() {
     private val CHANNEL = "zaheen.esim.chillsim/flutter_to_native"
+    private var esimManager: ESIMManager? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -56,10 +57,20 @@ class MainActivity : FlutterFragmentActivity() {
         }
 
         val normalizedUri = normalizeLpaUri(rawCardData)
+        android.util.Log.d("eSIM", "Attempting to install eSIM with URI: $normalizedUri")
 
         try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                android.util.Log.d("eSIM", "Using ESIMManager for installation")
+                if (esimManager == null) {
+                    esimManager = ESIMManager(this)
+                }
+                esimManager?.installESIM(normalizedUri)
+                result.success(true)
+                return
+            }
+
             if (isShaExist) {
-                // SHA-based installer for OEM-specific codes
                 ESIMManager(this).installESIM(normalizedUri)
                 result.success(true)
                 return
@@ -135,5 +146,15 @@ class MainActivity : FlutterFragmentActivity() {
         val intent = Intent(Settings.ACTION_MANAGE_ALL_SIM_PROFILES_SETTINGS)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ESIMManager.REQUEST_CODE_ESIM_INSTALL) {
+            android.util.Log.d(
+                "eSIM",
+                "onActivityResult: requestCode=$requestCode resultCode=$resultCode"
+            )
+        }
     }
 }

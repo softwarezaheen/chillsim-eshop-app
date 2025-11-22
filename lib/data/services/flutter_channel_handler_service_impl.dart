@@ -61,7 +61,18 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
     bool isSHAExist = false,
   }) async {
     try {
-      String cardData = "LPA:1\$$smdpAddress\$$activationCode";
+      // Check if activation code already contains full LPA string
+      String cardData;
+      if (activationCode.toUpperCase().startsWith("LPA:1\$")) {
+        // Backend sent full LPA string, use it directly
+        cardData = activationCode;
+        log("Using full LPA string from backend: $cardData");
+      } else {
+        // Backend sent just the matching ID, construct full LPA string
+        cardData = "LPA:1\$$smdpAddress\$$activationCode";
+        log("Constructed LPA string: $cardData");
+      }
+      
       bool result = await flutterToNativePlatform.invokeMethod(
         "openEsimSetup",
         <String, String>{

@@ -462,5 +462,15 @@
   "payment_preparing": "Se pregătește plata...",
   "payment_error_unknown": "Eroare necunoscută. Încercați din nou.",
   "device_security_notice_title": "Notificare de Securitate",
-  "device_security_notice_message": "Din motive de securitate, această aplicație nu poate rula pe dispozitive rootate sau în modul dezvoltator. Vă rugăm să utilizați o configurație standard a dispozitivului."
+  "device_security_notice_message": "Din motive de securitate, această aplicație nu poate rula pe dispozitive rootate sau în modul dezvoltator. Vă rugăm să utilizați o configurație standard a dispozitivului.",
+  "android_manual_install_title": "Instalare manuală",
+  "android_manual_install_description": "Instalare automată eSIM indisponibilă momentan pe Android. Alege o opțiune de mai jos pentru a finaliza activarea.",
+  "android_manual_install_link_label": "Link de activare",
+  "android_manual_install_steps_title": "Opțiunea 2 · Folosește linkul",
+  "android_manual_install_steps_body": "1. Deschide Setări > Conexiuni > Manager SIM (sau Rețea și Internet > SIM-uri).\n2. Atinge „Adaugă eSIM” sau „Descarcă o SIM”.\n3. Selectează „Introdu codul de activare”, lipește linkul și confirmă.",
+  "android_manual_install_link_tip": "Sfat: „Introdu codul de activare” poate fi ascuns sub Scanare QR.",
+  "android_manual_install_open_settings": "Deschide setările eSIM",
+  "android_manual_install_close": "Închide",
+  "android_manual_install_option_qr_title": "Opțiunea 1 · Scanează codul QR",
+  "android_manual_install_option_qr_steps": "1. Deschide Camera sau scannerul QR.\n2. Îndreaptă-l spre codul primit.\n3. Urmează pașii de instalare.\nPont: unele telefoane ascund scannerul în Cameră > Mai multe sau în comenzi rapide."
 }

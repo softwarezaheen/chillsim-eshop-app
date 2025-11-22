@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
@@ -11,6 +12,7 @@ import "package:esim_open_source/presentation/views/base/base_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/e_sim_current_plan_item.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/e_sim_expired_plan_item.dart";
+import "package:esim_open_source/presentation/widgets/android_manual_install_sheet.dart";
 import "package:esim_open_source/presentation/widgets/custom_tab_view.dart";
 import "package:esim_open_source/presentation/widgets/empty_content.dart";
 import "package:esim_open_source/presentation/widgets/empty_state_list_view.dart";
@@ -175,8 +177,19 @@ class MyESimView extends StatelessWidget {
               onConsumptionClick: () async =>
                   viewModel.onConsumptionClick(index: index),
               onQrCodeClick: () async => viewModel.onQrCodeClick(index: index),
-              onInstallClick: () async =>
-                  viewModel.onInstallClick(index: index),
+              onInstallClick: () async {
+                if (Platform.isAndroid) {
+                  final String activationLink = _buildActivationLink(item);
+                  await AndroidManualInstallSheet.show(
+                    context: context,
+                    activationLink: activationLink,
+                    onCopy: () => viewModel.copyToClipboard(activationLink),
+                    onOpenSettings: viewModel.openAndroidEsimSettings,
+                  );
+                } else {
+                  await viewModel.onInstallClick(index: index);
+                }
+              },
               isLoading: viewModel.isBusy,
               onItemClick: () =>
                   unawaited(viewModel.onCurrentBundleClick(index: index)),
@@ -244,5 +257,14 @@ class MyESimView extends StatelessWidget {
         onRequestDataPlansTab,
       ),
     );
+  }
+
+  String _buildActivationLink(PurchaseEsimBundleResponseModel item) {
+    final String activationCode = item.activationCode ?? "";
+    if (activationCode.toUpperCase().startsWith("LPA:1\$")) {
+      return activationCode;
+    }
+    final String smdpAddress = item.smdpAddress ?? "";
+    return "LPA:1\$$smdpAddress\$$activationCode";
   }
 }

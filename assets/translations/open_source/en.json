@@ -471,5 +471,15 @@
   "payment_preparing": "Preparing payment...",
   "payment_error_unknown": "Unknown error. Please try again.",
   "device_security_notice_title": "Security Notice",
-  "device_security_notice_message": "For security reasons, this app cannot run on rooted devices or in developer mode. Please use a standard device configuration."
+  "device_security_notice_message": "For security reasons, this app cannot run on rooted devices or in developer mode. Please use a standard device configuration.",
+  "android_manual_install_title": "Manual installation",
+  "android_manual_install_description": "Automatic eSIM installs currently unavailable on Android. Choose one of the options below to finish activation.",
+  "android_manual_install_link_label": "Activation link",
+  "android_manual_install_steps_title": "Option 2 · Use the activation link",
+  "android_manual_install_steps_body": "1. Open Settings > Connections > SIM manager (or Network & Internet > SIMs).\n2. Tap 'Add eSIM' or 'Download a SIM instead'.\n3. Pick 'Enter activation code', paste the link below, then confirm.",
+  "android_manual_install_link_tip": "Tip: 'Enter activation code' may be hidden under QR code scanning.",
+  "android_manual_install_open_settings": "Open eSIM settings",
+  "android_manual_install_close": "Close",
+  "android_manual_install_option_qr_title": "Option 1 · Scan the QR code",
+  "android_manual_install_option_qr_steps": "1. Open your Camera or device QR scanner.\n2. Point it at the QR code received.\n3. Follow the prompts to install the eSIM.\nTip: Some phones hide the QR scanner inside the Camera > More menu or quick toggles."
 }

@@ -294,7 +294,7 @@
   "promo_code_removed_title": "Código promocional eliminado",
   "promo_code_removed_description": "El descuento ha sido eliminado de tu pedido",
   "promo_code_invalid_title": "Código promocional no válido",
-  "promo_code_invalid_description": "El código promocional ingresado no es válido",,
+  "promo_code_invalid_description": "El código promocional ingresado no es válido",
   "bundleDetails_planTypeText": "Tipo de Plan",
   "bundleDetails_activationPolicyText": "Política de Activación",
   "bundleDetails_emptyText": "Sin Datos Encontrados",
@@ -471,5 +471,15 @@
   "payment_preparing": "Preparando el pago...",
   "payment_error_unknown": "Error desconocido. Inténtalo de nuevo.",
   "device_security_notice_title": "Aviso de Seguridad",
-  "device_security_notice_message": "Por razones de seguridad, esta aplicación no puede ejecutarse en dispositivos rooteados o en modo desarrollador. Por favor, use una configuración de dispositivo estándar."
+  "device_security_notice_message": "Por razones de seguridad, esta aplicación no puede ejecutarse en dispositivos rooteados o en modo desarrollador. Por favor, use una configuración de dispositivo estándar.",
+  "android_manual_install_title": "Instalación manual",
+  "android_manual_install_description": "Instalación automática de eSIM no disponible actualmente en Android. Elige una opción para finalizar la activación.",
+  "android_manual_install_link_label": "Enlace de activación",
+  "android_manual_install_steps_title": "Opción 2 · Usa el enlace",
+  "android_manual_install_steps_body": "1. Abre Ajustes > Conexiones > Gestor SIM (o Red e Internet > SIM).\n2. Toca «Añadir eSIM» o «Descargar una SIM».\n3. Elige «Introducir código de activación», pega el enlace y confirma.",
+  "android_manual_install_link_tip": "Nota: «Introducir código de activación» puede estar tras Escanear QR.",
+  "android_manual_install_open_settings": "Abrir ajustes de eSIM",
+  "android_manual_install_close": "Cerrar",
+  "android_manual_install_option_qr_title": "Opción 1 · Escanea el código QR",
+  "android_manual_install_option_qr_steps": "1. Abre la Cámara o el lector QR.\n2. Apúntalo al QR recibido.\n3. Sigue las indicaciones para instalar.\nTip: En algunos móviles el lector está en Cámara > Más o en accesos rápidos."
 }

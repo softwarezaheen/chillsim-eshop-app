@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
@@ -10,6 +12,7 @@ import "package:esim_open_source/presentation/views/base/base_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_order_success/purchase_order_success_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/bundle_divider_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/circular_icon_button.dart";
+import "package:esim_open_source/presentation/widgets/android_manual_install_sheet.dart";
 import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
@@ -109,7 +112,21 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                           isEnabled: !viewModel.isBusy,
                           title: LocaleKeys.install.tr(),
                           titleTextStyle: bodyBoldTextStyle(context: context),
-                          onPressed: viewModel.onInstallClick,
+                          onPressed: () async {
+                            if (Platform.isAndroid) {
+                              await AndroidManualInstallSheet.show(
+                                context: context,
+                                activationLink: viewModel.state.qrCodeValue,
+                                onCopy: () => viewModel.copyToClipboard(
+                                  viewModel.state.qrCodeValue,
+                                ),
+                                onOpenSettings:
+                                    viewModel.openAndroidEsimSettings,
+                              );
+                            } else {
+                              await viewModel.onInstallClick();
+                            }
+                          },
                           themeColor: themeColor,
                           height: 53,
                           hideShadows: true,

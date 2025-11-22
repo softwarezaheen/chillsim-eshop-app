@@ -57,6 +57,14 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
     copyText(text);
   }
 
+  Future<void> openAndroidEsimSettings() async {
+    try {
+      await locator<FlutterChannelHandlerService>().openSimProfilesSettings();
+    } on Object catch (ex) {
+      showNativeErrorMessage("", ex.toString().replaceAll("Exception:", ""));
+    }
+  }
+
   Future<void> onShareClick() async {
     String path = await captureImage(
       globalKey: state.globalKey,

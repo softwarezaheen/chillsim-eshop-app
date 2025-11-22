@@ -471,5 +471,15 @@
   "payment_preparing": "Zahlung wird vorbereitet...",
   "payment_error_unknown": "Unbekannter Fehler. Bitte erneut versuchen.",
   "device_security_notice_title": "Sicherheitshinweis",
-  "device_security_notice_message": "Aus Sicherheitsgründen kann diese App nicht auf gerooteten Geräten oder im Entwicklermodus ausgeführt werden. Bitte verwenden Sie eine Standardgerätekonfiguration."
+  "device_security_notice_message": "Aus Sicherheitsgründen kann diese App nicht auf gerooteten Geräten oder im Entwicklermodus ausgeführt werden. Bitte verwenden Sie eine Standardgerätekonfiguration.",
+  "android_manual_install_title": "Manuelle Installation",
+  "android_manual_install_description": "Automatische eSIM-Installation derzeit auf Android nicht verfügbar. Wähle unten eine Option für den Abschluss.",
+  "android_manual_install_link_label": "Aktivierungslink",
+  "android_manual_install_steps_title": "Option 2 · Link nutzen",
+  "android_manual_install_steps_body": "1. Öffne Einstellungen > Verbindungen > SIM-Verwaltung (oder Netzwerk & Internet > SIMs).\n2. Tippe „eSIM hinzufügen“ oder „Stattdessen SIM laden“.\n3. Wähle „Aktivierungscode eingeben“, füge den Link ein und bestätige.",
+  "android_manual_install_link_tip": "Hinweis: „Aktivierungscode eingeben“ versteckt sich oft hinter „QR-Code scannen“.",
+  "android_manual_install_open_settings": "eSIM-Einstellungen öffnen",
+  "android_manual_install_close": "Schließen",
+  "android_manual_install_option_qr_title": "Option 1 · QR-Code scannen",
+  "android_manual_install_option_qr_steps": "1. Öffne Kamera oder QR-Scanner.\n2. Richte ihn auf den erhaltenen QR-Code.\n3. Folge den Installationshinweisen.\nTipp: Manche Geräte verstecken den Scanner in Kamera > Mehr oder den Schnellzugriffen."
 }
