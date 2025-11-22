@@ -21,7 +21,7 @@ import FBSDKCoreKit
         
         let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
         let simProfilesChannel = FlutterMethodChannel(
-            name: "com.luxe.esim/flutter_to_native",
+            name: "zaheen.esim.chillsim/flutter_to_native",
             binaryMessenger: controller.binaryMessenger
         )
         simProfilesChannel.setMethodCallHandler { [weak self] (call, result) in
