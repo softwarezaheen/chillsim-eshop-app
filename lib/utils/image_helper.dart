@@ -5,7 +5,6 @@ import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/display_message_helper.dart";
 import "package:flutter_image_compress/flutter_image_compress.dart";
 import "package:gallery_saver_plus/gallery_saver.dart";
-import "package:permission_handler/permission_handler.dart";
 import "package:share_plus/share_plus.dart";
 
 Future<XFile?> compressImage(File file) async {
@@ -52,31 +51,20 @@ Future<dynamic> saveImageToGallery({
   required String imagePath,
   String? toastMessage,
 }) async {
-  // Request permission first
-  PermissionStatus status = await Permission.photos.request();
+  // Android 10+ (API 29+): No permission needed for saving to MediaStore
+  // Android 9 and below: WRITE_EXTERNAL_STORAGE permission (handled by gallery_saver_plus)
+  // iOS: Photo library permission handled by gallery_saver_plus automatically
   
-  // If denied, check if we should show rationale or open settings
-  if (status.isDenied) {
-    DisplayMessageHelper.toast(
-      LocaleKeys.permission_required.tr(
-        namedArgs: <String, String>{"permission": "photos"},
-      ),
-    );
-    return;
-  }
-  
-  if (status.isPermanentlyDenied) {
-    DisplayMessageHelper.toast(
-      LocaleKeys.permission_required.tr(
-        namedArgs: <String, String>{"permission": "photos"},
-      ),
-    );
-    return;
-  }
-
-  // Permission granted, save the image
-  if (imagePath.isNotEmpty && status.isGranted) {
-    await GallerySaver.saveImage(imagePath);
-    DisplayMessageHelper.toast(toastMessage ?? LocaleKeys.image_saved.tr());
+  if (imagePath.isNotEmpty) {
+    try {
+      await GallerySaver.saveImage(imagePath);
+      DisplayMessageHelper.toast(toastMessage ?? LocaleKeys.image_saved.tr());
+    } catch (e) {
+      DisplayMessageHelper.toast(
+        LocaleKeys.permission_required.tr(
+          namedArgs: <String, String>{"permission": "storage"},
+        ),
+      );
+    }
   }
 }
