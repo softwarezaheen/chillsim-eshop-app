@@ -118,6 +118,8 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                               
                             ],
                           ),
+                          // Fee row - only show if feeEnabled is true
+                          if (viewModel.taxes?.feeEnabled ?? true)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -147,6 +149,8 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                               ),
                             ],
                           ),
+                          // VAT row - only show for exclusive mode
+                          if (viewModel.taxes?.taxMode == "exclusive")
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[

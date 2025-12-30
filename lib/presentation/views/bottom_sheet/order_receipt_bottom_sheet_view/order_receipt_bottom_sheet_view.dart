@@ -267,7 +267,9 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  if (viewModel.bundleOrderModel?.orderFee != null &&
+                                  // Fee row - only show if feeEnabled is true and fee > 0
+                                  if ((viewModel.bundleOrderModel?.feeEnabled ?? true) &&
+                                      viewModel.bundleOrderModel?.orderFee != null &&
                                       viewModel.bundleOrderModel!.orderFee! > 0)
                                     TableRow(
                                       children: <Widget>[
@@ -281,7 +283,9 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                  if (viewModel.bundleOrderModel?.orderVat != null &&
+                                  // VAT row - only show for exclusive mode and vat > 0
+                                  if (viewModel.bundleOrderModel?.taxMode == "exclusive" &&
+                                      viewModel.bundleOrderModel?.orderVat != null &&
                                       viewModel.bundleOrderModel!.orderVat! > 0)
                                     TableRow(
                                       children: <Widget>[
@@ -302,8 +306,12 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                         titleText: LocaleKeys
                                             .orderReceiptBottomSheet_total
                                             .tr(),
-                                        contentText:
-                                            "${((viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0) + (viewModel.bundleOrderModel?.orderVat ?? 0))} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
+                                        // Calculate total based on tax mode
+                                        // For exclusive mode: amount + fee + vat
+                                        // For inclusive/none: amount + fee (VAT already included)
+                                        contentText: viewModel.bundleOrderModel?.taxMode == "exclusive"
+                                            ? "${((viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0) + (viewModel.bundleOrderModel?.orderVat ?? 0))} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}"
+                                            : "${((viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0))} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
                                       ),
                                     ],
                                   ),

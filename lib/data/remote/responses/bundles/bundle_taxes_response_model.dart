@@ -15,6 +15,8 @@ class BundleTaxesResponseModel {
     this.currency,
     this.displayCurrency,
     this.exchangeRate,
+    this.taxMode,
+    this.feeEnabled,
   });
 
   factory BundleTaxesResponseModel.fromJson({dynamic json}) {
@@ -42,6 +44,8 @@ class BundleTaxesResponseModel {
       currency: json["currency"],
       displayCurrency: json["display_currency"],
       exchangeRate: json["exchange_rate"],
+      taxMode: json["tax_mode"] ?? "exclusive",  // inclusive, exclusive, none
+      feeEnabled: json["fee_enabled"] ?? true,
     );
   }
 
@@ -52,6 +56,8 @@ class BundleTaxesResponseModel {
   final String? currency;
   final String? displayCurrency;
   final double? exchangeRate;
+  final String? taxMode;  // "inclusive", "exclusive", "none"
+  final bool? feeEnabled;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         "fee": fee,
@@ -61,5 +67,7 @@ class BundleTaxesResponseModel {
         "currency": currency,
         "displayCurrency": displayCurrency,
         "exchangeRate": exchangeRate,
+        "tax_mode": taxMode,
+        "fee_enabled": feeEnabled,
       };
 }

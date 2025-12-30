@@ -25,6 +25,8 @@ class OrderHistoryResponseModel {
     this.paymentType,
     this.promoCode,
     this.bundleDetails,
+    this.taxMode,
+    this.feeEnabled,
   });
 
   factory OrderHistoryResponseModel.fromJson({dynamic json}) {
@@ -54,6 +56,8 @@ class OrderHistoryResponseModel {
           ? BundleResponseModel.fromJson(json: json["bundle_details"])
           : null,
       promoCode: json["promo_code"],
+      taxMode: json["tax_mode"] ?? "exclusive",  // inclusive, exclusive, none
+      feeEnabled: json["fee_enabled"] ?? true,
     );
   }
 
@@ -78,6 +82,8 @@ class OrderHistoryResponseModel {
   final String? paymentType;
   final BundleResponseModel? bundleDetails;
   final String? promoCode;
+  final String? taxMode;  // "inclusive", "exclusive", "none"
+  final bool? feeEnabled;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -102,6 +108,8 @@ class OrderHistoryResponseModel {
       "payment_type": paymentType,
       "bundle_details": bundleDetails?.toJson(),
       "promo_code": promoCode,
+      "tax_mode": taxMode,
+      "fee_enabled": feeEnabled,
     };
   }
 
