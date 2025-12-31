@@ -214,4 +214,19 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
       key: ConfigurationResponseKeys.clickIdExpiry,
     );
   }
+
+  @override
+  String get taxMode {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.taxMode,
+    );
+  }
+
+  @override
+  bool get feeEnabled {
+    String value = _getConfigData(
+      key: ConfigurationResponseKeys.feeEnabled,
+    );
+    return value.toLowerCase() == "true";
+  }
 }

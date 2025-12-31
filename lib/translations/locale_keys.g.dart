@@ -287,6 +287,12 @@ abstract class  LocaleKeys {
   static const bundleInfo_priceText_noPrice = 'bundleInfo_priceText_noPrice';
   static const bundleInfo_validityText = 'bundleInfo_validityText';
   static const bundleInfo_priceDisclaimerText = 'bundleInfo_priceDisclaimerText';
+  static const bundleInfo_priceDisclaimerText_inclusive_with_fees = 'bundleInfo_priceDisclaimerText_inclusive_with_fees';
+  static const bundleInfo_priceDisclaimerText_inclusive_no_fees = 'bundleInfo_priceDisclaimerText_inclusive_no_fees';
+  static const bundleInfo_priceDisclaimerText_exclusive_with_fees = 'bundleInfo_priceDisclaimerText_exclusive_with_fees';
+  static const bundleInfo_priceDisclaimerText_exclusive_no_fees = 'bundleInfo_priceDisclaimerText_exclusive_no_fees';
+  static const bundleInfo_priceDisclaimerText_none_with_fees = 'bundleInfo_priceDisclaimerText_none_with_fees';
+  static const bundleInfo_priceDisclaimerText_none_no_fees = 'bundleInfo_priceDisclaimerText_none_no_fees';
   static const supportedCountries_tittleText = 'supportedCountries_tittleText';
   static const supportedCountries_card_tittleText = 'supportedCountries_card_tittleText';
   static const promoCodeView_titleText = 'promoCodeView_titleText';
@@ -330,6 +336,7 @@ abstract class  LocaleKeys {
   static const compatibleSheet_contentText1 = 'compatibleSheet_contentText1';
   static const compatibleSheet_contentText2 = 'compatibleSheet_contentText2';
   static const payment_success = 'payment_success';
+  static const stripe_security_message = 'stripe_security_message';
   static const the_qr_code_was_sent = 'the_qr_code_was_sent';
   static const gotoMyESim = 'gotoMyESim';
   static const installYourESim = 'installYourESim';

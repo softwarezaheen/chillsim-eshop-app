@@ -377,6 +377,13 @@ class StripePayment {
 
       // 3. display the payment sheet.
       log("📱 Step 3: Presenting Payment Sheet...");
+      log("═══════════════════════════════════════");
+      log("🔒 SECURE PAYMENT INFORMATION");
+      log("═══════════════════════════════════════");
+      log("   ✓ Payments are securely processed via Stripe.com");
+      log("   ✓ ChillSim does not store your card details");
+      log("   ✓ View Stripe's privacy policy: https://stripe.com/privacy");
+      log("═══════════════════════════════════════");
       await Stripe.instance.presentPaymentSheet();
       
       log("═══════════════════════════════════════");

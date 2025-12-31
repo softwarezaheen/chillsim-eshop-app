@@ -15,7 +15,9 @@ enum ConfigurationResponseKeys {
   cashbackOrdersThreshold,
   cashbackPercentage,
   clickIdExpiry,
-  zenminutesUrl;
+  zenminutesUrl,
+  taxMode,
+  feeEnabled;
 
   String get configurationKeyValue {
     switch (this) {
@@ -45,6 +47,10 @@ enum ConfigurationResponseKeys {
         return "click_id_expiry";
       case ConfigurationResponseKeys.zenminutesUrl:
         return "zenminutes_landing";
+      case ConfigurationResponseKeys.taxMode:
+        return "tax_mode";
+      case ConfigurationResponseKeys.feeEnabled:
+        return "fee_enabled";
     }
   }
 }

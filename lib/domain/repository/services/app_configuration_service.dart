@@ -14,4 +14,6 @@ abstract class AppConfigurationService {
   String get cashbackPercentage;
   String get clickIdExpiry;
   String get getZenminutesUrl;
+  String get taxMode;
+  bool get feeEnabled;
 }

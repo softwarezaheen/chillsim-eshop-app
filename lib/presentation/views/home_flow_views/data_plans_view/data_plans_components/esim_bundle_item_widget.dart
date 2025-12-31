@@ -8,6 +8,7 @@ import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/supported_countries_widget.dart";
 import "package:esim_open_source/presentation/widgets/unlimited_data_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:esim_open_source/utils/price_disclaimer_helper.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -158,9 +159,9 @@ class EsimBundleWidget extends StatelessWidget {
 
               const SizedBox(height: 15),
 
-              // Disclaimer Text
+              // Disclaimer Text - Dynamic based on tax_mode and fee_enabled
               Text(
-                LocaleKeys.bundleInfo_priceDisclaimerText.tr(),
+                PriceDisclaimerHelper.getPriceDisclaimerText(),
                 style: captionTwoNormalTextStyle(
                   context: context,
                   fontColor: secondaryTextColor(context: context),
