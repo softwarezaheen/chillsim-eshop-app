@@ -81,9 +81,10 @@ class MyESimViewModel extends BaseModel {
     }
   }
 
-  Future<void> onTopUpClick({required int index}) async {
-    PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
-
+  /// Performs the top-up flow for a given bundle item.
+  /// This method accepts the bundle directly to avoid index/list mismatch bugs
+  /// when called from different list contexts (current vs expired).
+  Future<void> _performTopUp(PurchaseEsimBundleResponseModel item) async {
     // Step 1: Show billing info bottom sheet
     SheetResponse<EmptyBottomSheetResponse>? billingSheetResponse =
         await bottomSheetService.showCustomSheet(
@@ -94,7 +95,7 @@ class MyESimViewModel extends BaseModel {
         null,
         null,
       ),
-    );    
+    );
 
     if (billingSheetResponse?.confirmed ?? false) {
       SheetResponse<MainBottomSheetResponse>? sheetResponse =
@@ -117,9 +118,14 @@ class MyESimViewModel extends BaseModel {
             imagePath: EnvironmentImages.compatibleIcon.fullImagePath,
           ),
         );
-    }
+      }
       refreshCurrentPlans();
     }
+  }
+
+  Future<void> onTopUpClick({required int index}) async {
+    PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+    await _performTopUp(item);
   }
 
   Future<void> onConsumptionClick({required int index}) async {
@@ -136,8 +142,8 @@ class MyESimViewModel extends BaseModel {
     );
 
     if (!(sheetResponse?.data?.canceled ?? true) &&
-        sheetResponse?.data?.tag == "top-up") {
-      onTopUpClick(index: index);
+        sheetResponse?.data?.tag == "top_up") {
+      await _performTopUp(item);
     }
   }
 
@@ -176,18 +182,20 @@ class MyESimViewModel extends BaseModel {
       _state.showInstallButton = false;
       notifyListeners();
       isInstallationFailed = true;
-      
+
       // Provide user-friendly error message
       String errorMsg = ex.toString().replaceAll("Exception:", "").trim();
-      
+
       // Check for specific error types and provide helpful guidance
-      if (errorMsg.contains("No Activity found") || errorMsg.contains("not supported")) {
-        errorMsg = "Your device doesn't support automatic eSIM installation. Please:\n\n"
+      if (errorMsg.contains("No Activity found") ||
+          errorMsg.contains("not supported")) {
+        errorMsg =
+            "Your device doesn't support automatic eSIM installation. Please:\n\n"
             "1. Go to Settings > Network & Internet > SIMs\n"
             "2. Tap 'Add eSIM' or 'Download a SIM instead'\n"
             "3. Scan the QR code shown in the app";
       }
-      
+
       showNativeErrorMessage("", errorMsg);
     }
   }
@@ -235,7 +243,7 @@ class MyESimViewModel extends BaseModel {
     if (!(sheetResponse?.data?.canceled ?? false)) {
       String tag = sheetResponse?.data?.tag ?? "";
       if (tag == "top_up") {
-        onTopUpClick(index: index);
+        await _performTopUp(item);
       }
     }
   }
@@ -256,7 +264,7 @@ class MyESimViewModel extends BaseModel {
     if (!(sheetResponse?.data?.canceled ?? false)) {
       String tag = sheetResponse?.data?.tag ?? "";
       if (tag == "top_up") {
-        onTopUpClick(index: index);
+        await _performTopUp(item);
       }
     }
   }

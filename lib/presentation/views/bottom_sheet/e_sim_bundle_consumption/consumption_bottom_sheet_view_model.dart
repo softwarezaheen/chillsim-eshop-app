@@ -47,7 +47,7 @@ class ConsumptionBottomSheetViewModel extends EsimBaseModel {
       SheetResponse<MainBottomSheetResponse>(
         data: const MainBottomSheetResponse(
           canceled: false,
-          tag: "top-up",
+          tag: "top_up",
         ),
       ),
     );

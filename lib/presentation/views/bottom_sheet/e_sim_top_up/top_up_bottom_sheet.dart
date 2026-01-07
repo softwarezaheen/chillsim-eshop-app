@@ -120,7 +120,8 @@ class TopUpBottomSheet extends StatelessWidget {
         BundleResponseModel item = viewModel.bundleItems[index];
         return EsimBundleTopUpWidget(
           taxes: viewModel.bundleTaxes[item.bundleCode],
-          isTaxesLoading: viewModel.loadingTaxesBundleCodes.contains(item.bundleCode),
+          isTaxesLoading:
+              viewModel.loadingTaxesBundleCodes.contains(item.bundleCode),
           priceButtonText: "${item.priceDisplay} - Buy Now",
           title: item.bundleName ?? "",
           data: item.gprsLimitDisplay ?? "",
@@ -181,6 +182,69 @@ class EsimBundleTopUpWidget extends StatelessWidget {
   final bool showUnlimitedData;
   final String icon;
   final VoidCallback onPriceButtonClick;
+
+  /// Builds the tax display text based on taxMode and feeEnabled settings.
+  /// - Fee is only shown if feeEnabled is true
+  /// - VAT is only shown if taxMode is "exclusive"
+  String _buildTaxDisplayText(BundleTaxesResponseModel taxes) {
+    final bool hasDifferentCurrency = taxes.currency != taxes.displayCurrency &&
+        taxes.exchangeRate != null &&
+        taxes.exchangeRate != 0;
+    final bool showFee = taxes.feeEnabled ?? true;
+    final bool showVat = taxes.taxMode == "exclusive";
+
+    // Build the included items list based on conditions
+    final List<String> includedItems = <String>[];
+
+    if (showFee) {
+      final String feeAmount = hasDifferentCurrency
+          ? ((taxes.fee ?? 0) / (taxes.exchangeRate ?? 1) / 100)
+              .toStringAsFixed(2)
+          : ((taxes.fee ?? 0) / 100).toStringAsFixed(2);
+      final String feeCurrency = hasDifferentCurrency
+          ? (taxes.displayCurrency ?? "")
+          : (taxes.displayCurrency ?? "");
+      includedItems.add(
+          "$feeAmount $feeCurrency ${LocaleKeys.bundle_processing_fee.tr()}");
+    }
+
+    if (showVat) {
+      final String vatAmount = hasDifferentCurrency
+          ? ((taxes.vat ?? 0) / (taxes.exchangeRate ?? 1) / 100)
+              .toStringAsFixed(2)
+          : ((taxes.vat ?? 0) / 100).toStringAsFixed(2);
+      final String vatCurrency = hasDifferentCurrency
+          ? (taxes.displayCurrency ?? "")
+          : (taxes.displayCurrency ?? "");
+      includedItems
+          .add("$vatAmount $vatCurrency ${LocaleKeys.bundle_vat_amount.tr()}");
+    }
+
+    // Build total amount display
+    final String totalAmount = hasDifferentCurrency
+        ? ((taxes.total ?? 0) / (taxes.exchangeRate ?? 1) / 100)
+            .toStringAsFixed(2)
+        : ((taxes.total ?? 0) / 100).toStringAsFixed(2);
+    final String totalCurrency = hasDifferentCurrency
+        ? (taxes.displayCurrency ?? "")
+        : (taxes.displayCurrency ?? "");
+
+    // If there are included items, show them in parentheses
+    if (includedItems.isNotEmpty) {
+      String result =
+          "${LocaleKeys.bundle_total_amount.tr()}: $totalAmount $totalCurrency (incl. ${includedItems.join(", ")}";
+      // Add original currency total if different currencies
+      if (hasDifferentCurrency) {
+        result +=
+            ", ${((taxes.total ?? 0) / 100).toStringAsFixed(2)} ${taxes.currency ?? ""} ${LocaleKeys.bundle_total_amount.tr()}";
+      }
+      result += ")";
+      return result;
+    } else {
+      // No fee or VAT to show - just display the total
+      return "${LocaleKeys.bundle_total_amount.tr()}: $totalAmount $totalCurrency";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -258,11 +322,7 @@ class EsimBundleTopUpWidget extends StatelessWidget {
               ),
             ] else if (taxes != null && taxes?.total != null) ...[
               Text(
-                (taxes?.currency != taxes?.displayCurrency && 
-                  taxes?.exchangeRate != null &&
-                  taxes?.exchangeRate != 0)
-                    ? "${LocaleKeys.bundle_total_amount.tr()}: ${((taxes?.total! ?? 0) / (taxes?.exchangeRate! ?? 1)/ 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} (incl. ${((taxes?.fee! ?? 0) / (taxes?.exchangeRate! ?? 1) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_processing_fee.tr()}, ${((taxes?.vat! ?? 0) / (taxes?.exchangeRate! ?? 1) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_vat_amount.tr()}, ${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.currency ?? ""} ${LocaleKeys.bundle_total_amount.tr()})"
-                    : "${LocaleKeys.bundle_total_amount.tr()}: ${((taxes?.total! ?? 0)/100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} (incl. ${((taxes?.fee ?? 0)/100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_processing_fee.tr()}, ${((taxes?.vat ?? 0)/100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""} ${LocaleKeys.bundle_vat_amount.tr()})",
+                _buildTaxDisplayText(taxes!),
                 style: captionTwoNormalTextStyle(
                   context: context,
                   fontColor: contentTextColor(context: context),
@@ -276,18 +336,19 @@ class EsimBundleTopUpWidget extends StatelessWidget {
                 MainButton(
                   hideShadows: true,
                   horizontalPadding: 12,
-                  title:
-                    (taxes?.currency != taxes?.displayCurrency && 
-                    taxes?.exchangeRate != null &&
-                    taxes?.exchangeRate != 0) ?
-                      LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
-                        "price": "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.currency ?? ""}",
-                      })
-                      : (( taxes != null && taxes?.total != null) ?
-                        LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
-                          "price": "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""}",
+                  title: (taxes?.currency != taxes?.displayCurrency &&
+                          taxes?.exchangeRate != null &&
+                          taxes?.exchangeRate != 0)
+                      ? LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
+                          "price":
+                              "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.currency ?? ""}",
                         })
-                        : priceButtonText),
+                      : ((taxes != null && taxes?.total != null)
+                          ? LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
+                              "price":
+                                  "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""}",
+                            })
+                          : priceButtonText),
                   themeColor: themeColor,
                   onPressed: isTaxesLoading ? () {} : onPriceButtonClick,
                   enabledTextColor:
