@@ -45,40 +45,32 @@ class ProfileView extends StatelessWidget {
                 context: context,
                 viewModel: viewModel,
               ),
-              // verticalSpaceMediumLarge,
-              // Align(
-              //   alignment: Alignment.centerLeft,
-              //   child: Text(
-              //     LocaleKeys.profile_settings.tr(),
-              //     style:
-              //         mainPlaceHolderTitleTextStyle(context: context).copyWith(
-              //       fontSize: 14,
-              //     ),
-              //   ),
-              // ),
-              // verticalSpaceSmall,
+              verticalSpaceMediumLarge,
               Expanded(
-                child: ListView.separated(
+                child: GridView.builder(
                   shrinkWrap: true,
-                  itemCount: ProfileViewSections.values.length,
-                  separatorBuilder: (
-                    BuildContext context,
-                    int index,
-                  ) =>
-                      profileSectionSeparationView(
-                    context,
-                    viewModel,
-                    ProfileViewSections.values[index],
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                   ),
+                  itemCount: ProfileViewSections.values
+                      .where((section) => !section.isViewHidden(viewModel))
+                      .length,
                   itemBuilder: (
                     BuildContext context,
                     int index,
-                  ) =>
-                      profileSectionView(
-                    context,
-                    viewModel,
-                    ProfileViewSections.values[index],
-                  ),
+                  ) {
+                    final visibleSections = ProfileViewSections.values
+                        .where((section) => !section.isViewHidden(viewModel))
+                        .toList();
+                    return profileSectionView(
+                      context,
+                      viewModel,
+                      visibleSections[index],
+                    );
+                  },
                 ),
               ),
               PaddingWidget.applySymmetricPadding(
@@ -103,81 +95,50 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget profileSectionSeparationView(
-    BuildContext context,
-    ProfileViewModel viewModel,
-    ProfileViewSections section,
-  ) {
-    if (section.isViewHidden(viewModel) || section.isHeaderTitle) {
-      return const SizedBox.shrink();
-    } else {
-      return Divider(
-        color: greyBackGroundColor(context: context),
-      );
-    }
-  }
-
   Widget profileSectionView(
     BuildContext context,
     ProfileViewModel viewModel,
     ProfileViewSections section,
   ) {
-    if (section.isViewHidden(viewModel)) {
-      return const SizedBox.shrink();
-    } else if (section.isHeaderTitle) {
-      return Column(
-        children: <Widget>[
-          verticalSpaceMediumLarge,
-          Text(
-            section.sectionTitle,
-            style: captionOneNormalTextStyle(
-              context: context,
-              fontColor: titleTextColor(context: context),
-            ),
-          ).textSupportsRTL(context),
-          verticalSpaceSmall,
-        ],
-      );
-    } else {
-      return GestureDetector(
-        onTap: () async {
-          section.tapAction(context, viewModel);
-        },
-        child: ColoredBox(
-          color: Colors.transparent,
-          child: PaddingWidget.applySymmetricPadding(
-            vertical: 15,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Image.asset(
-                      section.sectionImagePath,
-                      width: 15,
-                      height: 15,
-                    ),
-                    horizontalSpaceSmall,
-                    Text(
-                      section.sectionTitle,
-                      style: bodyNormalTextStyle(
-                        context: context,
-                        fontColor: bubbleCountryTextColor(context: context),
-                      ),
-                    ),
-                  ],
-                ),
-                Image.asset(
-                  EnvironmentImages.darkArrowRight.fullImagePath,
-                  width: 15,
-                  height: 15,
-                ).imageSupportsRTL(context),
-              ],
-            ),
+    return GestureDetector(
+      onTap: () async {
+        section.tapAction(context, viewModel);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: whiteBackGroundColor(context: context),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: greyBackGroundColor(context: context),
+            width: 1,
           ),
         ),
-      );
-    }
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              section.sectionImagePath,
+              width: 32,
+              height: 32,
+            ),
+            verticalSpaceTiny,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                section.sectionTitle,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: captionOneNormalTextStyle(
+                  context: context,
+                  fontColor: bubbleCountryTextColor(context: context),
+                ).copyWith(fontSize: 11),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget getTopTrialingWidget({

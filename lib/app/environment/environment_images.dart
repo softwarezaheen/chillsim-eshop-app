@@ -47,6 +47,7 @@ enum EnvironmentImages {
   //tab bar
   tabBarMyEsim,
   tabBarProfile,
+  tabBarCogwheel,
   tabBarDataPlans,
   //profile
   expandFaq,
@@ -61,6 +62,8 @@ enum EnvironmentImages {
   logout,
   orderHistory,
   profilePerson,
+  account,
+  rewards,
   termsAndConditions,
   userGuide,
   wallet,
@@ -133,6 +136,7 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.iosStep1:
       case EnvironmentImages.tabBarMyEsim:
       case EnvironmentImages.tabBarProfile:
+      case EnvironmentImages.tabBarCogwheel:
       case EnvironmentImages.tabBarDataPlans:
       case EnvironmentImages.aboutUs:
       case EnvironmentImages.accountInformation:
@@ -144,6 +148,8 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.logout:
       case EnvironmentImages.orderHistory:
       case EnvironmentImages.profilePerson:
+      case EnvironmentImages.account:
+      case EnvironmentImages.rewards:
       case EnvironmentImages.termsAndConditions:
       case EnvironmentImages.userGuide:
       case EnvironmentImages.wallet:
@@ -267,6 +273,7 @@ extension EnvironmentImagesExtension on EnvironmentImages {
         return "user_guide/$name";
       case EnvironmentImages.tabBarMyEsim:
       case EnvironmentImages.tabBarProfile:
+      case EnvironmentImages.tabBarCogwheel:
       case EnvironmentImages.tabBarDataPlans:
         return "tab_bar/$name";
       case EnvironmentImages.expandFaq:
@@ -281,6 +288,8 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.logout:
       case EnvironmentImages.orderHistory:
       case EnvironmentImages.profilePerson:
+      case EnvironmentImages.account:
+      case EnvironmentImages.rewards:
       case EnvironmentImages.termsAndConditions:
       case EnvironmentImages.userGuide:
       case EnvironmentImages.wallet:

@@ -207,7 +207,7 @@ class _MainTabPageState extends State<MainTabPage>
     }
 
     tabsIcons.add(
-      EnvironmentImages.tabBarProfile.fullImagePath,
+      EnvironmentImages.tabBarCogwheel.fullImagePath,
     );
 
     return tabsIcons;

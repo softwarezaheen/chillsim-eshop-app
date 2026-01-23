@@ -104,6 +104,7 @@ abstract class  LocaleKeys {
   static const profile_referAndEarn = 'profile_referAndEarn';
   static const profile_aboutUs = 'profile_aboutUs';
   static const profile_faq = 'profile_faq';
+  static const profile_help = 'profile_help';
   static const profile_contactUs = 'profile_contactUs';
   static const profile_termsConditions = 'profile_termsConditions';
   static const profile_privacySettings = 'profile_privacySettings';

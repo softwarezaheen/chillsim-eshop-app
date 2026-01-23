@@ -10,7 +10,9 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/notifications_view/notifications_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_view/account_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/contact_us_view/contact_us_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/help_view/help_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_data_view/dynamic_data_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_data_view/dynamic_data_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view.dart";
@@ -181,6 +183,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settingsName,
         viewToShow: const AccountInformationView(),
+      );
+
+    case AccountView.routeName:
+      return _getPageRoute(
+        routeName: settingsName,
+        viewToShow: const AccountView(),
+      );
+
+    case HelpView.routeName:
+      return _getPageRoute(
+        routeName: settingsName,
+        viewToShow: const HelpView(),
       );
 
     case MyWalletView.routeName:

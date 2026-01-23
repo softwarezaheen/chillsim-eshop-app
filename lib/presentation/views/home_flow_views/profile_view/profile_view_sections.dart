@@ -1,73 +1,49 @@
-import "dart:developer";
-
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
-import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
-import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
-import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_model.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/contact_us_view/contact_us_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_view/account_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_data_view/dynamic_data_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_data_view/dynamic_data_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/dynamic_selection_view/dynamic_selection_view_model.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/faq_view/faq_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/help_view/help_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_view/rewards_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
-import "package:stacked_services/stacked_services.dart";
 
 enum ProfileViewSections {
-  settingsHeader,
-  accountInformation,
-  myWallet,
+  // Main grid items (9 items max, some hidden when not logged in)
+  account,
+  installationGuide,
   orderHistory,
   rewards,
-  aboutUs,
-  faq,
-  contactUs,
-  termsAndConditions,
-  privacySettings,
-  userGuide,
+  myWallet,
   language,
   currency,
-  accountHeader,
-  logout,
-  deleteAccount;
+  help,
+  termsAndConditions;
 
   bool isViewHidden(ProfileViewModel viewModel) {
     switch (this) {
       case ProfileViewSections.currency:
         return !AppEnvironment.appEnvironmentHelper.enableCurrencySelection;
       case ProfileViewSections.myWallet:
-        if (viewModel.isUserLoggedIn &&
-            AppEnvironment.appEnvironmentHelper.enableWalletView) {
-          return false;
-        }
-        return true;
-      case ProfileViewSections.logout:
+        return !viewModel.isUserLoggedIn ||
+            !AppEnvironment.appEnvironmentHelper.enableWalletView;
       case ProfileViewSections.orderHistory:
-      case ProfileViewSections.accountHeader:
-      case ProfileViewSections.deleteAccount:
-      case ProfileViewSections.accountInformation:
-        if (viewModel.isUserLoggedIn) {
-          return false;
-        }
-        return true;
+        return !viewModel.isUserLoggedIn;
+      case ProfileViewSections.account:
+        return !viewModel.isUserLoggedIn;
       case ProfileViewSections.rewards:
-        if (viewModel.isUserLoggedIn &&
-            (AppEnvironment.appEnvironmentHelper.enableReferral ||
-             AppEnvironment.appEnvironmentHelper.enableCashBack ||
-             AppEnvironment.appEnvironmentHelper.enableRewardsHistory)) {
-          return false;
-        }
-        return true;
+        return !viewModel.isUserLoggedIn ||
+            (!AppEnvironment.appEnvironmentHelper.enableReferral &&
+             !AppEnvironment.appEnvironmentHelper.enableCashBack &&
+             !AppEnvironment.appEnvironmentHelper.enableRewardsHistory);
       case ProfileViewSections.language:
         return !AppEnvironment.appEnvironmentHelper.enableLanguageSelection;
       default:
@@ -75,166 +51,94 @@ enum ProfileViewSections {
     }
   }
 
-  bool get isHeaderTitle {
-    switch (this) {
-      case ProfileViewSections.accountHeader:
-      case ProfileViewSections.settingsHeader:
-        return true;
-      default:
-        return false;
-    }
-  }
+  bool get isHeaderTitle => false;
 
   String get sectionTitle {
     switch (this) {
-      case ProfileViewSections.settingsHeader:
-        return LocaleKeys.profile_settings.tr();
-      case ProfileViewSections.accountInformation:
-        return LocaleKeys.profile_accountInformation.tr();
-      case ProfileViewSections.myWallet:
-        return LocaleKeys.profile_myWallet.tr();
+      case ProfileViewSections.account:
+        return LocaleKeys.profile_account.tr();
+      case ProfileViewSections.installationGuide:
+        return LocaleKeys.profile_userGuide.tr();
       case ProfileViewSections.orderHistory:
         return LocaleKeys.profile_orderHistory.tr();
       case ProfileViewSections.rewards:
         return LocaleKeys.profile_rewards.tr();
-      case ProfileViewSections.aboutUs:
-        return LocaleKeys.profile_aboutUs.tr();
-      case ProfileViewSections.faq:
-        return LocaleKeys.profile_faq.tr();
-      case ProfileViewSections.contactUs:
-        return LocaleKeys.profile_contactUs.tr();
-      case ProfileViewSections.termsAndConditions:
-        return LocaleKeys.profile_termsConditions.tr();
-      case ProfileViewSections.privacySettings:
-        return LocaleKeys.profile_privacySettings.tr();
-      case ProfileViewSections.userGuide:
-        return LocaleKeys.profile_userGuide.tr();
+      case ProfileViewSections.myWallet:
+        return LocaleKeys.profile_myWallet.tr();
       case ProfileViewSections.language:
         return LocaleKeys.profile_language.tr();
       case ProfileViewSections.currency:
         return LocaleKeys.profile_currency.tr();
-      case ProfileViewSections.accountHeader:
-        return LocaleKeys.profile_account.tr();
-      case ProfileViewSections.logout:
-        return LocaleKeys.profile_logout.tr();
-      case ProfileViewSections.deleteAccount:
-        return LocaleKeys.profile_delete.tr();
+      case ProfileViewSections.help:
+        return LocaleKeys.profile_help.tr();
+      case ProfileViewSections.termsAndConditions:
+        return LocaleKeys.profile_termsConditions.tr();
     }
   }
 
   String get sectionImagePath => EnvironmentImages.values
       .firstWhere(
         (EnvironmentImages e) => e.name == _sectionImage,
-        orElse: () => EnvironmentImages.language,
+        orElse: () => EnvironmentImages.wallet,
       )
       .fullImagePath;
 
   String get _sectionImage {
     switch (this) {
-      case ProfileViewSections.settingsHeader:
-        return "";
-      case ProfileViewSections.accountInformation:
-        return "accountInformation";
-      case ProfileViewSections.myWallet:
-        return "wallet";
+      case ProfileViewSections.account:
+        return "account";
+      case ProfileViewSections.installationGuide:
+        return "userGuide";
       case ProfileViewSections.orderHistory:
         return "orderHistory";
       case ProfileViewSections.rewards:
-        return "walletReferEarn";
-      case ProfileViewSections.aboutUs:
-        return "aboutUs";
-      case ProfileViewSections.faq:
-        return "faq";
-      case ProfileViewSections.contactUs:
-        return "contactUs";
-      case ProfileViewSections.termsAndConditions:
-        return "termsAndConditions";
-      case ProfileViewSections.privacySettings:
-        return "privacySettings";
-      case ProfileViewSections.userGuide:
-        return "userGuide";
+        return "rewards";
+      case ProfileViewSections.myWallet:
+        return "wallet";
       case ProfileViewSections.language:
         return "language";
       case ProfileViewSections.currency:
         return "currency";
-      case ProfileViewSections.accountHeader:
-        return "";
-      case ProfileViewSections.logout:
-        return "logout";
-      case ProfileViewSections.deleteAccount:
-        return "deleteAccount";
+      case ProfileViewSections.help:
+        return "faq";
+      case ProfileViewSections.termsAndConditions:
+        return "termsAndConditions";
     }
   }
 
   Future<void> tapAction(BuildContext context, ProfileViewModel viewModel) async {
     switch (this) {
-      case ProfileViewSections.accountInformation:
-        viewModel.navigationService
-            .navigateTo(AccountInformationView.routeName);
-      case ProfileViewSections.myWallet:
-        viewModel.navigationService.navigateTo(MyWalletView.routeName);
-      case ProfileViewSections.faq:
-        viewModel.navigationService.navigateTo(FaqView.routeName);
-      case ProfileViewSections.contactUs:
-        viewModel.analyticsService
-            .logEvent(event: AnalyticEvent.contactUsClicked());
-        viewModel.navigationService.navigateTo(ContactUsView.routeName);
-      case ProfileViewSections.orderHistory:
-        viewModel.navigationService.navigateTo(OrderHistoryView.routeName);
-      case ProfileViewSections.rewards:
-        viewModel.navigationService.navigateTo(RewardsView.routeName);
-      case ProfileViewSections.aboutUs:
-        viewModel.navigationService.navigateTo(
-          DynamicDataView.routeName,
-          arguments: DynamicDataViewType.aboutUs,
-        );
-      case ProfileViewSections.termsAndConditions:
-        viewModel.navigationService.navigateTo(
-          DynamicDataView.routeName,
-          arguments: DynamicDataViewType.termsConditions,
-        );
-      case ProfileViewSections.privacySettings:
-        await ConsentInitializer.showConsentSettings(
-          context,
-        );
-      case ProfileViewSections.userGuide:
+      case ProfileViewSections.account:
+        viewModel.navigationService.navigateTo(AccountView.routeName);
+      case ProfileViewSections.installationGuide:
         viewModel.analyticsService
             .logEvent(event: AnalyticEvent.userGuideOpened());
         viewModel.navigationService.navigateTo(
           UserGuideView.routeName,
+        );
+      case ProfileViewSections.orderHistory:
+        viewModel.navigationService.navigateTo(OrderHistoryView.routeName);
+      case ProfileViewSections.rewards:
+        viewModel.navigationService.navigateTo(RewardsView.routeName);
+      case ProfileViewSections.myWallet:
+        viewModel.navigationService.navigateTo(MyWalletView.routeName);
+      case ProfileViewSections.language:
+        viewModel.navigationService.navigateTo(
+          DynamicSelectionView.routeName,
+          arguments: LanguagesDataSource(),
         );
       case ProfileViewSections.currency:
         viewModel.navigationService.navigateTo(
           DynamicSelectionView.routeName,
           arguments: CurrenciesDataSource(),
         );
-      case ProfileViewSections.language:
+      case ProfileViewSections.help:
+        viewModel.navigationService.navigateTo(HelpView.routeName);
+      case ProfileViewSections.termsAndConditions:
         viewModel.navigationService.navigateTo(
-          DynamicSelectionView.routeName,
-          arguments: LanguagesDataSource(),
+          DynamicDataView.routeName,
+          arguments: DynamicDataViewType.termsConditions,
         );
-      case ProfileViewSections.logout:
-        SheetResponse<EmptyBottomSheetResponse>? logoutResponse =
-            await viewModel.bottomSheetService.showCustomSheet(
-          enableDrag: false,
-          isScrollControlled: true,
-          variant: BottomSheetType.logout,
-        );
-        if (logoutResponse?.confirmed ?? false) {
-          await viewModel.logoutUser();
-        }
-      case ProfileViewSections.deleteAccount:
-        SheetResponse<EmptyBottomSheetResponse>? deleteAccountResponse =
-            await viewModel.bottomSheetService.showCustomSheet(
-          enableDrag: false,
-          isScrollControlled: true,
-          variant: BottomSheetType.deleteAccount,
-        );
-        if (deleteAccountResponse?.confirmed ?? false) {
-          await viewModel.logoutUser();
-        }
-      default:
-        log("Tapped $sectionTitle");
     }
   }
 }
