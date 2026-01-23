@@ -8,7 +8,6 @@ import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
-import "package:esim_open_source/domain/use_case/app/add_device_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/resend_otp_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/verify_otp_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
@@ -69,12 +68,32 @@ class VerifyLoginViewModel extends BaseModel {
         // This ensures FCM token is updated even when user loses authentication and logs back in
         // Without this, device may have stale/null FCM token if Firebase refreshed it while logged out
         try {
-          await locator<AddDeviceUseCase>().execute(NoParams());
+          await addDeviceUseCase.execute(NoParams());
           log("✅ Device re-registered with FCM token after OTP verification");
         } catch (e) {
           log("⚠️ Failed to re-register device after login: $e");
           // Don't fail login if device registration fails - user can still use app
         }
+        
+        // OTP flow: Prefer in-memory redirection (passed through navigation) over LocalStorage
+        // LocalStorage might have stale data from previous social media login attempt
+        InAppRedirection? restoredRedirection = redirection;
+        log("ℹ️ OTP Flow - In-memory redirection: ${redirection?.runtimeType ?? 'null'}");
+        
+        // Clear any stale pending redirection from LocalStorage (from previous social login)
+        try {
+          final String? staleRedirection = localStorageService.getString(
+            LocalStorageKeys.pendingRedirection,
+          );
+          if (staleRedirection != null) {
+            await localStorageService.remove(LocalStorageKeys.pendingRedirection);
+            log("🗑️ Cleared stale pending redirection from previous session");
+          }
+        } catch (e) {
+          log("⚠️ Failed to clear stale redirection: $e");
+        }
+        
+        log("📍 OTP Flow - Final redirection to use: ${restoredRedirection?.runtimeType ?? 'null (will go to home page)'}");
         
         String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
         analyticsService.logEvent(
@@ -83,7 +102,7 @@ class VerifyLoginViewModel extends BaseModel {
             platform: Platform.isAndroid ? "Android" : "iOS",
           ),
         );
-        await navigateToHomePager(redirection: redirection);
+        await navigateToHomePager(redirection: restoredRedirection);
       },
       onFailure: (Resource<AuthResponseModel> response) async {
         _errorMessage = LocaleKeys.verifyLogin_wrongCode.tr();

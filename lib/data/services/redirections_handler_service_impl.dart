@@ -320,12 +320,37 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
     required InAppRedirection redirection,
   }) async {
     if (redirection.variant != null) {
-      await bottomSheetService.showCustomSheet(
-        data: redirection.arguments,
-        enableDrag: false,
-        isScrollControlled: true,
-        variant: redirection.variant,
-      );
+      // Special handling for billingInfo (purchase flow) to ensure proper type casting
+      // and sequential bottom sheet display
+      if (redirection.variant == BottomSheetType.billingInfo) {
+        final PurchaseBundleBottomSheetArgs args =
+            redirection.arguments as PurchaseBundleBottomSheetArgs;
+        
+        // Step 1: Show billing info bottom sheet
+        SheetResponse<EmptyBottomSheetResponse>? billingSheetResponse =
+            await bottomSheetService.showCustomSheet<EmptyBottomSheetResponse, PurchaseBundleBottomSheetArgs>(
+          data: args,
+          isScrollControlled: true,
+          variant: BottomSheetType.billingInfo,
+        );
+
+        // Step 2: If billing confirmed, show bundle details bottom sheet
+        if (billingSheetResponse?.confirmed ?? false) {
+          await bottomSheetService.showCustomSheet<EmptyBottomSheetResponse, PurchaseBundleBottomSheetArgs>(
+            data: args,
+            enableDrag: false,
+            isScrollControlled: true,
+            variant: BottomSheetType.bundleDetails,
+          );
+        }
+      } else {
+        await bottomSheetService.showCustomSheet(
+          data: redirection.arguments,
+          enableDrag: false,
+          isScrollControlled: true,
+          variant: redirection.variant,
+        );
+      }
       return;
     }
     navigationService.navigateTo(

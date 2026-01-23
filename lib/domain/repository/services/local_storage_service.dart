@@ -11,7 +11,8 @@ enum LocalStorageKeys {
   appLanguage("appLanguage"),
   utm("utm"),
   affiliateClickId("affiliateClickId"),
-  affiliateClickIdExpiry("affiliateClickIdExpiry");
+  affiliateClickIdExpiry("affiliateClickIdExpiry"),
+  pendingRedirection("pendingRedirection");
 
   const LocalStorageKeys(this.value);
 

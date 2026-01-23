@@ -113,6 +113,14 @@ class BaseModel extends ReactiveViewModel
     await userAuthenticationService.clearUserInfo();
     locator<SocialLoginService>().logOut();
     addDeviceUseCase.execute(NoParams());
+    
+    // Clear any pending redirection from purchase flow
+    // This prevents stale redirection data from previous session
+    try {
+      await localStorageService.remove(LocalStorageKeys.pendingRedirection);
+    } catch (e) {
+      // Silent fail - not critical if this fails
+    }
   }
 
   void hideKeyboard() {

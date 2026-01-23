@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:convert";
 import "dart:developer";
 import "dart:io";
 
@@ -8,7 +9,6 @@ import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
-import "package:esim_open_source/domain/use_case/app/add_device_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/social_media_verify_login_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
@@ -31,6 +31,22 @@ class LoginViewModel extends BaseModel {
   void onViewModelReady() {
     super.onViewModelReady();
     unawaited(initializeListener());
+    
+    // Restore pending redirection if LoginView was recreated after external auth
+    // This happens when deep link brings user back to app after Facebook/Apple login
+    if (redirection == null) {
+      try {
+        final String? redirectionJson = localStorageService.getString(
+          LocalStorageKeys.pendingRedirection,
+        );
+        if (redirectionJson != null) {
+          redirection = InAppRedirection.fromJson(redirectionJson);
+          log("🔄 Restored pending redirection in LoginView after deep link return");
+        }
+      } catch (e) {
+        log("⚠️ Failed to restore pending redirection in onViewModelReady: $e");
+      }
+    }
   }
 
   Future<void> initializeListener() async {
@@ -67,6 +83,14 @@ class LoginViewModel extends BaseModel {
   }
 
   Future<void> backButtonPressed() async {
+    // Clear pending redirection if user backs out of login
+    // Prevents stale purchase intent from previous session
+    try {
+      await localStorageService.remove(LocalStorageKeys.pendingRedirection);
+      log("🗑️ Cleared pending redirection on back navigation");
+    } catch (e) {
+      log("⚠️ Failed to clear pending redirection: $e");
+    }
     navigationService.back();
   }
 
@@ -81,6 +105,22 @@ class LoginViewModel extends BaseModel {
     SocialMediaLoginType socialMediaLoginType,
   ) async {
     _redirecting = false;
+    
+    // Save pending redirection before external auth (Facebook/Apple opens browser)
+    // This preserves the purchase flow context when user returns via deep link
+    if (redirection != null) {
+      try {
+        final String redirectionJson = jsonEncode(redirection!.toJson());
+        await localStorageService.setString(
+          LocalStorageKeys.pendingRedirection,
+          redirectionJson,
+        );
+        log("💾 Saved pending redirection before external auth");
+      } catch (e) {
+        log("⚠️ Failed to save pending redirection: $e");
+      }
+    }
+    
     switch (socialMediaLoginType) {
       case SocialMediaLoginType.apple:
         socialLoginService.signInWithApple();
@@ -135,11 +175,31 @@ class LoginViewModel extends BaseModel {
         // This ensures FCM token is updated even when user loses authentication and logs back in
         // Without this, device may have stale/null FCM token if Firebase refreshed it while logged out
         try {
-          await locator<AddDeviceUseCase>().execute(NoParams());
+          await addDeviceUseCase.execute(NoParams());
           log("✅ Device re-registered with FCM token after social login");
         } catch (e) {
           log("⚠️ Failed to re-register device after login: $e");
           // Don't fail login if device registration fails - user can still use app
+        }
+        
+        // ALWAYS check LocalStorage for pending redirection after social auth
+        // The in-memory redirection parameter may be stale after app went inactive during external auth
+        InAppRedirection? restoredRedirection;
+        try {
+          final String? redirectionJson = localStorageService.getString(
+            LocalStorageKeys.pendingRedirection,
+          );
+          if (redirectionJson != null) {
+            restoredRedirection = InAppRedirection.fromJson(redirectionJson);
+            await localStorageService.remove(LocalStorageKeys.pendingRedirection);
+            log("✅ Restored pending redirection from storage: ${restoredRedirection?.runtimeType}");
+          } else {
+            log("ℹ️ No pending redirection in storage, using in-memory: ${redirection?.runtimeType}");
+            restoredRedirection = redirection;
+          }
+        } catch (e) {
+          log("⚠️ Failed to restore pending redirection: $e, using in-memory fallback");
+          restoredRedirection = redirection;
         }
         
         String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
@@ -149,7 +209,10 @@ class LoginViewModel extends BaseModel {
             platform: Platform.isAndroid ? "Android" : "iOS",
           ),
         );
-        await navigateToHomePager(redirection: redirection);
+        
+        // Delay navigation to avoid setState during build
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+        await navigateToHomePager(redirection: restoredRedirection);
       },
       onFailure: (Resource<AuthResponseModel> response) async {
         await handleError(response);
