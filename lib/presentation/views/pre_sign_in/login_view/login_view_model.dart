@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:developer";
 import "dart:io";
 
 import "package:esim_open_source/app/app.locator.dart";
@@ -7,7 +8,9 @@ import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/repository/services/social_login_service.dart";
+import "package:esim_open_source/domain/use_case/app/add_device_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/social_media_verify_login_use_case.dart";
+import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
@@ -127,6 +130,18 @@ class LoginViewModel extends BaseModel {
           socialLoginService.logOut();
           return;
         }
+        
+        // 🔥 CRITICAL FIX: Re-register device with current FCM token after login
+        // This ensures FCM token is updated even when user loses authentication and logs back in
+        // Without this, device may have stale/null FCM token if Firebase refreshed it while logged out
+        try {
+          await locator<AddDeviceUseCase>().execute(NoParams());
+          log("✅ Device re-registered with FCM token after social login");
+        } catch (e) {
+          log("⚠️ Failed to re-register device after login: $e");
+          // Don't fail login if device registration fails - user can still use app
+        }
+        
         String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
         analyticsService.logEvent(
           event: AnalyticEvent.loginSuccess(
