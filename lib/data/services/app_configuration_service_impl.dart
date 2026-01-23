@@ -166,6 +166,13 @@ class AppConfigurationServiceImpl extends AppConfigurationService {
     );
   }
 
+  @override
+  String get priorityCountries {
+    return _getConfigData(
+      key: ConfigurationResponseKeys.priorityCountries,
+    );
+  }
+
   String _getConfigData({required ConfigurationResponseKeys key}) {
     return _configData
             ?.firstWhere(

@@ -17,7 +17,8 @@ enum ConfigurationResponseKeys {
   clickIdExpiry,
   zenminutesUrl,
   taxMode,
-  feeEnabled;
+  feeEnabled,
+  priorityCountries;
 
   String get configurationKeyValue {
     switch (this) {
@@ -51,6 +52,8 @@ enum ConfigurationResponseKeys {
         return "tax_mode";
       case ConfigurationResponseKeys.feeEnabled:
         return "fee_enabled";
+      case ConfigurationResponseKeys.priorityCountries:
+        return "PRIORITY_COUNTRIES";
     }
   }
 }

@@ -16,4 +16,5 @@ abstract class AppConfigurationService {
   String get getZenminutesUrl;
   String get taxMode;
   bool get feeEnabled;
+  String get priorityCountries;
 }

@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:developer";
 
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/app_environment.dart";
@@ -7,6 +8,7 @@ import "package:esim_open_source/data/remote/responses/bundles/country_response_
 import "package:esim_open_source/data/remote/responses/bundles/regions_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_user_notifications_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
@@ -104,9 +106,11 @@ class DataPlansViewModel extends BaseModel {
     //
     // setViewState(ViewState.busy);
 
+    log("📍 fetchInitialData - isBundleServicesLoading: $isBundleServicesLoading, countries count: ${countries?.length ?? 0}");
+
     _filteredCountries = isBundleServicesLoading
         ? CountryResponseModel.getMockCountries()
-        : countries ?? <CountryResponseModel>[];
+        : _sortCountriesByPriority(countries ?? <CountryResponseModel>[]);
     _filteredRegions = isBundleServicesLoading
         ? RegionsResponseModel.getMockRegions()
         : regions ?? <RegionsResponseModel>[];
@@ -129,7 +133,7 @@ class DataPlansViewModel extends BaseModel {
         _searchTextFieldController.text.trim().toLowerCase();
 
     if (searchQuery.isEmpty) {
-      _filteredCountries = List<CountryResponseModel>.from(
+      _filteredCountries = _sortCountriesByPriority(
         countries ?? <CountryResponseModel>[],
       );
       _filteredRegions =
@@ -295,6 +299,75 @@ class DataPlansViewModel extends BaseModel {
         notifyListeners();
       },
     );
+  }
+
+  /// Sorts countries with priority countries first (maintaining config order), 
+  /// then remaining countries alphabetically
+  List<CountryResponseModel> _sortCountriesByPriority(
+    List<CountryResponseModel> countryList,
+  ) {
+    // Get priority country codes from config (comma-separated ISO3 codes)
+    final String priorityCodesStr = 
+        locator<AppConfigurationService>().priorityCountries;
+    
+    log("🔍 Priority codes from config: '$priorityCodesStr'");
+    log("🔍 Total countries to sort: ${countryList.length}");
+    
+    if (priorityCodesStr.isEmpty) {
+      // No priority config - return alphabetically sorted list
+      log("⚠️ No priority countries configured, sorting alphabetically");
+      final List<CountryResponseModel> sorted = List.from(countryList);
+      sorted.sort((a, b) => 
+        (a.country ?? "").compareTo(b.country ?? "")
+      );
+      return sorted;
+    }
+
+    // Parse priority country codes (e.g., "TUR,USA,THA,ARE")
+    final List<String> priorityCodes = priorityCodesStr
+        .split(",")
+        .map((code) => code.trim().toUpperCase())
+        .where((code) => code.isNotEmpty)
+        .toList();
+
+    log("🔍 Parsed priority codes: $priorityCodes");
+
+    // Split countries into priority and non-priority
+    final List<CountryResponseModel> priorityCountries = [];
+    final List<CountryResponseModel> otherCountries = [];
+
+    for (final country in countryList) {
+      final String? iso3 = country.iso3Code?.toUpperCase();
+      if (iso3 != null && priorityCodes.contains(iso3)) {
+        priorityCountries.add(country);
+        log("✅ Priority country found: ${country.country} ($iso3)");
+      } else {
+        otherCountries.add(country);
+      }
+    }
+
+    log("📊 Priority countries: ${priorityCountries.length}, Other countries: ${otherCountries.length}");
+
+    // Sort priority countries by config order
+    priorityCountries.sort((a, b) {
+      final int indexA = priorityCodes.indexOf(a.iso3Code?.toUpperCase() ?? "");
+      final int indexB = priorityCodes.indexOf(b.iso3Code?.toUpperCase() ?? "");
+      return indexA.compareTo(indexB);
+    });
+
+    // Sort other countries alphabetically by name
+    otherCountries.sort((a, b) => 
+      (a.country ?? "").compareTo(b.country ?? "")
+    );
+
+    // Combine: priority first, then alphabetical
+    final List<CountryResponseModel> result = [...priorityCountries, ...otherCountries];
+    
+    if (result.isNotEmpty) {
+      log("📍 First 5 countries after sorting: ${result.take(5).map((c) => '${c.country} (${c.countryCode})').join(', ')}");
+    }
+    
+    return result;
   }
 
   @override
