@@ -447,14 +447,12 @@ abstract class  LocaleKeys {
   static const bundle_exchange_rate_disclaimer = 'bundle_exchange_rate_disclaimer';
   static const consentDialog_title = 'consentDialog_title';
   static const consentDialog_description = 'consentDialog_description';
-  static const consentDialog_essentialTitle = 'consentDialog_essentialTitle';
-  static const consentDialog_essentialDescription = 'consentDialog_essentialDescription';
+  static const consentDialog_necessaryTitle = 'consentDialog_necessaryTitle';
+  static const consentDialog_necessaryDescription = 'consentDialog_necessaryDescription';
   static const consentDialog_analyticsTitle = 'consentDialog_analyticsTitle';
   static const consentDialog_analyticsDescription = 'consentDialog_analyticsDescription';
   static const consentDialog_advertisingTitle = 'consentDialog_advertisingTitle';
   static const consentDialog_advertisingDescription = 'consentDialog_advertisingDescription';
-  static const consentDialog_personalizationTitle = 'consentDialog_personalizationTitle';
-  static const consentDialog_personalizationDescription = 'consentDialog_personalizationDescription';
   static const consentDialog_footerText = 'consentDialog_footerText';
   static const attGuidance_title = 'attGuidance_title';
   static const attGuidance_denied_message = 'attGuidance_denied_message';

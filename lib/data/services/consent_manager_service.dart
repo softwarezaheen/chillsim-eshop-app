@@ -8,7 +8,7 @@ import "package:shared_preferences/shared_preferences.dart";
 enum ConsentType {
   analytics,
   advertising,
-  personalization,
+  necessary, // Replaced personalization - always enabled for security/device tracking
   functional,
 }
 
@@ -17,22 +17,26 @@ class ConsentManagerService {
     return _instance;
   }
   ConsentManagerService._internal();
-  static final ConsentManagerService _instance = ConsentManagerService._internal();
+  static final ConsentManagerService _instance =
+      ConsentManagerService._internal();
   static ConsentManagerService get instance => _instance;
 
   static const String _keyAnalyticsConsent = "consent_analytics";
   static const String _keyAdvertisingConsent = "consent_advertising";
-  static const String _keyPersonalizationConsent = "consent_personalization";
+  static const String _keyNecessaryConsent =
+      "consent_necessary"; // Replaced personalization
   static const String _keyFunctionalConsent = "consent_functional";
   static const String _keyConsentTimestamp = "consent_timestamp";
   static const String _keyConsentVersion = "consent_version";
   static const String _keyConsentShown = "consent_shown";
-  static const String _keyHasUserSetConsent = "has_user_set_consent"; // CRITICAL FIX
+  static const String _keyHasUserSetConsent =
+      "has_user_set_consent"; // CRITICAL FIX
 
-  static const String currentConsentVersion = "1.0";
+  static const String currentConsentVersion = "2.0";
 
   // Stream for consent changes
-  final StreamController<Map<ConsentType, bool>> _consentController = StreamController<Map<ConsentType, bool>>.broadcast();
+  final StreamController<Map<ConsentType, bool>> _consentController =
+      StreamController<Map<ConsentType, bool>>.broadcast();
   Stream<Map<ConsentType, bool>> get consentStream => _consentController.stream;
 
   Future<void> initializeConsent() async {
@@ -44,21 +48,21 @@ class ConsentManagerService {
       // iOS: analytics defaults to FALSE (Apple ATT compliance)
       // Android: analytics defaults to TRUE (Google allows this)
       final bool defaultAnalytics = await _getDefaultAnalyticsConsent();
-      
+
       await _setFirebaseConsentMode(
         analytics: defaultAnalytics,
         advertising: false,
-        personalization: false,
+        necessary: true, // Always enabled for security/device tracking
         functional: true, // Always required for basic functionality
       );
-      
+
       log("[ConsentManager] Initialized default consent - analytics: $defaultAnalytics (iOS requires false until user consent)");
     } else {
       // Load existing consent
       await _loadAndApplyConsent();
     }
   }
-  
+
   /// Get platform-specific default analytics consent
   /// iOS: false (Apple ATT compliance - must request permission first)
   /// Android/Web: true (Google allows analytics by default)
@@ -80,7 +84,7 @@ class ConsentManagerService {
   Future<void> updateConsent({
     required bool analytics,
     required bool advertising,
-    required bool personalization,
+    required bool necessary,
     required bool functional,
   }) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -90,22 +94,23 @@ class ConsentManagerService {
     // Save consent preferences
     await prefs.setBool(_keyAnalyticsConsent, analytics);
     await prefs.setBool(_keyAdvertisingConsent, advertising);
-    await prefs.setBool(_keyPersonalizationConsent, personalization);
+    await prefs.setBool(_keyNecessaryConsent, necessary);
     await prefs.setBool(_keyFunctionalConsent, functional);
-    await prefs.setString(_keyConsentTimestamp, DateTime.now().toIso8601String());
+    await prefs.setString(
+        _keyConsentTimestamp, DateTime.now().toIso8601String());
     await prefs.setString(_keyConsentVersion, currentConsentVersion);
     await prefs.setBool(_keyConsentShown, true);
-    
+
     // CRITICAL FIX: Set explicit flag that user has set consent
     await prefs.setBool(_keyHasUserSetConsent, true);
-    
+
     log("[ConsentManager] Consent saved. hasUserSetConsent flag set to true");
 
     // Apply to Firebase
     await _setFirebaseConsentMode(
       analytics: analytics,
       advertising: advertising,
-      personalization: personalization,
+      necessary: necessary,
       functional: functional,
     );
 
@@ -113,7 +118,7 @@ class ConsentManagerService {
     final Map<ConsentType, bool> consentMap = <ConsentType, bool>{
       ConsentType.analytics: analytics,
       ConsentType.advertising: advertising,
-      ConsentType.personalization: personalization,
+      ConsentType.necessary: necessary,
       ConsentType.functional: functional,
     };
     _consentController.add(consentMap);
@@ -121,17 +126,19 @@ class ConsentManagerService {
 
   Future<Map<ConsentType, bool>> getConsentStatus() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
     // Get platform-specific default for analytics
     final bool defaultAnalytics = await _getDefaultAnalyticsConsent();
 
     final Map<ConsentType, bool> consent = <ConsentType, bool>{
-      ConsentType.analytics: prefs.getBool(_keyAnalyticsConsent) ?? defaultAnalytics,
+      ConsentType.analytics:
+          prefs.getBool(_keyAnalyticsConsent) ?? defaultAnalytics,
       ConsentType.advertising: prefs.getBool(_keyAdvertisingConsent) ?? false,
-      ConsentType.personalization: prefs.getBool(_keyPersonalizationConsent) ?? false,
+      ConsentType.necessary:
+          prefs.getBool(_keyNecessaryConsent) ?? true, // Always true by default
       ConsentType.functional: prefs.getBool(_keyFunctionalConsent) ?? true,
     };
-    
+
     return consent;
   }
 
@@ -151,7 +158,7 @@ class ConsentManagerService {
     await _setFirebaseConsentMode(
       analytics: consent[ConsentType.analytics]!,
       advertising: consent[ConsentType.advertising]!,
-      personalization: consent[ConsentType.personalization]!,
+      necessary: consent[ConsentType.necessary]!,
       functional: consent[ConsentType.functional]!,
     );
   }
@@ -159,7 +166,7 @@ class ConsentManagerService {
   Future<void> _setFirebaseConsentMode({
     required bool analytics,
     required bool advertising,
-    required bool personalization,
+    required bool necessary,
     required bool functional,
   }) async {
     try {
@@ -167,9 +174,10 @@ class ConsentManagerService {
       await FirebaseAnalytics.instance.setConsent(
         adStorageConsentGranted: advertising,
         analyticsStorageConsentGranted: analytics,
-        adUserDataConsentGranted: personalization,
+        adUserDataConsentGranted:
+            necessary, // Necessary for security/device tracking
       );
-      
+
       // Also set analytics collection enabled/disabled
       await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(analytics);
     } catch (e) {
@@ -181,13 +189,14 @@ class ConsentManagerService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(_keyAnalyticsConsent);
     await prefs.remove(_keyAdvertisingConsent);
-    await prefs.remove(_keyPersonalizationConsent);
+    await prefs.remove(_keyNecessaryConsent);
     await prefs.remove(_keyFunctionalConsent);
     await prefs.remove(_keyConsentTimestamp);
     await prefs.remove(_keyConsentVersion);
     await prefs.remove(_keyConsentShown);
-    await prefs.remove(_keyHasUserSetConsent); // CRITICAL: Also remove the new flag
-    
+    await prefs
+        .remove(_keyHasUserSetConsent); // CRITICAL: Also remove the new flag
+
     log("[ConsentManager] Consent reset - all flags cleared");
   }
 
@@ -200,15 +209,15 @@ class ConsentManagerService {
   /// This is what determines if the dialog should show
   Future<bool> hasUserSetConsent() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
     // Check both new and old flags for backwards compatibility
     final bool hasSetConsent = prefs.getBool(_keyHasUserSetConsent) ?? false;
     final bool hasShownConsent = prefs.getBool(_keyConsentShown) ?? false;
-    
+
     final bool result = hasSetConsent || hasShownConsent;
-    
+
     log("[ConsentManager] hasUserSetConsent: $result (hasSet: $hasSetConsent, hasShown: $hasShownConsent)");
-    
+
     return result;
   }
 
@@ -220,7 +229,7 @@ class ConsentManagerService {
     await updateConsent(
       analytics: true,
       advertising: false,
-      personalization: false,
+      necessary: true,
       functional: true,
     );
   }

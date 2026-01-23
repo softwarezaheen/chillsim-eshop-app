@@ -21,11 +21,17 @@ class ConsentDialog extends StatefulWidget {
 class _ConsentDialogState extends State<ConsentDialog> {
   bool _analyticsConsent = true;
   bool _advertisingConsent = false;
-  bool _personalizationConsent = false;
+  // Necessary consent is always true (removed toggle - always enabled for security/device tracking)
   bool _isLoading = true;
-  
+
   // ATT guidance dialog state
   bool _isShowingAttGuidance = false;
+
+  /// Check if "Accept Selected" button should be shown
+  /// Hides if user selection is same as "Essential Only" (analytics OFF & advertising OFF)
+  bool get _shouldShowAcceptSelected {
+    return _analyticsConsent || _advertisingConsent;
+  }
 
   @override
   void initState() {
@@ -35,12 +41,13 @@ class _ConsentDialogState extends State<ConsentDialog> {
 
   Future<void> _loadCurrentConsentState() async {
     final ConsentManagerService consentService = ConsentManagerService();
-    final Map<ConsentType, bool> currentConsent = await consentService.getConsentStatus();
-    
+    final Map<ConsentType, bool> currentConsent =
+        await consentService.getConsentStatus();
+
     setState(() {
       _analyticsConsent = currentConsent[ConsentType.analytics] ?? true;
       _advertisingConsent = currentConsent[ConsentType.advertising] ?? false;
-      _personalizationConsent = currentConsent[ConsentType.personalization] ?? false;
+      // Necessary is always true - no toggle
       _isLoading = false;
     });
   }
@@ -57,8 +64,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
     }
 
     try {
-      final AnalyticsServiceImpl analyticsService = AnalyticsServiceImpl.instance;
-      
+      final AnalyticsServiceImpl analyticsService =
+          AnalyticsServiceImpl.instance;
+
       // Check if tracking is blocked by ATT
       if (analyticsService.isTrackingBlockedByATT()) {
         // Show guidance dialog
@@ -76,18 +84,19 @@ class _ConsentDialogState extends State<ConsentDialog> {
   /// Show ATT guidance dialog with iOS Settings navigation
   Future<void> _showAttGuidanceDialog() async {
     if (_isShowingAttGuidance) return; // Prevent multiple dialogs
-    
+
     setState(() {
       _isShowingAttGuidance = true;
     });
 
     try {
-      final AnalyticsServiceImpl analyticsService = AnalyticsServiceImpl.instance;
+      final AnalyticsServiceImpl analyticsService =
+          AnalyticsServiceImpl.instance;
       final String messageKey = analyticsService.getAttGuidanceMessageKey();
-      
+
       // Default to general message if no specific key
-      final String message = messageKey.isNotEmpty 
-          ? messageKey.tr() 
+      final String message = messageKey.isNotEmpty
+          ? messageKey.tr()
           : LocaleKeys.attGuidance_general_message.tr();
 
       await showDialog(
@@ -161,10 +170,10 @@ class _ConsentDialogState extends State<ConsentDialog> {
         isEnabling: true,
         trackingType: 'analytics',
       );
-      
+
       if (!allowed) return; // ATT guidance was shown
     }
-    
+
     setState(() {
       _analyticsConsent = value;
     });
@@ -178,10 +187,10 @@ class _ConsentDialogState extends State<ConsentDialog> {
         isEnabling: true,
         trackingType: 'advertising',
       );
-      
+
       if (!allowed) return; // ATT guidance was shown
     }
-    
+
     setState(() {
       _advertisingConsent = value;
     });
@@ -192,21 +201,26 @@ class _ConsentDialogState extends State<ConsentDialog> {
   Future<void> _handleAcceptAll() async {
     // Check current consent status
     final ConsentManagerService consentService = ConsentManagerService();
-    final Map<ConsentType, bool> currentConsent = await consentService.getConsentStatus();
-    
-    final bool currentAnalytics = currentConsent[ConsentType.analytics] ?? false;
-    final bool currentAdvertising = currentConsent[ConsentType.advertising] ?? false;
-    
+    final Map<ConsentType, bool> currentConsent =
+        await consentService.getConsentStatus();
+
+    final bool currentAnalytics =
+        currentConsent[ConsentType.analytics] ?? false;
+    final bool currentAdvertising =
+        currentConsent[ConsentType.advertising] ?? false;
+
     // Check if we're enabling any tracking that's currently disabled
-    final bool enablingAnalytics = !currentAnalytics; // Accept All enables analytics
-    final bool enablingAdvertising = !currentAdvertising; // Accept All enables advertising
-    
+    final bool enablingAnalytics =
+        !currentAnalytics; // Accept All enables analytics
+    final bool enablingAdvertising =
+        !currentAdvertising; // Accept All enables advertising
+
     if (enablingAnalytics || enablingAdvertising) {
       final bool allowed = await _checkAttStatusForTracking(
         isEnabling: true,
         trackingType: 'all',
       );
-      
+
       if (!allowed) {
         // ATT guidance was shown and user didn't enable ATT
         // Do NOT update UI state - keep current state
@@ -218,14 +232,14 @@ class _ConsentDialogState extends State<ConsentDialog> {
     setState(() {
       _analyticsConsent = true;
       _advertisingConsent = true;
-      _personalizationConsent = true;
+      // Necessary is always true
     });
 
     // Save the consent
     await ConsentManagerService().updateConsent(
       analytics: true,
       advertising: true,
-      personalization: true,
+      necessary: true,
       functional: true,
     );
 
@@ -238,20 +252,23 @@ class _ConsentDialogState extends State<ConsentDialog> {
   Future<void> _handleAcceptSelected() async {
     // Check if we're enabling any tracking that's currently disabled
     final ConsentManagerService consentService = ConsentManagerService();
-    final Map<ConsentType, bool> currentConsent = await consentService.getConsentStatus();
-    
-    final bool currentAnalytics = currentConsent[ConsentType.analytics] ?? false;
-    final bool currentAdvertising = currentConsent[ConsentType.advertising] ?? false;
-    
+    final Map<ConsentType, bool> currentConsent =
+        await consentService.getConsentStatus();
+
+    final bool currentAnalytics =
+        currentConsent[ConsentType.analytics] ?? false;
+    final bool currentAdvertising =
+        currentConsent[ConsentType.advertising] ?? false;
+
     final bool enablingAnalytics = _analyticsConsent && !currentAnalytics;
     final bool enablingAdvertising = _advertisingConsent && !currentAdvertising;
-    
+
     if (enablingAnalytics || enablingAdvertising) {
       final bool allowed = await _checkAttStatusForTracking(
         isEnabling: true,
         trackingType: 'selected',
       );
-      
+
       if (!allowed) return; // ATT guidance was shown
     }
 
@@ -259,7 +276,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
     await ConsentManagerService().updateConsent(
       analytics: _analyticsConsent,
       advertising: _advertisingConsent,
-      personalization: _personalizationConsent,
+      necessary: true, // Always true
       functional: true,
     );
 
@@ -273,6 +290,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
     if (_isLoading) {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 8),
         child: Container(
           height: 200,
           child: const Center(
@@ -283,9 +301,10 @@ class _ConsentDialogState extends State<ConsentDialog> {
     }
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 8),
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: screenWidth(context) * 0.92,
+          maxWidth: screenWidth(context) * 0.98, // Increased from 0.95 to 0.98
           maxHeight: screenHeight(context) * 0.90,
         ),
         child: Column(
@@ -340,46 +359,51 @@ class _ConsentDialogState extends State<ConsentDialog> {
                         fontColor: contentTextColor(context: context),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12), // Reduced from 16 to 12
 
                     // Analytics
                     _buildConsentTile(
                       title: LocaleKeys.consentDialog_analyticsTitle.tr(),
-                      description: LocaleKeys.consentDialog_analyticsDescription.tr(),
+                      description:
+                          LocaleKeys.consentDialog_analyticsDescription.tr(),
                       value: _analyticsConsent,
                       onChanged: (value) => _handleAnalyticsToggle(value),
                       icon: Icons.analytics_outlined,
                     ),
 
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8), // Reduced from 10 to 8
 
                     // Advertising
                     _buildConsentTile(
                       title: LocaleKeys.consentDialog_advertisingTitle.tr(),
-                      description: LocaleKeys.consentDialog_advertisingDescription.tr(),
+                      description:
+                          LocaleKeys.consentDialog_advertisingDescription.tr(),
                       value: _advertisingConsent,
                       onChanged: (value) => _handleAdvertisingToggle(value),
                       icon: Icons.ads_click_outlined,
                     ),
 
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8), // Reduced from 10 to 8
 
-                    // Personalization
+                    // Necessary (always enabled)
                     _buildConsentTile(
-                      title: LocaleKeys.consentDialog_personalizationTitle.tr(),
-                      description: LocaleKeys.consentDialog_personalizationDescription.tr(),
-                      value: _personalizationConsent,
-                      onChanged: (value) => setState(() => _personalizationConsent = value),
-                      icon: Icons.person_outline,
+                      title: LocaleKeys.consentDialog_necessaryTitle.tr(),
+                      description:
+                          LocaleKeys.consentDialog_necessaryDescription.tr(),
+                      value: true,
+                      onChanged: null, // Always enabled - no toggle
+                      required: true,
+                      icon: Icons.security_outlined,
                     ),
 
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 10), // Reduced from 14 to 10
 
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(8), // Reduced from 10 to 8
                       decoration: BoxDecoration(
                         color: lightGreyBackGroundColor(context: context),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius:
+                            BorderRadius.circular(7), // Reduced from 8 to 7
                       ),
                       child: Text(
                         LocaleKeys.consentDialog_footerText.tr(),
@@ -394,11 +418,12 @@ class _ConsentDialogState extends State<ConsentDialog> {
               ),
             ),
 
-            // Buttons
+            // Buttons - Dynamic layout based on user selection
             Container(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               decoration: BoxDecoration(
-                color: lightGreyBackGroundColor(context: context).withOpacity(0.3),
+                color:
+                    lightGreyBackGroundColor(context: context).withOpacity(0.3),
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -406,18 +431,20 @@ class _ConsentDialogState extends State<ConsentDialog> {
               ),
               child: Column(
                 children: [
-                  // Accept Selected
-                  MainButton(
-                    title: LocaleKeys.consentDialog_acceptSelected.tr(),
-                    onPressed: () async {
-                      await _handleAcceptSelected();
-                    },
-                    themeColor: Theme.of(context).primaryColor,
-                  ),
-                  
-                  const SizedBox(height: 8),
-                  
-                  // Quick options row
+                  // Smart button logic: Show "Accept Selected" only if user has selected something
+                  if (_shouldShowAcceptSelected) ...[
+                    // Accept Selected (only shown if analytics OR advertising is enabled)
+                    MainButton(
+                      title: LocaleKeys.consentDialog_acceptSelected.tr(),
+                      onPressed: () async {
+                        await _handleAcceptSelected();
+                      },
+                      themeColor: Theme.of(context).primaryColor,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+
+                  // Quick options row (always shown)
                   Row(
                     children: [
                       Expanded(
@@ -425,7 +452,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             side: BorderSide(
-                              color: Theme.of(context).primaryColor.withOpacity(0.3),
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.3),
                               width: 1,
                             ),
                             shape: RoundedRectangleBorder(
@@ -434,7 +463,6 @@ class _ConsentDialogState extends State<ConsentDialog> {
                           ),
                           onPressed: () async {
                             // Use ATT-aware Accept All handler
-                            // This will handle UI updates only after ATT succeeds
                             await _handleAcceptAll();
                           },
                           child: Text(
@@ -449,7 +477,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             side: BorderSide(
-                              color: Theme.of(context).dividerColor,
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.3),
                               width: 1,
                             ),
                             shape: RoundedRectangleBorder(
@@ -461,21 +491,23 @@ class _ConsentDialogState extends State<ConsentDialog> {
                             setState(() {
                               _analyticsConsent = false;
                               _advertisingConsent = false;
-                              _personalizationConsent = false;
+                              // Necessary is always true
                             });
-                            
+
                             // Wait a moment to show the updated state
-                            await Future.delayed(const Duration(milliseconds: 300));
-                            
+                            await Future.delayed(
+                                const Duration(milliseconds: 300));
+
                             // Essential only
                             await ConsentManagerService().updateConsent(
                               analytics: false,
                               advertising: false,
-                              personalization: false,
+                              necessary: true,
                               functional: true,
                             );
                             await ConsentInitializer.markConsentDialogShown();
-                            if (context.mounted && Navigator.of(context).canPop()) {
+                            if (context.mounted &&
+                                Navigator.of(context).canPop()) {
                               Navigator.of(context).pop();
                             }
                           },
@@ -505,18 +537,18 @@ class _ConsentDialogState extends State<ConsentDialog> {
     required IconData icon,
   }) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10), // Reduced from 12 to 10
       decoration: BoxDecoration(
         border: Border.all(
-          color: value 
-            ? Theme.of(context).primaryColor.withOpacity(0.3)
-            : Theme.of(context).dividerColor,
+          color: value
+              ? Theme.of(context).primaryColor.withOpacity(0.3)
+              : Theme.of(context).dividerColor,
           width: 1,
         ),
-        borderRadius: BorderRadius.circular(12),
-        color: value 
-          ? Theme.of(context).primaryColor.withOpacity(0.03)
-          : Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(10), // Reduced from 12 to 10
+        color: value
+            ? Theme.of(context).primaryColor.withOpacity(0.03)
+            : Theme.of(context).cardColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,18 +556,18 @@ class _ConsentDialogState extends State<ConsentDialog> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.all(5), // Reduced from 6 to 5
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(7), // Reduced from 8 to 7
                 ),
                 child: Icon(
                   icon,
-                  size: 16,
+                  size: 15, // Reduced from 16 to 15
                   color: Theme.of(context).primaryColor,
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8), // Reduced from 10 to 8
               Expanded(
                 child: Text(
                   title,
@@ -544,10 +576,12 @@ class _ConsentDialogState extends State<ConsentDialog> {
               ),
               if (required)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 7, vertical: 2), // Reduced padding
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius:
+                        BorderRadius.circular(5), // Reduced from 6 to 5
                   ),
                   child: Text(
                     LocaleKeys.consentDialog_required.tr(),
@@ -564,7 +598,8 @@ class _ConsentDialogState extends State<ConsentDialog> {
                     value: value,
                     onChanged: onChanged,
                     activeColor: Theme.of(context).primaryColor,
-                    activeTrackColor: Theme.of(context).primaryColor.withOpacity(0.4),
+                    activeTrackColor:
+                        Theme.of(context).primaryColor.withOpacity(0.4),
                     inactiveThumbColor: Colors.grey,
                     inactiveTrackColor: Colors.grey.withOpacity(0.3),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -572,9 +607,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
                 ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6), // Reduced from 8 to 6
           Padding(
-            padding: const EdgeInsets.only(left: 32),
+            padding: const EdgeInsets.only(left: 28), // Reduced from 32 to 28
             child: Text(
               description,
               style: captionTwoNormalTextStyle(

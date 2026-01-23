@@ -334,7 +334,7 @@ void main() {
         await consentService.updateConsent(
           analytics: true,
           advertising: false,
-          personalization: false,
+          necessary: true,
           functional: true,
         );
 

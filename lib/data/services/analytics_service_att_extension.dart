@@ -133,7 +133,7 @@ mixin AnalyticsServiceATTMixin {
       await consentManager.updateConsent(
         analytics: false,
         advertising: false,
-        personalization: false,
+        necessary: true, // Always true
         functional: true, // Keep functional enabled
       );
       
