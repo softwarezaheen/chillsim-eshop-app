@@ -283,6 +283,46 @@ class OtpTextFieldState extends State<OtpTextField> {
 
         obscureText: widget.obscureText,
         onChanged: (String value1) {
+          // Detect paste operation when multiple characters are entered at once
+          if (value1.length > 1) {
+            String cleanedText = value1.keepOnlyDigits();
+            // If we have multiple digits (paste operation), fill all fields
+            if (cleanedText.length > 1) {
+              // Extract the actual OTP code
+              String otpCode = cleanedText;
+              
+              // If we have more digits than fields, extract the OTP
+              if (cleanedText.length > widget.numberOfFields) {
+                // Check if current field had an old digit
+                String? oldDigit = _verificationCode[index];
+                
+                if (oldDigit != null && oldDigit.isNotEmpty) {
+                  // Remove the old digit from the cleaned text
+                  // Try removing from start (cursor before old digit)
+                  if (cleanedText.endsWith(oldDigit)) {
+                    otpCode = cleanedText.substring(0, cleanedText.length - 1);
+                  }
+                  // Try removing from end (cursor after old digit)
+                  else if (cleanedText.startsWith(oldDigit)) {
+                    otpCode = cleanedText.substring(1);
+                  }
+                  // Can't determine position, take first numberOfFields digits
+                  else {
+                    otpCode = cleanedText.substring(0, widget.numberOfFields);
+                  }
+                } else {
+                  // No old digit, just take first numberOfFields digits
+                  otpCode = cleanedText.substring(0, widget.numberOfFields);
+                }
+              }
+              
+              handlePasteLogic(otpCode);
+              return;
+            }
+            // Single digit with some formatting - extract the digit
+            value1 = cleanedText;
+          }
+          
           String value2 = value1;
           if (value1.length > 1) {
             value2 = _verificationCode[index] == value1.characters.first
@@ -507,10 +547,18 @@ class OtpTextFieldState extends State<OtpTextField> {
   void handlePasteLogic(String newText) {
     int numberOfValues = min(newText.length, widget.numberOfFields);
 
+    // Clear all fields first to ensure clean paste
+    for (int i = 0; i < widget.numberOfFields; i++) {
+      _verificationCode[i] = null;
+      _textControllers[i]?.text = "";
+    }
+
+    // Fill fields with pasted content
     for (int index = 0; index < numberOfValues; index++) {
       _verificationCode[index] = newText.characters.elementAt(index);
       _textControllers[index]?.text = newText.characters.elementAt(index);
     }
+    
     onSubmit(verificationCode: _verificationCode);
     FocusScope.of(context).unfocus();
     setState(() {});

@@ -140,7 +140,16 @@ class VerifyLoginViewModel extends BaseModel {
     fillInitial(verificationCode);
     _pinCode = verificationCode;
     _isVerifyButtonEnabled = true;
+    
+    // Clear any previous error message when new code is entered
+    _errorMessage = "";
     notifyListeners();
+    
+    // Auto-trigger verification when all 6 digits are entered
+    if (verificationCode.length == otpCount) {
+      log("✅ All 6 OTP digits entered - auto-triggering verification");
+      await verifyButtonTapped();
+    }
   }
 
   void fillInitial(String verificationCode) {
