@@ -42,6 +42,19 @@ class NotificationView extends StatelessWidget {
               fontColor: titleTextColor(context: context),
             ),
           ),
+          if (notificationsModel.content != null &&
+              notificationsModel.content!.isNotEmpty) ...[
+            verticalSpaceSmall,
+            Text(
+              notificationsModel.content!,
+              style: captionOneNormalTextStyle(
+                context: context,
+                fontColor: contentTextColor(context: context),
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
           verticalSpaceSmall,
           Text(
             DateTimeUtils.formatTimestampToDate(
