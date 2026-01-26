@@ -1,8 +1,8 @@
 import "package:esim_open_source/app/environment/app_environment_helper.dart";
 
 AppEnvironmentHelper openSourceDebugEnvInstance = AppEnvironmentHelper(
-  // baseApiUrl: "http://127.0.0.1:8000",
-  baseApiUrl: "https://api.chillsim.net",
+  baseApiUrl: "http://127.0.0.1:8000",
+  // baseApiUrl: "https://api.chillsim.net",
   websiteUrl: "chillsim.net",
   omniConfigBaseUrl: "",
   omniConfigTenant: "",

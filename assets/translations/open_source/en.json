@@ -282,7 +282,7 @@
   "one_week_ago": "1 week ago",
   "yesterday": "Yesterday",
   "bundleInfo_priceText": "{price} - Buy Now",
-  "bundleInfo_priceText_noPrice": "Buy Now",
+  "bundleInfo_priceText_noPrice": "View Details",
   "bundleInfo_validityText": "Validity {validity}",
   "bundleInfo_priceDisclaimerText": "*Prices displayed do not include taxes and transaction fees",
   "bundleInfo_priceDisclaimerText_inclusive_with_fees": "*Prices displayed include taxes. Transaction fees apply at checkout",

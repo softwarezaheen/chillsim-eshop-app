@@ -84,41 +84,29 @@ class MyESimViewModel extends BaseModel {
   /// Performs the top-up flow for a given bundle item.
   /// This method accepts the bundle directly to avoid index/list mismatch bugs
   /// when called from different list contexts (current vs expired).
+  /// Note: Billing info check happens inside TopUpBottomSheetViewModel when user clicks buy
   Future<void> _performTopUp(PurchaseEsimBundleResponseModel item) async {
-    // Step 1: Show billing info bottom sheet
-    SheetResponse<EmptyBottomSheetResponse>? billingSheetResponse =
+    // Show topup bundle selection - billing check happens inside when user clicks buy
+    SheetResponse<MainBottomSheetResponse>? sheetResponse =
         await bottomSheetService.showCustomSheet(
       isScrollControlled: true,
-      variant: BottomSheetType.billingInfo,
-      data: PurchaseBundleBottomSheetArgs(
-        null,
-        null,
-        null,
+      variant: BottomSheetType.topUpBundle,
+      data: BundleTopUpBottomRequest(
+        iccID: item.iccid ?? "",
+        bundleCode: item.bundleCode ?? "",
       ),
     );
 
-    if (billingSheetResponse?.confirmed ?? false) {
-      SheetResponse<MainBottomSheetResponse>? sheetResponse =
-          await bottomSheetService.showCustomSheet(
+    if (!(sheetResponse?.data?.canceled ?? true)) {
+      bottomSheetService.showCustomSheet(
         isScrollControlled: true,
-        variant: BottomSheetType.topUpBundle,
-        data: BundleTopUpBottomRequest(
-          iccID: item.iccid ?? "",
-          bundleCode: item.bundleCode ?? "",
+        variant: BottomSheetType.successBottomSheet,
+        data: SuccessBottomRequest(
+          title: LocaleKeys.hurray.tr(),
+          description: LocaleKeys.top_up_success_message.tr(),
+          imagePath: EnvironmentImages.compatibleIcon.fullImagePath,
         ),
       );
-
-      if (!(sheetResponse?.data?.canceled ?? true)) {
-        bottomSheetService.showCustomSheet(
-          isScrollControlled: true,
-          variant: BottomSheetType.successBottomSheet,
-          data: SuccessBottomRequest(
-            title: LocaleKeys.hurray.tr(),
-            description: LocaleKeys.top_up_success_message.tr(),
-            imagePath: EnvironmentImages.compatibleIcon.fullImagePath,
-          ),
-        );
-      }
       refreshCurrentPlans();
     }
   }

@@ -320,11 +320,43 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
     required InAppRedirection redirection,
   }) async {
     if (redirection.variant != null) {
-      // Special handling for billingInfo (purchase flow) to ensure proper type casting
-      // and sequential bottom sheet display
-      if (redirection.variant == BottomSheetType.billingInfo) {
+      // Special handling for purchase flow (bundleDetails) to ensure proper navigation context
+      if (redirection.variant == BottomSheetType.bundleDetails) {
         final PurchaseBundleBottomSheetArgs args =
             redirection.arguments as PurchaseBundleBottomSheetArgs;
+        
+        // Step 1: Navigate to home page if not already there (to provide proper context for bottom sheet)
+        if (!locator<NavigationRouter>().isPageVisible(HomePager.routeName)) {
+          log("🏠 Purchase flow: Navigating to home page first");
+          await navigationService.clearStackAndShow(HomePager.routeName);
+          // Wait longer for navigation and build to complete
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+        } else {
+          log("✅ Purchase flow: Already on home page");
+        }
+        
+        log("📱 Showing bundle details bottom sheet for: ${args.bundleResponseModel?.bundleName ?? 'unknown'}");
+        
+        // Step 2: Show bundle details bottom sheet directly
+        // The bundle details view model will handle billing info check internally
+        await bottomSheetService.showCustomSheet<EmptyBottomSheetResponse, PurchaseBundleBottomSheetArgs>(
+          data: args,
+          enableDrag: false,
+          isScrollControlled: true,
+          variant: BottomSheetType.bundleDetails,
+        );
+      } else if (redirection.variant == BottomSheetType.billingInfo) {
+        // Legacy flow - shouldn't be used anymore
+        final PurchaseBundleBottomSheetArgs args =
+            redirection.arguments as PurchaseBundleBottomSheetArgs;
+        
+        log("⚠️ Legacy billing info flow detected - consider updating to bundleDetails variant");
+        
+        // Navigate to home first
+        if (!locator<NavigationRouter>().isPageVisible(HomePager.routeName)) {
+          await navigationService.clearStackAndShow(HomePager.routeName);
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+        }
         
         // Step 1: Show billing info bottom sheet
         SheetResponse<EmptyBottomSheetResponse>? billingSheetResponse =

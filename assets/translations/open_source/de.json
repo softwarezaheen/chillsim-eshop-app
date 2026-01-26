@@ -282,7 +282,7 @@
   "one_week_ago": "Vor 1 Woche",
   "yesterday": "Gestern",
   "bundleInfo_priceText": "{price} - Jetzt kaufen",
-  "bundleInfo_priceText_noPrice": "Jetzt kaufen",
+  "bundleInfo_priceText_noPrice": "Details anzeigen",
   "bundleInfo_validityText": "Gültigkeit {validity}",
   "bundleInfo_priceDisclaimerText": "*Preise ohne Steuern und Transaktionsgebühren",
   "bundleInfo_priceDisclaimerText_inclusive_with_fees": "*Die angezeigten Preise enthalten Steuern. Transaktionsgebühren fallen beim Bezahlen an",

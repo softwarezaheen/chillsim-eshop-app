@@ -181,37 +181,43 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                               
                             ],
                           ),
-                          const DividerLine(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                LocaleKeys.bundle_total_amount.tr(),
-                                style: headerTwoSmallTextStyle(
-                                  context: context,
-                                  fontColor: bundleDataPriceTextColor(
-                                    context: context,
+                          // Only show Total row when there are fees or taxes (something to add to the base price)
+                          if (viewModel.taxes?.total != null && (
+                              // Show if there are fees
+                              (viewModel.taxes?.feeEnabled == true && viewModel.taxes?.fee != null && viewModel.taxes!.fee! > 0) ||
+                              // Show if there's VAT in exclusive mode
+                              (viewModel.taxes?.taxMode == "exclusive" && viewModel.taxes?.vat != null && viewModel.taxes!.vat! > 0)
+                            ))
+                            ...[
+                              const DividerLine(),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    LocaleKeys.bundle_total_amount.tr(),
+                                    style: headerTwoSmallTextStyle(
+                                      context: context,
+                                      fontColor: bundleDataPriceTextColor(
+                                        context: context,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Text(
-                                viewModel.taxes?.total != null
-                                  ? (
-                                      (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
-                                      viewModel.taxes?.exchangeRate != null &&
-                                      viewModel.taxes?.exchangeRate != 0)
-                                        ? "${(viewModel.taxes!.total! / viewModel.taxes!.exchangeRate! /100).toStringAsFixed(2)} ${viewModel.taxes!.displayCurrency!}"
-                                        : "${viewModel.taxes!.total! /100} ${viewModel.taxes!.currency!}"
-                                    )
-                                  : bundle?.priceDisplay ?? "",
-                                style: headerTwoSmallTextStyle(
-                                  context: context,
-                                  fontColor: bundleDataPriceTextColor(
-                                    context: context,
+                                  Text(
+                                    (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&
+                                    viewModel.taxes?.exchangeRate != null &&
+                                    viewModel.taxes?.exchangeRate != 0)
+                                      ? "${(viewModel.taxes!.total! / viewModel.taxes!.exchangeRate! /100).toStringAsFixed(2)} ${viewModel.taxes!.displayCurrency!}"
+                                      : "${viewModel.taxes!.total! /100} ${viewModel.taxes!.currency!}",
+                                    style: headerTwoSmallTextStyle(
+                                      context: context,
+                                      fontColor: bundleDataPriceTextColor(
+                                        context: context,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                          ],),
+                            ],
                           viewModel.taxes?.total != null
                               ? (
                                   (viewModel.taxes?.displayCurrency != viewModel.taxes?.currency &&

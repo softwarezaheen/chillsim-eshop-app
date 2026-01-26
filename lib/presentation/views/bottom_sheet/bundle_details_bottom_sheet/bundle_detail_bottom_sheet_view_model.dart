@@ -11,9 +11,11 @@ import "package:esim_open_source/data/remote/responses/base_response_model.dart"
 import "package:esim_open_source/data/remote/responses/bundles/bundle_assign_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
+import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/analytics/ecommerce_events.dart";
 import "package:esim_open_source/domain/data/api_user.dart";
+import "package:esim_open_source/domain/repository/api_user_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
 import "package:esim_open_source/domain/use_case/auth/tmp_login_use_case.dart";
@@ -274,6 +276,22 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   }
 
   Future<void> _continueToPurchase() async {
+    // Check if user has complete billing info before proceeding
+    if (isUserLoggedIn) {
+      setViewState(ViewState.busy);
+      final bool hasBillingInfo = await _hasCompleteBillingInfo();
+      setViewState(ViewState.idle);
+      
+      if (!hasBillingInfo) {
+        // Show billing info bottom sheet
+        final bool billingConfirmed = await _showBillingInfoBottomSheet();
+        if (!billingConfirmed) {
+          // User cancelled billing info, don't proceed with purchase
+          return;
+        }
+      }
+    }
+    
     List<PaymentType> paymentTypeList = AppEnvironment.appEnvironmentHelper
         .paymentTypeList(isUserLoggedIn: isUserLoggedIn);
     final double price = bundle?.price ?? 0;
@@ -599,6 +617,60 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     );
     setViewState(ViewState.idle);
     return bundleExists;
+  }
+
+  /// Check if user has complete billing information.
+  /// Required fields for individual: firstName, lastName, country, state, city
+  /// Required fields for business (companyName OR vatCode present): above + companyName, vatCode
+  /// TODO: Add extra validation if needed
+  Future<bool> _hasCompleteBillingInfo() async {
+    try {
+      final dynamic billingInfoResource = await locator<ApiUserRepository>().getUserBillingInfo();
+      final UserGetBillingInfoResponseModel? data = billingInfoResource?.data;
+      
+      if (data == null) return false;
+      
+      // Check base required fields for individual
+      final bool hasBaseFields = 
+        (data.firstName?.trim().isNotEmpty ?? false) &&
+        (data.lastName?.trim().isNotEmpty ?? false) &&
+        (data.country?.trim().isNotEmpty ?? false) &&
+        (data.state?.trim().isNotEmpty ?? false) &&
+        (data.city?.trim().isNotEmpty ?? false);
+      
+      if (!hasBaseFields) return false;
+      
+      // Check if this is a business account (either companyName or vatCode is present)
+      final bool isBusiness = 
+        (data.companyName?.trim().isNotEmpty ?? false) || 
+        (data.vatCode?.trim().isNotEmpty ?? false);
+      
+      if (isBusiness) {
+        // Business requires both companyName AND vatCode
+        return (data.companyName?.trim().isNotEmpty ?? false) && 
+               (data.vatCode?.trim().isNotEmpty ?? false);
+      }
+      
+      return true;
+    } on Exception catch (e) {
+      log("Error checking billing info: $e");
+      return false;
+    }
+  }
+
+  /// Show billing info bottom sheet and return true if user confirmed, false otherwise
+  Future<bool> _showBillingInfoBottomSheet() async {
+    SheetResponse<EmptyBottomSheetResponse>? billingSheetResponse =
+        await bottomSheetService.showCustomSheet(
+      isScrollControlled: true,
+      variant: BottomSheetType.billingInfo,
+      data: PurchaseBundleBottomSheetArgs(
+        _region,
+        _countries,
+        _bundle,
+      ),
+    );
+    return billingSheetResponse?.confirmed ?? false;
   }
 
   Future<void> validatePromoCode(String promoCode) async {

@@ -282,7 +282,7 @@
   "one_week_ago": "acum 1 săptămână",
   "yesterday": "Ieri",
   "bundleInfo_priceText": "{price} - Cumpără acum",
-  "bundleInfo_priceText_noPrice": "Cumpără acum",
+  "bundleInfo_priceText_noPrice": "Vezi detalii",
   "bundleInfo_priceDisclaimerText": "*Prețurile afișate nu includ taxe și comisioane de tranzacție",
   "bundleInfo_priceDisclaimerText_inclusive_with_fees": "*Prețurile afișate includ taxele. Se aplică comisioane de tranzacție la plată",
   "bundleInfo_priceDisclaimerText_inclusive_no_fees": "*Prețurile afișate sunt finale și includ toate taxele",

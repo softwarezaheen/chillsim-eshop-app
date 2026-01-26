@@ -282,7 +282,7 @@
   "one_week_ago": "1 सप्ताह पहले",
   "yesterday": "कल",
   "bundleInfo_priceText": "{price} - अभी खरीदें",
-  "bundleInfo_priceText_noPrice": "अभी खरीदें",
+  "bundleInfo_priceText_noPrice": "विवरण देखें",
   "bundleInfo_validityText": "वैधता {validity}",
   "bundleInfo_priceDisclaimerText": "*प्रदर्शित कीमतों में टैक्स और लेनदेन शुल्क शामिल नहीं हैं",
   "bundleInfo_priceDisclaimerText_inclusive_with_fees": "*प्रदर्शित कीमतों में टैक्स शामिल हैं. भुगतान पर लेनदेन शुल्क लागू होते हैं",

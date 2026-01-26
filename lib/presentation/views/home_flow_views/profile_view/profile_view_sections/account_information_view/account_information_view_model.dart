@@ -353,6 +353,11 @@ class AccountInformationViewModel extends BaseModel {
 
   void setBillingType(BillingType type) {
     billingType = type;
+    if (billingType == BillingType.individual) {
+      _companyNameController.text = "";
+      _vatCodeController.text = "";
+      _registrationCodeController.text = "";
+    }
     updateButtonState();
     notifyListeners();
   }

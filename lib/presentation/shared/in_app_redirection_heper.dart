@@ -103,7 +103,7 @@ class PurchaseRedirection extends InAppRedirection {
   dynamic get arguments => data;
 
   @override
-  BottomSheetType? get variant => BottomSheetType.billingInfo;
+  BottomSheetType? get variant => BottomSheetType.bundleDetails;
   
   @override
   Map<String, dynamic> toJson() {

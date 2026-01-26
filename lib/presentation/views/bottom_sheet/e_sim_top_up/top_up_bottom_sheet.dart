@@ -122,7 +122,11 @@ class TopUpBottomSheet extends StatelessWidget {
           taxes: viewModel.bundleTaxes[item.bundleCode],
           isTaxesLoading:
               viewModel.loadingTaxesBundleCodes.contains(item.bundleCode),
-          priceButtonText: "${item.priceDisplay} - Buy Now",
+          priceButtonText: LocaleKeys.bundleInfo_priceText.tr(
+            namedArgs: <String, String>{
+              "price": item.priceDisplay ?? "",
+            },
+          ),
           title: item.bundleName ?? "",
           data: item.gprsLimitDisplay ?? "",
           showUnlimitedData: item.unlimited ?? false,
