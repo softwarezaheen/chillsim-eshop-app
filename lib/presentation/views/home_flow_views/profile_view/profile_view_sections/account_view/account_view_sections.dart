@@ -2,6 +2,7 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/services/consent_initializer.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_view/account_view_model.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
@@ -65,6 +66,9 @@ enum AccountViewSections {
         );
         if (logoutResponse?.confirmed ?? false) {
           await viewModel.logoutUser();
+          await viewModel.navigationService.clearStackAndShow(
+            HomePager.routeName,
+          );
         }
       case AccountViewSections.deleteAccount:
         SheetResponse? deleteAccountResponse =
@@ -75,6 +79,9 @@ enum AccountViewSections {
         );
         if (deleteAccountResponse?.confirmed ?? false) {
           await viewModel.logoutUser();
+          await viewModel.navigationService.clearStackAndShow(
+            HomePager.routeName,
+          );
         }
     }
   }

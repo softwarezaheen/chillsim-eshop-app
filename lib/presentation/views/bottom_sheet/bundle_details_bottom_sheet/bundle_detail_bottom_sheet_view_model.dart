@@ -233,53 +233,43 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   }
 
   Future<void> buyNowPressed(BuildContext context) async {
-    // Show compatible sheet
-    SheetResponse<EmptyBottomSheetResponse>? response =
-        await bottomSheetService.showCustomSheet(
-      enableDrag: false,
-      isScrollControlled: true,
-      variant: BottomSheetType.compatibleSheetView,
-    );
-    if (response?.confirmed ?? false) {
-      // let payment sheet handle everything
-
-      if (isUserLoggedIn) {
-        //check if exists
-        bool bundleExists = await _checkIfBundleExists();
-        if (bundleExists && context.mounted) {
-          BundleExistsAction bundleExistsAction = await showNativeDialog(
-                context: context,
-                barrierDismissible: true,
-                titleText: LocaleKeys.bundleExistsView_titleText.tr(),
-                contentText: LocaleKeys.bundleExistsView_contentText.tr(),
-                buttons: <NativeButtonParams>[
-                  NativeButtonParams(
-                    buttonTitle: LocaleKeys.bundleExistsView_buttonOneText.tr(),
-                    buttonAction: () => navigationService.back(
-                      result: BundleExistsAction.buyNewEsim,
-                    ),
+    // Compatibility check removed - app already checks on startup
+    if (isUserLoggedIn) {
+      //check if exists
+      bool bundleExists = await _checkIfBundleExists();
+      if (bundleExists && context.mounted) {
+        BundleExistsAction bundleExistsAction = await showNativeDialog(
+              context: context,
+              barrierDismissible: true,
+              titleText: LocaleKeys.bundleExistsView_titleText.tr(),
+              contentText: LocaleKeys.bundleExistsView_contentText.tr(),
+              buttons: <NativeButtonParams>[
+                NativeButtonParams(
+                  buttonTitle: LocaleKeys.bundleExistsView_buttonOneText.tr(),
+                  buttonAction: () => navigationService.back(
+                    result: BundleExistsAction.buyNewEsim,
                   ),
-                  NativeButtonParams(
-                    buttonTitle: LocaleKeys.bundleExistsView_buttonTwoText.tr(),
-                    buttonAction: () => navigationService.back(
-                      result: BundleExistsAction.goToEsim,
-                    ),
+                ),
+                NativeButtonParams(
+                  buttonTitle: LocaleKeys.bundleExistsView_buttonTwoText.tr(),
+                  buttonAction: () => navigationService.back(
+                    result: BundleExistsAction.goToEsim,
                   ),
-                ],
-              ) ??
-              BundleExistsAction.close;
-          if (bundleExistsAction == BundleExistsAction.buyNewEsim) {
-            await _continueToPurchase();
-          } else if (bundleExistsAction == BundleExistsAction.goToEsim) {
-            locator<HomePagerViewModel>().changeSelectedTabIndex(index: 1);
-            navigationService.clearTillFirstAndShow(HomePager.routeName);
-          }
-        } else {
+                ),
+              ],
+            ) ??
+            BundleExistsAction.close;
+        if (bundleExistsAction == BundleExistsAction.buyNewEsim) {
           await _continueToPurchase();
+        } else if (bundleExistsAction == BundleExistsAction.goToEsim) {
+          locator<HomePagerViewModel>().changeSelectedTabIndex(index: 1);
+          navigationService.clearTillFirstAndShow(HomePager.routeName);
         }
       } else {
         await _continueToPurchase();
       }
+    } else {
+      await _continueToPurchase();
     }
   }
 
