@@ -193,6 +193,7 @@
   "userGuideView_titleText" : "User Guide",
   "userGuideView_iosTitle" : "How To Setup Your eSIM On iPhone",
   "userGuideView_androidTitle" : "How To Setup Your eSIM On Android",
+  "userGuideView_downloadPDF" : "Download installation instructions (PDF)",
   "userGuideView_androidStep1" : "Talk to your Team of Experts to set up your postpaid plan. You will need to provide your device EID to the Expert to update your account. A QR code will be delivered to you via email for activation. To learn how to access your QR code scanner and add your new line, follow these steps:",
   "userGuideView_androidStep2" : "Go to the Home screen. To open the menu, swipe up on the screen.",
   "userGuideView_androidStep3" : "Scroll to the right. Choose Settings.",

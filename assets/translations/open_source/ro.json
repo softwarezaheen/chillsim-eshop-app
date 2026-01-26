@@ -193,6 +193,7 @@
   "userGuideView_titleText" : "Ghid utilizator",
   "userGuideView_iosTitle" : "Cum să configurezi eSIM-ul pe iPhone",
   "userGuideView_androidTitle" : "Cum să configurezi eSIM-ul pe Android",
+  "userGuideView_downloadPDF" : "Descarcă instrucțiuni de instalare (PDF)",
   "userGuideView_androidStep1" : "Vorbește cu echipa noastră de experți pentru a-ți configura planul postpaid. Va trebui să furnizezi EID-ul dispozitivului tău expertului pentru a-ți actualiza contul. Un cod QR îți va fi trimis prin email pentru activare. Pentru a afla cum să accesezi scannerul de coduri QR și să adaugi noua linie, urmează acești pași:",
   "userGuideView_androidStep2" : "Accesează ecranul principal. Pentru a deschide meniul, glisează în sus pe ecran.",
   "userGuideView_androidStep3" : "Derulează spre dreapta. Alege Setări.",

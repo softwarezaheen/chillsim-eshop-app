@@ -197,6 +197,7 @@ abstract class  LocaleKeys {
   static const userGuideView_titleText = 'userGuideView_titleText';
   static const userGuideView_iosTitle = 'userGuideView_iosTitle';
   static const userGuideView_androidTitle = 'userGuideView_androidTitle';
+  static const userGuideView_downloadPDF = 'userGuideView_downloadPDF';
   static const userGuideView_androidStep1 = 'userGuideView_androidStep1';
   static const userGuideView_androidStep2 = 'userGuideView_androidStep2';
   static const userGuideView_androidStep3 = 'userGuideView_androidStep3';
