@@ -3,9 +3,14 @@ import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
+import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
+import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/flutter_channel_handler_service.dart";
+import "package:esim_open_source/domain/use_case/auth/update_user_info_use_case.dart";
+import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
+import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/shared/validation_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
@@ -42,7 +47,8 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
       ..smDpAddress = purchaseESimBundle?.smdpAddress ?? ""
       ..activationCode = purchaseESimBundle?.activationCode ?? ""
       ..showInstallButton = await isInstallButtonEnabled()
-      ..showGoToMyEsimButton = isUserLoggedIn;
+      ..showGoToMyEsimButton = isUserLoggedIn
+      ..isUpdatingConsent = false;
     notifyListeners();
   }
 
@@ -120,6 +126,50 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
       showNativeErrorMessage("", ex.toString().replaceAll("Exception:", ""));
     }
   }
+
+  /// Handle marketing consent toggle
+  Future<void> onMarketingConsentToggle(bool value) async {
+    if (_state.isUpdatingConsent) {
+      return;
+    }
+
+    _state.isUpdatingConsent = true;
+    notifyListeners();
+
+    try {
+      final Resource<AuthResponseModel> response = await UpdateUserInfoUseCase(locator<ApiAuthRepository>()).execute(
+        UpdateUserInfoParams(
+          email: userEmailAddress,
+          msisdn: userMsisdn,
+          firstName: userFirstName,
+          lastName: userLastName,
+          isNewsletterSubscribed: value,
+        ),
+      );
+
+      await handleResponse(
+        response,
+        onSuccess: (Resource<AuthResponseModel> result) async {
+          // Update only user info while preserving access/refresh tokens
+          await userAuthenticationService.updateUserResponse(result.data);
+          
+          await showToast(
+            value
+                ? LocaleKeys.marketing_consent_enabled_success.tr()
+                : LocaleKeys.marketing_consent_disabled_success.tr(),
+          );
+        },
+        onFailure: (Resource<AuthResponseModel> result) async {
+          showNativeErrorMessage("", LocaleKeys.marketing_consent_update_failed.tr());
+        },
+      );
+    } catch (e) {
+      showNativeErrorMessage("", LocaleKeys.marketing_consent_update_failed.tr());
+    } finally {
+      _state.isUpdatingConsent = false;
+      notifyListeners();
+    }
+  }
 }
 
 class PurchaseOrderSuccessState {
@@ -127,6 +177,7 @@ class PurchaseOrderSuccessState {
   String activationCode = "";
   bool showInstallButton = false;
   bool showGoToMyEsimButton = false;
+  bool isUpdatingConsent = false;
   GlobalKey globalKey = GlobalKey();
 
   String get qrCodeValue => "LPA:1\$$smDpAddress\$$activationCode";

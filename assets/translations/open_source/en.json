@@ -488,5 +488,13 @@
   "android_manual_install_open_settings": "Open eSIM settings",
   "android_manual_install_close": "Close",
   "android_manual_install_option_qr_title": "Option 1 · Scan the QR code",
-  "android_manual_install_option_qr_steps": "1. Open your Camera or device QR scanner.\n2. Point it at the QR code received.\n3. Follow the prompts to install the eSIM.\nTip: Some phones hide the QR scanner inside the Camera > More menu or quick toggles."
+  "android_manual_install_option_qr_steps": "1. Open your Camera or device QR scanner.\n2. Point it at the QR code received.\n3. Follow the prompts to install the eSIM.\nTip: Some phones hide the QR scanner inside the Camera > More menu or quick toggles.",
+  "marketing_consent_title": "💰 Want to save even more?",
+  "marketing_consent_description": "Turn on promotional notifications to receive exclusive deals, flash sales, and personalized offers tailored to your travel destinations.",
+  "marketing_consent_toggle_enabled": "You're getting exclusive deals",
+  "marketing_consent_toggle_disabled": "Yes, send me exclusive deals!",
+  "marketing_consent_disclaimer": "You can change your preferences anytime in Account Information. We only send valuable offers—no spam!",
+  "marketing_consent_enabled_success": "You'll now receive exclusive offers and promotions!",
+  "marketing_consent_disabled_success": "Promotional notifications have been turned off",
+  "marketing_consent_update_failed": "Failed to update preferences. Please try again."
 }

@@ -15,6 +15,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view
 import "package:esim_open_source/presentation/widgets/android_manual_install_sheet.dart";
 import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
+import "package:esim_open_source/presentation/widgets/marketing_consent_widget.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/foundation.dart";
@@ -87,7 +88,14 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                                 );
                               },
                             ),
-                            verticalSpaceMedium,
+                            verticalSpaceSmall,
+                            // Marketing consent widget - only shows if user hasn't subscribed
+                            MarketingConsentWidget(
+                              shouldNotify: viewModel.isNewsletterSubscribed,
+                              isUpdating: viewModel.state.isUpdatingConsent,
+                              onToggle: viewModel.onMarketingConsentToggle,
+                            ),
+                            verticalSpaceSmall,
                           ],
                         ),
                       ),

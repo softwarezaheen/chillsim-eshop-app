@@ -479,5 +479,13 @@
   "android_manual_install_open_settings": "Deschide setările eSIM",
   "android_manual_install_close": "Închide",
   "android_manual_install_option_qr_title": "Opțiunea 1 · Scanează codul QR",
-  "android_manual_install_option_qr_steps": "1. Deschide Camera sau scannerul QR.\n2. Îndreaptă-l spre codul primit.\n3. Urmează pașii de instalare.\nPont: unele telefoane ascund scannerul în Cameră > Mai multe sau în comenzi rapide."
+  "android_manual_install_option_qr_steps": "1. Deschide Camera sau scannerul QR.\n2. Îndreaptă-l spre codul primit.\n3. Urmează pașii de instalare.\nPont: unele telefoane ascund scannerul în Cameră > Mai multe sau în comenzi rapide.",
+  "marketing_consent_title": "💰 Vrei să economisești și mai mult?",
+  "marketing_consent_description": "Activează notificările promoționale pentru a primi oferte exclusive, vânzări flash și oferte personalizate adaptate destinațiilor tale de călătorie.",
+  "marketing_consent_toggle_enabled": "Primești oferte exclusive",
+  "marketing_consent_toggle_disabled": "Da, trimite-mi oferte exclusive!",
+  "marketing_consent_disclaimer": "Poți schimba preferințele oricând în Informații cont. Trimitem doar oferte valoroase—fără spam!",
+  "marketing_consent_enabled_success": "Vei primi acum oferte și promoții exclusive!",
+  "marketing_consent_disabled_success": "Notificările promoționale au fost dezactivate",
+  "marketing_consent_update_failed": "Actualizarea preferințelor a eșuat. Te rugăm să încerci din nou."
 }
