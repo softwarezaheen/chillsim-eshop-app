@@ -8,6 +8,7 @@ import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
+import "package:esim_open_source/domain/repository/services/push_notification_service.dart";
 import "package:esim_open_source/domain/use_case/auth/resend_otp_use_case.dart";
 import "package:esim_open_source/domain/use_case/auth/verify_otp_use_case.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
@@ -64,10 +65,29 @@ class VerifyLoginViewModel extends BaseModel {
     await handleResponse(
       authResponse,
       onSuccess: (Resource<AuthResponseModel> response) async {
-        // 🔥 CRITICAL FIX: Re-register device with current FCM token after login
-        // This ensures FCM token is updated even when user loses authentication and logs back in
-        // Without this, device may have stale/null FCM token if Firebase refreshed it while logged out
+        // 🔥 CRITICAL FIX: Fetch FRESH FCM token from Firebase before device re-registration
+        // This ensures we send the latest token, not stale value from app startup
+        // Matches web app and social login behavior
         try {
+          log("🔄 Fetching fresh FCM token for device re-registration...");
+          
+          // Get fresh FCM token from Firebase (not stale LocalStorage value)
+          final pushNotificationService = locator<PushNotificationService>();
+          String? fcmToken = await pushNotificationService.getFcmToken();
+          
+          // Only save and register if we have a valid token
+          if (fcmToken != null && fcmToken.isNotEmpty) {
+            // Update LocalStorage with fresh token
+            await locator<LocalStorageService>().setString(
+              LocalStorageKeys.fcmToken,
+              fcmToken,
+            );
+            log("✅ Fresh FCM token obtained and saved to LocalStorage");
+          } else {
+            log("⚠️ No FCM token available - user may have denied permission");
+          }
+          
+          // Re-register device with backend (uses token from LocalStorage)
           await addDeviceUseCase.execute(NoParams());
           log("✅ Device re-registered with FCM token after OTP verification");
         } catch (e) {

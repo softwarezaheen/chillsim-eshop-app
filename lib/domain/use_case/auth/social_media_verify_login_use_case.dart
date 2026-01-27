@@ -65,7 +65,8 @@ class SocialMediaVerifyLoginUseCase
       await applyReferralCodeUseCase
           .execute(ApplyReferralCodeUserCaseParams(referralCode: referralCode));
     }
-    addDeviceUseCase.execute(NoParams());
+    // Device registration is handled in login_view_model.dart with fresh FCM token
+    // Removed duplicate fire-and-forget call here
     return response;
   }
 }

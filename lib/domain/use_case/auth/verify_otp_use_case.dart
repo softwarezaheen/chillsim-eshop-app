@@ -76,7 +76,8 @@ class VerifyOtpUseCase
       await applyReferralCodeUseCase
           .execute(ApplyReferralCodeUserCaseParams(referralCode: referralCode));
     }
-    addDeviceUseCase.execute(NoParams());
+    // Device registration is handled in verify_login_view_model.dart with fresh FCM token
+    // Removed duplicate fire-and-forget call here
     return response;
   }
 }

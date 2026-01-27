@@ -144,10 +144,18 @@ class StartUpViewModel extends BaseModel {
             redirectionsHandlerService.serialiseAndRedirectNotification,
       );
       String? fcmToken = await pushNotificationService.getFcmToken();
-      await localStorageService.setString(
-        LocalStorageKeys.fcmToken,
-        fcmToken ?? "",
-      );
+      
+      // Only save FCM token if user granted permission (not null)
+      // This prevents storing empty strings that cause "No FCM tokens found" warnings
+      if (fcmToken != null && fcmToken.isNotEmpty) {
+        await localStorageService.setString(
+          LocalStorageKeys.fcmToken,
+          fcmToken,
+        );
+        log("✅ FCM token saved to LocalStorage");
+      } else {
+        log("⚠️ FCM permission denied or not available - device will not receive push notifications");
+      }
 
       await addDeviceUseCase.execute(NoParams());
     } on Object catch (e) {
