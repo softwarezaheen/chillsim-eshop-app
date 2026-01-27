@@ -94,6 +94,7 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                               shouldNotify: viewModel.isNewsletterSubscribed,
                               isUpdating: viewModel.state.isUpdatingConsent,
                               onToggle: viewModel.onMarketingConsentToggle,
+                              showWidget: viewModel.state.showMarketingWidget,
                             ),
                             verticalSpaceSmall,
                           ],

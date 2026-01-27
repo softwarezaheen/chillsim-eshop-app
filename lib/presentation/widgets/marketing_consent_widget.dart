@@ -11,23 +11,25 @@ import "package:flutter/material.dart";
 /// 
 /// This widget should only be shown when:
 /// - User is authenticated
-/// - User has `should_notify` set to false
+/// - User has `should_notify` set to false initially
 class MarketingConsentWidget extends StatelessWidget {
   const MarketingConsentWidget({
     required this.shouldNotify,
     required this.isUpdating,
     required this.onToggle,
+    required this.showWidget,
     super.key,
   });
 
   final bool shouldNotify;
   final bool isUpdating;
   final Function(bool) onToggle;
+  final bool showWidget;
 
   @override
   Widget build(BuildContext context) {
-    // Don't show if user already has notifications enabled
-    if (shouldNotify) {
+    // Don't show if parent says to hide
+    if (!showWidget) {
       return const SizedBox.shrink();
     }
 
@@ -94,22 +96,41 @@ class MarketingConsentWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Container(
-                  height: 32,
-                  width: 56,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(16),
+                // Show loading spinner when updating, otherwise show switch
+                if (isUpdating)
+                  SizedBox(
+                    width: 56,
+                    height: 32,
+                    child: Center(
+                      child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            context.appColors.warning_400!,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  Container(
+                    height: 32,
+                    width: 56,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Switch.adaptive(
+                      value: shouldNotify,
+                      onChanged: onToggle,
+                      activeColor: context.appColors.warning_400,
+                      activeTrackColor: context.appColors.warning_400!.withOpacity(0.5),
+                      inactiveThumbColor: Colors.grey.shade400,
+                      inactiveTrackColor: Colors.grey.shade300,
+                    ),
                   ),
-                  child: Switch.adaptive(
-                    value: shouldNotify,
-                    onChanged: isUpdating ? null : onToggle,
-                    activeColor: context.appColors.warning_400,
-                    activeTrackColor: context.appColors.warning_400!.withOpacity(0.5),
-                    inactiveThumbColor: Colors.grey.shade400,
-                    inactiveTrackColor: Colors.grey.shade300,
-                  ),
-                ),
               ],
             ),
           ),

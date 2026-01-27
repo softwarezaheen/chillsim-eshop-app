@@ -48,7 +48,8 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
       ..activationCode = purchaseESimBundle?.activationCode ?? ""
       ..showInstallButton = await isInstallButtonEnabled()
       ..showGoToMyEsimButton = isUserLoggedIn
-      ..isUpdatingConsent = false;
+      ..isUpdatingConsent = false
+      ..showMarketingWidget = !isNewsletterSubscribed;
     notifyListeners();
   }
 
@@ -178,6 +179,7 @@ class PurchaseOrderSuccessState {
   bool showInstallButton = false;
   bool showGoToMyEsimButton = false;
   bool isUpdatingConsent = false;
+  bool showMarketingWidget = false;
   GlobalKey globalKey = GlobalKey();
 
   String get qrCodeValue => "LPA:1\$$smDpAddress\$$activationCode";
