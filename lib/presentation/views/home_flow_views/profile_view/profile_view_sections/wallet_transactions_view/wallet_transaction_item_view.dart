@@ -50,7 +50,7 @@ class WalletTransactionItemView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _getTransactionTypeTitle(),
+                    transactionModel.title,
                     style: captionOneBoldTextStyle(
                       context: context,
                       fontColor: titleTextColor(context: context),

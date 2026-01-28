@@ -2,6 +2,7 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/app/app.locator.dart";
 import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/presentation/extensions/helper_extensions.dart";
+import "package:esim_open_source/presentation/shared/haptic_feedback.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -102,6 +103,7 @@ class ProfileView extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () async {
+        playHapticFeedback(HapticFeedbackType.secondaryButtonTapped);
         section.tapAction(context, viewModel);
       },
       child: Container(

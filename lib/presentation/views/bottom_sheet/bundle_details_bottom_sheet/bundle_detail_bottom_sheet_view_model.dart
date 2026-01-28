@@ -48,10 +48,12 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     RegionRequestModel? region,
     List<CountriesRequestModel>? countries,
     BundleResponseModel? bundle,
+    Function(SheetResponse<EmptyBottomSheetResponse>)? completer,
   })  : _bundle = bundle,
         _region = region,
         _tempBundle = bundle,
-        _countries = countries;
+        _countries = countries,
+        _completer = completer;
 
   //#region UseCases
   final TmpLoginUseCase tmpLoginUseCase = TmpLoginUseCase(locator());
@@ -68,6 +70,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   BundleResponseModel? _bundle;
   final BundleResponseModel? _tempBundle;
   final List<CountriesRequestModel>? _countries;
+  final Function(SheetResponse<EmptyBottomSheetResponse>)? _completer;
 
   BundleResponseModel? get bundle => _bundle;
 
@@ -560,6 +563,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         currency: _bundle?.currencyCode ?? "",
       ),
     );
+
+    // Dismiss the bundle details bottom sheet instantly using completer
+    _completer?.call(SheetResponse<EmptyBottomSheetResponse>(confirmed: true));
 
     locator.resetLazySingleton(instance: locator<PurchaseLoadingViewModel>());
     navigationService.navigateTo(

@@ -8,7 +8,6 @@ import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/supported_countries_widget.dart";
 import "package:esim_open_source/presentation/widgets/unlimited_data_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
-import "package:esim_open_source/utils/price_disclaimer_helper.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
@@ -45,7 +44,8 @@ class EsimBundleWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onPriceButtonClick,
       child: Card(
-        elevation: 0,
+        elevation: 6,
+        shadowColor: Colors.black.withOpacity(0.25),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
@@ -148,8 +148,8 @@ class EsimBundleWidget extends StatelessWidget {
 
               //const SizedBox(height: 10),
 
-              // Supported Countries
-              if (supportedCountries.isNotEmpty)
+              // Supported Countries - Only show if more than 1 country
+              if (supportedCountries.length > 1)
                 SupportedCountriesWidget(
                   offset: 20,
                   countries: supportedCountries,
@@ -157,18 +157,8 @@ class EsimBundleWidget extends StatelessWidget {
                   backgroundColor: greyBackGroundColor(context: context),
                 ),
 
-              const SizedBox(height: 15),
-
-              // Disclaimer Text - Dynamic based on tax_mode and fee_enabled
-              Text(
-                PriceDisclaimerHelper.getPriceDisclaimerText(),
-                style: captionTwoNormalTextStyle(
-                  context: context,
-                  fontColor: secondaryTextColor(context: context),
-                ),
-              ),
-
-              const SizedBox(height: 15),
+              if (supportedCountries.length > 1)
+                const SizedBox(height: 15),
 
               Row(
                 children: [

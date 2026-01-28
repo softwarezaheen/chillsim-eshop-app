@@ -43,6 +43,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
         region: requestBase.data?.region,
         countries: requestBase.data?.countries,
         bundle: requestBase.data?.bundleResponseModel,
+        completer: completer,
       ),
       builder: (
         BuildContext context,

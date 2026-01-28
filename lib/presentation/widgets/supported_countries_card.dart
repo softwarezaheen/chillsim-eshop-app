@@ -29,6 +29,12 @@ class SupportedCountriesCard extends StatefulWidget {
 class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
   bool _isExpanded = false;
 
+  List<CountryResponseModel> get sortedCountries {
+    final countries = List<CountryResponseModel>.from(widget.countries);
+    countries.sort((a, b) => (a.country ?? '').compareTo(b.country ?? ''));
+    return countries;
+  }
+
   double getHeight() {
     double maxHeight = 180;
     double cellHeight = _isExpanded ? 40 + 40 : 40;
@@ -70,9 +76,9 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
               thickness: 4,
               radius: const Radius.circular(2),
               child: ListView.builder(
-                itemCount: widget.countries.length,
+                itemCount: sortedCountries.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final CountryResponseModel country = widget.countries[index];
+                  final CountryResponseModel country = sortedCountries[index];
                   return ExpansionTile(
                     collapsedIconColor:
                         mainTabBackGroundColor(context: context),
@@ -94,7 +100,7 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
                     title: Row(
                       children: <Widget>[
                         CountryFlagImage(
-                          icon: widget.countries[index].icon ?? "",
+                          icon: sortedCountries[index].icon ?? "",
                           height: 20,
                           width: 20,
                         ),

@@ -323,28 +323,30 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  MainButton(
-                    title: LocaleKeys.orderReceiptBottomSheet_download.tr(),
-                    onPressed: () async {
-                      if (viewModel.bundleOrderModel?.orderInvoice != null && viewModel.bundleOrderModel!.orderInvoice!.isNotEmpty) {
-                        // Open browser to download invoice
-                        final url = viewModel.bundleOrderModel!.orderInvoice!;
-                        if (await canLaunchUrl(Uri.parse(url))) {
-                          await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                  // Only show download button for non-wallet payments
+                  if (viewModel.bundleOrderModel?.paymentType?.toLowerCase() != "wallet")
+                    MainButton(
+                      title: LocaleKeys.orderReceiptBottomSheet_download.tr(),
+                      onPressed: () async {
+                        if (viewModel.bundleOrderModel?.orderInvoice != null && viewModel.bundleOrderModel!.orderInvoice!.isNotEmpty) {
+                          // Open browser to download invoice
+                          final url = viewModel.bundleOrderModel!.orderInvoice!;
+                          if (await canLaunchUrl(Uri.parse(url))) {
+                            await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                          }
+                        } else {
+                          // Maintain savePdf logic
+                          await viewModel.savePdf();
                         }
-                      } else {
-                        // Maintain savePdf logic
-                        await viewModel.savePdf();
-                      }
-                    },
-                    hideShadows: true,
-                    themeColor: themeColor,
-                    enabledTextColor:
-                        enabledMainButtonTextColor(context: context),
-                    enabledBackgroundColor:
-                        enabledMainButtonColor(context: context),
-                    titleTextStyle: bodyBoldTextStyle(context: context),
-                  ),
+                      },
+                      hideShadows: true,
+                      themeColor: themeColor,
+                      enabledTextColor:
+                          enabledMainButtonTextColor(context: context),
+                      enabledBackgroundColor:
+                          enabledMainButtonColor(context: context),
+                      titleTextStyle: bodyBoldTextStyle(context: context),
+                    ),
                 ],
               ),
             ),
