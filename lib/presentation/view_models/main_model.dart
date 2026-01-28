@@ -93,7 +93,7 @@ class MainViewModel extends ReactiveViewModel
   ) async {
     AuthResponseModel? authResponseModel = response?.dataOfType;
     if (authResponseModel != null) {
-      locator<UserAuthenticationService>().saveUserResponse(authResponseModel);
+      await locator<UserAuthenticationService>().saveUserResponse(authResponseModel);
     }
   }
 

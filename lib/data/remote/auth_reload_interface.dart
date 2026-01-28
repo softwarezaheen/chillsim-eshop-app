@@ -4,7 +4,7 @@ import "package:http/http.dart";
 typedef AuthReloadListenerCallBack = void Function(BaseResponse?);
 
 abstract interface class AuthReloadListener {
-  void onAuthReloadListenerCallBackUseCase(
+  Future<void> onAuthReloadListenerCallBackUseCase(
     ResponseMain<dynamic>? response,
   );
 }

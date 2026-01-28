@@ -77,9 +77,9 @@ class HttpRequest {
   }
 
   // Notify all listeners
-  static void notifyAuthReloadListeners(
+  static Future<void> notifyAuthReloadListeners(
     ResponseMain<dynamic>? base,
-  ) {
+  ) async {
     _authReloadListeners.removeWhere(
       (WeakReference<AuthReloadListener> weakRef) => weakRef.target == null,
     );
@@ -87,7 +87,7 @@ class HttpRequest {
         in _authReloadListeners) {
       final AuthReloadListener? listener = weakRef.target;
       if (listener != null) {
-        listener.onAuthReloadListenerCallBackUseCase(base);
+        await listener.onAuthReloadListenerCallBackUseCase(base);
       }
     }
   }

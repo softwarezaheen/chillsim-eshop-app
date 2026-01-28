@@ -291,7 +291,7 @@ class APIService {
         fromJson: AuthResponseModel.fromAPIJson,
       );
 
-      HttpRequest.notifyAuthReloadListeners(authResponse);
+      await HttpRequest.notifyAuthReloadListeners(authResponse);
 
       _refreshCompleter!.complete();
       _isRefreshing = false;
