@@ -25,7 +25,7 @@ class ShareReferralCodeBottomSheetViewModel extends BaseModel {
 
     log(deepLink);
 
-    SharePlus.instance.share(
+    await SharePlus.instance.share(
       ShareParams(
         text: LocaleKeys.shareReferral_fullLinkText.tr(
           namedArgs: <String, String>{
