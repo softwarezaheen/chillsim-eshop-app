@@ -333,9 +333,15 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
             //case not valid
           }
         case PaymentType.dcb:
-        case PaymentType.card:
         case PaymentType.applePay:
           _triggerAssignFlow(paymentType: paymentType);
+        case PaymentType.card:
+          // Route through PM sheet for logged-in users to allow saved PM selection
+          if (isUserLoggedIn) {
+            unawaited(_choosePaymentMethod(paymentTypeList));
+          } else {
+            _triggerAssignFlow(paymentType: paymentType);
+          }
       }
     } else {
       _choosePaymentMethod(paymentTypeList);
@@ -346,6 +352,35 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     List<PaymentType> paymentTypeList,
   ) async {
     final double price = bundle?.price ?? 0;
+    final bool hasCard = paymentTypeList.contains(PaymentType.card);
+
+    if (isUserLoggedIn && hasCard) {
+      // Show saved payment method selection sheet for logged-in users
+      final SheetResponse<SavedPaymentMethodSheetResult>? pmResponse =
+          await bottomSheetService.showCustomSheet(
+        data: SavedPaymentMethodSheetRequest(
+          amount: price,
+          currency: bundle?.currencyCode ?? "",
+          walletBalance:
+              userAuthenticationService.walletAvailableBalance,
+          showWallet: paymentTypeList.contains(PaymentType.wallet),
+        ),
+        enableDrag: false,
+        isScrollControlled: true,
+        variant: BottomSheetType.paymentMethod,
+      );
+      if (pmResponse?.confirmed ?? false) {
+        final SavedPaymentMethodSheetResult? result = pmResponse?.data;
+        if (result?.canceled == true) return;
+        _triggerAssignFlow(
+          paymentType: result?.paymentType ?? PaymentType.card,
+          paymentMethodId: result?.paymentMethodId,
+        );
+      }
+      return;
+    }
+
+    // Fallback: legacy payment selection sheet
     SheetResponse<PaymentType>? response =
         await bottomSheetService.showCustomSheet(
       data: PaymentSelectionBottomRequest(
@@ -363,6 +398,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
 
   Future<void> _triggerAssignFlow({
     required PaymentType paymentType,
+    String? paymentMethodId,
   }) async {
     String? bearerToken;
     if (!isUserLoggedIn) {
@@ -384,6 +420,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
             ? paymentType.type
             : AppEnvironment
                 .appEnvironmentHelper.defaultPaymentTypeList.first.type,
+        paymentMethodId: paymentMethodId,
         bearerToken: bearerToken,
         relatedSearch: RelatedSearchRequestModel(
           region: _region,
@@ -445,6 +482,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         _initiatePaymentRequest(
           paymentType: paymentType,
           bearerToken: bearerToken,
+          paymentMethodId: paymentMethodId,
           orderID: result.data?.orderId ?? "",
           publishableKey: result.data?.publishableKey ?? "",
           merchantIdentifier: result.data?.merchantIdentifier ?? "",
@@ -472,10 +510,22 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
     required String customerEphemeralKeySecret,
     required String billingCountryCode,
     String? bearerToken,
+    String? paymentMethodId,
     String? merchantDisplayName,
     String? stripeUrlScheme,
     bool test = false,
   }) async {
+    // TODO (GAP 6 — app-kill during 3DS): If the user force-kills the app while the
+    // Stripe 3DS WebView is open, the PaymentIntent is left in requires_action state
+    // (or succeeds/fails without us knowing).  On next app launch there is currently
+    // no recovery surface — the user must contact support or wait for the 24-hour PI
+    // expiry.  Consider:
+    //  1. Persisting (orderID, paymentIntentClientSecret) to SharedPreferences before
+    //     calling processOrderPayment.
+    //  2. On app startup, if a persisted "pending payment" entry exists, redirect the
+    //     user to a "Resume / Cancel your pending payment" screen.
+    //  3. That screen calls Stripe.instance.retrievePaymentIntent() to get the current
+    //     status and either shows the result or re-launches handleNextAction.
     try {
       await paymentService.prepareCheckout(
         paymentType: paymentType,
@@ -493,6 +543,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         customerEphemeralKeySecret: customerEphemeralKeySecret,
         merchantDisplayName: merchantDisplayName ?? "ChillSIM",
         testEnv: test,
+        stripePaymentMethodId: paymentMethodId,
       );
 
       setViewState(ViewState.idle);
@@ -528,11 +579,26 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           }
       }
     } on Exception catch (e) {
+      final String errorMsg = e.toString();
       showToast(
-        e.toString().replaceAll("Exception:", ""),
+        errorMsg.replaceAll("Exception:", ""),
       );
       setViewState(ViewState.idle);
-      unawaited(cancelOrder(orderID: orderID));
+      // Guard: skip cancelOrder for network/timeout errors.
+      // If connectivity dropped during confirmPayment or the 3DS WebView, the
+      // PaymentIntent may have already succeeded server-side. Calling cancelOrder
+      // in that race would leave the DB order as CANCELED while the webhook still
+      // tries to fulfil it (see callback_service.py atomic update for the server-
+      // side counterpart of this guard).
+      final bool isNetworkOrTimeoutError =
+          errorMsg.toLowerCase().contains("no internet") ||
+          errorMsg.toLowerCase().contains("timed out") ||
+          errorMsg.toLowerCase().contains("connection");
+      if (isNetworkOrTimeoutError) {
+        log("⚠️ Network/timeout error — skipping cancelOrder for $orderID (webhook may have already processed payment)");
+      } else {
+        unawaited(cancelOrder(orderID: orderID));
+      }
       return;
     }
   }

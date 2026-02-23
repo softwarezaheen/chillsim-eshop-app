@@ -157,11 +157,16 @@ class MyESimView extends StatelessWidget {
               statusTextColor: item.getStatusTextColor(context),
               statusBgColor: item.getStatusBgColor(context),
               countryCode: "",
-              title: item.displayTitle ?? "",
+              title: (item.labelName as String?)?.isNotEmpty == true
+                  ? item.labelName as String
+                  : item.iccid ?? "",
               subTitle: item.displaySubtitle ?? "",
               dataValue: item.gprsLimitDisplay ?? "",
               showInstallButton: viewModel.state.showInstallButton,
               showTopUpButton: item.isTopupAllowed ?? true,
+              isAutoTopupEnabled: item.autoTopupEnabled ?? false,
+              onManageAutoTopupClick: () =>
+                  unawaited(viewModel.onManageAutoTopupClick(index: index)),
               iconPath: item.icon ?? "",
               price: "",
               validity: item.validityDisplay ?? "",
@@ -225,7 +230,9 @@ class MyESimView extends StatelessWidget {
             ESimExpiredPlanItem(
               countryCode: "",
               showUnlimitedData: item.unlimited ?? false,
-              title: item.displayTitle ?? "",
+              title: (item.labelName as String?)?.isNotEmpty == true
+                  ? item.labelName as String
+                  : item.iccid ?? "",
               subTitle: item.displaySubtitle ?? "",
               dataValue: item.gprsLimitDisplay ?? "",
               price: "",

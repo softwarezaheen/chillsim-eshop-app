@@ -1,6 +1,8 @@
 import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/data/remote/responses/auth/auth_response_model.dart";
+import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/domain/repository/api_auth_repository.dart";
+import "package:esim_open_source/domain/repository/api_user_repository.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/login_type.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/account_information_view/account_information_view.dart";
@@ -16,11 +18,11 @@ import "../../../../../../locator_test.dart";
 
 Future<void> main() async {
   await prepareTest();
-  late AccountInformationViewModel _viewModel; // retained for future assertions
+  late AccountInformationViewModel viewModel; // retained for future assertions
 
   setUp(() async {
     await setupTest();
-  _viewModel = locator<AccountInformationViewModel>();
+  viewModel = locator<AccountInformationViewModel>();
   });
 
   tearDown(() async {
@@ -36,6 +38,15 @@ Future<void> main() async {
         (WidgetTester tester) async {
       AppEnvironment.appEnvironmentHelper.setLoginTypeFromApi = LoginType.email;
       onViewModelReadyMock(viewName: "AccountInformationView");
+      
+      // Mock getUserBillingInfo to return empty billing data
+      when(locator<ApiUserRepository>().getUserBillingInfo()).thenAnswer(
+        (_) async => Resource<UserGetBillingInfoResponseModel>.success(
+          UserGetBillingInfoResponseModel(),
+          message: "",
+        ),
+      );
+      
       when(locator<ApiAuthRepository>().updateUserInfo(
         email: "",
         msisdn: "+40",
@@ -87,7 +98,7 @@ Future<void> main() async {
     });
 
     test("viewModel exists (silence unused)", () {
-      expect(_viewModel, isNotNull);
+      expect(viewModel, isNotNull);
     });
   });
 }

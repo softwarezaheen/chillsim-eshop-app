@@ -9,7 +9,9 @@ import "package:esim_open_source/data/remote/responses/bundles/bundle_response_m
 import "package:esim_open_source/data/remote/responses/bundles/bundle_taxes_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
+import "package:esim_open_source/data/remote/responses/user/auto_topup_config_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
+import "package:esim_open_source/data/remote/responses/user/saved_payment_method_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
 import "package:esim_open_source/data/remote/responses/user/user_get_billing_info_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_notification_response.dart";
@@ -46,6 +48,7 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
     required String paymentType,
     required RelatedSearchRequestModel relatedSearch,
     String? bearerToken,
+    String? paymentMethodId,
   }) {
     return responseToResource(
       apiUserBundles.assignBundle(
@@ -56,6 +59,7 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
         paymentType: paymentType,
         bearerToken: bearerToken,
         relatedSearch: relatedSearch,
+        paymentMethodId: paymentMethodId,
       ),
     );
   }
@@ -65,12 +69,16 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
     required String iccID,
     required String bundleCode,
     required String paymentType,
+    bool enableAutoTopup = false,
+    String? paymentMethodId,
   }) {
     return responseToResource(
       apiUserBundles.topUpBundle(
         iccID: iccID,
         bundleCode: bundleCode,
         paymentType: paymentType,
+        enableAutoTopup: enableAutoTopup,
+        paymentMethodId: paymentMethodId,
       ),
     );
   }
@@ -224,11 +232,13 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
   FutureOr<Resource<BundleAssignResponseModel?>> topUpWallet({
     required double amount,
     required String currency,
+    String? paymentMethodId,
   }) async {
     return responseToResource(
       apiUserBundles.topUpWallet(
         amount: amount,
         currency: currency,
+        paymentMethodId: paymentMethodId,
       ),
     );
   }
@@ -312,12 +322,12 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
   @override
   FutureOr<Resource<BundleTaxesResponseModel?>> getTaxes({
     required String bundleCode,
-    String? promoCode
+    String? promoCode,
   }) {
     return responseToResource(
       apiUserBundles.getTaxes(
         bundleCode: bundleCode,
-        promoCode: promoCode
+        promoCode: promoCode,
       ),
     );
   }
@@ -333,5 +343,84 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
         pageSize: pageSize,
       ),
     );
+  }
+
+  // Auto Top-Up
+
+  @override
+  FutureOr<Resource<AutoTopupConfigResponseModel?>> enableAutoTopup({
+    required String iccid,
+    required String bundleCode,
+    String? userProfileId,
+  }) {
+    return responseToResource<AutoTopupConfigResponseModel?>(
+      apiUserBundles.enableAutoTopup(
+        iccid: iccid,
+        bundleCode: bundleCode,
+        userProfileId: userProfileId,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<dynamic> disableAutoTopup({required String iccid}) {
+    return responseToResource(
+      apiUserBundles.disableAutoTopup(iccid: iccid),
+    );
+  }
+
+  @override
+  FutureOr<dynamic> getAutoTopupConfig({required String iccid}) {
+    return responseToResource(
+      apiUserBundles.getAutoTopupConfig(iccid: iccid),
+    );
+  }
+
+  @override
+  FutureOr<dynamic> getAutoTopupConfigs() {
+    return responseToResource(apiUserBundles.getAutoTopupConfigs());
+  }
+
+  @override
+  FutureOr<dynamic> updateAutoTopupConfig({
+    required String iccid,
+    required Map<String, dynamic> data,
+  }) {
+    return responseToResource(
+      apiUserBundles.updateAutoTopupConfig(
+        iccid: iccid,
+        data: data,
+      ),
+    );
+  }
+
+  // Payment Methods
+
+  @override
+  FutureOr<Resource<List<SavedPaymentMethodResponseModel>>> getPaymentMethods() {
+    return responseToResource(apiUserBundles.getPaymentMethods());
+  }
+
+  @override
+  FutureOr<Resource<SavedPaymentMethodResponseModel>> setDefaultPaymentMethod({
+    required String pmId,
+  }) {
+    return responseToResource(
+      apiUserBundles.setDefaultPaymentMethod(
+        pmId: pmId,
+      ),
+    );
+  }
+
+  @override
+  FutureOr<dynamic> deletePaymentMethod({required String pmId}) {
+    return responseToResource(
+      apiUserBundles.deletePaymentMethod(pmId: pmId),
+    );
+  }
+
+  @override
+  FutureOr<Resource<List<SavedPaymentMethodResponseModel>>> syncPaymentMethods() {
+    return responseToResource(apiUserBundles.syncPaymentMethods());
   }
 }

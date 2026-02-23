@@ -1,13 +1,10 @@
-import "package:easy_localization/easy_localization.dart";
-import "package:flutter/material.dart";
-
 import "package:esim_open_source/data/remote/responses/user/wallet_transaction_response.dart";
-
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/wallet_transactions_view/wallet_transactions_view_model.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
-import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/foundation.dart";
+import "package:flutter/material.dart";
 
 class WalletTransactionItemView extends StatelessWidget {
   const WalletTransactionItemView({
@@ -143,24 +140,10 @@ class WalletTransactionItemView extends StatelessWidget {
     }
   }
 
-  String _getTransactionTypeTitle() {
-    switch (transactionModel.transactionType) {
-      case WalletTransactionType.topUp:
-        // If it's a balance change (top_up type), use "Balance Changed" instead
-        if (transactionModel.isBalanceChange) {
-          return LocaleKeys.walletTransactions_balanceChangedText.tr();
-        }
-        return LocaleKeys.walletTransactions_topUpText.tr();
-      case WalletTransactionType.voucherRedeem:
-        return LocaleKeys.walletTransactions_voucherRedeemText.tr();
-      case WalletTransactionType.referralReward:
-        return LocaleKeys.walletTransactions_referralRewardText.tr();
-      case WalletTransactionType.cashback:
-        return LocaleKeys.walletTransactions_cashbackText.tr();
-      case WalletTransactionType.purchase:
-        return LocaleKeys.walletTransactions_purchaseText.tr();
-      case WalletTransactionType.refund:
-        return LocaleKeys.walletTransactions_refundText.tr();
-    }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<WalletTransactionUiModel>("transactionModel", transactionModel));
   }
+
 }

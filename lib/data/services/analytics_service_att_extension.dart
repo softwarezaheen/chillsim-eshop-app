@@ -21,11 +21,13 @@ mixin AnalyticsServiceATTMixin {
   bool _attEverAccepted = false;
   
   // SharedPreferences key for persistent ATT acceptance tracking
-  static const String _keyAttEverAccepted = 'att_ever_accepted';
+  static const String _keyAttEverAccepted = "att_ever_accepted";
   
   /// Initialize ATT state on service startup
   Future<void> initializeATT() async {
-    if (!Platform.isIOS) return;
+    if (!Platform.isIOS) {
+      return;
+    }
     
     await _loadAttAcceptanceState();
     await _evaluateCurrentAttStatus();
@@ -39,7 +41,7 @@ mixin AnalyticsServiceATTMixin {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       _attEverAccepted = prefs.getBool(_keyAttEverAccepted) ?? false;
       log("🍎 Loaded ATT acceptance state: $_attEverAccepted");
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error loading ATT acceptance state: $e");
       _attEverAccepted = false;
     }
@@ -52,20 +54,22 @@ mixin AnalyticsServiceATTMixin {
       await prefs.setBool(_keyAttEverAccepted, accepted);
       _attEverAccepted = accepted;
       log("🍎 Saved ATT acceptance state: $accepted");
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error saving ATT acceptance state: $e");
     }
   }
   
   /// Get current ATT status without requesting
   Future<void> _evaluateCurrentAttStatus() async {
-    if (!Platform.isIOS) return;
+    if (!Platform.isIOS) {
+      return;
+    }
     
     try {
       _attStatus = await AppTrackingTransparency.trackingAuthorizationStatus;
       _attAuthorized = _attStatus == TrackingStatus.authorized;
       log("🍎 Current ATT status: $_attStatus, authorized: $_attAuthorized");
-    } catch (e) {
+    } on Exception catch (e) {
       log("🍎 Error evaluating ATT status: $e");
     }
   }
@@ -117,7 +121,7 @@ mixin AnalyticsServiceATTMixin {
       }
       
       return AttRequestResult.restricted;
-    } catch (e) {
+    } on Exception catch (e) {
       log("🍎 ATT request error: $e");
       return AttRequestResult.error;
     }
@@ -138,7 +142,7 @@ mixin AnalyticsServiceATTMixin {
       );
       
       log("🍎 Consent disabled after ATT denial");
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error handling ATT denial: $e");
     }
   }
@@ -168,7 +172,7 @@ mixin AnalyticsServiceATTMixin {
       _attAuthorized = currentStatus == TrackingStatus.authorized;
       
       return false; // No change
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error checking iOS Settings change: $e");
       return false;
     }
@@ -181,17 +185,19 @@ mixin AnalyticsServiceATTMixin {
   
   /// Get ATT guidance message key for UI
   String getAttGuidanceMessageKey() {
-    if (!Platform.isIOS) return '';
-    
-    if (_attStatus == TrackingStatus.denied) {
-      return 'attGuidance_denied_message';
-    } else if (_attStatus == TrackingStatus.restricted) {
-      return 'attGuidance_restricted_message';
-    } else if (_attRequestAttempted && !_attAuthorized) {
-      return 'attGuidance_general_message';
+    if (!Platform.isIOS) {
+      return "";
     }
     
-    return '';
+    if (_attStatus == TrackingStatus.denied) {
+      return "attGuidance_denied_message";
+    } else if (_attStatus == TrackingStatus.restricted) {
+      return "attGuidance_restricted_message";
+    } else if (_attRequestAttempted && !_attAuthorized) {
+      return "attGuidance_general_message";
+    }
+    
+    return "";
   }
   
   /// Reset ATT state (testing only)
@@ -206,7 +212,7 @@ mixin AnalyticsServiceATTMixin {
       _attAuthorized = false;
       
       log("🍎 ATT state reset for testing");
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error resetting ATT state: $e");
     }
   }

@@ -13,7 +13,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/bundle_divider_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/circular_icon_button.dart";
 import "package:esim_open_source/presentation/widgets/android_manual_install_sheet.dart";
-import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
+import "package:esim_open_source/presentation/widgets/auto_topup_prompt_widget.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/marketing_consent_widget.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
@@ -46,9 +46,6 @@ class PurchaseOrderSuccessView extends StatelessWidget {
           horizontal: 20,
           child: Column(
             children: <Widget>[
-              BottomSheetCloseButton(
-                onTap: viewModel.onBackPressed,
-              ),
               Expanded(
                 child: Column(
                   children: <Widget>[
@@ -87,6 +84,25 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                                   viewModel.state.activationCode,
                                 );
                               },
+                            ),
+                            verticalSpaceSmall,
+                            // Auto top-up prompt — comes before marketing widget
+                            AutoTopupPromptWidget(
+                              bundleName:
+                                  viewModel.state.autoTopupBundleName,
+                              isEnabling:
+                                  viewModel.state.isEnablingAutoTopup,
+                              isDisabling:
+                                  viewModel.state.isDisablingAutoTopup,
+                              onEnable: () {
+                                viewModel.onEnableAutoTopup();
+                              },
+                              onDisable: () {
+                                viewModel.onDisableAutoTopup();
+                              },
+                              showWidget:
+                                  viewModel.state.showAutoTopupPrompt,
+                              isEnabled: viewModel.state.autoTopupEnabled,
                             ),
                             verticalSpaceSmall,
                             // Marketing consent widget - only shows if user hasn't subscribed
@@ -158,26 +174,37 @@ class PurchaseOrderSuccessView extends StatelessWidget {
   ) {
     return Column(
       children: <Widget>[
-        Column(
+        // Title row: centered title with X close button on right
+        Row(
           children: <Widget>[
-            Image.asset(
-              EnvironmentImages.compatibleIcon.fullImagePath,
-              width: 60,
-              height: 60,
-            ),
-            verticalSpaceMedium,
-            Text(
-              LocaleKeys.payment_success.tr(),
-              style: headerThreeMediumTextStyle(
-                context: context,
-                fontColor: mainDarkTextColor(context: context),
+            const SizedBox(width: 40),
+            Expanded(
+              child: Text(
+                LocaleKeys.payment_success.tr(),
+                textAlign: TextAlign.center,
+                style: headerThreeMediumTextStyle(
+                  context: context,
+                  fontColor: mainDarkTextColor(context: context),
+                ),
               ),
             ),
-            verticalSpaceSmall,
-            const BundleDivider(
-              verticalPadding: 0,
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: GestureDetector(
+                onTap: viewModel.onBackPressed,
+                child: Image.asset(
+                  EnvironmentImages.sheetCloseIcon.fullImagePath,
+                  width: 32,
+                  height: 32,
+                ),
+              ),
             ),
           ],
+        ),
+        verticalSpaceSmall,
+        const BundleDivider(
+          verticalPadding: 0,
         ),
       ],
     );
@@ -192,18 +219,23 @@ class PurchaseOrderSuccessView extends StatelessWidget {
         Text(
           LocaleKeys.the_qr_code_was_sent.tr(),
           textAlign: TextAlign.center,
-          style: captionOneMediumTextStyle(
+          style: captionTwoNormalTextStyle(
             context: context,
             fontColor: secondaryTextColor(context: context),
           ),
         ),
         verticalSpaceSmall,
         MainButton.emptyBackground(
-          width: 200,
+          width: 160,
           hideShadows: true,
           title: LocaleKeys.check_user_guide.tr(),
           onPressed: viewModel.onUserGuideClick,
           themeColor: userGuideButtonColor(context: context),
+          height: 36,
+          titleTextStyle: captionOneMediumTextStyle(
+            context: context,
+            fontColor: userGuideButtonColor(context: context),
+          ).copyWith(fontSize: 12),
         ),
       ],
     );

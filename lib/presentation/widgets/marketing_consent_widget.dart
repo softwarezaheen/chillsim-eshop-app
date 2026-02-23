@@ -55,67 +55,35 @@ class MarketingConsentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          // Title
-          Text(
-            LocaleKeys.marketing_consent_title.tr(),
-            style: bodyBoldTextStyle(
-              context: context,
-              fontColor: mainDarkTextColor(context: context),
-            ).copyWith(fontSize: 14),
-          ),
-          const SizedBox(height: 6),
-          // Description
-          Text(
-            LocaleKeys.marketing_consent_description.tr(),
-            style: captionTwoNormalTextStyle(
-              context: context,
-              fontColor: contentTextColor(context: context),
-            ).copyWith(fontSize: 11, height: 1.3),
-          ),
-          const SizedBox(height: 8),
-          // Toggle Switch Row
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: context.appColors.baseWhite,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    shouldNotify
-                        ? LocaleKeys.marketing_consent_toggle_enabled.tr()
-                        : LocaleKeys.marketing_consent_toggle_disabled.tr(),
-                    style: captionOneMediumTextStyle(
-                      context: context,
-                      fontColor: mainDarkTextColor(context: context),
-                    ).copyWith(fontSize: 13),
-                  ),
+          // Title row with toggle inline
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  LocaleKeys.marketing_consent_title.tr(),
+                  style: bodyBoldTextStyle(
+                    context: context,
+                    fontColor: mainDarkTextColor(context: context),
+                  ).copyWith(fontSize: 14),
                 ),
-                const SizedBox(width: 12),
-                // Show loading spinner when updating, otherwise show switch
-                if (isUpdating)
-                  SizedBox(
-                    width: 56,
-                    height: 32,
-                    child: Center(
-                      child: SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            context.appColors.warning_400!,
-                          ),
-                        ),
-                      ),
+              ),
+              const SizedBox(width: 12),
+              if (isUpdating)
+                SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      context.appColors.warning_400!,
                     ),
-                  )
-                else
-                  Container(
+                  ),
+                )
+              else
+                Transform.scale(
+                  scale: 0.75,
+                  child: Container(
                     height: 32,
                     width: 56,
                     decoration: BoxDecoration(
@@ -125,14 +93,23 @@ class MarketingConsentWidget extends StatelessWidget {
                     child: Switch.adaptive(
                       value: shouldNotify,
                       onChanged: onToggle,
-                      activeColor: context.appColors.warning_400,
-                      activeTrackColor: context.appColors.warning_400!.withOpacity(0.5),
-                      inactiveThumbColor: Colors.grey.shade400,
+                      activeColor: Colors.white,
+                      activeTrackColor: context.appColors.warning_400,
+                      inactiveThumbColor: Colors.white,
                       inactiveTrackColor: Colors.grey.shade300,
                     ),
                   ),
-              ],
-            ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          // Description
+          Text(
+            LocaleKeys.marketing_consent_description.tr(),
+            style: captionTwoNormalTextStyle(
+              context: context,
+              fontColor: contentTextColor(context: context),
+            ).copyWith(fontSize: 11, height: 1.3),
           ),
         ],
       ),

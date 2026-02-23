@@ -77,6 +77,114 @@ class TopUpBottomSheet extends StatelessWidget {
                             child: buildTopUpList(context, viewModel),
                           ),
                         ),
+                  // Auto-topup opt-in checkbox (hidden if already enabled or all unlimited)
+                  if (viewModel.isUserLoggedIn &&
+                      !viewModel.allBundlesUnlimited &&
+                      !(request.data?.isAutoTopupEnabled ?? false))
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: themeColor.withOpacity(0.08),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: themeColor.withOpacity(0.25),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            InkWell(
+                              onTap: () => viewModel.setAutoTopupOptIn(
+                                value: !viewModel.autoTopupOptIn,
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: Checkbox(
+                                      value: viewModel.autoTopupOptIn,
+                                      onChanged: (bool? value) =>
+                                          viewModel.setAutoTopupOptIn(
+                                        value: value ?? false,
+                                      ),
+                                      activeColor: themeColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      LocaleKeys.auto_topup_enable_button
+                                          .tr(),
+                                      style: bodyNormalTextStyle(
+                                        context: context,
+                                        fontColor: contentTextColor(
+                                          context: context,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 4,
+                                left: 32,
+                              ),
+                              child: Text(
+                                LocaleKeys.auto_topup_checkout_hint.tr(),
+                                style: captionTwoNormalTextStyle(
+                                  context: context,
+                                  fontColor: contentTextColor(
+                                    context: context,
+                                  ).withOpacity(0.7),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  // Stripe disclaimer (only when auto-topup section is NOT shown)
+                  if (!viewModel.isUserLoggedIn ||
+                      viewModel.allBundlesUnlimited ||
+                      (request.data?.isAutoTopupEnabled ?? false))
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 4,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(
+                            Icons.lock_outline,
+                            size: 14,
+                            color: contentTextColor(context: context),
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              LocaleKeys.paymentSelection_stripeNotice.tr(),
+                              style: captionOneNormalTextStyle(
+                                context: context,
+                                fontColor: contentTextColor(context: context),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

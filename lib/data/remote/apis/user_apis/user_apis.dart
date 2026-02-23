@@ -22,7 +22,18 @@ enum UserApis implements URlRequestBuilder {
   verifyOrderOtp,
   setUserBillingInfo,
   getUserBillingInfo,
-  getTaxes;
+  getTaxes,
+  // Auto Top-Up
+  enableAutoTopup,
+  disableAutoTopup,
+  getAutoTopupConfig,
+  getAutoTopupConfigs,
+  updateAutoTopupConfig,
+  // Payment Methods
+  getPaymentMethods,
+  setDefaultPaymentMethod,
+  deletePaymentMethod,
+  syncPaymentMethods;
 
   @override
   String get baseURL => "";
@@ -43,7 +54,7 @@ enum UserApis implements URlRequestBuilder {
       case UserApis.getBundleExists:
         return "/api/v1/user/bundle-exists";
       case UserApis.getBundleLabel:
-        return "/api/v1/user/bundle-label";
+        return "/api/v1/user/bundle-label-by-iccid";
       case UserApis.getMyEsims:
         return "/api/v1/user/my-esim";
       case UserApis.getMyEsimByIccID:
@@ -72,6 +83,24 @@ enum UserApis implements URlRequestBuilder {
         return "/api/v1/user/get-billing-info";
       case UserApis.getTaxes:
         return "/api/v1/user/bundle/get-taxes";
+      case UserApis.enableAutoTopup:
+        return "/api/v1/user/auto-topup/enable";
+      case UserApis.disableAutoTopup:
+        return "/api/v1/user/auto-topup/disable";
+      case UserApis.getAutoTopupConfig:
+        return "/api/v1/user/auto-topup";
+      case UserApis.getAutoTopupConfigs:
+        return "/api/v1/user/auto-topup";
+      case UserApis.updateAutoTopupConfig:
+        return "/api/v1/user/auto-topup";
+      case UserApis.getPaymentMethods:
+        return "/api/v1/user/payment-methods";
+      case UserApis.setDefaultPaymentMethod:
+        return "/api/v1/user/payment-methods";
+      case UserApis.deletePaymentMethod:
+        return "/api/v1/user/payment-methods";
+      case UserApis.syncPaymentMethods:
+        return "/api/v1/user/payment-methods/sync";
     }
   }
 
@@ -90,6 +119,9 @@ enum UserApis implements URlRequestBuilder {
       case UserApis.getWalletTransactions:
       case UserApis.getUserBillingInfo:
       case UserApis.getTaxes:
+      case UserApis.getAutoTopupConfig:
+      case UserApis.getAutoTopupConfigs:
+      case UserApis.getPaymentMethods:
         return HttpMethod.GET;
       case UserApis.assignBundle:
       case UserApis.setNotificationsRead:
@@ -99,9 +131,16 @@ enum UserApis implements URlRequestBuilder {
       case UserApis.resendOrderOtp:
       case UserApis.verifyOrderOtp:
       case UserApis.setUserBillingInfo:
+      case UserApis.enableAutoTopup:
+      case UserApis.disableAutoTopup:
+      case UserApis.setDefaultPaymentMethod:
+      case UserApis.syncPaymentMethods:
         return HttpMethod.POST;
       case UserApis.cancelOrder:
+      case UserApis.deletePaymentMethod:
         return HttpMethod.DELETE;
+      case UserApis.updateAutoTopupConfig:
+        return HttpMethod.PUT;
     }
   }
 

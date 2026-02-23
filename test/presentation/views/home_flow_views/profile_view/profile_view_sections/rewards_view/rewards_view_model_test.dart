@@ -84,13 +84,11 @@ Future<void> main() async {
                 AppEnvironment.appEnvironmentHelper.enableReferral,
                 isTrue,
               );
-              break;
             case RewardsViewSections.rewardsHistory:
               expect(
                 AppEnvironment.appEnvironmentHelper.enableRewardsHistory,
                 isTrue,
               );
-              break;
           }
         }
       });
@@ -191,7 +189,7 @@ Future<void> main() async {
     group("Memory and Performance Tests", () {
       test("viewModel can be disposed without errors", () {
         final RewardsViewModel testViewModel = RewardsViewModel();
-        expect(() => testViewModel.dispose(), returnsNormally);
+        expect(testViewModel.dispose, returnsNormally);
       });
 
       test("multiple viewModels can coexist", () {

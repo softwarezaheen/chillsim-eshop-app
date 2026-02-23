@@ -216,14 +216,14 @@ void main() {
 
       test("displayTitle falls back to referralFrom when both title and name are empty",
           () {
-        final Map<String, dynamic> json = {
+        final Map<String, dynamic> json = <String, dynamic>{
           "is_referral": true,
           "amount": "5.00 EUR",
           "name": "",
           "promotion_name": "",
           "date": "1760000000",
           "title": null,
-          "referral_from": "friend@example.com"
+          "referral_from": "friend@example.com",
         };
         final RewardHistoryResponseModel model =
             RewardHistoryResponseModel.fromJson(json: json);

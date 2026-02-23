@@ -89,8 +89,8 @@ class PhoneNumberUtils {
     }
     
     try {
-      final countryCode = controller!.value!.countryCode;
-      final nsn = controller.value!.nsn;
+      final String countryCode = controller!.value!.countryCode;
+      final String nsn = controller.value!.nsn;
       
       if (countryCode.isEmpty || nsn.isEmpty) {
         return "";

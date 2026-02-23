@@ -43,11 +43,21 @@ Future<void> main() async {
       ),);
     });
 
-    test("onViewModelReady with redirection", () {
+    testWidgets("onViewModelReady with redirection", (WidgetTester tester) async {
       final InAppRedirection redirection = InAppRedirection.cashback();
-      viewModel..redirection = redirection
+      viewModel.redirection = redirection;
 
-      ..onViewModelReady();
+      // Create a minimal widget to ensure WidgetsBinding is available
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Container(),
+        ),
+      );
+
+      viewModel.onViewModelReady();
+
+      // Pump frame to allow addPostFrameCallback to execute
+      await tester.pump();
 
       verify(mockRedirectionsHandlerService.redirectToRoute(
         redirection: redirection,

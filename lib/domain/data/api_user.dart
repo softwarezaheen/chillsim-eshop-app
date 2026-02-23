@@ -13,12 +13,15 @@ abstract interface class ApiUser {
     required String paymentType,
     required RelatedSearchRequestModel relatedSearch,
     String? bearerToken,
+    String? paymentMethodId,
   });
 
   FutureOr<dynamic> topUpBundle({
     required String iccID,
     required String bundleCode,
     required String paymentType,
+    bool enableAutoTopup = false,
+    String? paymentMethodId,
   });
 
   FutureOr<dynamic> getUserNotifications({
@@ -65,6 +68,7 @@ abstract interface class ApiUser {
   FutureOr<dynamic> topUpWallet({
     required double amount,
     required String currency,
+    String? paymentMethodId,
   });
 
   FutureOr<dynamic> cancelOrder({
@@ -96,4 +100,39 @@ abstract interface class ApiUser {
     required int pageIndex,
     required int pageSize,
   });
+
+  // Auto Top-Up
+  FutureOr<dynamic> enableAutoTopup({
+    required String iccid,
+    required String bundleCode,
+    String? userProfileId,
+  });
+
+  FutureOr<dynamic> disableAutoTopup({
+    required String iccid,
+  });
+
+  FutureOr<dynamic> getAutoTopupConfig({
+    required String iccid,
+  });
+
+  FutureOr<dynamic> getAutoTopupConfigs();
+
+  FutureOr<dynamic> updateAutoTopupConfig({
+    required String iccid,
+    required Map<String, dynamic> data,
+  });
+
+  // Payment Methods
+  FutureOr<dynamic> getPaymentMethods();
+
+  FutureOr<dynamic> setDefaultPaymentMethod({
+    required String pmId,
+  });
+
+  FutureOr<dynamic> deletePaymentMethod({
+    required String pmId,
+  });
+
+  FutureOr<dynamic> syncPaymentMethods();
 }

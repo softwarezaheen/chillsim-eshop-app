@@ -18,5 +18,6 @@ abstract class PaymentService {
     bool testEnv = false,
     String? iccID,
     String? orderID,
+    String? stripePaymentMethodId,
   });
 }

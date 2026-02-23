@@ -15,10 +15,10 @@ import "package:fluttertoast/fluttertoast.dart";
 /// Handles cases where easy_localization context is not available (e.g., tests)
 String _safeTranslate(String key, String fallback) {
   try {
-    final translated = key.tr();
+    final String translated = key.tr();
     // If translation returns the key itself, localization is not available
     return translated == key ? fallback : translated;
-  } catch (e) {
+  } on Object catch (_) {
     // Localization not available (e.g., in tests), use fallback
     return fallback;
   }
@@ -62,8 +62,8 @@ class StripePayment {
       // DEFENSIVE CODING: Safe string preview that handles any length
       // Why: Prevent crashes from short keys and avoid exposing full key in logs
       // Security: Only show first 15 chars
-      final keyPreview = publishableKey.length > 15 
-          ? '${publishableKey.substring(0, 15)}...' 
+      final String keyPreview = publishableKey.length > 15
+          ? "${publishableKey.substring(0, 15)}..."
           : publishableKey;
       
       log("   Publishable Key: $keyPreview");
@@ -74,24 +74,19 @@ class StripePayment {
 
       // DEFENSIVE CODING: Validate publishable key before use
       // Why: Stripe SDK will fail with cryptic error if key is invalid
-      // Better to fail fast with clear, actionable error message
+      // Throws Exception (not ArgumentError) so it propagates correctly through
+      // the bare catch→rethrow path and surfaces to the VM with the right message.
       if (publishableKey.isEmpty) {
-        await showToast(
+        throw Exception(
           _safeTranslate(
             LocaleKeys.payment_error_failed,
-            "Payment configuration error. Please contact support."
+            "Payment configuration error. Please contact support.",
           ),
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-        );
-        throw ArgumentError(
-          'Publishable key cannot be empty. '
-          'Please provide a valid Stripe publishable key (pk_test_... or pk_live_...).'
         );
       }
 
-      if (!publishableKey.startsWith('pk_test_') && 
-          !publishableKey.startsWith('pk_live_')) {
+      if (!publishableKey.startsWith("pk_test_") &&
+          !publishableKey.startsWith("pk_live_")) {
         log("⚠️ Warning: Publishable key format may be invalid. "
             "Expected format: pk_test_... or pk_live_...");
       }
@@ -101,19 +96,16 @@ class StripePayment {
       // Impact: Without merchant ID, Payment Sheet initialization fails
       // Critical: This affects ALL payments on iOS (not just Apple Pay)
       if (Platform.isIOS && effectiveMerchantId.isEmpty) {
-        await showToast(
+        throw Exception(
           _safeTranslate(
             LocaleKeys.payment_error_failed,
-            "Apple Pay configuration error"
+            "Apple Pay configuration error. Please contact support.",
           ),
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
         );
-        throw ArgumentError('Merchant identifier is required for Apple Pay in Payment Sheet');
       }
 
       // Validate format if iOS
-      if (Platform.isIOS && !effectiveMerchantId.startsWith('merchant.')) {
+      if (Platform.isIOS && !effectiveMerchantId.startsWith("merchant.")) {
         log("⚠️ Warning: Merchant identifier format may be invalid.");
         log("   Expected format: merchant.{domain}.{app}");
         log("   Current value: $effectiveMerchantId");
@@ -125,10 +117,9 @@ class StripePayment {
       await showToast(
         _safeTranslate(
           LocaleKeys.payment_preparing,
-          "Preparing payment..."
+          "Preparing payment...",
         ),
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
       );
 
       // DEFENSIVE CODING: Configure Stripe with validated values
@@ -146,70 +137,25 @@ class StripePayment {
     } on StripeException catch (e) {
       log("❌ Stripe configuration error: ${e.error.localizedMessage ?? e.error.message}");
       log("   Code: ${e.error.code}");
-      
-      await showToast(
-        _safeTranslate(
-          LocaleKeys.payment_error_stripe_config,
-          "Payment system error. Please try again."
-        ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-      );
-      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_platform, "Platform error occurred"));
     } on PlatformException catch (e) {
       log("❌ Platform error during Stripe initialization: ${e.message}");
       log("   Code: ${e.code}");
-      
-      await showToast(
-        _safeTranslate(
-          LocaleKeys.payment_error_platform,
-          "Platform error. Please try again."
-        ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-      );
-      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_platform, "Platform error occurred"));
     } on SocketException catch (e) {
       log("❌ Network error during Stripe initialization: ${e.message}");
-      
-      await showToast(
-        _safeTranslate(
-          LocaleKeys.payment_error_network,
-          "No internet connection"
-        ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-      );
-      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_network, "No internet connection"));
     } on TimeoutException catch (_) {
       log("❌ Timeout during Stripe initialization");
-      
-      await showToast(
-        _safeTranslate(
-          LocaleKeys.payment_error_timeout,
-          "Payment timed out"
-        ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-      );
-      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_timeout, "Payment timed out"));
     } catch (e, stackTrace) {
+      // Rethrow any Exception we already built with a user-friendly message
+      // (e.g. validation errors thrown above). Only wrap truly unexpected
+      // non-Exception objects (Errors, assertion failures, etc.).
+      if (e is Exception) 
+        {rethrow;}
       log("❌ Unexpected error preparing Stripe checkout: $e");
       log("   Stack trace: $stackTrace");
-      
-      await showToast(
-        _safeTranslate(
-          LocaleKeys.payment_error_unknown,
-          "Unexpected error. Please try again."
-        ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-      );
-      
       throw Exception(_safeTranslate(LocaleKeys.payment_error_unknown, "Unknown error occurred"));
     }
   }
@@ -223,8 +169,82 @@ class StripePayment {
     bool testEnv = false,
     String? iccID,
     String? orderID,
+    String? stripePaymentMethodId,
   }) async {
     try {
+      // Use saved payment method directly (skip Payment Sheet)
+      if (stripePaymentMethodId != null && stripePaymentMethodId.isNotEmpty) {
+        log("═══════════════════════════════════════");
+        log("💳 Confirming with Saved Payment Method");
+        log("   PM ID: $stripePaymentMethodId");
+        log("   Order ID: $orderID");
+        log("═══════════════════════════════════════");
+        final PaymentIntent result = await Stripe.instance.confirmPayment(
+          paymentIntentClientSecret: paymentIntentClientSecret,
+          data: PaymentMethodParams.cardFromMethodId(
+            paymentMethodData: PaymentMethodDataCardFromMethod(
+              paymentMethodId: stripePaymentMethodId,
+            ),
+          ),
+        );
+        log("✅ Saved PM confirm status: ${result.status}");
+        switch (result.status) {
+          case PaymentIntentsStatus.Succeeded:
+          case PaymentIntentsStatus.Processing:
+            // Processing = async method (SEPA, Sofort, etc). Webhook will confirm.
+            log("✅ Saved PM payment ${result.status == PaymentIntentsStatus.Processing ? 'processing — webhook will confirm' : 'succeeded'}");
+            return PaymentResult.completed;
+
+          case PaymentIntentsStatus.Canceled:
+            log("ℹ️ Saved PM payment intent was canceled");
+            return PaymentResult.canceled;
+
+          case PaymentIntentsStatus.RequiresCapture:
+            // Manual-capture flow: PI is authorised but not yet captured server-side.
+            // Treat as success — the backend webhook will capture and fulfil the order.
+            log("✅ Saved PM requires capture (manual-capture flow) — treating as success");
+            return PaymentResult.completed;
+
+          case PaymentIntentsStatus.RequiresAction:
+            // 3DS or other redirect-based authentication required.
+            // Call handleNextAction to launch the WebView/redirect flow,
+            // then re-evaluate the final status.
+            log("🔐 Saved PM requires action (3DS) — launching handleNextAction");
+            final PaymentIntent actionResult =
+                await Stripe.instance.handleNextAction(paymentIntentClientSecret);
+            log("🔐 handleNextAction completed — status: ${actionResult.status}");
+            switch (actionResult.status) {
+              case PaymentIntentsStatus.Succeeded:
+              case PaymentIntentsStatus.Processing:
+                log("✅ 3DS authentication succeeded");
+                return PaymentResult.completed;
+              case PaymentIntentsStatus.RequiresCapture:
+                log("✅ 3DS succeeded, requires capture (manual-capture flow)");
+                return PaymentResult.completed;
+              case PaymentIntentsStatus.Canceled:
+                log("ℹ️ Payment canceled during 3DS");
+                return PaymentResult.canceled;
+              default:
+                log("❌ Payment failed after 3DS — status: ${actionResult.status}");
+                throw Exception(_safeTranslate(
+                    LocaleKeys.payment_error_failed,
+                    "Payment authentication failed. Please try a different card."));
+            }
+
+          case PaymentIntentsStatus.RequiresConfirmation:
+            log("❌ Saved PM still requires confirmation after confirmPayment");
+            throw Exception(_safeTranslate(LocaleKeys.payment_error_failed, "Payment requires additional verification. Please try a different card."));
+
+          case PaymentIntentsStatus.RequiresPaymentMethod:
+            log("❌ Saved PM authentication failed — requires new payment method");
+            throw Exception(_safeTranslate(LocaleKeys.payment_error_failed, "Payment authentication failed. Please try a different card."));
+
+          case PaymentIntentsStatus.Unknown:
+            log("❌ Saved PM unexpected status: ${result.status}");
+            throw Exception(_safeTranslate(LocaleKeys.payment_error_failed, "Payment failed"));
+        }
+      }
+
       log("═══════════════════════════════════════");
       log("💳 Starting Stripe Card Payment Flow");
       log("   (Payment Sheet includes Apple Pay/Google Pay)");
@@ -269,7 +289,7 @@ class StripePayment {
           log("───────────────────────────────────────");
           log("ℹ️  Note: Even if supported, Apple Pay button");
           log("   only appears if user has cards in Wallet app");
-        } catch (e) {
+        } on Object catch (e) {
           log("⚠️  Apple Pay capability check failed: $e");
           log("   Payment Sheet will still work with card payments");
         }
@@ -281,55 +301,67 @@ class StripePayment {
       // Better to fail fast with clear, actionable error messages
 
       // 1. Validate Customer ID
+      // Uses Exception (not ArgumentError) so it propagates through the bare
+      // catch→rethrow path and reaches the VM with the correct message.
       if (customerId.isEmpty) {
-        throw ArgumentError(
-          'Customer ID is required for payment processing. '
-          'Please ensure your backend creates a Stripe customer and returns the ID.'
+        throw Exception(
+          _safeTranslate(
+            LocaleKeys.payment_error_failed,
+            "Payment configuration error: missing customer ID. Please contact support.",
+          ),
         );
       }
-      if (!customerId.startsWith('cus_')) {
+      if (!customerId.startsWith("cus_")) {
         log("⚠️ Warning: Customer ID format may be invalid. "
             "Expected format: cus_... (Stripe customer ID)");
       }
 
       // 2. Validate Payment Intent Client Secret
       if (paymentIntentClientSecret.isEmpty) {
-        throw ArgumentError(
-          'Payment intent client secret is required. '
-          'Please ensure your backend creates a PaymentIntent and returns the client_secret.'
+        throw Exception(
+          _safeTranslate(
+            LocaleKeys.payment_error_failed,
+            "Payment configuration error: missing payment intent. Please contact support.",
+          ),
         );
       }
-      if (!paymentIntentClientSecret.startsWith('pi_') && 
-          !paymentIntentClientSecret.startsWith('seti_')) {
+      if (!paymentIntentClientSecret.startsWith("pi_") &&
+          !paymentIntentClientSecret.startsWith("seti_")) {
         log("⚠️ Warning: Payment intent secret format may be invalid. "
             "Expected format: pi_... or seti_...");
       }
 
       // 3. Validate Ephemeral Key Secret
       if (customerEphemeralKeySecret.isEmpty) {
-        throw ArgumentError(
-          'Customer ephemeral key secret is required. '
-          'Please ensure your backend creates an ephemeral key and returns the secret.'
+        throw Exception(
+          _safeTranslate(
+            LocaleKeys.payment_error_failed,
+            "Payment configuration error: missing ephemeral key. Please contact support.",
+          ),
         );
       }
 
       // 4. Validate Country Code (ISO 3166-1 alpha-2)
       if (billingCountryCode.isEmpty) {
-        throw ArgumentError(
-          'Billing country code is required. '
-          'Please provide a valid ISO 3166-1 alpha-2 country code (e.g., "US", "GB", "AE").'
+        throw Exception(
+          _safeTranslate(
+            LocaleKeys.payment_error_failed,
+            "Payment configuration error: missing billing country. Please contact support.",
+          ),
         );
       }
       if (billingCountryCode.length != 2) {
-        throw ArgumentError(
-          'Invalid country code format: "$billingCountryCode". '
-          'Must be exactly 2 letters (ISO 3166-1 alpha-2 format, e.g., "US", "GB", "AE").'
+        throw Exception(
+          _safeTranslate(
+            LocaleKeys.payment_error_failed,
+            'Payment configuration error: invalid country code "$billingCountryCode". Please contact support.',
+          ),
         );
       }
       // Ensure uppercase for consistency
-      final normalizedCountryCode = billingCountryCode.toUpperCase();
+      final String normalizedCountryCode = billingCountryCode.toUpperCase();
       if (billingCountryCode != normalizedCountryCode) {
-        log("ℹ️ Info: Country code normalized from '$billingCountryCode' to '$normalizedCountryCode'");
+        log('ℹ️ Info: Country code normalized from "$billingCountryCode" to "$normalizedCountryCode"');
       }
 
       log("✅ All payment parameters validated successfully");
@@ -417,7 +449,7 @@ class StripePayment {
         
         default:
           // Use Stripe's localized message if available, otherwise use generic error
-          final errorMessage = e.error.localizedMessage?.isNotEmpty == true
+          final String? errorMessage = e.error.localizedMessage?.isNotEmpty ?? false
               ? e.error.localizedMessage
               : _safeTranslate(LocaleKeys.payment_error_failed, "Payment failed");
           log("❌ Stripe error: $errorMessage");
@@ -445,6 +477,12 @@ class StripePayment {
       log("═══════════════════════════════════════");
       throw Exception(_safeTranslate(LocaleKeys.payment_error_timeout, "Payment timed out"));
     } catch (e, stackTrace) {
+      // Rethrow any Exception we already built with a user-friendly message
+      // (validation errors, status-switch errors). Only wrap truly unexpected
+      // non-Exception objects (Errors, assertion failures, etc.).
+      if (e is Exception) {
+        rethrow;
+      }
       log("═══════════════════════════════════════");
       log("❌ Unexpected Error in Payment");
       log("═══════════════════════════════════════");

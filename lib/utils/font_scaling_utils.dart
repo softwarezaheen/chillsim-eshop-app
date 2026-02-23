@@ -12,7 +12,7 @@ class FontScalingUtils {
   /// Allows system font scaling with a maximum limit to prevent extreme scaling
   static MediaQueryData limitFontScaling(BuildContext context, {double maxScale = 1.2}) {
     final MediaQueryData data = MediaQuery.of(context);
-    final double currentScale = data.textScaler.scale(1.0);
+    final double currentScale = data.textScaler.scale(1);
     
     // Limit the scaling factor to prevent layout issues
     final double limitedScale = currentScale > maxScale ? maxScale : currentScale;
@@ -47,11 +47,11 @@ class FontScalingUtils {
   
   /// Check if the user has increased font size beyond normal
   static bool isLargeFontSize(BuildContext context) {
-    return MediaQuery.of(context).textScaler.scale(1.0) > 1.0;
+    return MediaQuery.of(context).textScaler.scale(1) > 1.0;
   }
   
   /// Get the current font scale factor
   static double getFontScale(BuildContext context) {
-    return MediaQuery.of(context).textScaler.scale(1.0);
+    return MediaQuery.of(context).textScaler.scale(1);
   }
 }

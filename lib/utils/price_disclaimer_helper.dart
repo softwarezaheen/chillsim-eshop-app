@@ -11,9 +11,9 @@ class PriceDisclaimerHelper {
   /// - fee_enabled: true or false
   static String getPriceDisclaimerText() {
     try {
-      final appConfig = locator<AppConfigurationService>();
-      final taxMode = appConfig.taxMode.toLowerCase();
-      final feeEnabled = appConfig.feeEnabled;
+      final AppConfigurationService appConfig = locator<AppConfigurationService>();
+      final String taxMode = appConfig.taxMode.toLowerCase();
+      final bool feeEnabled = appConfig.feeEnabled;
 
       // Tax mode: inclusive - tax is already included in displayed price
       // Tax mode: exclusive - tax will be added at checkout  

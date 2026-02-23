@@ -67,9 +67,9 @@ void runAnalyticsTests() {
 }
 */
 
-import 'package:flutter/material.dart';
-import 'package:esim_open_source/test_utils/analytics_test_helper.dart';
-import 'package:esim_open_source/presentation/widgets/analytics_test_widget.dart';
+import "package:esim_open_source/presentation/widgets/analytics_test_widget.dart";
+import "package:esim_open_source/test_utils/analytics_test_helper.dart";
+import "package:flutter/material.dart";
 
 /// Quick access methods for analytics testing
 class AnalyticsTestingIntegration {
@@ -80,7 +80,7 @@ class AnalyticsTestingIntegration {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => Container(
+      builder: (BuildContext context) => Container(
         height: MediaQuery.of(context).size.height * 0.8,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -96,7 +96,7 @@ class AnalyticsTestingIntegration {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const AnalyticsTestWidget(),
+        builder: (BuildContext context) => const AnalyticsTestWidget(),
       ),
     );
   }
@@ -108,8 +108,8 @@ class AnalyticsTestingIntegration {
 
   static Future<void> quickTestPurchaseWithCoupon() async {
     await AnalyticsTestHelper.sendMockPurchaseEvent(
-      couponCode: 'QUICKTEST',
-      discount: 3.0,
+      couponCode: "QUICKTEST",
+      discount: 3,
     );
   }
 
@@ -119,7 +119,7 @@ class AnalyticsTestingIntegration {
 
   /// Run all test scenarios (for comprehensive testing)
   static Future<void> runAllTestScenarios() async {
-    for (final scenario in PurchaseTestScenario.values) {
+    for (final PurchaseTestScenario scenario in PurchaseTestScenario.values) {
       await AnalyticsTestHelper.sendMockPurchaseScenario(scenario);
       // Small delay between tests
       await Future.delayed(const Duration(milliseconds: 300));

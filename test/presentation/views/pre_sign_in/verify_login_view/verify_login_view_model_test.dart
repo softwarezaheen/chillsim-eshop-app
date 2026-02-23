@@ -68,7 +68,7 @@ Future<void> main() async {
         .thenAnswer((_) async => true);
     when(mockApiPromotionRepository.applyReferralCode(referralCode: "test_utm"))
         .thenAnswer(
-      (_) async => Resource<dynamic>.success(null, message: "Success"),
+      (_) async => Resource<EmptyResponse?>.success(EmptyResponse(), message: "Success"),
     );
     when(
       mockApiAuthRepository.login(
@@ -260,14 +260,24 @@ Future<void> main() async {
       expect(viewModel.viewState, ViewState.idle);
       expect(viewModel.isVerifyButtonEnabled, true);
 
-      try {
-        await viewModel.verifyButtonTapped();
-      } on Object catch (_) {}
+      // Reset mock to clear the auto-triggered call from otpFieldSubmitted
+      reset(mockApiAuthRepository);
 
+      // Call without awaiting so we can check state during execution
+      final Future<void> verifyFuture = viewModel.verifyButtonTapped();
+
+      // Check state immediately after call (should be busy)
       expect(
         viewModel.viewState,
         ViewState.busy,
       );
+
+      // Clean up - await completion
+      try {
+        await verifyFuture;
+      } on Object catch (_) {
+        // Ignore errors from platform dependencies
+      }
     });
 
     test("verifyButtonTapped line coverage - successful verification path",
@@ -281,6 +291,9 @@ Future<void> main() async {
       // Verify preconditions
       expect(viewModel.isVerifyButtonEnabled, true);
       expect(viewModel.initialVerificationCode.join(), testCode);
+
+      // Reset mock to clear the auto-triggered call from otpFieldSubmitted
+      reset(mockApiAuthRepository);
 
       // Mock successful verifyOtp response
       when(
@@ -317,7 +330,7 @@ Future<void> main() async {
         // The important thing is that we've covered the business logic lines
       }
 
-      // Verify that the API was called with correct parameters
+      // Verify that the API was called with correct parameters (only once, not the auto-triggered call)
       verify(
         mockApiAuthRepository.verifyOtp(
           email: "test@example.com",

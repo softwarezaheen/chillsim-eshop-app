@@ -13,7 +13,7 @@ enum WalletTransactionType {
 
   static WalletTransactionType fromString(String value) {
     return WalletTransactionType.values.firstWhere(
-      (type) => type.value == value,
+      (WalletTransactionType type) => type.value == value,
       orElse: () => WalletTransactionType.topUp,
     );
   }

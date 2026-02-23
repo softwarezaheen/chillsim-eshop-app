@@ -74,7 +74,7 @@ class ConsentManagerService {
       }
       // Android and other platforms can default to true
       return true;
-    } catch (e) {
+    } on Exception catch (e) {
       // If Platform is not available (web), default to false (safest)
       log("[ConsentManager] Platform detection failed, defaulting to false: $e");
       return false;
@@ -97,7 +97,9 @@ class ConsentManagerService {
     await prefs.setBool(_keyNecessaryConsent, necessary);
     await prefs.setBool(_keyFunctionalConsent, functional);
     await prefs.setString(
-        _keyConsentTimestamp, DateTime.now().toIso8601String());
+        _keyConsentTimestamp,
+        DateTime.now().toIso8601String(),
+    );
     await prefs.setString(_keyConsentVersion, currentConsentVersion);
     await prefs.setBool(_keyConsentShown, true);
 
@@ -180,7 +182,7 @@ class ConsentManagerService {
 
       // Also set analytics collection enabled/disabled
       await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(analytics);
-    } catch (e) {
+    } on Exception {
       // Handle error silently
     }
   }

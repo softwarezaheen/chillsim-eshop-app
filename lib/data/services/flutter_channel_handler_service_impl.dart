@@ -63,7 +63,7 @@ class FlutterChannelHandlerServiceImpl implements FlutterChannelHandlerService {
     try {
       // Check if activation code already contains full LPA string
       String cardData;
-      if (activationCode.toUpperCase().startsWith("LPA:1\$")) {
+      if (activationCode.toUpperCase().startsWith(r"LPA:1$")) {
         // Backend sent full LPA string, use it directly
         cardData = activationCode;
         log("Using full LPA string from backend: $cardData");

@@ -1,4 +1,6 @@
+import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/presentation/extensions/stacked_services/custom_route_observer.dart";
+import "package:esim_open_source/presentation/reactive_service/bundles_data_service.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:flutter/foundation.dart";
@@ -20,6 +22,7 @@ Future<void> main() async {
       // onViewModelReadyMock(viewName: "ProfileView");
       when(locator<NavigationRouter>().isPageVisible("DataPlansView"))
           .thenReturn(true);
+      when(locator<BundlesDataService>().countries).thenReturn(<CountryResponseModel>[]);
     });
 
     tearDown(() async {

@@ -34,7 +34,11 @@ class ConsumptionBottomSheetViewModel extends EsimBaseModel {
   //#region Functions
   @override
   void onViewModelReady() {
-    _state.showTopUP = request.data?.showTopUp ?? true;
+    _state
+      ..showTopUP = (request.data?.showTopUp ?? true) &&
+          !(request.data?.isAutoTopupEnabled ?? false)
+      ..isAutoTopupEnabled = request.data?.isAutoTopupEnabled ?? false
+      ..autoTopupBundleName = request.data?.autoTopupBundleName;
     if (!(request.data?.isUnlimitedData ?? false)) {
       unawaited(_fetchConsumptionData());
     } else {
@@ -104,4 +108,6 @@ class ConsumptionState {
   String consumptionText = "";
   double consumption = 0;
   bool showTopUP = true;
+  bool isAutoTopupEnabled = false;
+  String? autoTopupBundleName;
 }

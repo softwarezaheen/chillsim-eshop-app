@@ -1,11 +1,10 @@
-import 'dart:async';
+import "dart:async";
 
+import "package:esim_open_source/data/remote/apis/affiliates/api_affiliates.dart";
 import "package:esim_open_source/data/remote/apis/api_provider.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
 import "package:esim_open_source/domain/data/api_affiliate.dart";
-
-import 'api_affiliates.dart';
 
 class APIAffiliateImpl extends APIService implements ApiAffiliate {
   APIAffiliateImpl.privateConstructor() : super.privateConstructor();

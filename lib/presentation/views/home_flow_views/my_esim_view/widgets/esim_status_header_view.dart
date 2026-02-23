@@ -16,6 +16,7 @@ class ESimStatusHeader extends StatelessWidget {
     required this.statusBgColor,
     required this.onEditTap,
     required this.isLoading,
+    this.isAutoTopupEnabled = false,
     super.key,
   });
 
@@ -24,22 +25,50 @@ class ESimStatusHeader extends StatelessWidget {
   final Color statusBgColor;
   final VoidCallback onEditTap;
   final bool isLoading;
+  final bool isAutoTopupEnabled;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        MyCardWrap(
-          borderRadius: 30,
-          enableBorder: false,
-          color: isLoading ? Colors.transparent : statusBgColor,
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          child: Text(
-            status,
-            style: captionOneMediumTextStyle(context: context)
-                .copyWith(color: statusTextColor, fontSize: 11),
-          ).applyShimmer(enable: isLoading, context: context, width: 50),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            MyCardWrap(
+              borderRadius: 30,
+              enableBorder: false,
+              color: isLoading ? Colors.transparent : statusBgColor,
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              child: Text(
+                status,
+                style: captionOneMediumTextStyle(context: context)
+                    .copyWith(color: statusTextColor, fontSize: 11),
+              ).applyShimmer(enable: isLoading, context: context, width: 50),
+            ),
+            if (isAutoTopupEnabled) ...<Widget>[
+              const SizedBox(width: 6),
+              MyCardWrap(
+                borderRadius: 30,
+                enableBorder: false,
+                color: isLoading ? Colors.transparent : statusBgColor,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(Icons.bolt, size: 12, color: statusTextColor),
+                    const SizedBox(width: 3),
+                    Text(
+                      LocaleKeys.auto_topup_badge.tr(),
+                      style: captionOneMediumTextStyle(context: context)
+                          .copyWith(color: statusTextColor, fontSize: 11),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
         ),
         MainButton(
           height: 30,
@@ -77,6 +106,12 @@ class ESimStatusHeader extends StatelessWidget {
       )
       ..add(ColorProperty("statusTextColor", statusTextColor))
       ..add(ColorProperty("statusBgColor", statusBgColor))
-      ..add(DiagnosticsProperty<bool>("isLoading", isLoading));
+      ..add(DiagnosticsProperty<bool>("isLoading", isLoading))
+      ..add(
+        DiagnosticsProperty<bool>(
+          "isAutoTopupEnabled",
+          isAutoTopupEnabled,
+        ),
+      );
   }
 }

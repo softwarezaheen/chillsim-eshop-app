@@ -1,10 +1,10 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:esim_open_source/data/services/analytics_service_att_extension.dart';
-import 'package:esim_open_source/data/services/analytics_service_impl.dart';
-import 'package:esim_open_source/data/services/consent_manager_service.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import "package:esim_open_source/data/services/analytics_service_att_extension.dart";
+import "package:esim_open_source/data/services/analytics_service_impl.dart";
+import "package:esim_open_source/data/services/consent_manager_service.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 /// Comprehensive ATT Integration Test Suite
 /// 
@@ -20,12 +20,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('ATT Integration - Comprehensive Edge Cases', () {
+  group("ATT Integration - Comprehensive Edge Cases", () {
     late AnalyticsServiceImpl service;
 
     setUpAll(() async {
       // Initialize SharedPreferences for testing
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues(<String, Object>{});
     });
 
     setUp(() async {
@@ -37,8 +37,8 @@ void main() {
       await service.resetAttStateForTesting();
     });
 
-    group('🤖 Android Platform Tests', () {
-      test('Android: ATT methods return notApplicable and allow all consent changes', () async {
+    group("🤖 Android Platform Tests", () {
+      test("Android: ATT methods return notApplicable and allow all consent changes", () async {
         // These tests would run on Android platform
         if (!Platform.isIOS) {
           // Test ATT request result
@@ -50,7 +50,7 @@ void main() {
           expect(result, AttRequestResult.notApplicable);
           
           // Test consent changes work normally
-          await service.applyConsentForTest({
+          await service.applyConsentForTest(<ConsentType, bool>{
             ConsentType.analytics: true,
             ConsentType.advertising: true,
           });
@@ -59,15 +59,15 @@ void main() {
           expect(service.facebookEnabledFlag, isTrue);
           expect(service.isTrackingBlockedByATT(), isFalse);
         } else {
-          print('⏭️ Skipping Android tests - running on iOS platform');
+          print("⏭️ Skipping Android tests - running on iOS platform");
         }
       });
 
-      test('Android: Multiple rapid consent changes work without ATT interference', () async {
+      test("Android: Multiple rapid consent changes work without ATT interference", () async {
         if (!Platform.isIOS) {
           // Rapid consent changes
           for (int i = 0; i < 5; i++) {
-            await service.applyConsentForTest({
+            await service.applyConsentForTest(<ConsentType, bool>{
               ConsentType.analytics: i % 2 == 0,
               ConsentType.advertising: i % 2 == 1,
             });
@@ -77,13 +77,13 @@ void main() {
             expect(service.facebookEnabledFlag, i % 2 == 1);
           }
         } else {
-          print('⏭️ Skipping Android tests - running on iOS platform');
+          print("⏭️ Skipping Android tests - running on iOS platform");
         }
       });
     });
 
-    group('🍎 iOS Platform Tests', () {
-      test('iOS: First-time analytics enabling should request ATT', () async {
+    group("🍎 iOS Platform Tests", () {
+      test("iOS: First-time analytics enabling should request ATT", () async {
         if (Platform.isIOS) {
           expect(service.attEverAcceptedForTesting, isFalse);
           expect(service.attRequestAttemptedForTesting, isFalse);
@@ -95,17 +95,17 @@ void main() {
           
           // In test mode, this would be not needed since no real ATT status
           // But we can verify the logic path
-          expect(result, isIn([
+          expect(result, isIn(<AttRequestResult>[
             AttRequestResult.notNeeded, 
             AttRequestResult.authorized,
             AttRequestResult.denied,
-          ]));
+          ]),);
         } else {
-          print('⏭️ Skipping iOS tests - running on Android platform');
+          print("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
 
-      test('iOS: ATT already accepted should not re-request', () async {
+      test("iOS: ATT already accepted should not re-request", () async {
         if (Platform.isIOS) {
           // Simulate ATT already accepted
           await service.resetAttStateForTesting();
@@ -125,11 +125,11 @@ void main() {
           // Should not request twice
           expect(result2, AttRequestResult.notNeeded);
         } else {
-          print('⏭️ Skipping iOS tests - running on Android platform');
+          print("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
 
-      test('iOS: Tracking blocked by ATT should return true', () async {
+      test("iOS: Tracking blocked by ATT should return true", () async {
         if (Platform.isIOS) {
           // Simulate ATT denied state
           expect(service.isTrackingBlockedByATT(), isFalse); // Initially false
@@ -137,11 +137,11 @@ void main() {
           // After ATT attempt in test mode, should remain false unless mocked
           // This tests the logic path exists
         } else {
-          print('⏭️ Skipping iOS tests - running on Android platform');
+          print("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
 
-      test('iOS: iOS Settings change detection works', () async {
+      test("iOS: iOS Settings change detection works", () async {
         if (Platform.isIOS) {
           // Test iOS Settings change detection
           final bool changed = await service.checkForIOSSettingsChange();
@@ -151,20 +151,20 @@ void main() {
           
           // Verify method doesn't crash and handles test mode gracefully
         } else {
-          print('⏭️ Skipping iOS tests - running on Android platform');
+          print("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
     });
 
-    group('🔄 Consent Flow Integration Tests', () {
-      test('Analytics consent change triggers ATT check on iOS, bypassed on Android', () async {
-        await service.applyConsentForTest({
+    group("🔄 Consent Flow Integration Tests", () {
+      test("Analytics consent change triggers ATT check on iOS, bypassed on Android", () async {
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: false,
           ConsentType.advertising: false,
-        }, initialLoad: true);
+        }, initialLoad: true,);
 
         // Enable analytics
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: true,
           ConsentType.advertising: false,
         });
@@ -173,21 +173,21 @@ void main() {
         
         if (Platform.isIOS) {
           // On iOS, ATT logic would have been triggered
-          print('🍎 ATT logic triggered for analytics');
+          print("🍎 ATT logic triggered for analytics");
         } else {
           // On Android, should work immediately
           expect(service.facebookEnabledFlag, isFalse);
         }
       });
 
-      test('Advertising consent change triggers ATT check on iOS, bypassed on Android', () async {
-        await service.applyConsentForTest({
+      test("Advertising consent change triggers ATT check on iOS, bypassed on Android", () async {
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: false,
           ConsentType.advertising: false,
-        }, initialLoad: true);
+        }, initialLoad: true,);
 
         // Enable advertising
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: false,
           ConsentType.advertising: true,
         });
@@ -195,20 +195,20 @@ void main() {
         expect(service.facebookEnabledFlag, isTrue);
         
         if (Platform.isIOS) {
-          print('🍎 ATT logic triggered for advertising');
+          print("🍎 ATT logic triggered for advertising");
         } else {
           expect(service.firebaseEnabledFlag, isFalse);
         }
       });
 
-      test('Both analytics and advertising enabled simultaneously', () async {
-        await service.applyConsentForTest({
+      test("Both analytics and advertising enabled simultaneously", () async {
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: false,
           ConsentType.advertising: false,
-        }, initialLoad: true);
+        }, initialLoad: true,);
 
         // Enable both at once (simulating Accept All)
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: true,
           ConsentType.advertising: true,
         });
@@ -218,11 +218,11 @@ void main() {
       });
     });
 
-    group('🛡️ Edge Cases & Error Handling', () {
-      test('Multiple rapid consent changes dont break state', () async {
+    group("🛡️ Edge Cases & Error Handling", () {
+      test("Multiple rapid consent changes dont break state", () async {
         // Simulate user rapidly toggling consent
         for (int i = 0; i < 10; i++) {
-          await service.applyConsentForTest({
+          await service.applyConsentForTest(<ConsentType, bool>{
             ConsentType.analytics: i % 2 == 0,
             ConsentType.advertising: i % 3 == 0,
           });
@@ -233,7 +233,7 @@ void main() {
         }
       });
 
-      test('Service initialization handles ATT state correctly', () async {
+      test("Service initialization handles ATT state correctly", () async {
         // Test service can initialize without crashing
         await service.initializeATT();
         
@@ -243,15 +243,15 @@ void main() {
         }
       });
 
-      test('Consent with no changes should not trigger ATT', () async {
+      test("Consent with no changes should not trigger ATT", () async {
         // Set initial state
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: true,
           ConsentType.advertising: false,
-        }, initialLoad: true);
+        }, initialLoad: true,);
 
         // Apply same consent again (no changes)
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: true,
           ConsentType.advertising: false,
         });
@@ -261,15 +261,15 @@ void main() {
         expect(service.facebookEnabledFlag, isFalse);
       });
 
-      test('Disabling consent should not trigger ATT', () async {
+      test("Disabling consent should not trigger ATT", () async {
         // Start with enabled
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: true,
           ConsentType.advertising: true,
-        }, initialLoad: true);
+        }, initialLoad: true,);
 
         // Disable both
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: false,
           ConsentType.advertising: false,
         });
@@ -279,8 +279,8 @@ void main() {
       });
     });
 
-    group('💾 State Persistence Tests', () {
-      test('ATT acceptance state persists across service resets', () async {
+    group("💾 State Persistence Tests", () {
+      test("ATT acceptance state persists across service resets", () async {
         if (Platform.isIOS) {
           // Reset to clean state
           await service.resetAttStateForTesting();
@@ -292,9 +292,9 @@ void main() {
         }
       });
 
-      test('Service reset clears all test state correctly', () async {
+      test("Service reset clears all test state correctly", () async {
         // Modify state
-        await service.applyConsentForTest({
+        await service.applyConsentForTest(<ConsentType, bool>{
           ConsentType.analytics: true,
           ConsentType.advertising: true,
         });
@@ -308,8 +308,8 @@ void main() {
       });
     });
 
-    group('🎯 ATT Guidance Message Tests', () {
-      test('ATT guidance message key selection works', () async {
+    group("🎯 ATT Guidance Message Tests", () {
+      test("ATT guidance message key selection works", () async {
         final String messageKey = service.getAttGuidanceMessageKey();
         
         // Should return appropriate key based on ATT status
@@ -317,17 +317,17 @@ void main() {
         expect(messageKey, isA<String>());
       });
 
-      test('iOS Settings URL construction works', () async {
+      test("iOS Settings URL construction works", () async {
         // This would test the URL formation logic
         // In our implementation, it's handled in the UI layer
         if (Platform.isIOS) {
-          print('🍎 iOS Settings navigation available');
+          print("🍎 iOS Settings navigation available");
         }
       });
     });
 
-    group('🧩 Integration with ConsentManagerService', () {
-      test('Consent updates trigger analytics service updates', () async {
+    group("🧩 Integration with ConsentManagerService", () {
+      test("Consent updates trigger analytics service updates", () async {
         final ConsentManagerService consentService = ConsentManagerService.instance;
         
         // Test that consent changes flow through to analytics service
@@ -348,8 +348,8 @@ void main() {
       });
     });
 
-    group('🔧 Mixin Functionality Tests', () {
-      test('ATT mixin methods are available on service', () {
+    group("🔧 Mixin Functionality Tests", () {
+      test("ATT mixin methods are available on service", () {
         // Test that mixin is properly applied
         expect(service, isA<AnalyticsServiceATTMixin>());
         
@@ -360,7 +360,7 @@ void main() {
         expect(() => service.getAttGuidanceMessageKey(), returnsNormally);
       });
 
-      test('ATT state getters return consistent values', () {
+      test("ATT state getters return consistent values", () {
         final bool authorized = service.attAuthorizedForTesting;
         final bool everAccepted = service.attEverAcceptedForTesting;
         final bool attempted = service.attRequestAttemptedForTesting;
@@ -377,12 +377,12 @@ void main() {
     });
   });
 
-  group('🎨 UI Integration Edge Cases', () {
+  group("🎨 UI Integration Edge Cases", () {
     // Note: UI tests would require widget testing setup
     // These are logical tests for the integration points
     
-    test('ATT request results map to appropriate UI responses', () {
-      final List<AttRequestResult> allResults = [
+    test("ATT request results map to appropriate UI responses", () {
+      final List<AttRequestResult> allResults = <AttRequestResult>[
         AttRequestResult.authorized,
         AttRequestResult.denied,
         AttRequestResult.restricted,
@@ -392,30 +392,23 @@ void main() {
         AttRequestResult.error,
       ];
 
-      for (final result in allResults) {
+      for (final AttRequestResult result in allResults) {
         // Each result should have a defined behavior
         switch (result) {
           case AttRequestResult.authorized:
-            print('✅ ATT Authorized - Continue normally');
-            break;
+            print("✅ ATT Authorized - Continue normally");
           case AttRequestResult.denied:
-            print('❌ ATT Denied - Show guidance, disable consent');
-            break;
+            print("❌ ATT Denied - Show guidance, disable consent");
           case AttRequestResult.restricted:
-            print('🚫 ATT Restricted - Show device admin guidance');
-            break;
+            print("🚫 ATT Restricted - Show device admin guidance");
           case AttRequestResult.previouslyDenied:
-            print('⚠️ ATT Previously Denied - Show iOS Settings guidance');
-            break;
+            print("⚠️ ATT Previously Denied - Show iOS Settings guidance");
           case AttRequestResult.notNeeded:
-            print('ℹ️ ATT Not Needed - Continue normally');
-            break;
+            print("ℹ️ ATT Not Needed - Continue normally");
           case AttRequestResult.notApplicable:
-            print('🤖 ATT Not Applicable (Android) - Continue normally');
-            break;
+            print("🤖 ATT Not Applicable (Android) - Continue normally");
           case AttRequestResult.error:
-            print('💥 ATT Error - Continue normally (fail safe)');
-            break;
+            print("💥 ATT Error - Continue normally (fail safe)");
         }
         
         expect(result, isA<AttRequestResult>());

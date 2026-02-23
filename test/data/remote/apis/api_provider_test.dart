@@ -7,6 +7,7 @@ import "package:esim_open_source/data/remote/apis/api_provider.dart";
 import "package:esim_open_source/data/remote/apis/auth_apis/auth_apis.dart";
 import "package:esim_open_source/data/remote/http_methods.dart";
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
+import "package:esim_open_source/domain/repository/services/affiliate_click_id_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
 import "package:esim_open_source/domain/repository/services/device_info_service.dart";
 import "package:esim_open_source/domain/repository/services/local_storage_service.dart";
@@ -77,6 +78,7 @@ void main() {
     late MockLocalStorageService mockLocalStorageService;
     late MockDeviceInfoService mockDeviceInfoService;
     late MockSecureStorageService mockSecureStorageService;
+    late MockAffiliateClickIdService mockAffiliateClickIdService;
     late APIService apiService;
 
     setUpAll(() async {
@@ -95,6 +97,8 @@ void main() {
           locator<DeviceInfoService>() as MockDeviceInfoService;
       mockSecureStorageService =
           locator<SecureStorageService>() as MockSecureStorageService;
+      mockAffiliateClickIdService =
+          locator<AffiliateClickIdService>() as MockAffiliateClickIdService;
     });
 
     setUp(() {
@@ -109,6 +113,8 @@ void main() {
           .thenAnswer((_) async => "device_123");
       when(mockDeviceInfoService.deviceID)
           .thenAnswer((_) async => "mock_device_id");
+      when(mockAffiliateClickIdService.getValidClickId())
+          .thenAnswer((_) async => null);
 
       apiService = APIService.instance;
     });

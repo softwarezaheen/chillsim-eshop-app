@@ -64,7 +64,8 @@ class ConsentInitializer {
   static Future<void> resetAndShowConsentDialog(BuildContext context) async {
     await resetConsentDialogState();
     // Show immediately after reset
-    await Future.delayed(const Duration(milliseconds: 100));
+    const Duration delay = Duration(milliseconds: 100);
+    await Future<void>.delayed(delay);
     await showConsentDialog(context);
     dev.log("[ConsentInitializer] Reset and showed consent dialog immediately");
   }

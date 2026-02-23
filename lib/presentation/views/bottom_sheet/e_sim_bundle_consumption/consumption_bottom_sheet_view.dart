@@ -68,6 +68,40 @@ class ConsumptionBottomSheetView extends StatelessWidget {
                       viewModel,
                     ),
                     verticalSpaceLarge,
+                    // Auto top-up active info message
+                    if (viewModel.state.isAutoTopupEnabled)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: themeColor.withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.bolt,
+                                size: 18,
+                                color: themeColor,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  "${LocaleKeys.auto_topup_active.tr()}: ${viewModel.state.autoTopupBundleName ?? ""}",
+                                  style: captionOneNormalTextStyle(
+                                    context: context,
+                                    fontColor: themeColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     (viewModel.state.errorMessage == null &&
                             viewModel.state.showTopUP)
                         ? Row(

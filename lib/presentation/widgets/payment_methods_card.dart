@@ -9,6 +9,9 @@ class PaymentMethodCard extends StatelessWidget {
     required this.icon,
     required this.text,
     super.key,
+    this.imagePath,
+    this.subtitle,
+    this.trailingChipLabel,
     this.circleColor = Colors.white,
     this.iconColor = Colors.black,
     this.textStyle,
@@ -19,6 +22,9 @@ class PaymentMethodCard extends StatelessWidget {
   final Color backgroundColor;
   final Color circleColor;
   final IconData icon;
+  final String? imagePath;
+  final String? subtitle;
+  final String? trailingChipLabel;
   final Color iconColor;
   final String text;
   final TextStyle? textStyle;
@@ -36,7 +42,7 @@ class PaymentMethodCard extends StatelessWidget {
         child: Padding(
           padding: padding,
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Stack(
                 alignment: Alignment.center,
@@ -50,26 +56,72 @@ class PaymentMethodCard extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                   ),
-                  // Icon
-                  Icon(
-                    icon,
-                    color: iconColor,
-                    size: iconSize,
-                  ),
+                  // Icon or image
+                  if (imagePath != null)
+                    SizedBox(
+                      width: iconSize,
+                      height: iconSize,
+                      child: Image.asset(
+                        imagePath!,
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                  else
+                    Icon(
+                      icon,
+                      color: iconColor,
+                      size: iconSize.clamp(0.0, 26.0),
+                    ),
                 ],
               ),
               const SizedBox(width: 12),
-              // Text
-              Flexible(
-                child: Text(
-                  text,
-                  style: textStyle ??
-                      bodyNormalTextStyle(
-                        context: context,
-                        fontColor: context.appColors.grey_900,
+              // Title + subtitle
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      text,
+                      style: textStyle ??
+                          bodyNormalTextStyle(
+                            context: context,
+                            fontColor: context.appColors.grey_900,
+                          ),
+                    ),
+                    if (subtitle != null) ...<Widget>[
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle!,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: context.appColors.grey_600,
+                          height: 1.3,
+                        ),
                       ),
+                    ],
+                  ],
                 ),
               ),
+              // Default chip
+              if (trailingChipLabel != null) ...<Widget>[
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: context.appColors.primary_800!),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    trailingChipLabel!,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: context.appColors.primary_800,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -84,6 +136,9 @@ class PaymentMethodCard extends StatelessWidget {
       ..add(ColorProperty("backgroundColor", backgroundColor))
       ..add(ColorProperty("circleColor", circleColor))
       ..add(DiagnosticsProperty<IconData>("icon", icon))
+      ..add(StringProperty("imagePath", imagePath))
+      ..add(StringProperty("subtitle", subtitle))
+      ..add(StringProperty("trailingChipLabel", trailingChipLabel))
       ..add(ColorProperty("iconColor", iconColor))
       ..add(StringProperty("text", text))
       ..add(DiagnosticsProperty<TextStyle?>("textStyle", textStyle))

@@ -449,7 +449,7 @@ Future<void> main() async {
         final int chipIconCount = icons
             .where((Icon icon) =>
                 icon.icon == Icons.local_offer_outlined ||
-                icon.icon == Icons.person_outline)
+                icon.icon == Icons.person_outline,)
             .length;
 
         // Should only have reward type and application type icons, no info chip
@@ -631,12 +631,12 @@ Future<void> main() async {
       testWidgets("renders all RewardType values correctly",
           (WidgetTester tester) async {
         // Test all 5 reward types
-        final List<String> mockKeys = [
+        final List<String> mockKeys = <String>[
           "complete_referral_credit_wallet",
           "complete_cashback_wallet",
           "complete_promo_discount_order",
           "complete_discount_amount_order",
-          "complete_percentage_discount_order"
+          "complete_percentage_discount_order",
         ];
 
         for (final String key in mockKeys) {

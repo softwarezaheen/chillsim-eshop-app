@@ -1,18 +1,24 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/presentation/theme/my_theme_builder.dart";
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_item.dart";
 import "package:flutter/material.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:mockito/mockito.dart";
 
 import "../../../../helpers/view_helper.dart";
+import "../../../../locator_test.dart";
 
 void main() async {
   await prepareTest();
 
   setUp(() async {
     await setupTest();
+
+    // Mock required configuration for ReferalStoriesView
+    when(locator<AppConfigurationService>().referredDiscountPercentage).thenReturn("10");
 
     // locator.registerSingleton<BottomSheetService>(mockBottomSheetService);
     // locator.registerSingleton<NavigationService>(mockNavigationService);

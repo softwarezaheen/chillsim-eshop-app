@@ -44,12 +44,19 @@ Future<void> main() async {
       });
 
       test("enum contains all expected sections", () {
-        expect(MyWalletViewSections.values.length, equals(3));
+        expect(MyWalletViewSections.values.length, equals(4));
         expect(
           MyWalletViewSections.values,
           contains(MyWalletViewSections.voucherCode),
         );
-
+        expect(
+          MyWalletViewSections.values,
+          contains(MyWalletViewSections.cashbackRewards),
+        );
+        expect(
+          MyWalletViewSections.values,
+          contains(MyWalletViewSections.walletTransactions),
+        );
         expect(
           MyWalletViewSections.values,
           contains(MyWalletViewSections.upgradeWallet),
@@ -59,6 +66,7 @@ Future<void> main() async {
       test("sections are properly ordered", () {
         final List<MyWalletViewSections> expectedOrder = <MyWalletViewSections>[
           MyWalletViewSections.voucherCode,
+          MyWalletViewSections.cashbackRewards,
           MyWalletViewSections.walletTransactions,
           MyWalletViewSections.upgradeWallet,
         ];
@@ -68,15 +76,21 @@ Future<void> main() async {
 
       test("enum index values are correct", () {
         expect(MyWalletViewSections.voucherCode.index, equals(0));
-
-        expect(MyWalletViewSections.walletTransactions.index, equals(1));
-        expect(MyWalletViewSections.upgradeWallet.index, equals(2));
+        expect(MyWalletViewSections.cashbackRewards.index, equals(1));
+        expect(MyWalletViewSections.walletTransactions.index, equals(2));
+        expect(MyWalletViewSections.upgradeWallet.index, equals(3));
       });
     });
 
     group("Section Titles", () {
       test("voucherCode section has correct title", () {
         const MyWalletViewSections section = MyWalletViewSections.voucherCode;
+        expect(section.sectionTitle, isNotEmpty);
+        expect(section.sectionTitle, isA<String>());
+      });
+
+      test("cashbackRewards section has correct title", () {
+        const MyWalletViewSections section = MyWalletViewSections.cashbackRewards;
         expect(section.sectionTitle, isNotEmpty);
         expect(section.sectionTitle, isA<String>());
       });

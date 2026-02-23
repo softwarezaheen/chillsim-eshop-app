@@ -129,7 +129,7 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
       DateTime expiryDate = DateTime.now().add(Duration(days: expiryDays));
       
       await locator<AffiliateClickIdService>().storeClickId(affiliateRef, expiryDate);
-      log("Affiliate click ID saved with expiry: ${expiryDays} days from now");
+      log("Affiliate click ID saved with expiry: $expiryDays days from now");
       
       // Track the click ID with the backend API (fire-and-forget)
       unawaited(

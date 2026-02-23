@@ -158,6 +158,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 11,
         flags: 520,
         indexId: const obx_int.IdUid(1, 2207907975271774534),
+        relationField: 'bundleCategory',
         relationTarget: 'BundleCategoryEntity',
       ),
       obx_int.ModelProperty(
@@ -166,6 +167,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 11,
         flags: 520,
         indexId: const obx_int.IdUid(2, 7941058205647145524),
+        relationField: 'homeData',
         relationTarget: 'HomeDataEntity',
       ),
       obx_int.ModelProperty(
@@ -543,6 +545,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 11,
         flags: 520,
         indexId: const obx_int.IdUid(3, 2111038786350938522),
+        relationField: 'bundleCategory',
         relationTarget: 'EsimBundleCategoryEntity',
       ),
       obx_int.ModelProperty(
@@ -597,6 +600,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 11,
         flags: 520,
         indexId: const obx_int.IdUid(5, 2011655117619998248),
+        relationField: 'esimData',
         relationTarget: 'EsimEntity',
       ),
       obx_int.ModelProperty(
@@ -641,6 +645,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 11,
         flags: 520,
         indexId: const obx_int.IdUid(6, 4791991272740744303),
+        relationField: 'bundle',
         relationTarget: 'EsimBundleEntity',
       ),
     ],
@@ -795,6 +800,7 @@ final _entities = <obx_int.ModelEntity>[
         type: 11,
         flags: 520,
         indexId: const obx_int.IdUid(7, 4294559215289422009),
+        relationField: 'bundleCategory',
         relationTarget: 'EsimBundleCategoryEntity',
       ),
       obx_int.ModelProperty(
@@ -916,6 +922,11 @@ Future<obx.Store> openStore({
 /// [obx.Store.new].
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
+    // If this version is not found, it means that this file was generated
+    // with an older version of the ObjectBox Dart generator.
+    // Please regenerate this file with the current generator version.
+    // Typically, this is done with `dart run build_runner build`.
+    generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
     lastEntityId: const obx_int.IdUid(10, 3152941530312633510),
     lastIndexId: const obx_int.IdUid(7, 4294559215289422009),

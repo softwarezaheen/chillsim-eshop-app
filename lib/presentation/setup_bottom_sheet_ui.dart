@@ -17,6 +17,7 @@ import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_qr
 import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_top_up/top_up_bottom_sheet.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/edit_name/edit_name_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/logout_bottom_sheet/logout_bottom_sheet.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/manage_auto_topup/manage_auto_topup_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_bottom_sheet_view/order_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/order_receipt_bottom_sheet_view/order_receipt_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_method_bottom_sheet/payment_method_bottom_sheet_view.dart";
@@ -171,9 +172,10 @@ void setupBottomSheetUi() {
     BottomSheetType.paymentMethod: (
       dynamic context,
       dynamic sheetRequest,
-      Function(SheetResponse<EmptyBottomSheetResponse>) completer,
+      Function(SheetResponse<SavedPaymentMethodSheetResult>) completer,
     ) =>
         PaymentMethodBottomSheetView(
+          request: sheetRequest as SheetRequest<SavedPaymentMethodSheetRequest>,
           completer: completer,
         ),
     BottomSheetType.topUpBundle: (
@@ -281,6 +283,15 @@ void setupBottomSheetUi() {
       Function(SheetResponse<EmptyBottomSheetResponse>) completer,
     ) =>
         _CashbackRewardBottomSheet(
+          request: sheetRequest,
+          completer: completer,
+        ),
+    BottomSheetType.manageAutoTopup: (
+      dynamic context,
+      dynamic sheetRequest,
+      Function(SheetResponse<MainBottomSheetResponse>) completer,
+    ) =>
+        ManageAutoTopupBottomSheetView(
           request: sheetRequest,
           completer: completer,
         ),
@@ -659,11 +670,15 @@ class BundleConsumptionBottomRequest {
     required this.iccID,
     required this.showTopUp,
     required this.isUnlimitedData,
+    this.isAutoTopupEnabled = false,
+    this.autoTopupBundleName,
   });
 
   final String iccID;
   final bool showTopUp;
   final bool isUnlimitedData;
+  final bool isAutoTopupEnabled;
+  final String? autoTopupBundleName;
 }
 //#endregion
 
@@ -709,10 +724,12 @@ class BundleTopUpBottomRequest {
   const BundleTopUpBottomRequest({
     required this.iccID,
     required this.bundleCode,
+    this.isAutoTopupEnabled = false,
   });
 
   final String iccID;
   final String bundleCode;
+  final bool isAutoTopupEnabled;
 }
 //#endregion
 
@@ -969,5 +986,49 @@ class PaymentSelectionResponse {
 
   final PaymentType paymentType;
   final bool canceled;
+}
+//#endregion
+
+//#region Saved Payment Method Sheet
+class SavedPaymentMethodSheetRequest {
+  const SavedPaymentMethodSheetRequest({
+    required this.amount,
+    required this.currency,
+    this.walletBalance = 0.0,
+    this.showWallet = true,
+  });
+
+  final double amount;
+  final String currency;
+  final double walletBalance;
+  final bool showWallet;
+}
+
+class SavedPaymentMethodSheetResult {
+  const SavedPaymentMethodSheetResult({
+    required this.paymentType,
+    this.paymentMethodId,
+    this.canceled = false,
+  });
+
+  final PaymentType paymentType;
+  final String? paymentMethodId;
+  final bool canceled;
+}
+//#endregion
+
+//#region Manage Auto Top-Up
+class ManageAutoTopupSheetRequest {
+  const ManageAutoTopupSheetRequest({
+    required this.iccid,
+    required this.isAutoTopupEnabled,
+    this.labelName,
+    this.bundleName,
+  });
+
+  final String iccid;
+  final bool isAutoTopupEnabled;
+  final String? labelName;
+  final String? bundleName;
 }
 //#endregion

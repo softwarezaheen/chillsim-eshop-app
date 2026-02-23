@@ -52,12 +52,23 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   final Function(SheetResponse<MainBottomSheetResponse>) completer;
   List<BundleResponseModel> bundleItems = <BundleResponseModel>[];
 
+  /// Whether the user has opted in to enable auto top-up after purchase.
+  /// Defaults to true if auto top-up is already active for this eSIM.
+  bool autoTopupOptIn = false;
+
+  /// Whether the pending bundle is unlimited (auto top-up would never trigger).
+  bool _pendingBundleUnlimited = false;
+
+  /// Guards against double-invocation of the payment flow (e.g. rapid double-tap on "Buy").
+  bool _isProcessingPayment = false;
+
   //#endregion
 
   //#region Functions
   @override
   void onViewModelReady() {
     super.onViewModelReady();
+    autoTopupOptIn = request.data?.isAutoTopupEnabled ?? false;
     unawaited(_initializeView());
   }
 
@@ -164,18 +175,24 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
               showToast(LocaleKeys.no_sufficient_balance_in_wallet.tr());
               return;
             }
-            _triggerTopUpFlow(item: item, paymentType: paymentType);
+            unawaited(_triggerTopUpFlow(item: item, paymentType: paymentType));
           } else {
             //case not valid
             showToast(LocaleKeys.no_payment_method_available.tr());
           }
         case PaymentType.dcb:
-        case PaymentType.card:
         case PaymentType.applePay:
-          _triggerTopUpFlow(item: item, paymentType: paymentType);
+          unawaited(_triggerTopUpFlow(item: item, paymentType: paymentType));
+        case PaymentType.card:
+          // Route through PM sheet for logged-in users to allow saved PM selection
+          if (isUserLoggedIn) {
+            unawaited(_choosePaymentMethod(<PaymentType>[PaymentType.card], item));
+          } else {
+            unawaited(_triggerTopUpFlow(item: item, paymentType: paymentType));
+          }
       }
     } else {
-      _choosePaymentMethod(paymentTypeList, item);
+      unawaited(_choosePaymentMethod(paymentTypeList, item));
     }
   }
 
@@ -184,7 +201,37 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     BundleResponseModel item,
   ) async {
     final double price = item.price ?? 0;
-    SheetResponse<PaymentType>? response =
+    final bool hasCard = paymentTypeList.contains(PaymentType.card);
+
+    if (isUserLoggedIn && hasCard) {
+      // Show saved payment method selection sheet for logged-in users
+      final SheetResponse<SavedPaymentMethodSheetResult>? pmResponse =
+          await bottomSheetService.showCustomSheet(
+        data: SavedPaymentMethodSheetRequest(
+          amount: price,
+          currency: item.currencyCode ?? "",
+          walletBalance:
+              userAuthenticationService.walletAvailableBalance,
+          showWallet: paymentTypeList.contains(PaymentType.wallet),
+        ),
+        enableDrag: false,
+        isScrollControlled: true,
+        variant: BottomSheetType.paymentMethod,
+      );
+      if (pmResponse?.confirmed ?? false) {
+        final SavedPaymentMethodSheetResult? result = pmResponse?.data;
+        if (result?.canceled == true) return;
+        _triggerTopUpFlow(
+          item: item,
+          paymentType: result?.paymentType ?? PaymentType.card,
+          paymentMethodId: result?.paymentMethodId,
+        );
+      }
+      return;
+    }
+
+    // Fallback: legacy payment selection sheet
+    final SheetResponse<PaymentType>? response =
         await bottomSheetService.showCustomSheet(
       data: PaymentSelectionBottomRequest(
         paymentTypeList: paymentTypeList,
@@ -205,7 +252,9 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   Future<void> _triggerTopUpFlow({
     required BundleResponseModel item,
     required PaymentType paymentType,
+    String? paymentMethodId,
   }) async {
+    _pendingBundleUnlimited = item.unlimited ?? false;
     unawaited(
       _topUpBundle(
         iccId: request.data?.iccID ?? "",
@@ -213,6 +262,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         bundlePrice: item.priceDisplay ?? "",
         bundleCurrency: item.currencyCode ?? "",
         paymentType: paymentType,
+        paymentMethodId: paymentMethodId,
       ),
     );
   }
@@ -220,6 +270,19 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   void closeBottomSheet() {
     completer(SheetResponse<MainBottomSheetResponse>());
   }
+
+  void setAutoTopupOptIn({required bool value}) {
+    autoTopupOptIn = value;
+    notifyListeners();
+  }
+
+  bool get allBundlesUnlimited =>
+      bundleItems.isNotEmpty &&
+      bundleItems.every((BundleResponseModel b) => b.unlimited == true);
+
+  bool get hasMixedUnlimitedBundles =>
+      bundleItems.any((BundleResponseModel b) => b.unlimited == true) &&
+      bundleItems.any((BundleResponseModel b) => b.unlimited != true);
 
   /// Check if user has complete billing information.
   /// Required fields for individual: firstName, lastName, country, state, city
@@ -363,14 +426,19 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     required String bundlePrice,
     required String bundleCurrency,
     required PaymentType paymentType,
+    String? paymentMethodId,
   }) async {
     setViewState(ViewState.busy);
-    Resource<BundleAssignResponseModel?> response = await topUpUserBundleUseCase
-        .execute(TopUpUserBundleParam(
-          iccID: iccId, 
-          bundleCode: bundleCode,
-          paymentType: paymentType.type,
-        ));
+    final Resource<BundleAssignResponseModel?> response =
+        await topUpUserBundleUseCase.execute(
+      TopUpUserBundleParam(
+        iccID: iccId,
+        bundleCode: bundleCode,
+        paymentType: paymentType.type,
+        enableAutoTopup: autoTopupOptIn && !_pendingBundleUnlimited,
+        paymentMethodId: paymentMethodId,
+      ),
+    );
     handleResponse(
       response,
       onSuccess: (Resource<BundleAssignResponseModel?> result) async {
@@ -411,6 +479,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           bundleCurrency: bundleCurrency,
           merchantDisplayName: result.data?.merchantDisplayName,
           stripeUrlScheme: result.data?.stripeUrlScheme,
+          stripePaymentMethodId: paymentMethodId,
         );
       },
     );
@@ -429,8 +498,17 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     required String bundleCurrency,
     String? merchantDisplayName,
     String? stripeUrlScheme,
+    String? stripePaymentMethodId,
     bool test = false,
   }) async {
+    // TODO (GAP 6 — app-kill during 3DS): Same as bundle_detail_bottom_sheet_view_model.
+    // Persist (orderID, paymentIntentClientSecret) before entering the 3DS WebView so
+    // a recovery screen can be shown on next app launch.
+    // See bundle_detail_bottom_sheet_view_model._initiatePaymentRequest for full notes.
+    if (_isProcessingPayment) {
+      return;
+    }
+    _isProcessingPayment = true;
     try {
       await paymentService.prepareCheckout(
         paymentType: paymentType,
@@ -449,6 +527,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         customerEphemeralKeySecret: customerEphemeralKeySecret,
         merchantDisplayName: merchantDisplayName ?? "ChillSIM",
         testEnv: test,
+        stripePaymentMethodId: stripePaymentMethodId,
       );
 
       setViewState(ViewState.idle);
@@ -478,13 +557,24 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           }
       }
     } on Exception catch (e) {
-      unawaited(cancelOrder(orderID: orderID));
+      final String errorMsg = e.toString();
+      final bool isNetworkOrTimeoutError =
+          errorMsg.toLowerCase().contains("no internet") ||
+          errorMsg.toLowerCase().contains("timed out") ||
+          errorMsg.toLowerCase().contains("connection");
+      if (isNetworkOrTimeoutError) {
+        dev.log("⚠️ Network/timeout error — skipping cancelOrder for $orderID (webhook may have already processed payment)");
+      } else {
+        unawaited(cancelOrder(orderID: orderID));
+      }
       closeBottomSheet();
       showToast(
-        e.toString().replaceAll("Exception:", ""),
+        errorMsg.replaceAll("Exception:", ""),
       );
       hideKeyboard();
       return;
+    } finally {
+      _isProcessingPayment = false;
     }
   }
 

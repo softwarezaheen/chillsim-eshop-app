@@ -20,6 +20,8 @@ class TopUpUserBundleUseCase
       iccID: params.iccID,
       bundleCode: params.bundleCode,
       paymentType: params.paymentType,
+      enableAutoTopup: params.enableAutoTopup,
+      paymentMethodId: params.paymentMethodId,
     );
   }
 }
@@ -29,9 +31,13 @@ class TopUpUserBundleParam {
     required this.iccID,
     required this.bundleCode,
     this.paymentType = "Card",
+    this.enableAutoTopup = false,
+    this.paymentMethodId,
   });
 
   final String iccID;
   final String bundleCode;
   final String paymentType;
+  final bool enableAutoTopup;
+  final String? paymentMethodId;
 }

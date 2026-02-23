@@ -24,5 +24,6 @@ enum BottomSheetType {
   shareReferralCode,
   paymentSelection,
   cashbackReward,
-  billingInfo;
+  billingInfo,
+  manageAutoTopup;
 }

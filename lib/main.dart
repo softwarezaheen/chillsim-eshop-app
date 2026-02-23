@@ -214,9 +214,9 @@ class _MyFlutterActivityState extends State<MyFlutterActivity>
                 // Allow scaling up to 1.2x maximum for better accessibility balance
                 data: MediaQuery.of(context).copyWith(
                   textScaler: TextScaler.linear(
-                    MediaQuery.of(context).textScaler.scale(1.0) > 1.2 
+                    MediaQuery.of(context).textScaler.scale(1) > 1.2 
                         ? 1.2 
-                        : MediaQuery.of(context).textScaler.scale(1.0),
+                        : MediaQuery.of(context).textScaler.scale(1),
                   ),
                 ),
                 child: MaterialApp(

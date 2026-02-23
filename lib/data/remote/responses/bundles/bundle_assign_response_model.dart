@@ -24,10 +24,18 @@ class BundleAssignResponseModel {
   factory BundleAssignResponseModel.fromJson({dynamic json}) {
     // Helper function to safely parse numeric values that may come as int, double, or String
     int? parseIntSafe(dynamic value) {
-      if (value == null) return null;
-      if (value is int) return value;
-      if (value is double) return value.toInt();
-      if (value is String) return double.tryParse(value)?.toInt();
+      if (value == null) {
+        return null;
+      }
+      if (value is int) {
+        return value;
+      }
+      if (value is double) {
+        return value.toInt();
+      }
+      if (value is String) {
+        return double.tryParse(value)?.toInt();
+      }
       return null;
     }
 

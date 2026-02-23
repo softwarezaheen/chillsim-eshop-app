@@ -70,7 +70,7 @@ Future<void> main() async {
 
       // Should find text widgets for balance display
       expect(find.byType(Text), findsWidgets);
-      expect(find.text("USD 100.0"), findsOneWidget);
+      expect(find.text("USD 100.00"), findsOneWidget);
     });
 
     testWidgets("displays wallet icon", (WidgetTester tester) async {

@@ -9,16 +9,15 @@ import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/services.dart";
 import "package:flutter_stripe/flutter_stripe.dart";
-import "package:fluttertoast/fluttertoast.dart";
 
 /// Helper function to safely get translated string with fallback
 /// Handles cases where easy_localization context is not available (e.g., tests)
 String _safeTranslate(String key, String fallback) {
   try {
-    final translated = key.tr();
+    final String translated = key.tr();
     // If translation returns the key itself, localization is not available
     return translated == key ? fallback : translated;
-  } catch (e) {
+  } on Exception {
     // Localization not available (e.g., in tests), use fallback
     return fallback;
   }
@@ -80,8 +79,8 @@ class ApplePayService {
       // DEFENSIVE CODING: Safe string preview that handles any length
       // Why: substring(0, 20) crashes if string < 20 chars
       // Security: Only show first 15 chars to prevent full key exposure in logs
-      final keyPreview = publishableKey.length > 15 
-          ? '${publishableKey.substring(0, 15)}...' 
+      final String keyPreview = publishableKey.length > 15 
+          ? "${publishableKey.substring(0, 15)}..." 
           : publishableKey;
       
       log("   Publishable Key: $keyPreview");
@@ -92,23 +91,21 @@ class ApplePayService {
       // Why: Stripe SDK will fail with cryptic error if key is invalid
       // Better to fail fast with clear message
       if (publishableKey.isEmpty) {
-        final errorMsg = _safeTranslate(
+        final String errorMsg = _safeTranslate(
           LocaleKeys.payment_error_failed, 
-          "Payment configuration error. Please contact support."
+          "Payment configuration error. Please contact support.",
         );
         await showToast(
           errorMsg,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
         );
         throw ArgumentError(
-          'Publishable key cannot be empty. '
-          'Please provide a valid Stripe publishable key (pk_test_... or pk_live_...).'
+          "Publishable key cannot be empty. "
+          "Please provide a valid Stripe publishable key (pk_test_... or pk_live_...).",
         );
       }
 
-      if (!publishableKey.startsWith('pk_test_') && 
-          !publishableKey.startsWith('pk_live_')) {
+      if (!publishableKey.startsWith("pk_test_") && 
+          !publishableKey.startsWith("pk_live_")) {
         log("⚠️ Warning: Publishable key format may be invalid. "
             "Expected format: pk_test_... or pk_live_...");
       }
@@ -121,19 +118,17 @@ class ApplePayService {
         log("❌ ERROR: No merchant identifier available!");
         log("   This should NEVER happen on iOS with configured ID");
         log("   Apple Pay will NOT work");
-        final errorMsg = _safeTranslate(
+        final String errorMsg = _safeTranslate(
           LocaleKeys.payment_error_failed,
-          "Apple Pay configuration error"
+          "Apple Pay configuration error",
         );
         await showToast(
           errorMsg,
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
         );
-        throw ArgumentError('Merchant identifier is required for Apple Pay');
+        throw ArgumentError("Merchant identifier is required for Apple Pay");
       }
       
-      if (!effectiveMerchantId.startsWith('merchant.')) {
+      if (!effectiveMerchantId.startsWith("merchant.")) {
         log("⚠️ Warning: Merchant identifier format may be invalid.");
         log("   Expected format: merchant.{domain}.{app}");
         log("   Current value: $effectiveMerchantId");
@@ -146,10 +141,8 @@ class ApplePayService {
       await showToast(
         _safeTranslate(
           LocaleKeys.payment_success, // Reusing existing key, fallback provides message
-          "Preparing Apple Pay..."
+          "Preparing Apple Pay...",
         ),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
       );
 
       Stripe.publishableKey = publishableKey;
@@ -166,10 +159,8 @@ class ApplePayService {
       await showToast(
         _safeTranslate(
           LocaleKeys.payment_error_failed,
-          "Payment system error. Please try again."
+          "Payment system error. Please try again.",
         ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
       );
       
       throw Exception(_safeTranslate(LocaleKeys.payment_error_platform, "Platform error occurred"));
@@ -180,10 +171,8 @@ class ApplePayService {
       await showToast(
         _safeTranslate(
           LocaleKeys.payment_error_platform,
-          "Platform error. Please try again."
+          "Platform error. Please try again.",
         ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
       );
       
       throw Exception(_safeTranslate(LocaleKeys.payment_error_platform, "Platform error occurred"));
@@ -193,10 +182,8 @@ class ApplePayService {
       await showToast(
         _safeTranslate(
           LocaleKeys.payment_error_network,
-          "No internet connection"
+          "No internet connection",
         ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
       );
       
       throw Exception(_safeTranslate(LocaleKeys.payment_error_network, "No internet connection"));
@@ -206,24 +193,20 @@ class ApplePayService {
       await showToast(
         _safeTranslate(
           LocaleKeys.payment_error_timeout,
-          "Payment timed out"
+          "Payment timed out",
         ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
       );
       
       throw Exception(_safeTranslate(LocaleKeys.payment_error_timeout, "Payment timed out"));
-    } catch (e, stackTrace) {
+    } on Exception catch (e, stackTrace) {
       log("❌ Unexpected error preparing Apple Pay checkout: $e");
       log("   Stack trace: $stackTrace");
       
       await showToast(
         _safeTranslate(
           LocaleKeys.payment_error_unexpected,
-          "Unexpected error. Please try again."
+          "Unexpected error. Please try again.",  
         ),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
       );
       
       throw Exception(_safeTranslate(LocaleKeys.payment_error_unexpected, "Unknown error occurred"));
@@ -288,7 +271,7 @@ class ApplePayService {
         
         return isSupported;
         
-      } catch (e, stackTrace) {
+      } on Exception catch (e, stackTrace) {
         log("❌ Error checking Apple Pay capability: $e");
         log("   Stack trace: $stackTrace");
         log("───────────────────────────────────────");
@@ -299,7 +282,7 @@ class ApplePayService {
         return true;
       }
       
-    } catch (e) {
+    } on Exception catch (e) {
       log("❌ Unexpected error in Apple Pay check: $e");
       log("═══════════════════════════════════════");
       return false;
@@ -354,11 +337,11 @@ class ApplePayService {
       // 1. Validate Customer ID
       if (customerId.isEmpty) {
         throw ArgumentError(
-          'Customer ID is required for payment processing. '
-          'Please ensure your backend creates a Stripe customer and returns the ID.'
+          "Customer ID is required for payment processing. "
+          "Please ensure your backend creates a Stripe customer and returns the ID."
         );
       }
-      if (!customerId.startsWith('cus_')) {
+      if (!customerId.startsWith("cus_")) {
         log("⚠️ Warning: Customer ID format may be invalid. "
             "Expected format: cus_... (Stripe customer ID)");
       }
@@ -366,12 +349,12 @@ class ApplePayService {
       // 2. Validate Payment Intent Client Secret
       if (paymentIntentClientSecret.isEmpty) {
         throw ArgumentError(
-          'Payment intent client secret is required. '
-          'Please ensure your backend creates a PaymentIntent and returns the client_secret.'
+          "Payment intent client secret is required. "
+          "Please ensure your backend creates a PaymentIntent and returns the client_secret."
         );
       }
-      if (!paymentIntentClientSecret.startsWith('pi_') && 
-          !paymentIntentClientSecret.startsWith('seti_')) {
+      if (!paymentIntentClientSecret.startsWith("pi_") && 
+          !paymentIntentClientSecret.startsWith("seti_")) {
         log("⚠️ Warning: Payment intent secret format may be invalid. "
             "Expected format: pi_... or seti_...");
       }
@@ -379,16 +362,16 @@ class ApplePayService {
       // 3. Validate Ephemeral Key Secret
       if (customerEphemeralKeySecret.isEmpty) {
         throw ArgumentError(
-          'Customer ephemeral key secret is required. '
-          'Please ensure your backend creates an ephemeral key and returns the secret.'
+          "Customer ephemeral key secret is required. "
+          "Please ensure your backend creates an ephemeral key and returns the secret."
         );
       }
 
       // 4. Validate Country Code (ISO 3166-1 alpha-2)
       if (billingCountryCode.isEmpty) {
         throw ArgumentError(
-          'Billing country code is required. '
-          'Please provide a valid ISO 3166-1 alpha-2 country code (e.g., "US", "GB", "AE").'
+          "Billing country code is required. "
+          'Please provide a valid ISO 3166-1 alpha-2 country code (e.g., "US", "GB", "AE").',
         );
       }
       if (billingCountryCode.length != 2) {
@@ -398,7 +381,7 @@ class ApplePayService {
         );
       }
       // Ensure uppercase for consistency
-      final normalizedCountryCode = billingCountryCode.toUpperCase();
+      final String normalizedCountryCode = billingCountryCode.toUpperCase();
       if (billingCountryCode != normalizedCountryCode) {
         log("ℹ️ Info: Country code normalized from '$billingCountryCode' to '$normalizedCountryCode'");
       }
@@ -491,7 +474,7 @@ class ApplePayService {
         
         default:
           // Use Stripe's localized message if available, otherwise use generic error
-          final errorMessage = e.error.localizedMessage?.isNotEmpty == true
+          final String? errorMessage = (e.error.localizedMessage?.isNotEmpty ?? false)
               ? e.error.localizedMessage
               : _safeTranslate(LocaleKeys.payment_error_failed, "Payment failed");
           log("❌ Stripe error: $errorMessage");
@@ -518,7 +501,7 @@ class ApplePayService {
       log("❌ Payment Timeout");
       log("═══════════════════════════════════════");
       throw Exception(_safeTranslate(LocaleKeys.payment_error_timeout, "Payment timed out"));
-    } catch (e, stackTrace) {
+    } on Exception catch (e, stackTrace) {
       log("═══════════════════════════════════════");
       log("❌ Unexpected Error in Payment");
       log("═══════════════════════════════════════");

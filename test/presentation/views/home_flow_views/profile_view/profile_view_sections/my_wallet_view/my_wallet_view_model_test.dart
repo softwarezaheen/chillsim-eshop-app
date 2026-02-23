@@ -119,14 +119,36 @@ Future<void> main() async {
     });
 
     test("wallet sections maintain correct order", () {
+      // First section is always voucherCode
       expect(viewModel.walletSections[0],
           equals(MyWalletViewSections.voucherCode),);
-      expect(
-          viewModel.walletSections[1], equals(MyWalletViewSections.walletTransactions),);
       
-      // Only check third section if it exists (depends on enableWalletRecharge)
-      if (viewModel.walletSections.length > 2) {
-        expect(viewModel.walletSections[2],
+      // Determine expected indices based on enabled features
+      int expectedCashbackIndex = 1;
+      int expectedTransactionsIndex = AppEnvironment.appEnvironmentHelper.enableCashBack ? 2 : 1;
+      int? expectedUpgradeIndex;
+      
+      if (AppEnvironment.appEnvironmentHelper.enableWalletRecharge) {
+        expectedUpgradeIndex = viewModel.walletSections.length - 1;
+      }
+      
+      // Check cashbackRewards if enabled
+      if (AppEnvironment.appEnvironmentHelper.enableCashBack) {
+        expect(
+          viewModel.walletSections[expectedCashbackIndex],
+          equals(MyWalletViewSections.cashbackRewards),
+        );
+      }
+      
+      // walletTransactions should be second or third depending on cashback
+      expect(
+        viewModel.walletSections[expectedTransactionsIndex],
+        equals(MyWalletViewSections.walletTransactions),
+      );
+      
+      // upgradeWallet only if wallet recharge is enabled (last item)
+      if (expectedUpgradeIndex != null) {
+        expect(viewModel.walletSections[expectedUpgradeIndex],
             equals(MyWalletViewSections.upgradeWallet),);
       }
     });

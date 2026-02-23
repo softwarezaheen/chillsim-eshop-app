@@ -111,17 +111,17 @@
         {
           "id": "15:9201633083853427630",
           "name": "bundleCategoryId",
+          "indexId": "1:2207907975271774534",
           "type": 11,
           "flags": 520,
-          "indexId": "1:2207907975271774534",
           "relationTarget": "BundleCategoryEntity"
         },
         {
           "id": "16:5399768502731405318",
           "name": "homeDataId",
+          "indexId": "2:7941058205647145524",
           "type": 11,
           "flags": 520,
-          "indexId": "2:7941058205647145524",
           "relationTarget": "HomeDataEntity"
         },
         {
@@ -436,9 +436,9 @@
         {
           "id": "30:1584521648825019093",
           "name": "bundleCategoryId",
+          "indexId": "3:2111038786350938522",
           "type": 11,
           "flags": 520,
-          "indexId": "3:2111038786350938522",
           "relationTarget": "EsimBundleCategoryEntity"
         },
         {
@@ -479,9 +479,9 @@
         {
           "id": "21:7133025044429977911",
           "name": "esimDataId",
+          "indexId": "5:2011655117619998248",
           "type": 11,
           "flags": 520,
-          "indexId": "5:2011655117619998248",
           "relationTarget": "EsimEntity"
         },
         {
@@ -517,9 +517,9 @@
         {
           "id": "28:8191698619578376793",
           "name": "bundleId",
+          "indexId": "6:4791991272740744303",
           "type": 11,
           "flags": 520,
-          "indexId": "6:4791991272740744303",
           "relationTarget": "EsimBundleEntity"
         }
       ],
@@ -648,9 +648,9 @@
         {
           "id": "18:8154799682633878051",
           "name": "bundleCategoryId",
+          "indexId": "7:4294559215289422009",
           "type": 11,
           "flags": 520,
-          "indexId": "7:4294559215289422009",
           "relationTarget": "EsimBundleCategoryEntity"
         },
         {

@@ -116,6 +116,27 @@ class MyESimViewModel extends BaseModel {
     await _performTopUp(item);
   }
 
+  Future<void> onManageAutoTopupClick({required int index}) async {
+    final PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
+    final SheetResponse<MainBottomSheetResponse>? sheetResponse =
+        await bottomSheetService.showCustomSheet(
+      isScrollControlled: true,
+      variant: BottomSheetType.manageAutoTopup,
+      data: ManageAutoTopupSheetRequest(
+        iccid: item.iccid ?? "",
+        isAutoTopupEnabled: item.autoTopupEnabled ?? false,
+        labelName: item.labelName as String?,
+        bundleName: item.displayTitle ?? "",
+      ),
+    );
+    // Update just this item in-place when AT was disabled — no API call, scroll preserved
+    if (sheetResponse?.data?.canceled == false) {
+      _state.currentESimList[index] =
+          _state.currentESimList[index].copyWith(autoTopupEnabled: false);
+      notifyListeners();
+    }
+  }
+
   Future<void> onConsumptionClick({required int index}) async {
     PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
     SheetResponse<MainBottomSheetResponse>? sheetResponse =
@@ -126,6 +147,8 @@ class MyESimViewModel extends BaseModel {
         iccID: item.iccid ?? "",
         showTopUp: item.isTopupAllowed ?? true,
         isUnlimitedData: item.unlimited ?? false,
+        isAutoTopupEnabled: item.autoTopupEnabled ?? false,
+        autoTopupBundleName: item.autoTopupBundleName ?? item.displayTitle,
       ),
     );
 
@@ -195,13 +218,15 @@ class MyESimViewModel extends BaseModel {
       isScrollControlled: true,
       variant: BottomSheetType.bundleEditName,
       data: BundleEditNameRequest(
-        name: item.displayTitle ?? "",
+        name: (item.labelName as String?)?.isNotEmpty == true
+            ? item.labelName as String
+            : item.iccid ?? "",
       ),
     );
     if (sheetResponse?.data?.canceled == false &&
         (sheetResponse?.data?.tag ?? "").isNotEmpty) {
       _changeBundleName(
-        code: item.bundleCode ?? "",
+        code: item.iccid ?? "",
         label: sheetResponse?.data?.tag ?? "",
       );
     }
@@ -232,6 +257,11 @@ class MyESimViewModel extends BaseModel {
       String tag = sheetResponse?.data?.tag ?? "";
       if (tag == "top_up") {
         await _performTopUp(item);
+      } else if (tag == "auto_topup_disabled") {
+        // Update just this item in-place — no API call, scroll position preserved
+        _state.currentESimList[index] =
+            _state.currentESimList[index].copyWith(autoTopupEnabled: false);
+        notifyListeners();
       }
     }
   }

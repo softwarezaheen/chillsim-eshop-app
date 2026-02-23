@@ -64,13 +64,13 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
       try {
         if (!testMode) {
           await _fbAnalytics.setAnalyticsCollectionEnabled(true);
-          await _fbAnalytics.setUserProperty(name: 'debug_view', value: 'true');
-          log('[Analytics] GA4 debug mode enabled (dev flavor).');
+          await _fbAnalytics.setUserProperty(name: "debug_view", value: "true");
+          log("[Analytics] GA4 debug mode enabled (dev flavor).");
         } else {
-          log('[Analytics][TestMode] Would enable GA4 debug view (dev flavor).');
+          log("[Analytics][TestMode] Would enable GA4 debug view (dev flavor).");
         }
-      } catch (e, st) {
-        log('Failed to enable GA4 debug mode: $e\n$st');
+      } on Exception catch (e, st) {
+        log("Failed to enable GA4 debug mode: $e\n$st");
       }
     }
 
@@ -120,16 +120,22 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
     required AnalyticEvent event,
   }) async {
     try {
-      if (testMode) return; // skip channel interaction in tests
+      if (testMode) {
+        return; // skip channel interaction in tests
+      }
       // Reinforce debug view for dev flavor just before sending (in case app restarted mid-session)
       if (Environment.currentEnvironment == Environment.openSourceDev) {
-        try { await _fbAnalytics.setUserProperty(name: 'debug_view', value: 'true'); } catch (_) {}
+        try {
+          await _fbAnalytics.setUserProperty(name: "debug_view", value: "true");
+        } on Exception catch (_) {
+          // Ignore exceptions when setting debug view
+        }
       }
       await _fbAnalytics.logEvent(
         name: event.eventName,
         parameters: event.parameters,
       );
-    } on Object catch (e, st) {
+    } on Exception catch (e, st) {
       log("Firebase logEvent error: $e\n$st");
     }
   }
@@ -138,12 +144,14 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
     required AnalyticEvent event,
   }) async {
     try {
-      if (testMode) return; // skip channel interaction in tests
+      if (testMode) {
+        return; // skip channel interaction in tests
+      }
       await _fbEvents.logEvent(
         name: event.eventName,
         parameters: event.parameters,
       );
-    } on Object catch (e, st) {
+    } on Exception catch (e, st) {
       log("Facebook logEvent error: $e\n$st");
     }
   }
@@ -151,32 +159,31 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
   /// Uses Firebase native ecommerce methods for proper GA4 reporting
   Future<void> _logFirebaseEcommerce(DualProviderEvent event) async {
     try {
-      if (testMode) return;
+      if (testMode) {
+        return;
+      }
       
       // Enable debug mode if dev environment
       if (Environment.currentEnvironment == Environment.openSourceDev) {
-        try { 
-          await _fbAnalytics.setUserProperty(name: 'debug_view', value: 'true'); 
-        } catch (_) {}
+        try {
+          await _fbAnalytics.setUserProperty(name: "debug_view", value: "true");
+        } on Exception catch (_) {
+          // Ignore exceptions when setting debug view
+        }
       }
 
       // Route to appropriate native Firebase ecommerce method
       switch (event.firebaseEventName) {
-        case 'view_item_list':
+        case "view_item_list":
           await _logViewItemList(event);
-          break;
-        case 'view_item':
+        case "view_item":
           await _logViewItem(event);
-          break;
-        case 'add_to_cart':
+        case "add_to_cart":
           await _logAddToCart(event);
-          break;
-        case 'begin_checkout':
+        case "begin_checkout":
           await _logBeginCheckout(event);
-          break;
-        case 'purchase':
+        case "purchase":
           await _logPurchase(event);
-          break;
         default:
           // Fallback to generic logging for unknown ecommerce events
           await _logFirebaseRaw(
@@ -184,32 +191,36 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
             parameters: event.firebaseParameters,
           );
       }
-    } on Object catch (e, st) {
+    } on Exception catch (e, st) {
       log("Firebase ecommerce event error: $e\n$st");
     }
   }
 
   Future<void> _logFirebaseRaw({required String name, required Map<String, Object?> parameters}) async {
     try {
-      if (testMode) return;
+      if (testMode) {
+        return;
+      }
       
       // Remove empty lists/arrays to prevent Firebase assertion errors
-      final cleanParams = <String, Object>{};
-      parameters.forEach((key, value) {
+      final Map<String, Object> cleanParams = <String, Object>{};
+      parameters.forEach((String key, Object? value) {
         if (value != null && !(value is List && value.isEmpty)) {
           cleanParams[key] = value;
         }
       });
       
       await _fbAnalytics.logEvent(name: name, parameters: cleanParams);
-    } on Object catch (e, st) {
+    } on Exception catch (e, st) {
       log("Firebase raw logEvent error: $e\n$st");
     }
   }
 
   Future<void> _logFacebookRaw({required String name, required Map<String, Object?> parameters}) async {
     try {
-      if (testMode) return;
+      if (testMode) {
+        return;
+      }
       
       // Facebook plugin has issues with nested ArrayList structures
       // Convert complex structures to JSON strings or flatten them
@@ -219,31 +230,31 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
       log("Facebook event '$name' with sanitized params: ${fbParams.keys.toList()}");
       
       // Additional debugging - check each parameter type
-      fbParams.forEach((key, value) {
+      fbParams.forEach((String key, Object value) {
         log("FB param '$key': ${value.runtimeType} = $value");
       });
       
       await _fbEvents.logEvent(name: name, parameters: fbParams);
     } on PlatformException catch (e) {
-      if (e.message?.contains('ArrayList') == true) {
+      if (e.message?.contains("ArrayList") ?? false) {
         log("Facebook ArrayList error for '$name' - attempting simplified logging");
         // Fallback: Try with only primitive values
         try {
           final Map<String, Object> simpleParams = <String, Object>{};
-          parameters.forEach((key, value) {
+          parameters.forEach((String key, Object? value) {
             if (value is String || value is double || value is int || value is bool) {
-              simpleParams[key] = value as Object;
+              simpleParams[key] = value!;
             }
           });
           await _fbEvents.logEvent(name: name, parameters: simpleParams);
           log("Facebook fallback logging succeeded for '$name'");
-        } catch (fallbackError) {
+        } on Exception catch (fallbackError) {
           log("Facebook fallback logging also failed for '$name': $fallbackError");
         }
       } else {
         log("Facebook raw logEvent error for '$name': $e");
       }
-    } on Object catch (e, st) {
+    } on Exception catch (e, st) {
       log("Facebook raw logEvent error for '$name': $e");
       log("Original parameters: ${parameters.keys.toList()}");
       log("Sanitized parameters: ${_sanitizeParametersForFacebook(parameters).keys.toList()}");
@@ -257,7 +268,9 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
     final Map<String, Object> sanitized = <String, Object>{};
     
     params.forEach((String key, Object? value) {
-      if (value == null) return;
+      if (value == null) {
+        return;
+      }
       
       // ULTRA-AGGRESSIVE: Convert ALL complex types to strings to avoid ArrayList issues
       if (value is List) {
@@ -265,9 +278,9 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
         try {
           final String jsonString = jsonEncode(value);
           sanitized[key] = jsonString;
-        } catch (e) {
+        } on Exception {
           // Fallback: convert to comma-separated string
-          final String fallbackString = value.map((e) => e.toString()).join(', ');
+          final String fallbackString = value.map((dynamic e) => e.toString()).join(", ");
           sanitized[key] = fallbackString;
         }
       } else if (value is Map) {
@@ -275,13 +288,13 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
         try {
           final String jsonString = jsonEncode(value);
           sanitized[key] = jsonString;
-        } catch (e) {
+        } on Exception {
           final String fallbackString = value.toString();
           sanitized[key] = fallbackString;
         }
       } else if (value is String) {
         // Ensure strings are completely new objects
-        sanitized[key] = value.toString();
+        sanitized[key] = value;
       } else if (value is double || value is int || value is bool) {
         // Keep primitive numeric/boolean types as-is
         sanitized[key] = value;
@@ -295,130 +308,140 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
   }
 
   Future<void> _logViewItemList(DualProviderEvent event) async {
-    final params = event.firebaseParameters;
-    final items = params['items'] as List<Map<String, Object?>>?;
+    final Map<String, Object?> params = event.firebaseParameters;
+    final List<Map<String, Object?>>? items = params["items"] as List<Map<String, Object?>>?;
     
-    if (items == null || items.isEmpty) return;
+    if (items == null || items.isEmpty) {
+      return;
+    }
 
     // Convert to AnalyticsEventItem format
-    final List<AnalyticsEventItem> analyticsItems = items.map((item) {
+    final List<AnalyticsEventItem> analyticsItems = items.map((Map<String, Object?> item) {
       return AnalyticsEventItem(
-        itemId: item['item_id']?.toString(),
-        itemName: item['item_name']?.toString(),
-        itemCategory: item['item_category']?.toString(),
-        itemBrand: item['item_brand']?.toString(),
-        price: _parseDouble(item['price']),
-        quantity: _parseInt(item['quantity']) ?? 1,
-        index: _parseInt(item['index']),
+        itemId: item["item_id"]?.toString(),
+        itemName: item["item_name"]?.toString(),
+        itemCategory: item["item_category"]?.toString(),
+        itemBrand: item["item_brand"]?.toString(),
+        price: _parseDouble(item["price"]),
+        quantity: _parseInt(item["quantity"]) ?? 1,
+        index: _parseInt(item["index"]),
       );
     }).toList();
 
     await _fbAnalytics.logViewItemList(
-      itemListId: params['item_list_id']?.toString(),
-      itemListName: params['item_list_name']?.toString(),
+      itemListId: params["item_list_id"]?.toString(),
+      itemListName: params["item_list_name"]?.toString(),
       items: analyticsItems,
       parameters: _extractCustomParameters(params),
     );
   }
 
   Future<void> _logViewItem(DualProviderEvent event) async {
-    final params = event.firebaseParameters;
-    final items = params['items'] as List<Map<String, Object?>>?;
+    final Map<String, Object?> params = event.firebaseParameters;
+    final List<Map<String, Object?>>? items = params["items"] as List<Map<String, Object?>>?;
     
-    if (items == null || items.isEmpty) return;
+    if (items == null || items.isEmpty) {
+      return;
+    }
 
-    final item = items.first;
-    final analyticsItem = AnalyticsEventItem(
-      itemId: item['item_id']?.toString(),
-      itemName: item['item_name']?.toString(),
-      itemCategory: item['item_category']?.toString(),
-      itemBrand: item['item_brand']?.toString(),
-      price: _parseDouble(item['price']),
-      quantity: _parseInt(item['quantity']) ?? 1,
+    final Map<String, Object?> item = items.first;
+    final AnalyticsEventItem analyticsItem = AnalyticsEventItem(
+      itemId: item["item_id"]?.toString(),
+      itemName: item["item_name"]?.toString(),
+      itemCategory: item["item_category"]?.toString(),
+      itemBrand: item["item_brand"]?.toString(),
+      price: _parseDouble(item["price"]),
+      quantity: _parseInt(item["quantity"]) ?? 1,
     );
 
     await _fbAnalytics.logViewItem(
-      currency: params['currency']?.toString(),
-      value: _parseDouble(params['value']),
-      items: [analyticsItem],
+      currency: params["currency"]?.toString(),
+      value: _parseDouble(params["value"]),
+      items: <AnalyticsEventItem>[analyticsItem],
       parameters: _extractCustomParameters(params),
     );
   }
 
   Future<void> _logAddToCart(DualProviderEvent event) async {
-    final params = event.firebaseParameters;
-    final items = params['items'] as List<Map<String, Object?>>?;
+    final Map<String, Object?> params = event.firebaseParameters;
+    final List<Map<String, Object?>>? items = params["items"] as List<Map<String, Object?>>?;
     
-    if (items == null || items.isEmpty) return;
+    if (items == null || items.isEmpty) {
+      return;
+    }
 
-    final List<AnalyticsEventItem> analyticsItems = items.map((item) {
+    final List<AnalyticsEventItem> analyticsItems = items.map((Map<String, Object?> item) {
       return AnalyticsEventItem(
-        itemId: item['item_id']?.toString(),
-        itemName: item['item_name']?.toString(),
-        itemCategory: item['item_category']?.toString(),
-        itemBrand: item['item_brand']?.toString(),
-        price: _parseDouble(item['price']),
-        quantity: _parseInt(item['quantity']) ?? 1,
+        itemId: item["item_id"]?.toString(),
+        itemName: item["item_name"]?.toString(),
+        itemCategory: item["item_category"]?.toString(),
+        itemBrand: item["item_brand"]?.toString(),
+        price: _parseDouble(item["price"]),
+        quantity: _parseInt(item["quantity"]) ?? 1,
       );
     }).toList();
 
     await _fbAnalytics.logAddToCart(
-      currency: params['currency']?.toString(),
-      value: _parseDouble(params['value']),
+      currency: params["currency"]?.toString(),
+      value: _parseDouble(params["value"]),
       items: analyticsItems,
       parameters: _extractCustomParameters(params),
     );
   }
 
   Future<void> _logBeginCheckout(DualProviderEvent event) async {
-    final params = event.firebaseParameters;
-    final items = params['items'] as List<Map<String, Object?>>?;
+    final Map<String, Object?> params = event.firebaseParameters;
+    final List<Map<String, Object?>>? items = params["items"] as List<Map<String, Object?>>?;
     
-    if (items == null || items.isEmpty) return;
+    if (items == null || items.isEmpty) {
+      return;
+    }
 
-    final List<AnalyticsEventItem> analyticsItems = items.map((item) {
+    final List<AnalyticsEventItem> analyticsItems = items.map((Map<String, Object?> item) {
       return AnalyticsEventItem(
-        itemId: item['item_id']?.toString(),
-        itemName: item['item_name']?.toString(),
-        itemCategory: item['item_category']?.toString(),
-        itemBrand: item['item_brand']?.toString(),
-        price: _parseDouble(item['price']),
-        quantity: _parseInt(item['quantity']) ?? 1,
+        itemId: item["item_id"]?.toString(),
+        itemName: item["item_name"]?.toString(),
+        itemCategory: item["item_category"]?.toString(),
+        itemBrand: item["item_brand"]?.toString(),
+        price: _parseDouble(item["price"]),
+        quantity: _parseInt(item["quantity"]) ?? 1,
       );
     }).toList();
 
     await _fbAnalytics.logBeginCheckout(
-      currency: params['currency']?.toString(),
-      value: _parseDouble(params['value']),
+      currency: params["currency"]?.toString(),
+      value: _parseDouble(params["value"]),
       items: analyticsItems,
       parameters: _extractCustomParameters(params),
     );
   }
 
   Future<void> _logPurchase(DualProviderEvent event) async {
-    final params = event.firebaseParameters;
-    final items = params['items'] as List<Map<String, Object?>>?;
+    final Map<String, Object?> params = event.firebaseParameters;
+    final List<Map<String, Object?>>? items = params["items"] as List<Map<String, Object?>>?;
     
-    if (items == null || items.isEmpty) return;
+    if (items == null || items.isEmpty) {
+      return;
+    }
 
-    final List<AnalyticsEventItem> analyticsItems = items.map((item) {
+    final List<AnalyticsEventItem> analyticsItems = items.map((Map<String, Object?> item) {
       return AnalyticsEventItem(
-        itemId: item['item_id']?.toString(),
-        itemName: item['item_name']?.toString(),
-        itemCategory: item['item_category']?.toString(),
-        itemBrand: item['item_brand']?.toString(),
-        price: _parseDouble(item['price']),
-        quantity: _parseInt(item['quantity']) ?? 1,
+        itemId: item["item_id"]?.toString(),
+        itemName: item["item_name"]?.toString(),
+        itemCategory: item["item_category"]?.toString(),
+        itemBrand: item["item_brand"]?.toString(),
+        price: _parseDouble(item["price"]),
+        quantity: _parseInt(item["quantity"]) ?? 1,
       );
     }).toList();
 
     await _fbAnalytics.logPurchase(
-      currency: params['currency']?.toString(),
-      value: _parseDouble(params['value']),
-      transactionId: params['transaction_id']?.toString(),
-      tax: _parseDouble(params['tax']),
-      shipping: _parseDouble(params['shipping']),
-      coupon: params['coupon']?.toString(),
+      currency: params["currency"]?.toString(),
+      value: _parseDouble(params["value"]),
+      transactionId: params["transaction_id"]?.toString(),
+      tax: _parseDouble(params["tax"]),
+      shipping: _parseDouble(params["shipping"]),
+      coupon: params["coupon"]?.toString(),
       items: analyticsItems,
       parameters: _extractCustomParameters(params),
     );
@@ -426,30 +449,46 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
 
   // Helper methods for type conversion
   double? _parseDouble(Object? value) {
-    if (value == null) return null;
-    if (value is double) return value;
-    if (value is int) return value.toDouble();
-    if (value is String) return double.tryParse(value);
+    if (value == null) {
+      return null;
+    }
+    if (value is double) {
+      return value;
+    }
+    if (value is int) {
+      return value.toDouble();
+    }
+    if (value is String) {
+      return double.tryParse(value);
+    }
     return null;
   }
 
   int? _parseInt(Object? value) {
-    if (value == null) return null;
-    if (value is int) return value;
-    if (value is double) return value.toInt();
-    if (value is String) return int.tryParse(value);
+    if (value == null) {
+      return null;
+    }
+    if (value is int) {
+      return value;
+    }
+    if (value is double) {
+      return value.toInt();
+    }
+    if (value is String) {
+      return int.tryParse(value);
+    }
     return null;
   }
 
   // Extract custom parameters (non-ecommerce standard ones)
   Map<String, Object>? _extractCustomParameters(Map<String, Object?> allParams) {
-    final customParams = <String, Object>{};
-    final standardKeys = {
-      'items', 'currency', 'value', 'transaction_id', 'tax', 'shipping', 
-      'coupon', 'item_list_id', 'item_list_name'
+    final Map<String, Object> customParams = <String, Object>{};
+    final Set<String> standardKeys = <String>{
+      "items", "currency", "value", "transaction_id", "tax", "shipping", 
+      "coupon", "item_list_id", "item_list_name",
     };
 
-    allParams.forEach((key, value) {
+    allParams.forEach((String key, Object? value) {
       if (!standardKeys.contains(key) && value != null) {
         customParams[key] = value;
       }
@@ -505,7 +544,6 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
         switch (result) {
           case AttRequestResult.authorized:
             log("🍎 ✅ ATT authorized - enabling tracking");
-            break;
           case AttRequestResult.denied:
             log("🍎 ❌ ATT denied - disabling tracking");
             await handleAttDenial();
@@ -513,10 +551,8 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
           case AttRequestResult.previouslyDenied:
             log("🍎 ⚠️ ATT previously denied - UI should show guidance");
             // This will be handled by the UI layer
-            break;
           case AttRequestResult.notNeeded:
             log("🍎 ATT request not needed");
-            break;
           default:
             log("🍎 ATT result: $result");
         }
@@ -542,7 +578,7 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
         return;
       }
       await _fbEvents.setAdvertiserTracking(enabled: enable);
-      log("Facebook advertiser tracking set to $enable (consent=$_useFacebookAnalytics attAuth=${attAuthorizedForTesting})");
+      log("Facebook advertiser tracking set to $enable (consent=$_useFacebookAnalytics attAuth=$attAuthorizedForTesting)");
     } on Object catch (e) {
       log("Failed to set Facebook advertiser tracking: $e");
     }
@@ -568,12 +604,12 @@ class AnalyticsServiceImpl extends AnalyticsService with AnalyticsServiceATTMixi
   bool get attAuthorizedFlag => attAuthorizedForTesting;
   @visibleForTesting
   Future<void> applyConsentForTest(Map<ConsentType, bool> consent,
-          {bool initialLoad = false}) async =>
+          {bool initialLoad = false,}) async =>
       _applyConsent(consent, initialLoad: initialLoad);
   @visibleForTesting
   void resetTestState() {
     _useFirebaseAnalytics = true;
     _useFacebookAnalytics = true;
-    resetAttStateForTesting();
+    unawaited(resetAttStateForTesting());
   }
 }

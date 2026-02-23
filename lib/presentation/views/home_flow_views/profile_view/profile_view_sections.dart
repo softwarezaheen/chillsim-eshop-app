@@ -11,6 +11,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/help_view/help_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/my_wallet_view/my_wallet_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/order_history_view/order_history_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/payment_methods_view/payment_methods_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_view/rewards_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
@@ -23,6 +24,7 @@ enum ProfileViewSections {
   orderHistory,
   rewards,
   myWallet,
+  paymentMethods,
   language,
   currency,
   help,
@@ -35,6 +37,8 @@ enum ProfileViewSections {
       case ProfileViewSections.myWallet:
         return !viewModel.isUserLoggedIn ||
             !AppEnvironment.appEnvironmentHelper.enableWalletView;
+      case ProfileViewSections.paymentMethods:
+        return !viewModel.isUserLoggedIn;
       case ProfileViewSections.orderHistory:
         return !viewModel.isUserLoggedIn;
       case ProfileViewSections.account:
@@ -65,6 +69,8 @@ enum ProfileViewSections {
         return LocaleKeys.profile_rewards.tr();
       case ProfileViewSections.myWallet:
         return LocaleKeys.profile_myWallet.tr();
+      case ProfileViewSections.paymentMethods:
+        return LocaleKeys.payment_methods_title.tr();
       case ProfileViewSections.language:
         return LocaleKeys.profile_language.tr();
       case ProfileViewSections.currency:
@@ -83,6 +89,8 @@ enum ProfileViewSections {
       )
       .fullImagePath;
 
+  double get sectionImageSize => 32;
+
   String get _sectionImage {
     switch (this) {
       case ProfileViewSections.account:
@@ -95,6 +103,8 @@ enum ProfileViewSections {
         return "rewards";
       case ProfileViewSections.myWallet:
         return "wallet";
+      case ProfileViewSections.paymentMethods:
+        return "payByCardIcon";
       case ProfileViewSections.language:
         return "language";
       case ProfileViewSections.currency:
@@ -122,6 +132,8 @@ enum ProfileViewSections {
         viewModel.navigationService.navigateTo(RewardsView.routeName);
       case ProfileViewSections.myWallet:
         viewModel.navigationService.navigateTo(MyWalletView.routeName);
+      case ProfileViewSections.paymentMethods:
+        viewModel.navigationService.navigateTo(PaymentMethodsView.routeName);
       case ProfileViewSections.language:
         viewModel.navigationService.navigateTo(
           DynamicSelectionView.routeName,

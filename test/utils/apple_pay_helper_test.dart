@@ -1,6 +1,7 @@
 /// Apple Pay Helper Comprehensive Tests
 /// 
 /// Tests for Apple Pay availability checking, caching, and error handling
+library;
 
 import "dart:io";
 
@@ -9,22 +10,16 @@ import "package:flutter_test/flutter_test.dart";
 
 void main() {
   group("Apple Pay Helper - Comprehensive Tests", () {
-    setUp(() {
-      // Clear cache before each test
-      ApplePayHelper.clearCache();
-    });
+    setUp(ApplePayHelper.clearCache);
 
-    tearDown(() {
-      // Clean up after tests
-      ApplePayHelper.clearCache();
-    });
+    tearDown(ApplePayHelper.clearCache);
 
     group("1. Platform Detection Tests", () {
       test("Should return false on non-iOS platforms", () async {
         // Only run on Android/other platforms
         if (!Platform.isIOS) {
           // Act
-          final isAvailable = await ApplePayHelper.isApplePayAvailable();
+          final bool isAvailable = await ApplePayHelper.isApplePayAvailable();
 
           // Assert
           expect(isAvailable, isFalse);
@@ -33,7 +28,7 @@ void main() {
 
       test("Should return platform-specific unavailability message", () {
         // Act
-        final reason = ApplePayHelper.getUnavailabilityReason();
+        final String reason = ApplePayHelper.getUnavailabilityReason();
 
         // Assert
         if (Platform.isIOS) {
@@ -58,10 +53,10 @@ void main() {
         }
 
         // Act - First call
-        final firstResult = await ApplePayHelper.isApplePayAvailable();
+        final bool firstResult = await ApplePayHelper.isApplePayAvailable();
 
         // Act - Second call (should use cache)
-        final secondResult = await ApplePayHelper.isApplePayAvailable();
+        final bool secondResult = await ApplePayHelper.isApplePayAvailable();
 
         // Assert - Results should be identical
         expect(secondResult, equals(firstResult));
@@ -71,7 +66,7 @@ void main() {
         // Act - Multiple calls
         await ApplePayHelper.isApplePayAvailable();
         await ApplePayHelper.isApplePayAvailable();
-        final result = await ApplePayHelper.isApplePayAvailable();
+        final bool result = await ApplePayHelper.isApplePayAvailable();
 
         // Assert - Should return a boolean
         expect(result, isA<bool>());
@@ -90,7 +85,7 @@ void main() {
 
         // Assert - Next call should re-check (we can't directly verify this
         // without mocking, but we can verify no errors occur)
-        final result = await ApplePayHelper.isApplePayAvailable();
+        final bool result = await ApplePayHelper.isApplePayAvailable();
         expect(result, isA<bool>());
       });
     });
@@ -100,7 +95,7 @@ void main() {
         // ⚠️ DEFENSIVE PROGRAMMING: Error handling
 
         // Act - Should not throw even if service fails
-        final result = await ApplePayHelper.isApplePayAvailable();
+        final bool result = await ApplePayHelper.isApplePayAvailable();
 
         // Assert - Should return false on error, not throw
         expect(result, isA<bool>());
@@ -118,7 +113,7 @@ void main() {
 
         // We can't easily trigger an exception without mocking,
         // but we verify the contract that it returns a boolean
-        final result = await ApplePayHelper.isApplePayAvailable();
+        final bool result = await ApplePayHelper.isApplePayAvailable();
         expect(result, isA<bool>());
       });
     });
@@ -126,7 +121,7 @@ void main() {
     group("4. User Experience Tests", () {
       test("Should provide helpful unavailability message for iOS", () {
         // Act
-        final reason = ApplePayHelper.getUnavailabilityReason();
+        final String reason = ApplePayHelper.getUnavailabilityReason();
 
         // Assert - Message should be user-friendly
         if (Platform.isIOS) {
@@ -138,7 +133,7 @@ void main() {
 
       test("Should provide helpful unavailability message for Android", () {
         // Act
-        final reason = ApplePayHelper.getUnavailabilityReason();
+        final String reason = ApplePayHelper.getUnavailabilityReason();
 
         // Assert
         if (Platform.isAndroid) {
@@ -166,7 +161,7 @@ void main() {
         // ⚠️ RACE CONDITION TEST
 
         // Act - Trigger multiple concurrent calls
-        final results = await Future.wait([
+        final List<bool> results = await Future.wait(<Future<bool>>[
           ApplePayHelper.isApplePayAvailable(),
           ApplePayHelper.isApplePayAvailable(),
           ApplePayHelper.isApplePayAvailable(),
@@ -196,7 +191,7 @@ void main() {
         ApplePayHelper.clearCache();
 
         // Act - Check again after clear
-        final result = await ApplePayHelper.isApplePayAvailable();
+        final bool result = await ApplePayHelper.isApplePayAvailable();
 
         // Assert
         expect(result, isA<bool>());
@@ -209,14 +204,14 @@ void main() {
 
         if (!Platform.isIOS) {
           // On non-iOS, should return false without calling service
-          final result = await ApplePayHelper.isApplePayAvailable();
+          final bool result = await ApplePayHelper.isApplePayAvailable();
           expect(result, isFalse);
           return;
         }
 
         // On iOS, should call service
         // (We can't easily verify without mocking, but we test the flow)
-        final result = await ApplePayHelper.isApplePayAvailable();
+        final bool result = await ApplePayHelper.isApplePayAvailable();
         expect(result, isA<bool>());
       });
     });

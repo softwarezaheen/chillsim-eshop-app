@@ -167,7 +167,7 @@ Future<void> main() async {
         expect(result, equals("EUR"));
         verify(mockLocalStorage.currencyCode).called(1);
         verify(mockAppConfig.getDefaultCurrency)
-            .called(2); // Called twice in the function
+            .called(1); // Called once to get default currency
         verify(mockLocalStorage.setString(LocalStorageKeys.appCurrency, "EUR"))
             .called(1);
       });
@@ -182,7 +182,7 @@ Future<void> main() async {
 
         expect(result, equals("GBP"));
         verify(mockLocalStorage.currencyCode).called(1);
-        verify(mockAppConfig.getDefaultCurrency).called(2);
+        verify(mockAppConfig.getDefaultCurrency).called(1);
         verify(mockLocalStorage.setString(LocalStorageKeys.appCurrency, "GBP"))
             .called(1);
       });

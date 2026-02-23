@@ -1,11 +1,20 @@
 /// Payment Type Enum Tests
 /// 
 /// Tests for PaymentType enum including Apple Pay integration
+library;
 
+import "package:esim_open_source/app/environment/app_environment.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:flutter_test/flutter_test.dart";
 
+import "../../helpers/app_enviroment_helper.dart";
+
 void main() {
+  setUpAll(() {
+    // Initialize AppEnvironment for image path tests
+    AppEnvironment.appEnvironmentHelper = createTestEnvironmentHelper();
+  });
+
   group("PaymentType Enum Tests", () {
     group("1. Enum Values Tests", () {
       test("Should have all payment types defined", () {
@@ -29,7 +38,7 @@ void main() {
     group("2. Apple Pay Integration Tests", () {
       test("Apple Pay should be included in enum", () {
         // Act
-        final hasApplePay = PaymentType.values.contains(PaymentType.applePay);
+        final bool hasApplePay = PaymentType.values.contains(PaymentType.applePay);
 
         // Assert
         expect(hasApplePay, isTrue);
@@ -37,7 +46,7 @@ void main() {
 
       test("Apple Pay should have correct type identifier", () {
         // Act
-        final applePayType = PaymentType.applePay.type;
+        final String applePayType = PaymentType.applePay.type;
 
         // Assert
         expect(applePayType, equals("ApplePay"));
@@ -46,10 +55,10 @@ void main() {
 
       test("Should parse Apple Pay from string", () {
         // Arrange
-        const paymentTypeString = "Wallet,Card,ApplePay";
+        const String paymentTypeString = "Wallet,Card,ApplePay";
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert
@@ -60,10 +69,10 @@ void main() {
         // ⚠️ DEFENSIVE PROGRAMMING TEST
 
         // Arrange
-        const paymentTypeString = "applepay"; // lowercase
+        const String paymentTypeString = "applepay"; // lowercase
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert - Current implementation is case-sensitive
@@ -83,7 +92,7 @@ void main() {
         // In actual app, would return translated string
 
         // Act
-        final title = PaymentType.applePay.titleText;
+        final String title = PaymentType.applePay.titleText;
 
         // Assert
         expect(title, isNotNull);
@@ -92,8 +101,8 @@ void main() {
 
       test("All payment types should have localized titles", () {
         // Act & Assert
-        for (final paymentType in PaymentType.values) {
-          final title = paymentType.titleText;
+        for (final PaymentType paymentType in PaymentType.values) {
+          final String title = paymentType.titleText;
           expect(title, isNotNull);
           expect(title.isNotEmpty, isTrue);
         }
@@ -103,7 +112,7 @@ void main() {
     group("4. Image Path Tests", () {
       test("Apple Pay should have valid image path", () {
         // Act
-        final imagePath = PaymentType.applePay.sectionImagePath;
+        final String imagePath = PaymentType.applePay.sectionImagePath;
 
         // Assert
         expect(imagePath, isNotNull);
@@ -112,8 +121,8 @@ void main() {
 
       test("All payment types should have image paths", () {
         // Act & Assert
-        for (final paymentType in PaymentType.values) {
-          final imagePath = paymentType.sectionImagePath;
+        for (final PaymentType paymentType in PaymentType.values) {
+          final String imagePath = paymentType.sectionImagePath;
           expect(imagePath, isNotNull);
           expect(imagePath.isNotEmpty, isTrue);
         }
@@ -123,10 +132,10 @@ void main() {
     group("5. Parsing Tests", () {
       test("Should parse valid payment type string", () {
         // Arrange
-        const paymentTypeString = "Wallet,Card,DCB,ApplePay";
+        const String paymentTypeString = "Wallet,Card,DCB,ApplePay";
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert
@@ -139,10 +148,10 @@ void main() {
 
       test("Should handle empty string", () {
         // Arrange
-        const paymentTypeString = "";
+        const String paymentTypeString = "";
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert
@@ -151,7 +160,7 @@ void main() {
 
       test("Should handle null string", () {
         // Act
-        final paymentTypes = PaymentType.getListFromValues(null);
+        final List<PaymentType> paymentTypes = PaymentType.getListFromValues(null);
 
         // Assert
         expect(paymentTypes, isEmpty);
@@ -161,10 +170,10 @@ void main() {
         // ⚠️ DEFENSIVE PROGRAMMING TEST
 
         // Arrange
-        const paymentTypeString = "InvalidPaymentType";
+        const String paymentTypeString = "InvalidPaymentType";
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert - Should handle gracefully
@@ -177,10 +186,10 @@ void main() {
         // ⚠️ DEFENSIVE PROGRAMMING TEST
 
         // Arrange
-        const paymentTypeString = " Wallet , Card , ApplePay ";
+        const String paymentTypeString = " Wallet , Card , ApplePay ";
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert
@@ -193,10 +202,10 @@ void main() {
     group("6. Edge Cases", () {
       test("Should handle duplicate payment types in string", () {
         // Arrange
-        const paymentTypeString = "Card,Card,Card";
+        const String paymentTypeString = "Card,Card,Card";
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert
@@ -209,10 +218,10 @@ void main() {
         // ⚠️ DEFENSIVE PROGRAMMING TEST
 
         // Arrange
-        const paymentTypeString = "Card;ApplePay|Wallet";
+        const String paymentTypeString = "Card;ApplePay|Wallet";
 
         // Act
-        final paymentTypes =
+        final List<PaymentType> paymentTypes =
             PaymentType.getListFromValues(paymentTypeString);
 
         // Assert - Should handle non-comma separators gracefully

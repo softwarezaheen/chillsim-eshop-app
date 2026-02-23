@@ -81,6 +81,7 @@ class PaymentServiceImpl extends PaymentService {
     bool testEnv = false,
     String? iccID,
     String? orderID,
+    String? stripePaymentMethodId,
   }) async {
     switch (paymentType) {
       case PaymentType.wallet:
@@ -115,6 +116,7 @@ class PaymentServiceImpl extends PaymentService {
           testEnv: testEnv,
           iccID: iccID,
           orderID: orderID,
+          stripePaymentMethodId: stripePaymentMethodId,
         );
       case PaymentType.applePay:
         return applePayService.processOrderPayment(

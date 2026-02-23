@@ -9,6 +9,7 @@ import "package:esim_open_source/domain/repository/api_bundles_repository.dart";
 import "package:esim_open_source/domain/repository/api_device_repository.dart";
 import "package:esim_open_source/domain/repository/api_promotion_repository.dart";
 import "package:esim_open_source/domain/repository/api_user_repository.dart";
+import "package:esim_open_source/domain/repository/services/affiliate_click_id_service.dart";
 import "package:esim_open_source/domain/repository/services/analytics_service.dart";
 import "package:esim_open_source/domain/repository/services/app_configuration_service.dart";
 import "package:esim_open_source/domain/repository/services/connectivity_service.dart";
@@ -75,6 +76,7 @@ import "locator_test.mocks.dart";
   LocalStorageService,
   AppConfigurationService,
   FlutterChannelHandlerService,
+  AffiliateClickIdService,
   AnalyticsService,
   //RemoteConfigService,
   ConnectivityService,
@@ -164,6 +166,9 @@ Future<void> appServicesModule() async {
     )
     ..registerLazySingleton<FlutterChannelHandlerService>(
       MockFlutterChannelHandlerService.new,
+    )
+    ..registerLazySingleton<AffiliateClickIdService>(
+      MockAffiliateClickIdService.new,
     )
     //..registerLazySingleton<RemoteConfigService>(MockRemoteConfigService.new)
     ..registerLazySingleton<ConnectivityService>(MockConnectivityService.new)

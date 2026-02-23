@@ -89,13 +89,17 @@ Future<void> main() async {
       await tester.pumpWidget(createTestableWidget(const ProfileView()));
       await tester.pump();
 
-      expect(find.byType(ListView), findsOneWidget);
+      expect(find.byType(GridView), findsOneWidget);
 
-      final ListView listView = tester.widget<ListView>(find.byType(ListView));
+      final GridView gridView = tester.widget<GridView>(find.byType(GridView));
       expect(
-        listView.itemExtent,
-        isNull,
-      ); // ListView.separated doesn't use itemExtent
+        gridView.gridDelegate,
+        isA<SliverGridDelegateWithFixedCrossAxisCount>(),
+      );
+      
+      final SliverGridDelegateWithFixedCrossAxisCount delegate =
+          gridView.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount;
+      expect(delegate.crossAxisCount, equals(3));
     });
 
     testWidgets("taps login button successfully", (WidgetTester tester) async {

@@ -18,6 +18,7 @@ class TopUpWalletUseCase
     return await repository.topUpWallet(
       amount: params.amount,
       currency: params.currencyCode,
+      paymentMethodId: params.paymentMethodId,
     );
   }
 }
@@ -26,8 +27,10 @@ class TopUpWalletParam {
   TopUpWalletParam({
     required this.amount,
     required this.currencyCode,
+    this.paymentMethodId,
   });
 
   final double amount;
   final String currencyCode;
+  final String? paymentMethodId;
 }

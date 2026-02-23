@@ -54,6 +54,7 @@ class PurchaseEsimBundleResponseModel {
     String? smdpAddress,
     String? validityDate,
     String? iccid,
+    String? userProfileId,
     String? paymentDate,
     String? sharedWith,
     String? displayTitle,
@@ -76,6 +77,8 @@ class PurchaseEsimBundleResponseModel {
     List<CountryResponseModel>? countries,
     String? icon,
     List<TransactionHistoryResponseModel>? transactionHistory,
+    bool? autoTopupEnabled,
+    String? autoTopupBundleName,
   }) {
     _isTopupAllowed = isTopupAllowed;
     _planStarted = planStarted;
@@ -88,6 +91,7 @@ class PurchaseEsimBundleResponseModel {
     _smdpAddress = smdpAddress;
     _validityDate = validityDate;
     _iccid = iccid;
+    _userProfileId = userProfileId;
     _paymentDate = paymentDate;
     _sharedWith = sharedWith;
     _displayTitle = displayTitle;
@@ -110,6 +114,8 @@ class PurchaseEsimBundleResponseModel {
     _countries = countries;
     _icon = icon;
     _transactionHistory = transactionHistory;
+    _autoTopupEnabled = autoTopupEnabled;
+    _autoTopupBundleName = autoTopupBundleName;
   }
 
   PurchaseEsimBundleResponseModel.fromJson({dynamic json}) {
@@ -124,6 +130,7 @@ class PurchaseEsimBundleResponseModel {
     _smdpAddress = json["smdp_address"];
     _validityDate = json["validity_date"];
     _iccid = json["iccid"];
+    _userProfileId = json["user_profile_id"];
     _paymentDate = json["payment_date"];
     _sharedWith = json["shared_with"];
     _displayTitle = json["display_title"];
@@ -163,6 +170,8 @@ class PurchaseEsimBundleResponseModel {
         _transactionHistory?.add(TransactionHistoryResponseModel.fromJson(v));
       });
     }
+    _autoTopupEnabled = json["auto_topup_enabled"];
+    _autoTopupBundleName = json["auto_topup_bundle_name"];
   }
 
   bool? _isTopupAllowed;
@@ -176,6 +185,7 @@ class PurchaseEsimBundleResponseModel {
   String? _smdpAddress;
   String? _validityDate;
   String? _iccid;
+  String? _userProfileId;
   String? _paymentDate;
   String? _sharedWith;
   String? _displayTitle;
@@ -198,6 +208,8 @@ class PurchaseEsimBundleResponseModel {
   List<CountryResponseModel>? _countries;
   String? _icon;
   List<TransactionHistoryResponseModel>? _transactionHistory;
+  bool? _autoTopupEnabled;
+  String? _autoTopupBundleName;
 
   PurchaseEsimBundleResponseModel copyWith({
     bool? isTopupAllowed,
@@ -211,6 +223,7 @@ class PurchaseEsimBundleResponseModel {
     String? smdpAddress,
     String? validityDate,
     String? iccid,
+    String? userProfileId,
     String? paymentDate,
     String? sharedWith,
     String? displayTitle,
@@ -233,6 +246,8 @@ class PurchaseEsimBundleResponseModel {
     List<CountryResponseModel>? countries,
     String? icon,
     List<TransactionHistoryResponseModel>? transactionHistory,
+    bool? autoTopupEnabled,
+    String? autoTopupBundleName,
   }) =>
       PurchaseEsimBundleResponseModel(
         isTopupAllowed: isTopupAllowed ?? _isTopupAllowed,
@@ -246,6 +261,7 @@ class PurchaseEsimBundleResponseModel {
         smdpAddress: smdpAddress ?? _smdpAddress,
         validityDate: validityDate ?? _validityDate,
         iccid: iccid ?? _iccid,
+        userProfileId: userProfileId ?? _userProfileId,
         paymentDate: paymentDate ?? _paymentDate,
         sharedWith: sharedWith ?? _sharedWith,
         displayTitle: displayTitle ?? _displayTitle,
@@ -268,6 +284,8 @@ class PurchaseEsimBundleResponseModel {
         countries: countries ?? _countries,
         icon: icon ?? _icon,
         transactionHistory: transactionHistory ?? _transactionHistory,
+        autoTopupEnabled: autoTopupEnabled ?? _autoTopupEnabled,
+        autoTopupBundleName: autoTopupBundleName ?? _autoTopupBundleName,
       );
 
   bool? get isTopupAllowed => _isTopupAllowed;
@@ -291,6 +309,8 @@ class PurchaseEsimBundleResponseModel {
   String? get validityDate => _validityDate;
 
   String? get iccid => _iccid;
+
+  String? get userProfileId => _userProfileId;
 
   String? get paymentDate => _paymentDate;
 
@@ -337,6 +357,10 @@ class PurchaseEsimBundleResponseModel {
   List<TransactionHistoryResponseModel>? get transactionHistory =>
       _transactionHistory;
 
+  bool? get autoTopupEnabled => _autoTopupEnabled;
+
+  String? get autoTopupBundleName => _autoTopupBundleName;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> map = <String, dynamic>{};
     map["is_topup_allowed"] = _isTopupAllowed;
@@ -350,6 +374,7 @@ class PurchaseEsimBundleResponseModel {
     map["smdp_address"] = _smdpAddress;
     map["validity_date"] = _validityDate;
     map["iccid"] = _iccid;
+    map["user_profile_id"] = _userProfileId;
     map["payment_date"] = _paymentDate;
     map["shared_with"] = _sharedWith;
     map["display_title"] = _displayTitle;
@@ -379,6 +404,8 @@ class PurchaseEsimBundleResponseModel {
           ?.map((TransactionHistoryResponseModel v) => v.toJson())
           .toList();
     }
+    map["auto_topup_enabled"] = _autoTopupEnabled;
+    map["auto_topup_bundle_name"] = _autoTopupBundleName;
     return map;
   }
 

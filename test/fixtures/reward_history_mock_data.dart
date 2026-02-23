@@ -10,10 +10,11 @@
 /// - Different date formats
 /// - Long strings for testing overflow
 /// - Special characters in strings
+library;
 
-const Map<String, dynamic> rewardHistoryMockData = {
+const Map<String, dynamic> rewardHistoryMockData = <String, dynamic>{
   // COMPLETE DATA CASES - All fields present
-  "complete_cashback_wallet": {
+  "complete_cashback_wallet": <String, Object?>{
     "is_referral": true,
     "amount": "3.0 EUR",
     "name": "referrer@example.com",
@@ -28,10 +29,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": "referrer@example.com",
     "order_id": "1bf20e77-26c8-41ad-a7b3-ac4518c92cdc",
     "bundle_name": null,
-    "status": "completed"
+    "status": "completed",
   },
 
-  "complete_percentage_discount_order": {
+  "complete_percentage_discount_order": <String, Object?>{
     "is_referral": false,
     "amount": "0.09 EUR",
     "name": "Discount 15% for customers referred by John Doe",
@@ -46,10 +47,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": null,
     "order_id": "766d6176-1ab1-4f35-82eb-4018c81d9bdc",
     "bundle_name": "Turkey",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "complete_promo_discount_order": {
+  "complete_promo_discount_order": <String, Object?>{
     "is_referral": false,
     "amount": "5.00 EUR",
     "name": "Summer Sale 2025",
@@ -64,10 +65,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": null,
     "order_id": "abc12345-def6-7890-ghij-klmnopqrstuv",
     "bundle_name": "Spain",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "complete_discount_amount_order": {
+  "complete_discount_amount_order": <String, Object?>{
     "is_referral": false,
     "amount": "10.00 EUR",
     "name": "Fixed Amount Discount",
@@ -82,10 +83,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": null,
     "order_id": "xyz98765-abc4-3210-defg-hijklmnopqrs",
     "bundle_name": "France",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "complete_referral_credit_wallet": {
+  "complete_referral_credit_wallet": <String, Object?>{
     "is_referral": true,
     "amount": "5.00 EUR",
     "name": "friend@example.com",
@@ -100,28 +101,28 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": "friend@example.com",
     "order_id": "ref12345-6789-0abc-defg-hijklmnopqrs",
     "bundle_name": null,
-    "status": "completed"
+    "status": "completed",
   },
 
   // LEGACY DATA CASES - Only old fields present (backward compatibility)
-  "legacy_referral": {
+  "legacy_referral": <String, Object>{
     "is_referral": true,
     "amount": "2.5 EUR",
     "name": "olduser@example.com",
     "promotion_name": "",
-    "date": "1750000000"
+    "date": "1750000000",
   },
 
-  "legacy_promotion": {
+  "legacy_promotion": <String, Object>{
     "is_referral": false,
     "amount": "1.50 EUR",
     "name": "Old Promotion",
     "promotion_name": "Old Promotion",
-    "date": "1749000000"
+    "date": "1749000000",
   },
 
   // PARTIAL DATA CASES - Mix of old and new fields
-  "partial_with_reward_type_only": {
+  "partial_with_reward_type_only": <String, Object?>{
     "is_referral": false,
     "amount": "3.00 EUR",
     "name": "Test Promotion",
@@ -130,10 +131,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "reward_type": "discount_percentage",
     "application_type": null,
     "title": null,
-    "description": null
+    "description": null,
   },
 
-  "partial_with_application_type_only": {
+  "partial_with_application_type_only": <String, Object?>{
     "is_referral": true,
     "amount": "4.00 EUR",
     "name": "friend2@example.com",
@@ -142,11 +143,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "reward_type": null,
     "application_type": "wallet_credit",
     "title": null,
-    "description": null
+    "description": null,
   },
 
   // NULL AND EMPTY VALUE CASES
-  "null_amount": {
+  "null_amount": <String, Object?>{
     "is_referral": false,
     "amount": null,
     "name": "Test",
@@ -156,10 +157,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "application_type": "order_discount",
     "title": "Test Reward",
     "description": "Test description",
-    "status": "pending"
+    "status": "pending",
   },
 
-  "empty_strings": {
+  "empty_strings": <String, Object>{
     "is_referral": false,
     "amount": "0.00 EUR",
     "name": "",
@@ -173,10 +174,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": "",
     "order_id": "",
     "bundle_name": "",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "all_nulls": {
+  "all_nulls": <String, void>{
     "is_referral": null,
     "amount": null,
     "name": null,
@@ -191,11 +192,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": null,
     "order_id": null,
     "bundle_name": null,
-    "status": null
+    "status": null,
   },
 
   // EDGE CASE: Both promotion_code and referral_from present (should prioritize promo code)
-  "both_promo_and_referral": {
+  "both_promo_and_referral": <String, Object>{
     "is_referral": false,
     "amount": "7.50 EUR",
     "name": "Hybrid Reward",
@@ -207,11 +208,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "description": "Both promo and referral data present",
     "promotion_code": "HYBRID2025",
     "referral_from": "someone@example.com",
-    "status": "completed"
+    "status": "completed",
   },
 
   // LONG STRING CASES - Testing text overflow
-  "long_title": {
+  "long_title": <String, Object>{
     "is_referral": false,
     "amount": "12.00 EUR",
     "name": "Very Long Promotion Name That Should Be Truncated",
@@ -222,10 +223,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "title": "This is an extremely long title that should be truncated with ellipsis to fit within the card layout constraints",
     "description": "Short description",
     "promotion_code": "LONGCODE123456789",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "long_description": {
+  "long_description": <String, Object>{
     "is_referral": false,
     "amount": "8.00 EUR",
     "name": "Long Description Test",
@@ -236,10 +237,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "title": "Standard Title",
     "description": "This is an extremely long description that spans multiple lines and should be truncated after two lines to maintain a clean card layout. It contains lots of information about the promotion and how it was applied to the customer's account. Additional details would normally be shown in a detail view.",
     "promotion_code": "DESC2025",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "long_promo_code": {
+  "long_promo_code": <String, Object>{
     "is_referral": false,
     "amount": "15.00 EUR",
     "name": "Long Code Test",
@@ -250,10 +251,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "title": "Code Test",
     "description": "Testing very long promotion code",
     "promotion_code": "VERYLONGPROMOTIONCODE2025THATSHOULDBETRUNCAT",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "long_referral_email": {
+  "long_referral_email": <String, Object>{
     "is_referral": true,
     "amount": "3.50 EUR",
     "name": "verylongemailaddress@subdomain.example.com",
@@ -264,11 +265,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "title": "Referral Bonus",
     "description": "Long email address test",
     "referral_from": "verylongemailaddresswithlotsocharacters@subdomain.example.com",
-    "status": "completed"
+    "status": "completed",
   },
 
   // SPECIAL CHARACTERS CASES
-  "special_characters": {
+  "special_characters": <String, Object>{
     "is_referral": false,
     "amount": "6.00 EUR",
     "name": "Spécial Prömötîön & Dîsçöunt 50%",
@@ -279,11 +280,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "title": "Spécial Öffer!",
     "description": "Promotion with special characters and symbols",
     "promotion_code": "SPECIAL-2025",
-    "status": "completed"
+    "status": "completed",
   },
 
   // DIFFERENT STATUS VALUES
-  "status_pending": {
+  "status_pending": <String, Object>{
     "is_referral": false,
     "amount": "20.00 EUR",
     "name": "Pending Reward",
@@ -293,10 +294,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "application_type": "wallet_credit",
     "title": "Pending Cashback",
     "description": "This reward is pending approval",
-    "status": "pending"
+    "status": "pending",
   },
 
-  "status_failed": {
+  "status_failed": <String, Object>{
     "is_referral": false,
     "amount": "10.00 EUR",
     "name": "Failed Reward",
@@ -306,10 +307,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "application_type": "order_discount",
     "title": "Failed Discount",
     "description": "This reward application failed",
-    "status": "failed"
+    "status": "failed",
   },
 
-  "status_expired": {
+  "status_expired": <String, Object>{
     "is_referral": false,
     "amount": "5.00 EUR",
     "name": "Expired Reward",
@@ -319,11 +320,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "application_type": "wallet_credit",
     "title": "Expired Promotion",
     "description": "This reward has expired",
-    "status": "expired"
+    "status": "expired",
   },
 
   // UNUSUAL BUT VALID CASES
-  "zero_amount": {
+  "zero_amount": <String, Object>{
     "is_referral": false,
     "amount": "0.00 EUR",
     "name": "Free Trial",
@@ -334,10 +335,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "title": "Free Trial Discount",
     "description": "100% discount for free trial",
     "promotion_code": "FREETRIAL",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "large_amount": {
+  "large_amount": <String, Object>{
     "is_referral": false,
     "amount": "999.99 EUR",
     "name": "Large Discount",
@@ -348,10 +349,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "title": "Mega Discount",
     "description": "Unusually large discount amount",
     "promotion_code": "MEGA999",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "negative_date": {
+  "negative_date": <String, Object>{
     "is_referral": false,
     "amount": "5.00 EUR",
     "name": "Old Reward",
@@ -361,11 +362,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "application_type": "wallet_credit",
     "title": "Very Old Reward",
     "description": "Reward from 1970",
-    "status": "completed"
+    "status": "completed",
   },
 
   // REAL-WORLD DATA FROM PROVIDED SAMPLE (sanitized)
-  "real_sample_1": {
+  "real_sample_1": <String, Object?>{
     "is_referral": true,
     "amount": "3.0 EUR",
     "name": "user1@example.com",
@@ -380,10 +381,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": "user1@example.com",
     "order_id": "1bf20e77-26c8-41ad-a7b3-ac4518c92cdc",
     "bundle_name": null,
-    "status": "completed"
+    "status": "completed",
   },
 
-  "real_sample_2": {
+  "real_sample_2": <String, Object?>{
     "is_referral": true,
     "amount": "3.0 EUR",
     "name": "user2@example.com",
@@ -398,10 +399,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": "user2@example.com",
     "order_id": "b3eb8ff6-bf1b-4ced-a038-f77fd23160e0",
     "bundle_name": null,
-    "status": "completed"
+    "status": "completed",
   },
 
-  "real_sample_3": {
+  "real_sample_3": <String, Object?>{
     "is_referral": false,
     "amount": "0.09 EUR",
     "name": "Discount 15% for referred customers",
@@ -416,10 +417,10 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": null,
     "order_id": "766d6176-1ab1-4f35-82eb-4018c81d9bdc",
     "bundle_name": "Turkey",
-    "status": "completed"
+    "status": "completed",
   },
 
-  "real_sample_4": {
+  "real_sample_4": <String, Object?>{
     "is_referral": false,
     "amount": "0.06 EUR",
     "name": "Test promotion",
@@ -434,11 +435,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "referral_from": null,
     "order_id": null,
     "bundle_name": null,
-    "status": "completed"
+    "status": "completed",
   },
 
   // EDGE CASE: Invalid reward_type (should handle gracefully)
-  "invalid_reward_type": {
+  "invalid_reward_type": <String, Object>{
     "is_referral": false,
     "amount": "5.00 EUR",
     "name": "Unknown Type",
@@ -448,11 +449,11 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "application_type": "wallet_credit",
     "title": "Test Reward",
     "description": "Testing invalid reward type",
-    "status": "completed"
+    "status": "completed",
   },
 
   // EDGE CASE: Invalid application_type (should handle gracefully)
-  "invalid_application_type": {
+  "invalid_application_type": <String, Object>{
     "is_referral": false,
     "amount": "5.00 EUR",
     "name": "Unknown Application",
@@ -462,15 +463,15 @@ const Map<String, dynamic> rewardHistoryMockData = {
     "application_type": "unknown_application",
     "title": "Test Reward",
     "description": "Testing invalid application type",
-    "status": "completed"
+    "status": "completed",
   },
 
   // MINIMAL VALID DATA
-  "minimal_valid": {
+  "minimal_valid": <String, Object>{
     "is_referral": false,
     "amount": "1.00 EUR",
     "name": "Min",
     "promotion_name": "Min",
-    "date": "1761800000"
-  }
+    "date": "1761800000",
+  },
 };

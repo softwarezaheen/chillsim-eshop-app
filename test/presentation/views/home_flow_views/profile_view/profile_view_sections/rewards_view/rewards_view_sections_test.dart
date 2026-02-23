@@ -89,9 +89,9 @@ Future<void> main() async {
 
       test("all sections have unique tap actions", () {
         // Ensure tap actions are defined and not null
-        for (final section in RewardsViewSections.values) {
+        for (final RewardsViewSections section in RewardsViewSections.values) {
           expect(section.tapAction, isNotNull,
-              reason: "${section.name} should have a tapAction");
+              reason: "${section.name} should have a tapAction",);
         }
       });
     });

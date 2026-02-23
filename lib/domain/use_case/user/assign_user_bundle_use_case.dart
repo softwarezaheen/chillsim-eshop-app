@@ -25,6 +25,7 @@ class AssignUserBundleUseCase
       paymentType: params.paymentType,
       bearerToken: params.bearerToken,
       relatedSearch: params.relatedSearch,
+      paymentMethodId: params.paymentMethodId,
     );
   }
 }
@@ -38,6 +39,7 @@ class AssignUserBundleParam {
     required this.paymentType,
     required this.relatedSearch,
     this.bearerToken,
+    this.paymentMethodId,
   });
 
   final String bundleCode;
@@ -47,4 +49,5 @@ class AssignUserBundleParam {
   final String paymentType;
   final RelatedSearchRequestModel relatedSearch;
   String? bearerToken;
+  String? paymentMethodId;
 }

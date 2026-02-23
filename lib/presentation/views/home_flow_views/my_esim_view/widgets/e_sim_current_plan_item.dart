@@ -42,6 +42,8 @@ class ESimCurrentPlanItem extends StatelessWidget {
     required this.iconPath,
     required this.showTopUpButton,
     required this.showUnlimitedData,
+    this.isAutoTopupEnabled = false,
+    this.onManageAutoTopupClick,
     super.key,
   });
 
@@ -67,6 +69,8 @@ class ESimCurrentPlanItem extends StatelessWidget {
   final bool showInstallButton;
   final bool showTopUpButton;
   final bool showUnlimitedData;
+  final bool isAutoTopupEnabled;
+  final VoidCallback? onManageAutoTopupClick;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +99,7 @@ class ESimCurrentPlanItem extends StatelessWidget {
                 statusBgColor: statusBgColor,
                 onEditTap: onEditName,
                 isLoading: isLoading,
+                isAutoTopupEnabled: isAutoTopupEnabled,
               ),
               verticalSpaceSmall,
               //flag , countryName, 5GB
@@ -127,13 +132,53 @@ class ESimCurrentPlanItem extends StatelessWidget {
               buildBundleButtons(
                 context: context,
                 showInstallButton: showInstallButton,
-                showTopUpButton: showTopUpButton,
+                showTopUpButton: showTopUpButton && !isAutoTopupEnabled,
                 onQrClick: onQrCodeClick,
                 onConsumptionClick: onConsumptionClick,
                 onTopUpClick: onTopUpClick,
                 onInstallClick: onInstallClick,
                 isLoading: isLoading,
               ),
+              // Manage Auto Top-Up button
+              if (isAutoTopupEnabled && onManageAutoTopupClick != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Row(
+                    children: <Widget>[
+                      MainButton(
+                        title: LocaleKeys.my_esim_manage_auto_topup.tr(),
+                        onPressed: () async {
+                          if (await locator<ConnectivityService>()
+                              .isConnected()) {
+                            onManageAutoTopupClick?.call();
+                          }
+                        },
+                        hideShadows: true,
+                        height: 40,
+                        horizontalPadding: 15,
+                        titleTextStyle:
+                            captionOneMediumTextStyle(context: context),
+                        leadingWidget: Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: Icon(
+                            size: 20,
+                            Icons.settings,
+                            color: iconButtonColor(context: context),
+                          ),
+                        ),
+                        borderColor: mainBorderColor(context: context),
+                        enabledBackgroundColor:
+                            mainWhiteTextColor(context: context),
+                        themeColor: themeColor,
+                        enabledTextColor: iconButtonColor(context: context),
+                      ).applyShimmer(
+                        enable: isLoading,
+                        context: context,
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
@@ -199,7 +244,9 @@ class ESimCurrentPlanItem extends StatelessWidget {
       ..add(StringProperty("iconPath", iconPath))
       ..add(DiagnosticsProperty<bool>("showInstallButton", showInstallButton))
       ..add(DiagnosticsProperty<bool>("showTopUpButton", showTopUpButton))
-      ..add(DiagnosticsProperty<bool>("showUnlimitedData", showUnlimitedData));
+      ..add(DiagnosticsProperty<bool>("showUnlimitedData", showUnlimitedData))
+      ..add(DiagnosticsProperty<bool>("isAutoTopupEnabled", isAutoTopupEnabled))
+      ..add(ObjectFlagProperty<VoidCallback?>.has("onManageAutoTopupClick", onManageAutoTopupClick));
   }
 }
 
