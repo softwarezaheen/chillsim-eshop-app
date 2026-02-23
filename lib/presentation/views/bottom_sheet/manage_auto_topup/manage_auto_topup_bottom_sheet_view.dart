@@ -131,59 +131,68 @@ class ManageAutoTopupBottomSheetView extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 SizedBox(
+                  width: 44,
                   height: 28,
-                  child: AbsorbPointer(
-                    absorbing: viewModel.state.isUpdating,
-                    child: Switch.adaptive(
-                      value: viewModel.state.isEnabled,
-                      onChanged: (bool value) async {
-                        if (!value) {
-                          final bool? confirmed =
-                              await showAdaptiveDialog<bool>(
-                            context: context,
-                            builder: (BuildContext ctx) =>
-                                AlertDialog.adaptive(
-                              title: Text(
-                                LocaleKeys.auto_topup_confirm_disable.tr(),
+                  child: viewModel.state.isUpdating
+                      ? const Center(
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFFD3DC47),
                               ),
-                              content: Text(
-                                LocaleKeys
-                                    .auto_topup_confirm_disable_description
-                                    .tr(),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.of(ctx).pop(false),
-                                  child:
-                                      Text(LocaleKeys.cancel.tr()),
-                                ),
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.of(ctx).pop(true),
-                                  child: Text(
-                                    LocaleKeys.auto_topup_yes_disable
-                                        .tr(),
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
-                          );
-                          if (confirmed ?? false) {
-                            unawaited(viewModel.onDisableConfirmed());
-                          }
-                        }
-                      },
-                      activeThumbColor: const Color(0xFFD3DC47),
-                      activeTrackColor:
-                          const Color(0xFFD3DC47).withValues(alpha: 0.5),
-                      materialTapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap,
-                    ),
-                  ),
+                          ),
+                        )
+                      : Switch.adaptive(
+                          value: viewModel.state.isEnabled,
+                          onChanged: (bool value) async {
+                            if (!value) {
+                              final bool? confirmed =
+                                  await showAdaptiveDialog<bool>(
+                                context: context,
+                                builder: (BuildContext ctx) =>
+                                    AlertDialog.adaptive(
+                                  title: Text(
+                                    LocaleKeys.auto_topup_confirm_disable.tr(),
+                                  ),
+                                  content: Text(
+                                    LocaleKeys
+                                        .auto_topup_confirm_disable_description
+                                        .tr(),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(ctx).pop(false),
+                                      child: Text(LocaleKeys.cancel.tr()),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(ctx).pop(true),
+                                      child: Text(
+                                        LocaleKeys.auto_topup_yes_disable.tr(),
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              if (confirmed ?? false) {
+                                unawaited(viewModel.onDisableConfirmed());
+                              }
+                            }
+                          },
+                          activeThumbColor: const Color(0xFFD3DC47),
+                          activeTrackColor:
+                              const Color(0xFFD3DC47).withValues(alpha: 0.5),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                        ),
                 ),
               ],
             ),
