@@ -356,7 +356,7 @@
   "invalid_phone_number": "Numéro de téléphone invalide",
   "noConnection_titleText": "Pas de réseau",
   "noConnection_contentText": "Veuillez vous connecter au réseau et\nréessayer",
-  "noConnection_buttonTitleText": "Aller à mon eSIM",
+  "noConnection_buttonTitleText": "OK",
   "action_retry": "Réessayer",
   "action_dismiss": "Rejeter",
   "error_network_connection_lost": "Connexion perdue. Veuillez vérifier votre internet et réessayer.",

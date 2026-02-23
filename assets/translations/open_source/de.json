@@ -358,7 +358,7 @@
   "invalid_phone_number": "Ungültige Telefonnummer",
   "noConnection_titleText": "Kein Netzwerk",
   "noConnection_contentText": "Bitte mit Netzwerk verbinden und\nerneut versuchen",
-  "noConnection_buttonTitleText": "Zu meiner eSIM",
+  "noConnection_buttonTitleText": "OK",
   "action_retry": "Wiederholen",
   "action_dismiss": "Schließen",
   "error_network_connection_lost": "Verbindung verloren. Bitte überprüfen Sie Ihr Internet und versuchen Sie es erneut.",

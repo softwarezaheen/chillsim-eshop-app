@@ -358,7 +358,7 @@
   "invalid_phone_number": "Número de teléfono inválido",
   "noConnection_titleText": "Sin Red",
   "noConnection_contentText": "Por favor conéctate a la red e\ninténtalo de nuevo",
-  "noConnection_buttonTitleText": "Ir a Mi eSIM",
+  "noConnection_buttonTitleText": "OK",
   "action_retry": "Reintentar",
   "action_dismiss": "Descartar",
   "error_network_connection_lost": "Conexión perdida. Verifica tu internet e intenta de nuevo.",

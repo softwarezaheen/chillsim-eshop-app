@@ -359,7 +359,7 @@
   "invalid_phone_number": "Invalid phone number",
   "noConnection_titleText": "No Network",
   "noConnection_contentText": "Please connect to network and\ntry again",
-  "noConnection_buttonTitleText": "Go to My eSim",
+  "noConnection_buttonTitleText": "OK",
   "action_retry": "Retry",
   "action_dismiss": "Dismiss",
   "error_network_connection_lost": "Connection lost. Please check your internet and try again.",

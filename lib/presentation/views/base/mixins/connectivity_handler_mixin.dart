@@ -72,11 +72,10 @@ mixin ConnectivityHandlerMixin on BaseViewModel implements ConnectionListener {
         return;
       }
 
-      if (navigationRouter.isPageVisible(routeName)) {
-        log("Pop displayed by: $routeName");
-        if (this is DialogUtilitiesMixin) {
-          (this as DialogUtilitiesMixin).showNoConnectionDialog(routeName);
-        }
+      // Show dialog regardless of route visibility to ensure users always see connectivity loss
+      log("Connectivity lost - showing dialog");
+      if (this is DialogUtilitiesMixin) {
+        (this as DialogUtilitiesMixin).showNoConnectionDialog(routeName);
       }
     }
   }

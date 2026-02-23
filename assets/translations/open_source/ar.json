@@ -358,7 +358,7 @@
   "invalid_phone_number": "رقم الهاتف غير صالح",
   "noConnection_titleText": "لا توجد شبكة",
   "noConnection_contentText": "يُرجى الاتصال بالشبكة وإعادة المحاولة",
-  "noConnection_buttonTitleText": "الانتقال إلى شريحة eSIM",
+  "noConnection_buttonTitleText": "حسناً",
   "action_retry": "إعادة المحاولة",
   "action_dismiss": "رفض",
   "error_network_connection_lost": "فقدت الاتصال. يرجى التحقق من الإنترنت والمحاولة مرة أخرى.",

@@ -95,9 +95,11 @@ mixin DialogUtilitiesMixin on BaseViewModel {
     // return AndroidSmsRetriever.stopSmsListener();
   }
 
-  BuildContext? _dialogContext;
+  // Static to prevent multiple dialogs from different ViewModels
+  static BuildContext? _dialogContext;
 
   Future<void> showNoConnectionDialog(String routeName) async {
+    // Use static guard to ensure only ONE dialog shows across all ViewModels
     if (StackedService.navigatorKey?.currentContext != null &&
         _dialogContext == null) {
       _dialogContext = StackedService.navigatorKey?.currentContext;

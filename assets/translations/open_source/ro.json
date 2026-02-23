@@ -359,7 +359,7 @@
   "invalid_phone_number": "Număr de telefon invalid",
   "noConnection_titleText": "Nicio rețea",
   "noConnection_contentText": "Te rugăm să te conectezi la rețea și\nsă încerci din nou",
-  "noConnection_buttonTitleText": "Mergi la eSIM-ul meu",
+  "noConnection_buttonTitleText": "OK",
   "action_retry": "Reîncearcă",
   "action_dismiss": "Închide",
   "error_network_connection_lost": "Conexiune pierdută. Verifică internetul și încearcă din nou.",
