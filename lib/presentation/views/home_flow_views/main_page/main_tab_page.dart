@@ -89,18 +89,19 @@ class _MainTabPageState extends State<MainTabPage>
     }
     if (tabController.length != neededLength) {
       // Remove listener before disposing controller
-      tabController.removeListener(_handleTabChange);
-      tabController.dispose();
+      tabController
+        ..removeListener(_handleTabChange)
+        ..dispose();
       tabController = LockableTabController(
         length: neededLength,
         vsync: this,
       );
       // Re-attach listener to new controller
-      tabController.addListener(_handleTabChange);
-
-      tabController.animateTo(
-        currentIndex >= neededLength ? neededLength - 1 : currentIndex,
-      );
+      tabController
+        ..addListener(_handleTabChange)
+        ..animateTo(
+          currentIndex >= neededLength ? neededLength - 1 : currentIndex,
+        );
       
       // Update view model reference
       widget.viewModel.tabController = tabController;

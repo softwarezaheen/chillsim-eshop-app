@@ -51,19 +51,18 @@ class ProfileView extends StatelessWidget {
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    childAspectRatio: 1,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                   ),
                   itemCount: ProfileViewSections.values
-                      .where((section) => !section.isViewHidden(viewModel))
+                      .where((ProfileViewSections section) => !section.isViewHidden(viewModel))
                       .length,
                   itemBuilder: (
                     BuildContext context,
                     int index,
                   ) {
-                    final visibleSections = ProfileViewSections.values
-                        .where((section) => !section.isViewHidden(viewModel))
+                    final List<ProfileViewSections> visibleSections = ProfileViewSections.values
+                        .where((ProfileViewSections section) => !section.isViewHidden(viewModel))
                         .toList();
                     return profileSectionView(
                       context,
@@ -105,13 +104,12 @@ class ProfileView extends StatelessWidget {
         playHapticFeedback(HapticFeedbackType.secondaryButtonTapped);
         section.tapAction(context, viewModel);
       },
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: whiteBackGroundColor(context: context),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: greyBackGroundColor(context: context),
-            width: 1,
           ),
         ),
         child: Column(

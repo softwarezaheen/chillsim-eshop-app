@@ -105,4 +105,3 @@ class AccountView extends StatelessWidget {
     );
   }
 }
-

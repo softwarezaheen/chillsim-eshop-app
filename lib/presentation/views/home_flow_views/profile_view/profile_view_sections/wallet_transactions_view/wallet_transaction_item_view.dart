@@ -27,12 +27,12 @@ class WalletTransactionItemView extends StatelessWidget {
         horizontal: 15,
         vertical: 12,
         child: Row(
-          children: [
+          children: <Widget>[
             Container(
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: _getTransactionColor().withOpacity(0.1),
+                color: _getTransactionColor().withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
@@ -45,7 +45,7 @@ class WalletTransactionItemView extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(
                     transactionModel.title,
                     style: captionOneBoldTextStyle(
@@ -75,7 +75,7 @@ class WalletTransactionItemView extends StatelessWidget {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
+              children: <Widget>[
                 Text(
                   transactionModel.amount,
                   style: captionOneBoldTextStyle(
@@ -87,7 +87,7 @@ class WalletTransactionItemView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getStatusColor().withOpacity(0.1),
+                    color: _getStatusColor().withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -111,9 +111,15 @@ class WalletTransactionItemView extends StatelessWidget {
   }
 
   Color _getStatusColor() {
-    if (transactionModel.isSuccess) return Colors.green;
-    if (transactionModel.isPending) return Colors.orange;
-    if (transactionModel.isFailed) return Colors.red;
+    if (transactionModel.isSuccess) {
+      return Colors.green;
+    }
+    if (transactionModel.isPending) {
+      return Colors.orange;
+    }
+    if (transactionModel.isFailed) {
+      return Colors.red;
+    }
     return Colors.grey;
   }
 

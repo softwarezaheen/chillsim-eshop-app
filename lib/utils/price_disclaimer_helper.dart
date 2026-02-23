@@ -47,7 +47,7 @@ class PriceDisclaimerHelper {
           return "bundleInfo_priceDisclaimerText_none_no_fees".tr();
         }
       }
-    } catch (e) {
+    } on Exception {
       // Fallback to default if configurations aren't loaded yet
       return LocaleKeys.bundleInfo_priceDisclaimerText.tr();
     }

@@ -74,7 +74,7 @@ class PaymentMethodsViewModel extends BaseModel {
           _state.autoTopupConfigs = <AutoTopupConfigResponseModel>[];
         },
       );
-    } catch (e) {
+    } on Exception  {
       // Silently fail - auto-topup check is not critical
       _state.autoTopupConfigs = <AutoTopupConfigResponseModel>[];
     }
@@ -131,7 +131,7 @@ class PaymentMethodsViewModel extends BaseModel {
           );
         },
       );
-    } catch (e) {
+    } on Exception {
       showNativeErrorMessage(
         "",
         LocaleKeys.payment_methods_set_default_error.tr(),
@@ -181,7 +181,7 @@ class PaymentMethodsViewModel extends BaseModel {
           );
         },
       );
-    } catch (e) {
+    } on Exception {
       showNativeErrorMessage(
         "",
         LocaleKeys.payment_methods_delete_error.tr(),
@@ -213,7 +213,7 @@ class PaymentMethodsViewModel extends BaseModel {
           );
         },
       );
-    } catch (e) {
+    } on Exception {
       showNativeErrorMessage(
         "",
         LocaleKeys.payment_methods_sync_error.tr(),

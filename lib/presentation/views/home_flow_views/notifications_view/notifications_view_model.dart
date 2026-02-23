@@ -38,7 +38,7 @@ class NotificationsViewModel extends BaseModel {
     try {
       // Initialize safely
       _initializeNotifications();
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error initializing notifications: $e");
     }
   }
@@ -79,7 +79,7 @@ class NotificationsViewModel extends BaseModel {
   Future<void> getNotifications() async {
     try {
       await getUserNotificationsPaginationUseCase.loadNextPage(NoParams());
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error loading notifications: $e");
     }
   }
@@ -87,7 +87,7 @@ class NotificationsViewModel extends BaseModel {
   Future<void> refreshNotifications() async {
     try {
       await getUserNotificationsPaginationUseCase.refreshData(NoParams());
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error refreshing notifications: $e");
     }
   }

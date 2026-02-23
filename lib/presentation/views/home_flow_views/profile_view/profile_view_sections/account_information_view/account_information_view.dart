@@ -38,7 +38,7 @@ class AccountInformationView extends StatelessWidget {
         double screenHeight,
       ) {
         // Logging for debugging dropdown issues
-        log("Dropdown counties: ${viewModel.countiesList.map((c) => '${c.name} (${c.alpha3}) [${c.hashCode}]').toList()}");
+        log("Dropdown counties: ${viewModel.countiesList.map((County c) => '${c.name} (${c.alpha3}) [${c.hashCode}]').toList()}");
         log("Dropdown selectedCounty: ${viewModel.selectedCounty?.name} (${viewModel.selectedCounty?.alpha3}) [${viewModel.selectedCounty?.hashCode}]");
 
         return PaddingWidget.applyPadding(
@@ -116,16 +116,16 @@ class AccountInformationView extends StatelessWidget {
                               }
                             },
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: TextStyle(fontSize: 12)),
+                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: const TextStyle(fontSize: 12)),
                                     value: BillingType.individual,
                                   ),
                                 ),
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_company.tr(), style: TextStyle(fontSize: 12)),
+                                    title: Text(LocaleKeys.billing_type_company.tr(), style: const TextStyle(fontSize: 12)),
                                     value: BillingType.business,
                                   ),
                                 ),

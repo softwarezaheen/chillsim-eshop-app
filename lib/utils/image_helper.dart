@@ -59,7 +59,7 @@ Future<dynamic> saveImageToGallery({
     try {
       await GallerySaver.saveImage(imagePath);
       DisplayMessageHelper.toast(toastMessage ?? LocaleKeys.image_saved.tr());
-    } catch (e) {
+    } on Exception {
       DisplayMessageHelper.toast(
         LocaleKeys.permission_required.tr(
           namedArgs: <String, String>{"permission": "storage"},

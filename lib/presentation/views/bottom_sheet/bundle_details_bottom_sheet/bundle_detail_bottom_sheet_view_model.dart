@@ -165,14 +165,14 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         event: ViewItemEvent(
           item: EcommerceItem(
             id: _bundle!.bundleCode!,
-            name: _bundle!.displayTitle ?? _bundle!.bundleName ?? '',
-            category: 'esim_bundle',
-            price: (_bundle!.price ?? 0).toDouble(),
+            name: _bundle!.displayTitle ?? _bundle!.bundleName ?? "",
+            category: "esim_bundle",
+            price: _bundle!.price ?? 0,
           ),
-          platform: Platform.isIOS ? 'iOS' : 'Android',
+          platform: Platform.isIOS ? "iOS" : "Android",
           currency: _bundle!.currencyCode ?? "EUR",
         ),
-      ));
+      ),);
     }
   }
 
@@ -196,11 +196,11 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           final double currentScroll = scrollController.offset;
           final double targetScroll = currentScroll + position - 150;
           
-          scrollController.animateTo(
+          unawaited(scrollController.animateTo(
             targetScroll,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-          );
+          ),);
         }
       });
     }
@@ -371,7 +371,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       );
       if (pmResponse?.confirmed ?? false) {
         final SavedPaymentMethodSheetResult? result = pmResponse?.data;
-        if (result?.canceled == true) return;
+        if (result?.canceled ?? false) {
+          return;
+        }
         _triggerAssignFlow(
           paymentType: result?.paymentType ?? PaymentType.card,
           paymentMethodId: result?.paymentMethodId,
@@ -441,25 +443,24 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         final double tax = 0; // TODO: Get tax from response if available
         
         // Log add to cart event
-        final item = EcommerceItem(
-          id: bundle?.bundleCode ?? '',
-            name: bundle?.displayTitle ?? bundle?.bundleName ?? '',
-            category: 'esim_bundle',
-            price: (bundle?.price ?? 0).toDouble(),
-            quantity: 1,
+        final EcommerceItem item = EcommerceItem(
+          id: bundle?.bundleCode ?? "",
+            name: bundle?.displayTitle ?? bundle?.bundleName ?? "",
+            category: "esim_bundle",
+            price: bundle?.price ?? 0,
         );
         await analyticsService.logEvent(
           event: AddToCartEvent(
             item: item,
-            platform: Platform.isIOS ? 'iOS' : 'Android',
-            currency: bundle?.currencyCode ?? 'EUR',
+            platform: Platform.isIOS ? "iOS" : "Android",
+            currency: bundle?.currencyCode ?? "EUR",
           ),
         );
         await analyticsService.logEvent(
           event: BeginCheckoutEvent(
-            items: [item],
-            platform: Platform.isIOS ? 'iOS' : 'Android',
-            currency: bundle?.currencyCode ?? 'EUR',
+            items: <EcommerceItem>[item],
+            platform: Platform.isIOS ? "iOS" : "Android",
+            currency: bundle?.currencyCode ?? "EUR",
             shipping: fee / 100,
             tax: tax / 100,
             coupon: _promoCode,
@@ -700,7 +701,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       final dynamic billingInfoResource = await locator<ApiUserRepository>().getUserBillingInfo();
       final UserGetBillingInfoResponseModel? data = billingInfoResource?.data;
       
-      if (data == null) return false;
+      if (data == null) {
+        return false;
+      }
       
       // Check base required fields for individual
       final bool hasBaseFields = 
@@ -710,7 +713,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         (data.state?.trim().isNotEmpty ?? false) &&
         (data.city?.trim().isNotEmpty ?? false);
       
-      if (!hasBaseFields) return false;
+      if (!hasBaseFields) {
+        return false;
+      }
       
       // Check if this is a business account (either companyName or vatCode is present)
       final bool isBusiness = 
@@ -762,7 +767,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           description: LocaleKeys.promo_code_removed_description.tr(),
           imagePath: EnvironmentImages.iconWarning.fullImagePath,
         ),
-      ));
+      ),);
       notifyListeners();
       return;
     }
@@ -804,10 +809,10 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           variant: BottomSheetType.successBottomSheet,
           data: SuccessBottomRequest(
             title: LocaleKeys.promo_code_applied_title.tr(),
-            description: LocaleKeys.promo_code_applied_description.tr(namedArgs: {"discount": "$discountPercentage"}),
+            description: LocaleKeys.promo_code_applied_description.tr(namedArgs: <String, String>{"discount": "$discountPercentage"}),
             imagePath: EnvironmentImages.iconCheck.fullImagePath,
           ),
-        ));
+        ),);
         //load taxes again
         await loadTaxes(manageViewState: false);
       },
@@ -834,7 +839,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
             description: result.message ?? LocaleKeys.promo_code_invalid_description.tr(),
             imagePath: EnvironmentImages.iconWarning.fullImagePath,
           ),
-        ));
+        ),);
       },
     );
 

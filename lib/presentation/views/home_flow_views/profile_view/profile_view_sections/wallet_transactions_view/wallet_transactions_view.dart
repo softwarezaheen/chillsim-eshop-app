@@ -1,15 +1,8 @@
 
 import "package:easy_localization/easy_localization.dart";
-import "package:flutter/material.dart";
-
-import "package:esim_open_source/data/remote/responses/user/wallet_transaction_response.dart";
-
 import "package:esim_open_source/app/environment/environment_images.dart";
-
+import "package:esim_open_source/data/remote/responses/user/wallet_transaction_response.dart";
 import "package:esim_open_source/di/locator.dart";
-
-
-
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -21,6 +14,7 @@ import "package:esim_open_source/presentation/widgets/empty_state_widget.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/material.dart";
 
 
 class WalletTransactionsView extends StatelessWidget {
@@ -30,7 +24,7 @@ class WalletTransactionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = locator<WalletTransactionsViewModel>();
+    final WalletTransactionsViewModel viewModel = locator<WalletTransactionsViewModel>();
     
     return BaseView<WalletTransactionsViewModel>(
       hideAppBar: true,

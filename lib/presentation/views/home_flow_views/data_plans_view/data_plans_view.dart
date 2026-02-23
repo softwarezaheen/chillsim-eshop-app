@@ -49,7 +49,6 @@ class DataPlansView extends StatelessWidget {
       routeName: routeName,
       enableBottomSafeArea: false,
       fireOnViewModelReadyOnce: true,
-      staticChild: null,
       viewModel: locator<DataPlansViewModel>(),
       builder: (
         BuildContext context,
@@ -99,7 +98,7 @@ class DataPlansView extends StatelessWidget {
                 ),
                 verticalSpace(15),
                 KeyboardVisibilityBuilder(
-                  builder: (context, isKeyboardVisible) {
+                  builder: (BuildContext context, bool isKeyboardVisible) {
                     final Widget? childWidget = (AppEnvironment.appEnvironmentHelper.enableBannersView &&
                             !AppEnvironment.isFromAppClip && !isKeyboardVisible)
                         ? const BannersView()

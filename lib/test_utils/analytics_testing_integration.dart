@@ -67,6 +67,8 @@ void runAnalyticsTests() {
 }
 */
 
+import "dart:async";
+
 import "package:esim_open_source/presentation/widgets/analytics_test_widget.dart";
 import "package:esim_open_source/test_utils/analytics_test_helper.dart";
 import "package:flutter/material.dart";
@@ -76,7 +78,7 @@ class AnalyticsTestingIntegration {
   
   /// Show analytics test widget as a modal bottom sheet
   static void showTestBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+    unawaited(showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -88,17 +90,17 @@ class AnalyticsTestingIntegration {
         ),
         child: const AnalyticsTestWidget(),
       ),
-    );
+    ),);
   }
 
   /// Show analytics test widget as a full screen
   static void showTestScreen(BuildContext context) {
-    Navigator.push(
+    unawaited(Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (BuildContext context) => const AnalyticsTestWidget(),
       ),
-    );
+    ),);
   }
 
   /// Quick test methods that can be called directly
@@ -122,7 +124,7 @@ class AnalyticsTestingIntegration {
     for (final PurchaseTestScenario scenario in PurchaseTestScenario.values) {
       await AnalyticsTestHelper.sendMockPurchaseScenario(scenario);
       // Small delay between tests
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future<void>.delayed(const Duration(milliseconds: 300));
     }
   }
 }

@@ -61,25 +61,24 @@ class PurchaseLoadingViewModel extends BaseModel {
         if (orderResponse.resourceType == ResourceType.success &&
             orderResponse.data != null) {
           final OrderHistoryResponseModel orderData = orderResponse.data!;
-          final double amount = ((orderData.orderAmount ?? 0)).toDouble();
-          final double fee = ((orderData.orderFee ?? 0)).toDouble();
-          final double tax = ((orderData.orderVat ?? 0)).toDouble();
+          final double amount = orderData.orderAmount ?? 0;
+          final double fee = orderData.orderFee ?? 0;
+          final double tax = orderData.orderVat ?? 0;
           // total can be derived if needed: amount + fee + tax
           final String discount = "0"; // TODO: Add discount field if available
-          final item = EcommerceItem(
-            id: orderData.bundleDetails?.bundleCode ?? '',
-            name: orderData.bundleDetails?.displayTitle ?? '',
-            category: 'esim_bundle',
+          final EcommerceItem item = EcommerceItem(
+            id: orderData.bundleDetails?.bundleCode ?? "",
+            name: orderData.bundleDetails?.displayTitle ?? "",
+            category: "esim_bundle",
             price: amount,
-            quantity: 1,
           );
           await analyticsService.logEvent(
             event: PurchaseEvent(
-              items: [item],
-              platform: Platform.isIOS ? 'iOS' : 'Android',
-              currency: orderData.orderCurrency ?? 'EUR',
-              transactionId: orderData.orderNumber ?? '',
-              purchaseType: 'bundle',
+              items: <EcommerceItem>[item],
+              platform: Platform.isIOS ? "iOS" : "Android",
+              currency: orderData.orderCurrency ?? "EUR",
+              transactionId: orderData.orderNumber ?? "",
+              purchaseType: "bundle",
               coupon: orderData.promoCode, // Use actual promo code from order
               shipping: fee,
               tax: tax,

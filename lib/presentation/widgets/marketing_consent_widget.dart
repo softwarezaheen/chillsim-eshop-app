@@ -2,6 +2,7 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
 /// Marketing Consent Widget
@@ -23,6 +24,7 @@ class MarketingConsentWidget extends StatelessWidget {
 
   final bool shouldNotify;
   final bool isUpdating;
+  // ignore: avoid_positional_boolean_parameters
   final Function(bool) onToggle;
   final bool showWidget;
 
@@ -39,16 +41,15 @@ class MarketingConsentWidget extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
-            context.appColors.warning_400!.withOpacity(0.08),
-            context.appColors.primary_500!.withOpacity(0.08),
+            context.appColors.warning_400!.withValues(alpha: 0.08),
+            context.appColors.primary_500!.withValues(alpha: 0.08),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: context.appColors.warning_400!.withOpacity(0.25),
-          width: 1,
+          color: context.appColors.warning_400!.withValues(alpha: 0.25),
         ),
       ),
       child: Column(
@@ -57,7 +58,6 @@ class MarketingConsentWidget extends StatelessWidget {
         children: <Widget>[
           // Title row with toggle inline
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
                 child: Text(
@@ -93,7 +93,7 @@ class MarketingConsentWidget extends StatelessWidget {
                     child: Switch.adaptive(
                       value: shouldNotify,
                       onChanged: onToggle,
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                       activeTrackColor: context.appColors.warning_400,
                       inactiveThumbColor: Colors.white,
                       inactiveTrackColor: Colors.grey.shade300,
@@ -114,5 +114,15 @@ class MarketingConsentWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty<bool>("shouldNotify", shouldNotify))
+    ..add(DiagnosticsProperty<bool>("isUpdating", isUpdating))
+    // ignore: avoid_positional_boolean_parameters
+    ..add(ObjectFlagProperty<Function(bool)>.has("onToggle", onToggle))
+    ..add(DiagnosticsProperty<bool>("showWidget", showWidget));
   }
 }

@@ -147,7 +147,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                                             onPressed: () =>
                                                 Navigator.of(ctx).pop(false),
                                             child: Text(
-                                                LocaleKeys.cancel.tr()),
+                                                LocaleKeys.cancel.tr(),),
                                           ),
                                           TextButton(
                                             onPressed: () =>

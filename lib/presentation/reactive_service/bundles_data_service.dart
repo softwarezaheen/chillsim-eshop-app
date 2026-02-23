@@ -255,7 +255,7 @@ class BundlesDataService with ListenableServiceMixin {
 
   // Dispose method to clean up subscriptions and prevent memory leaks
   void dispose() {
-    _homeDataStreamSubscription?.cancel();
+    unawaited(_homeDataStreamSubscription?.cancel());
   }
 }
 

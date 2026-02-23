@@ -40,8 +40,7 @@ class BundlesListViewModel extends EsimBaseModel {
             .where(
               (CountryResponseModel country) =>
                   country.country?.toLowerCase().contains(query) ??
-                  false ||
-                      (country.iso3Code?.toLowerCase().contains(query) ??
+                  (country.iso3Code?.toLowerCase().contains(query) ??
                           false),
             )
             .toList();

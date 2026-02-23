@@ -45,7 +45,7 @@ class EsimBundleWidget extends StatelessWidget {
       onTap: onPriceButtonClick,
       child: Card(
         elevation: 6,
-        shadowColor: Colors.black.withOpacity(0.25),
+        shadowColor: Colors.black.withValues(alpha: 0.25),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
@@ -161,7 +161,7 @@ class EsimBundleWidget extends StatelessWidget {
                 const SizedBox(height: 15),
 
               Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     // Price Button
                     child: MainButton.bannerButton(

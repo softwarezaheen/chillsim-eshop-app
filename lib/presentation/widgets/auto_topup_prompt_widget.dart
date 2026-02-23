@@ -46,15 +46,15 @@ class AutoTopupPromptWidget extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
-            context.appColors.primary_500!.withOpacity(0.08),
-            context.appColors.primary_800!.withOpacity(0.08),
+            context.appColors.primary_500!.withValues(alpha: 0.08),
+            context.appColors.primary_800!.withValues(alpha: 0.08),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: context.appColors.primary_500!.withOpacity(0.25),
+          color: context.appColors.primary_500!.withValues(alpha: 0.25),
         ),
       ),
       child: Column(
@@ -99,7 +99,7 @@ class AutoTopupPromptWidget extends StatelessWidget {
                     child: Switch.adaptive(
                       value: isEnabled,
                       onChanged: (bool v) => v ? onEnable() : onDisable?.call(),
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                       activeTrackColor: context.appColors.primary_800,
                       inactiveThumbColor: Colors.white,
                       inactiveTrackColor: Colors.grey.shade300,
@@ -147,12 +147,13 @@ class AutoTopupPromptWidget extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty("bundleName", bundleName));
-    properties.add(DiagnosticsProperty<bool>("isEnabling", isEnabling));
-    properties.add(DiagnosticsProperty<bool>("isDisabling", isDisabling));
-    properties.add(ObjectFlagProperty<VoidCallback>.has("onEnable", onEnable));
-    properties.add(ObjectFlagProperty<VoidCallback?>.has("onDisable", onDisable));
-    properties.add(DiagnosticsProperty<bool>("showWidget", showWidget));
-    properties.add(DiagnosticsProperty<bool>("isEnabled", isEnabled));
+    properties
+      ..add(StringProperty("bundleName", bundleName))
+      ..add(DiagnosticsProperty<bool>("isEnabling", isEnabling))
+      ..add(DiagnosticsProperty<bool>("isDisabling", isDisabling))
+      ..add(ObjectFlagProperty<VoidCallback>.has("onEnable", onEnable))
+      ..add(ObjectFlagProperty<VoidCallback?>.has("onDisable", onDisable))
+      ..add(DiagnosticsProperty<bool>("showWidget", showWidget))
+      ..add(DiagnosticsProperty<bool>("isEnabled", isEnabled));
   }
 }

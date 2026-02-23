@@ -74,26 +74,26 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
 
   Future<void> _initializeView() async {
     // Fetch bundle details for analytics
-    final bundleResource = await getBundleUseCase.execute(
+    final Resource<BundleResponseModel?> bundleResource = await getBundleUseCase.execute(
       BundleParams(code: request.data!.bundleCode),
     );
 
     if (bundleResource.resourceType == ResourceType.success && bundleResource.data != null) {
-      final bundle = bundleResource.data!;
+      final BundleResponseModel bundle = bundleResource.data!;
       
       // Log view topup details event
       unawaited(analyticsService.logEvent(
         event: ViewItemEvent(
           item: EcommerceItem(
-            id: bundle.bundleCode ?? '',
-            name: bundle.displayTitle ?? bundle.bundleName ?? '',
-            category: 'topup',
-            price: (bundle.price ?? 0).toDouble(),
+            id: bundle.bundleCode ?? "",
+            name: bundle.displayTitle ?? bundle.bundleName ?? "",
+            category: "topup",
+            price: bundle.price ?? 0,
           ),
-          platform: Platform.isIOS ? 'iOS' : 'Android',
+          platform: Platform.isIOS ? "iOS" : "Android",
           currency: bundle.currencyCode,
         ),
-      ));
+      ),);
     }
 
     // Fetch topup related bundles
@@ -108,16 +108,15 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
     unawaited(analyticsService.logEvent(
       event: AddToCartEvent(
         item: EcommerceItem(
-          id: item.bundleCode ?? '',
-          name: item.displayTitle ?? item.bundleName ?? '',
-          category: 'topup',
-          price: (item.price ?? 0).toDouble(),
-          quantity: 1,
+          id: item.bundleCode ?? "",
+          name: item.displayTitle ?? item.bundleName ?? "",
+          category: "topup",
+          price: item.price ?? 0,
         ),
-        platform: Platform.isIOS ? 'iOS' : 'Android',
-        currency: item.currencyCode ?? 'EUR',
+        platform: Platform.isIOS ? "iOS" : "Android",
+        currency: item.currencyCode ?? "EUR",
       ),
-    ));
+    ),);
     
     // Start payment method selection flow
     unawaited(_initializeTopUpFlow(item));
@@ -220,7 +219,9 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       );
       if (pmResponse?.confirmed ?? false) {
         final SavedPaymentMethodSheetResult? result = pmResponse?.data;
-        if (result?.canceled == true) return;
+        if (result?.canceled ?? false) {
+          return;
+        }
         _triggerTopUpFlow(
           item: item,
           paymentType: result?.paymentType ?? PaymentType.card,
@@ -278,10 +279,10 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
 
   bool get allBundlesUnlimited =>
       bundleItems.isNotEmpty &&
-      bundleItems.every((BundleResponseModel b) => b.unlimited == true);
+      bundleItems.every((BundleResponseModel b) => b.unlimited ?? false);
 
   bool get hasMixedUnlimitedBundles =>
-      bundleItems.any((BundleResponseModel b) => b.unlimited == true) &&
+      bundleItems.any((BundleResponseModel b) => b.unlimited ?? false) &&
       bundleItems.any((BundleResponseModel b) => b.unlimited != true);
 
   /// Check if user has complete billing information.
@@ -293,7 +294,9 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
       final dynamic billingInfoResource = await locator<ApiUserRepository>().getUserBillingInfo();
       final UserGetBillingInfoResponseModel? data = billingInfoResource?.data;
       
-      if (data == null) return false;
+      if (data == null) {
+        return false;
+      }
       
       // Check base required fields for individual
       final bool hasBaseFields = 
@@ -303,7 +306,9 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         (data.state?.trim().isNotEmpty ?? false) &&
         (data.city?.trim().isNotEmpty ?? false);
       
-      if (!hasBaseFields) return false;
+      if (!hasBaseFields) {
+        return false;
+      }
       
       // Check if this is a business account (either companyName or vatCode is present)
       final bool isBusiness = 
@@ -398,7 +403,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         await _logTopupOptionsListView();
 
         // Fetch taxes for each bundle
-        for (final bundle in bundleItems) {
+        for (final BundleResponseModel bundle in bundleItems) {
           if (bundle.bundleCode != null && bundle.bundleCode!.isNotEmpty) {
             loadingTaxesBundleCodes.add(bundle.bundleCode!);
           }
@@ -406,7 +411,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         notifyListeners();
 
         // Now start fetching taxes for each bundle
-        for (final bundle in bundleItems) {
+        for (final BundleResponseModel bundle in bundleItems) {
           if (bundle.bundleCode != null && bundle.bundleCode!.isNotEmpty) {
             await loadTaxesForBundle(bundle.bundleCode!);
           }
@@ -585,7 +590,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         response,
         onSuccess: (Resource<AuthResponseModel?> result) async {},
       );
-    } catch (e) {
+    } on Exception catch (e) {
       dev.log("Error refreshing user info: $e");
     }
   }
@@ -593,14 +598,14 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   void _handleSuccessfulPayment(String orderID, String bundlePrice, String bundleCurrency) {
     hideKeyboard();
     String utm = localStorageService.getString(LocalStorageKeys.utm) ?? "";
-    analyticsService.logEvent(
+    unawaited(analyticsService.logEvent(
       event: AnalyticEvent.buyTopUpSuccess(
         utm: utm,
         platform: Platform.isAndroid ? "Android" : "iOS",
         amount: bundlePrice,
         currency: bundleCurrency,
       ),
-    );
+    ),);
     completer(
       SheetResponse<MainBottomSheetResponse>(
         data: MainBottomSheetResponse(
@@ -630,25 +635,27 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
 
   /// Log ViewItemListEvent with actual topup options data when bundles are loaded and displayed
   Future<void> _logTopupOptionsListView() async {
-    if (bundleItems.isEmpty) return;
+    if (bundleItems.isEmpty) {
+      return;
+    }
 
     // Convert topup bundles to EcommerceItem format
     final List<EcommerceItem> items = bundleItems.take(10).map((BundleResponseModel bundle) {
       return EcommerceItem(
-        id: bundle.bundleCode ?? bundle.bundleName ?? '',
-        name: bundle.displayTitle ?? bundle.bundleName ?? bundle.bundleMarketingName ?? 'Unknown Topup',
-        category: 'topup_options',
+        id: bundle.bundleCode ?? bundle.bundleName ?? "",
+        name: bundle.displayTitle ?? bundle.bundleName ?? bundle.bundleMarketingName ?? "Unknown Topup",
+        category: "topup_options",
         price: bundle.price ?? 0.0,
       );
     }).toList();
 
     await analyticsService.logEvent(
       event: ViewItemListEvent(
-        listType: 'topup',
+        listType: "topup",
         listId: request.data?.iccID, // The SIM card being topped up
-        listName: 'Topup Options',
+        listName: "Topup Options",
         items: items,
-        platform: Platform.isIOS ? 'iOS' : 'Android',
+        platform: Platform.isIOS ? "iOS" : "Android",
         currency: bundleItems.first.currencyCode, // Use first bundle's currency
       ),
     );

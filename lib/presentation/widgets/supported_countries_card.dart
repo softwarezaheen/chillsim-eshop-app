@@ -30,8 +30,8 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
   bool _isExpanded = false;
 
   List<CountryResponseModel> get sortedCountries {
-    final countries = List<CountryResponseModel>.from(widget.countries);
-    countries.sort((a, b) => (a.country ?? '').compareTo(b.country ?? ''));
+    final List<CountryResponseModel> countries = List<CountryResponseModel>.from(widget.countries)
+    ..sort((CountryResponseModel a, CountryResponseModel b) => (a.country ?? "").compareTo(b.country ?? ""));
     return countries;
   }
 
@@ -137,5 +137,11 @@ class _SupportedCountriesCardState extends State<SupportedCountriesCard> {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IterableProperty<CountryResponseModel>("sortedCountries", sortedCountries));
   }
 }

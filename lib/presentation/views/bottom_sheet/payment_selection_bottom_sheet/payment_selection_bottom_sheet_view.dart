@@ -97,7 +97,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                         ),
                         
                         // Stripe Security Message - Show if Card payment is available
-                        if (viewModel.paymentTypeList.contains(PaymentType.card)) ...[
+                        if (viewModel.paymentTypeList.contains(PaymentType.card)) ...<Widget>[
                           verticalSpaceMedium,
                           Container(
                             padding: const EdgeInsets.all(12),
@@ -108,7 +108,7 @@ class PaymentSelectionBottomSheetView extends StatelessWidget {
                             ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: <Widget>[
                                 Icon(
                                   Icons.info_outline,
                                   color: Colors.blue.shade700,

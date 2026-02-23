@@ -4,7 +4,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 
 class RewardsViewModel extends BaseModel {
   List<RewardsViewSections> rewardsSections = RewardsViewSections.values
-      .where((element) {
+      .where((RewardsViewSections element) {
         if (element == RewardsViewSections.referAndEarn) {
           return AppEnvironment.appEnvironmentHelper.enableReferral;
         }

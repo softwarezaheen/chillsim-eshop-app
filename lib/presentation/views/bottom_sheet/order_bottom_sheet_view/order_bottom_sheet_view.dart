@@ -153,7 +153,7 @@ class OrderBottomSheetView extends StatelessWidget {
       return "";
     }
 
-    final paymentType = bundleOrderModel.paymentType!.toLowerCase();
+    final String paymentType = bundleOrderModel.paymentType!.toLowerCase();
 
     if (paymentType == "card") {
       return bundleOrderModel.paymentDetails?.cardDisplay ?? "";

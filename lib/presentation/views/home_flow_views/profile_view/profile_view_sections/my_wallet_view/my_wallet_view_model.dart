@@ -12,7 +12,7 @@ class MyWalletViewModel extends BaseModel {
   // List<MyWalletViewSections> walletSections = MyWalletViewSections.values;
 
   List<MyWalletViewSections> walletSections = MyWalletViewSections.values
-      .where((element) {
+      .where((MyWalletViewSections element) {
         if (element == MyWalletViewSections.upgradeWallet) {
           return AppEnvironment.appEnvironmentHelper.enableWalletRecharge;
         }

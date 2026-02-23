@@ -34,7 +34,6 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
       // Use the safe phone number creation utility
       phoneController.value = PhoneNumberUtils.createSafePhoneNumber(
         phoneNumberString: userMsisdn,
-        fallbackCountry: IsoCode.RO,
       );
       _emailController.addListener(_validateForm);
     });
@@ -82,7 +81,7 @@ class DeleteAccountBottomSheetViewModel extends BaseModel {
       } else {
         _isButtonEnabled = false;
       }
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error validating phone number: $e");
       _isButtonEnabled = false;
     }

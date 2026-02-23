@@ -6,7 +6,9 @@ class PhoneNumberUtils {
   /// Validates if the MSISDN is in the correct international format
   /// Returns true if the phone number starts with + and has at least 8 digits after country code
   static bool isValidMsisdn(String msisdn) {
-    if (msisdn.isEmpty) return false;
+    if (msisdn.isEmpty) {
+      return false;
+    }
     // Basic validation: starts with + and has at least 8 digits after country code
     final RegExp regex = RegExp(r"^\+\d{8,}$");
     return regex.hasMatch(msisdn);
@@ -21,7 +23,7 @@ class PhoneNumberUtils {
         return null;
       }
       return PhoneNumber.parse(phoneNumberString);
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error parsing phone number: $phoneNumberString, Error: $e");
       return null;
     }
@@ -75,7 +77,7 @@ class PhoneNumberUtils {
       
       return parsed1.countryCode == parsed2.countryCode && 
              parsed1.nsn == parsed2.nsn;
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error comparing phone numbers: $e");
       // Fallback to string comparison
       return phoneNumber1 == phoneNumber2;
@@ -97,7 +99,7 @@ class PhoneNumberUtils {
       }
       
       return "+$countryCode$nsn";
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error extracting phone number from controller: $e");
       return "";
     }

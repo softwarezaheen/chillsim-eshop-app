@@ -33,7 +33,7 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
       return "N/A";
     }
 
-    final paymentType = bundleOrderModel.paymentType!.toLowerCase();
+    final String paymentType = bundleOrderModel.paymentType!.toLowerCase();
 
     if (paymentType == "card") {
       return bundleOrderModel.paymentDetails?.cardDisplay ?? "N/A";
@@ -310,8 +310,8 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                                         // For exclusive mode: amount + fee + vat
                                         // For inclusive/none: amount + fee (VAT already included)
                                         contentText: viewModel.bundleOrderModel?.taxMode == "exclusive"
-                                            ? "${((viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0) + (viewModel.bundleOrderModel?.orderVat ?? 0))} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}"
-                                            : "${((viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0))} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
+                                            ? "${(viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0) + (viewModel.bundleOrderModel?.orderVat ?? 0)} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}"
+                                            : "${(viewModel.bundleOrderModel?.orderAmount ?? 0) + (viewModel.bundleOrderModel?.orderFee ?? 0)} ${viewModel.bundleOrderModel?.orderCurrency ?? ""}",
                                       ),
                                     ],
                                   ),
@@ -330,7 +330,7 @@ class OrderReceiptBottomSheetView extends StatelessWidget {
                       onPressed: () async {
                         if (viewModel.bundleOrderModel?.orderInvoice != null && viewModel.bundleOrderModel!.orderInvoice!.isNotEmpty) {
                           // Open browser to download invoice
-                          final url = viewModel.bundleOrderModel!.orderInvoice!;
+                          final String url = viewModel.bundleOrderModel!.orderInvoice!;
                           if (await canLaunchUrl(Uri.parse(url))) {
                             await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
                           }

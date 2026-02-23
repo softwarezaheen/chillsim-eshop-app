@@ -44,7 +44,7 @@ class LoginViewModel extends BaseModel {
           redirection = InAppRedirection.fromJson(redirectionJson);
           log("🔄 Restored pending redirection in LoginView after deep link return");
         }
-      } catch (e) {
+      } on Exception catch (e) {
         log("⚠️ Failed to restore pending redirection in onViewModelReady: $e");
       }
     }
@@ -89,7 +89,7 @@ class LoginViewModel extends BaseModel {
     try {
       await localStorageService.remove(LocalStorageKeys.pendingRedirection);
       log("🗑️ Cleared pending redirection on back navigation");
-    } catch (e) {
+    } on Exception catch (e) {
       log("⚠️ Failed to clear pending redirection: $e");
     }
     navigationService.back();
@@ -117,7 +117,7 @@ class LoginViewModel extends BaseModel {
           redirectionJson,
         );
         log("💾 Saved pending redirection before external auth");
-      } catch (e) {
+      } on Exception catch (e) {
         log("⚠️ Failed to save pending redirection: $e");
       }
     }
@@ -179,7 +179,7 @@ class LoginViewModel extends BaseModel {
           log("🔄 Fetching fresh FCM token for device re-registration...");
           
           // Get fresh FCM token from Firebase (not stale LocalStorage value)
-          final pushNotificationService = locator<PushNotificationService>();
+          final PushNotificationService pushNotificationService = locator<PushNotificationService>();
           String? fcmToken = await pushNotificationService.getFcmToken();
           
           // Only save and register if we have a valid token
@@ -197,7 +197,7 @@ class LoginViewModel extends BaseModel {
           // Re-register device with backend (uses token from LocalStorage)
           await addDeviceUseCase.execute(NoParams());
           log("✅ Device re-registered with FCM token after social login");
-        } catch (e) {
+        } on Exception catch (e) {
           log("⚠️ Failed to re-register device after login: $e");
           // Don't fail login if device registration fails - user can still use app
         }
@@ -217,7 +217,7 @@ class LoginViewModel extends BaseModel {
             log("ℹ️ No pending redirection in storage, using in-memory: ${redirection?.runtimeType}");
             restoredRedirection = redirection;
           }
-        } catch (e) {
+        } on Exception catch (e) {
           log("⚠️ Failed to restore pending redirection: $e, using in-memory fallback");
           restoredRedirection = redirection;
         }

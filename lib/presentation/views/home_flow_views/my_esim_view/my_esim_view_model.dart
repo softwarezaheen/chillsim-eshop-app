@@ -218,7 +218,7 @@ class MyESimViewModel extends BaseModel {
       isScrollControlled: true,
       variant: BottomSheetType.bundleEditName,
       data: BundleEditNameRequest(
-        name: (item.labelName as String?)?.isNotEmpty == true
+        name: (item.labelName as String?)?.isNotEmpty ?? false
             ? item.labelName as String
             : item.iccid ?? "",
       ),

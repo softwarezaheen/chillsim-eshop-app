@@ -36,7 +36,9 @@ class ManageAutoTopupBottomSheetViewModel extends BaseModel {
 
   Future<void> _loadConfig() async {
     final String iccid = _state.iccid ?? "";
-    if (iccid.isEmpty) return;
+    if (iccid.isEmpty) {
+      return;
+    }
 
     _state.isLoadingConfig = true;
     notifyListeners();

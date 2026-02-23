@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:io";
 
 import "package:easy_localization/easy_localization.dart";
@@ -95,10 +96,10 @@ class PurchaseOrderSuccessView extends StatelessWidget {
                               isDisabling:
                                   viewModel.state.isDisablingAutoTopup,
                               onEnable: () {
-                                viewModel.onEnableAutoTopup();
+                                unawaited(viewModel.onEnableAutoTopup());
                               },
                               onDisable: () {
-                                viewModel.onDisableAutoTopup();
+                                unawaited(viewModel.onDisableAutoTopup());
                               },
                               showWidget:
                                   viewModel.state.showAutoTopupPrompt,

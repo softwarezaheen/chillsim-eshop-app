@@ -72,7 +72,7 @@ class VerifyLoginViewModel extends BaseModel {
           log("🔄 Fetching fresh FCM token for device re-registration...");
           
           // Get fresh FCM token from Firebase (not stale LocalStorage value)
-          final pushNotificationService = locator<PushNotificationService>();
+          final PushNotificationService pushNotificationService = locator<PushNotificationService>();
           String? fcmToken = await pushNotificationService.getFcmToken();
           
           // Only save and register if we have a valid token
@@ -90,7 +90,7 @@ class VerifyLoginViewModel extends BaseModel {
           // Re-register device with backend (uses token from LocalStorage)
           await addDeviceUseCase.execute(NoParams());
           log("✅ Device re-registered with FCM token after OTP verification");
-        } catch (e) {
+        } on Exception catch (e) {
           log("⚠️ Failed to re-register device after login: $e");
           // Don't fail login if device registration fails - user can still use app
         }
@@ -109,7 +109,7 @@ class VerifyLoginViewModel extends BaseModel {
             await localStorageService.remove(LocalStorageKeys.pendingRedirection);
             log("🗑️ Cleared stale pending redirection from previous session");
           }
-        } catch (e) {
+        } on Exception catch (e) {
           log("⚠️ Failed to clear stale redirection: $e");
         }
         

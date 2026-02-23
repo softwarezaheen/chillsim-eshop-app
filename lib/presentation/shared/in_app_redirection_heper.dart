@@ -25,30 +25,30 @@ sealed class InAppRedirection {
   static InAppRedirection? fromJson(String jsonString) {
     try {
       final Map<String, dynamic> json = jsonDecode(jsonString);
-      final String type = json['type'] as String;
+      final String type = json["type"] as String;
       
       switch (type) {
-        case 'cashback':
+        case "cashback":
           return InAppRedirection.cashback();
-        case 'referral':
+        case "referral":
           return InAppRedirection.referral();
-        case 'purchase':
+        case "purchase":
           // Return a special marker that HomePagerViewModel will detect
           // and use to fetch bundle data and reconstruct purchase flow
-          final Map<String, dynamic>? data = json['data'] as Map<String, dynamic>?;
-          if (data != null && data['bundleCode'] != null) {
+          final Map<String, dynamic>? data = json["data"] as Map<String, dynamic>?;
+          if (data != null && data["bundleCode"] != null) {
             // Store the bundle details for later fetching
             return PendingPurchaseRedirection(
-              bundleCode: data['bundleCode'] as String,
-              regionCode: data['regionCode'] as String?,
-              countryIsoCodes: (data['countryIsoCodes'] as List<dynamic>?)?.cast<String>(),
+              bundleCode: data["bundleCode"] as String,
+              regionCode: data["regionCode"] as String?,
+              countryIsoCodes: (data["countryIsoCodes"] as List<dynamic>?)?.cast<String>(),
             );
           }
           return null;
         default:
           return null;
       }
-    } catch (e) {
+    } on Exception {
       return null;
     }
   }
@@ -67,7 +67,7 @@ class CashbackRedirection extends InAppRedirection {
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'type': 'cashback',
+      "type": "cashback",
     };
   }
 }
@@ -87,7 +87,7 @@ class ReferralRedirection extends InAppRedirection {
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'type': 'referral',
+      "type": "referral",
     };
   }
 }
@@ -108,11 +108,11 @@ class PurchaseRedirection extends InAppRedirection {
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'type': 'purchase',
-      'data': <String, dynamic>{
-        'bundleCode': data.bundleResponseModel?.bundleCode,
-        'regionCode': data.region?.isoCode,
-        'countryIsoCodes': data.countries?.map((CountriesRequestModel e) => e.isoCode).toList(),
+      "type": "purchase",
+      "data": <String, dynamic>{
+        "bundleCode": data.bundleResponseModel?.bundleCode,
+        "regionCode": data.region?.isoCode,
+        "countryIsoCodes": data.countries?.map((CountriesRequestModel e) => e.isoCode).toList(),
       },
     };
   }
@@ -143,11 +143,11 @@ class PendingPurchaseRedirection extends InAppRedirection {
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'type': 'purchase',
-      'data': <String, dynamic>{
-        'bundleCode': bundleCode,
-        'regionCode': regionCode,
-        'countryIsoCodes': countryIsoCodes,
+      "type": "purchase",
+      "data": <String, dynamic>{
+        "bundleCode": bundleCode,
+        "regionCode": regionCode,
+        "countryIsoCodes": countryIsoCodes,
       },
     };
   }

@@ -115,6 +115,7 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
     );
   }
 
+  // ignore: avoid_positional_boolean_parameters
   Future<void> onAutoTopupToggle(bool value) async {
     if (!value) {
       await _disableAutoTopup();
@@ -124,7 +125,9 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
   /// Disables auto top-up. Called after user confirms via the adaptive dialog in the view.
   Future<void> _disableAutoTopup() async {
     final String? iccid = _state.item?.iccid;
-    if (iccid == null) return;
+    if (iccid == null) {
+      return;
+    }
 
     _state.isUpdatingAutoTopup = true;
     notifyListeners();

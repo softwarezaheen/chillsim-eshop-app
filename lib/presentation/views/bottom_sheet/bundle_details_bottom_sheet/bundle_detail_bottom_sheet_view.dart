@@ -106,7 +106,7 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                                       viewModel.taxes?.exchangeRate != null &&
                                       viewModel.taxes?.exchangeRate != 0)
                                         ? "${(viewModel.taxes!.originalAmount! / viewModel.taxes!.exchangeRate! /100).toStringAsFixed(2)} ${viewModel.taxes!.displayCurrency!}"
-                                        : "${(viewModel.taxes!.originalAmount! /100).toString()} ${viewModel.taxes!.currency!}"
+                                        : "${viewModel.taxes!.originalAmount! /100} ${viewModel.taxes!.currency!}"
                                     )
                                   : bundle?.priceDisplay ?? "",
                                 style: headerTwoMediumTextStyle(
@@ -185,11 +185,11 @@ class BundleDetailBottomSheetView extends StatelessWidget {
                           // Only show Total row when there are fees or taxes (something to add to the base price)
                           if (viewModel.taxes?.total != null && (
                               // Show if there are fees
-                              (viewModel.taxes?.feeEnabled == true && viewModel.taxes?.fee != null && viewModel.taxes!.fee! > 0) ||
+                              ((viewModel.taxes?.feeEnabled ?? false) && viewModel.taxes?.fee != null && viewModel.taxes!.fee! > 0) ||
                               // Show if there's VAT in exclusive mode
                               (viewModel.taxes?.taxMode == "exclusive" && viewModel.taxes?.vat != null && viewModel.taxes!.vat! > 0)
                             ))
-                            ...[
+                            ...<Widget>[
                               const DividerLine(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -126,10 +126,10 @@ class _BaseFlutterBottomNavBarState extends State<BaseFlutterBottomNavBar> {
             duration: const Duration(milliseconds: 200),
             child: widget.isKeyboardVisible
                 ? const SizedBox.shrink(
-                    key: ValueKey('hidden'),
+                    key: ValueKey<String>("hidden"),
                   )
                 : Stack(
-                    key: const ValueKey('visible'),
+                    key: const ValueKey<String>("visible"),
                     children: <Widget>[
                       // Positioned.fill(
                       //   child: Align(

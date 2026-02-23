@@ -157,7 +157,7 @@ class MyESimView extends StatelessWidget {
               statusTextColor: item.getStatusTextColor(context),
               statusBgColor: item.getStatusBgColor(context),
               countryCode: "",
-              title: (item.labelName as String?)?.isNotEmpty == true
+              title: (item.labelName as String?)?.isNotEmpty ?? false
                   ? item.labelName as String
                   : item.iccid ?? "",
               subTitle: item.displaySubtitle ?? "",
@@ -230,7 +230,7 @@ class MyESimView extends StatelessWidget {
             ESimExpiredPlanItem(
               countryCode: "",
               showUnlimitedData: item.unlimited ?? false,
-              title: (item.labelName as String?)?.isNotEmpty == true
+              title: (item.labelName as String?)?.isNotEmpty ?? false
                   ? item.labelName as String
                   : item.iccid ?? "",
               subTitle: item.displaySubtitle ?? "",
@@ -268,7 +268,7 @@ class MyESimView extends StatelessWidget {
 
   String _buildActivationLink(PurchaseEsimBundleResponseModel item) {
     final String activationCode = item.activationCode ?? "";
-    if (activationCode.toUpperCase().startsWith("LPA:1\$")) {
+    if (activationCode.toUpperCase().startsWith(r"LPA:1$")) {
       return activationCode;
     }
     final String smdpAddress = item.smdpAddress ?? "";

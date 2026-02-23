@@ -53,14 +53,14 @@ extension BannersViewTypesExtension on BannersViewTypes {
       case BannersViewTypes.bannersZenminutes:
         return LocaleKeys.dataPlans_zenminutesBannerContent.tr();
       case BannersViewTypes.bannersReferral:
-        return LocaleKeys.dataPlans_referAndEarnBannerContent.tr(namedArgs: {
+        return LocaleKeys.dataPlans_referAndEarnBannerContent.tr(namedArgs: <String, String>{
           "referAndEarnAmount":
               locator<AppConfigurationService>().referAndEarnAmount,
-        });
+        },);
       case BannersViewTypes.bannersCashback:
-        return LocaleKeys.dataPlans_cashbackRewardsBannerContent.tr(namedArgs: {
+        return LocaleKeys.dataPlans_cashbackRewardsBannerContent.tr(namedArgs: <String, String>{
           "percentage": locator<AppConfigurationService>().cashbackPercentage,
-        });
+        },);
       case BannersViewTypes.bannersSupport:
         return LocaleKeys.dataPlans_supportBannerContent.tr();
       // case BannersViewTypes.cashBackRewards:
@@ -139,7 +139,6 @@ extension BannersViewTypesExtension on BannersViewTypes {
           log("Launching URL: $url");
           await launchUrl(url, mode: LaunchMode.externalApplication);
         }
-        break;
       case BannersViewTypes.bannersReferral:
         if (locator<UserAuthenticationService>().isUserLoggedIn) {
             locator<NavigationService>().navigateTo(

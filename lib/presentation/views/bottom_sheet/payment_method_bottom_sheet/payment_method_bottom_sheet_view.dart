@@ -2,8 +2,8 @@ import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/user/saved_payment_method_response_model.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
-import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
+import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/payment_method_bottom_sheet/payment_method_bottom_sheet_view_model.dart";
 import "package:esim_open_source/presentation/widgets/payment_methods_card.dart";
@@ -314,7 +314,9 @@ class PaymentMethodBottomSheetView extends StatelessWidget {
 
   /// Capitalize brand name for display.
   String _capitalizeBrand(String brand) {
-    if (brand.isEmpty) return "Card";
+    if (brand.isEmpty) {
+      return "Card";
+    }
     return brand[0].toUpperCase() + brand.substring(1);
   }
 

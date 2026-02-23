@@ -118,7 +118,7 @@ class BaseModel extends ReactiveViewModel
     // This prevents stale redirection data from previous session
     try {
       await localStorageService.remove(LocalStorageKeys.pendingRedirection);
-    } catch (e) {
+    } on Exception {
       // Silent fail - not critical if this fails
     }
   }

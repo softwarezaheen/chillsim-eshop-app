@@ -3,6 +3,7 @@ import "dart:io";
 import "package:esim_open_source/data/services/analytics_service_att_extension.dart";
 import "package:esim_open_source/data/services/analytics_service_impl.dart";
 import "package:esim_open_source/data/services/consent_manager_service.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
@@ -30,8 +31,8 @@ void main() {
 
     setUp(() async {
       AnalyticsServiceImpl.testMode = true;
-      service = AnalyticsServiceImpl.instance;
-      service.resetTestState();
+      service = AnalyticsServiceImpl.instance
+        ..resetTestState();
       
       // Clear any persistent ATT state
       await service.resetAttStateForTesting();
@@ -59,7 +60,7 @@ void main() {
           expect(service.facebookEnabledFlag, isTrue);
           expect(service.isTrackingBlockedByATT(), isFalse);
         } else {
-          print("⏭️ Skipping Android tests - running on iOS platform");
+          debugPrint("⏭️ Skipping Android tests - running on iOS platform");
         }
       });
 
@@ -68,16 +69,16 @@ void main() {
           // Rapid consent changes
           for (int i = 0; i < 5; i++) {
             await service.applyConsentForTest(<ConsentType, bool>{
-              ConsentType.analytics: i % 2 == 0,
-              ConsentType.advertising: i % 2 == 1,
+              ConsentType.analytics: i.isEven,
+              ConsentType.advertising: i.isOdd,
             });
             
             // Should work without ATT blocking
-            expect(service.firebaseEnabledFlag, i % 2 == 0);
-            expect(service.facebookEnabledFlag, i % 2 == 1);
+            expect(service.firebaseEnabledFlag, i.isEven);
+            expect(service.facebookEnabledFlag, i.isOdd);
           }
         } else {
-          print("⏭️ Skipping Android tests - running on iOS platform");
+          debugPrint("⏭️ Skipping Android tests - running on iOS platform");
         }
       });
     });
@@ -101,7 +102,7 @@ void main() {
             AttRequestResult.denied,
           ]),);
         } else {
-          print("⏭️ Skipping iOS tests - running on Android platform");
+          debugPrint("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
 
@@ -125,7 +126,7 @@ void main() {
           // Should not request twice
           expect(result2, AttRequestResult.notNeeded);
         } else {
-          print("⏭️ Skipping iOS tests - running on Android platform");
+          debugPrint("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
 
@@ -137,7 +138,7 @@ void main() {
           // After ATT attempt in test mode, should remain false unless mocked
           // This tests the logic path exists
         } else {
-          print("⏭️ Skipping iOS tests - running on Android platform");
+          debugPrint("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
 
@@ -151,7 +152,7 @@ void main() {
           
           // Verify method doesn't crash and handles test mode gracefully
         } else {
-          print("⏭️ Skipping iOS tests - running on Android platform");
+          debugPrint("⏭️ Skipping iOS tests - running on Android platform");
         }
       });
     });
@@ -173,7 +174,7 @@ void main() {
         
         if (Platform.isIOS) {
           // On iOS, ATT logic would have been triggered
-          print("🍎 ATT logic triggered for analytics");
+          debugPrint("🍎 ATT logic triggered for analytics");
         } else {
           // On Android, should work immediately
           expect(service.facebookEnabledFlag, isFalse);
@@ -195,7 +196,7 @@ void main() {
         expect(service.facebookEnabledFlag, isTrue);
         
         if (Platform.isIOS) {
-          print("🍎 ATT logic triggered for advertising");
+          debugPrint("🍎 ATT logic triggered for advertising");
         } else {
           expect(service.firebaseEnabledFlag, isFalse);
         }
@@ -223,12 +224,12 @@ void main() {
         // Simulate user rapidly toggling consent
         for (int i = 0; i < 10; i++) {
           await service.applyConsentForTest(<ConsentType, bool>{
-            ConsentType.analytics: i % 2 == 0,
+            ConsentType.analytics: i.isEven,
             ConsentType.advertising: i % 3 == 0,
           });
           
           // State should be consistent
-          expect(service.firebaseEnabledFlag, i % 2 == 0);
+          expect(service.firebaseEnabledFlag, i.isEven);
           expect(service.facebookEnabledFlag, i % 3 == 0);
         }
       });
@@ -321,7 +322,7 @@ void main() {
         // This would test the URL formation logic
         // In our implementation, it's handled in the UI layer
         if (Platform.isIOS) {
-          print("🍎 iOS Settings navigation available");
+          debugPrint("🍎 iOS Settings navigation available");
         }
       });
     });
@@ -339,7 +340,7 @@ void main() {
         );
 
         // Give time for stream to process
-        await Future.delayed(const Duration(milliseconds: 100));
+        await Future<void>.delayed(const Duration(milliseconds: 100));
         
         // Service should reflect the change
         // Note: The service might have different default behavior in test mode
@@ -396,19 +397,19 @@ void main() {
         // Each result should have a defined behavior
         switch (result) {
           case AttRequestResult.authorized:
-            print("✅ ATT Authorized - Continue normally");
+            debugPrint("✅ ATT Authorized - Continue normally");
           case AttRequestResult.denied:
-            print("❌ ATT Denied - Show guidance, disable consent");
+            debugPrint("❌ ATT Denied - Show guidance, disable consent");
           case AttRequestResult.restricted:
-            print("🚫 ATT Restricted - Show device admin guidance");
+            debugPrint("🚫 ATT Restricted - Show device admin guidance");
           case AttRequestResult.previouslyDenied:
-            print("⚠️ ATT Previously Denied - Show iOS Settings guidance");
+            debugPrint("⚠️ ATT Previously Denied - Show iOS Settings guidance");
           case AttRequestResult.notNeeded:
-            print("ℹ️ ATT Not Needed - Continue normally");
+            debugPrint("ℹ️ ATT Not Needed - Continue normally");
           case AttRequestResult.notApplicable:
-            print("🤖 ATT Not Applicable (Android) - Continue normally");
+            debugPrint("🤖 ATT Not Applicable (Android) - Continue normally");
           case AttRequestResult.error:
-            print("💥 ATT Error - Continue normally (fail safe)");
+            debugPrint("💥 ATT Error - Continue normally (fail safe)");
         }
         
         expect(result, isA<AttRequestResult>());

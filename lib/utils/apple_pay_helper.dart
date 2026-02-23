@@ -46,7 +46,7 @@ class ApplePayHelper {
       }
       
       return isAvailable;
-    } catch (e) {
+    } on Exception catch (e) {
       log("❌ Error checking Apple Pay availability: $e");
       _cachedAvailability = false;
       return false;

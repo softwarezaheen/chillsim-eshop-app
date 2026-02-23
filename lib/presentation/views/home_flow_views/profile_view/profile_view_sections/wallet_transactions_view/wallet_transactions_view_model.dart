@@ -1,8 +1,8 @@
 import "dart:async";
 import "dart:developer";
 
-import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/data/remote/responses/user/wallet_transaction_response.dart";
+import "package:esim_open_source/di/locator.dart";
 import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/user/get_wallet_transactions_pagination_use_case.dart";
 import "package:esim_open_source/domain/util/pagination/paginated_data.dart";
@@ -31,7 +31,7 @@ class WalletTransactionsViewModel extends BaseModel {
     try {
       // Initialize safely
       _initializeTransactions();
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error initializing wallet transactions: $e");
     }
   }
@@ -49,7 +49,7 @@ class WalletTransactionsViewModel extends BaseModel {
   // Getters for UI
   List<WalletTransactionUiModel> get transactions {
     return walletTransactionsPaginationService.notifier.items
-        .map((response) => WalletTransactionUiModel.fromResponse(response))
+        .map(WalletTransactionUiModel.fromResponse)
         .toList();
   }
   
@@ -61,7 +61,7 @@ class WalletTransactionsViewModel extends BaseModel {
   Future<void> getTransactions() async {
     try {
       await getWalletTransactionsPaginationUseCase.loadNextPage(NoParams());
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error loading wallet transactions: $e");
     }
   }
@@ -69,7 +69,7 @@ class WalletTransactionsViewModel extends BaseModel {
   Future<void> refreshTransactions() async {
     try {
       await getWalletTransactionsPaginationUseCase.refreshData(NoParams());
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error refreshing wallet transactions: $e");
     }
   }
@@ -91,17 +91,6 @@ class WalletTransactionUiModel {
     this.sourceDetail,
   });
 
-  final String id;
-  final WalletTransactionType transactionType;
-  final String amount;
-  final String title;
-  final String description;
-  final String date;
-  final String status;
-  final String? voucherCode;
-  final String? orderId;
-  final String? sourceDetail;
-
   factory WalletTransactionUiModel.fromResponse(WalletTransactionResponse response) {
     // Format date from ISO to locale date time with AM/PM
     String formattedDate = _formatDateToLocale(response.date ?? "");
@@ -120,14 +109,27 @@ class WalletTransactionUiModel {
     );
   }
 
+  final String id;
+  final WalletTransactionType transactionType;
+  final String amount;
+  final String title;
+  final String description;
+  final String date;
+  final String status;
+  final String? voucherCode;
+  final String? orderId;
+  final String? sourceDetail;
+
   static String _formatDateToLocale(String dateInput) {
-    if (dateInput.isEmpty) return "";
+    if (dateInput.isEmpty) {
+      return "";
+    }
     
     try {
       DateTime dateTime;
       
       // Try to parse as timestamp (milliseconds or seconds)
-      if (RegExp(r'^\d+$').hasMatch(dateInput)) {
+      if (RegExp(r"^\d+$").hasMatch(dateInput)) {
         int timestamp = int.parse(dateInput);
         
         // If timestamp is in seconds (10 digits), convert to milliseconds
@@ -143,8 +145,8 @@ class WalletTransactionUiModel {
       }
       
       // Format as "MMM dd, yyyy h:mm a" (e.g., "Jan 15, 2024 10:30 AM") in local time
-      return DateFormat('MMM dd, yyyy h:mm a').format(dateTime);
-    } catch (e) {
+      return DateFormat("MMM dd, yyyy h:mm a").format(dateTime);
+    } on Exception  {
       return dateInput; // Return original if parsing fails
     }
   }
@@ -161,21 +163,21 @@ class WalletTransactionUiModel {
   // Get numeric amount value for comparison
   double get numericAmount {
     try {
-      String cleanAmount = amount.replaceAll(RegExp(r'[^\d.-]'), '');
+      String cleanAmount = amount.replaceAll(RegExp(r"[^\d.-]"), "");
       return double.tryParse(cleanAmount) ?? 0.0;
-    } catch (e) {
-      return 0.0;
+    } on Exception {
+      return 0;
     }
   }
 
   // Mock data for testing
   static List<WalletTransactionUiModel> get mockData => 
       WalletTransactionResponse.mockData
-          .map((response) => WalletTransactionUiModel.fromResponse(response))
+          .map(WalletTransactionUiModel.fromResponse)
           .toList();
 
   static List<WalletTransactionUiModel> get shimmerData => 
-      List.generate(5, (index) => WalletTransactionUiModel(
+      List<WalletTransactionUiModel>.generate(5, (int index) => WalletTransactionUiModel(
         id: "$index",
         transactionType: WalletTransactionType.topUp,
         amount: "",
@@ -183,5 +185,5 @@ class WalletTransactionUiModel {
         description: "",
         date: "",
         status: "",
-      ));
+      ),);
 }

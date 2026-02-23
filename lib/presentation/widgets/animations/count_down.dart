@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:developer";
 
 import "package:esim_open_source/presentation/theme/theme_setup.dart";
@@ -52,14 +53,13 @@ class _CountdownState extends State<Countdown>
     _controller = AnimationController(
       vsync: this,
       duration: Duration(seconds: widget.numberOfSeconds.toInt()),
-    )
-      ..forward()
-      ..addStatusListener((AnimationStatus status) {
+    )..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           log("completed");
           widget.onCounterCompleted();
         }
       });
+    unawaited(_controller!.forward());
   }
 
   @override

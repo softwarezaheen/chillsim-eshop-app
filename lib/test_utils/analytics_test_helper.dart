@@ -14,7 +14,7 @@ class AnalyticsTestHelper {
     int count = 2,
     String category = "esim_bundle",
   }) {
-    return List.generate(count, (int index) {
+    return List<EcommerceItem>.generate(count, (int index) {
       return EcommerceItem(
         id: "test-item-${index + 1}",
         name: "Test Bundle ${index + 1}",
@@ -87,7 +87,7 @@ class AnalyticsTestHelper {
       );
 
       // Small delay to simulate checkout process
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future<void>.delayed(const Duration(milliseconds: 500));
 
       // 5. Purchase Event (the main test target)
       log("🧪 [Analytics Test] Sending PurchaseEvent...");
@@ -110,7 +110,7 @@ class AnalyticsTestHelper {
       log("🧪 [Analytics Test] Total Value: ${_calculateTotalValue(items, discount)}");
       log('🧪 [Analytics Test] Coupon: ${couponCode ?? 'None'}');
 
-    } catch (e, st) {
+    } on Exception catch (e, st) {
       log("🧪 [Analytics Test] ❌ Error in mock purchase flow: $e");
       log("🧪 [Analytics Test] Stack trace: $st");
     }
@@ -167,7 +167,7 @@ class AnalyticsTestHelper {
         log("🧪 [Analytics Test]   - Item ${i + 1}: ${item.name} (${item.id}) - ${item.price} $currency x${item.quantity}");
       }
 
-    } catch (e, st) {
+    } on Exception catch (e, st) {
       log("🧪 [Analytics Test] ❌ Error sending mock purchase event: $e");
       log("🧪 [Analytics Test] Stack trace: $st");
     }

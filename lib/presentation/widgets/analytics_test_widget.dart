@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:esim_open_source/test_utils/analytics_test_helper.dart';
-import 'package:esim_open_source/domain/analytics/ecommerce_events.dart';
+import "package:esim_open_source/domain/analytics/ecommerce_events.dart";
+import "package:esim_open_source/test_utils/analytics_test_helper.dart";
+import "package:flutter/material.dart";
 
 /// Debug widget for manual analytics testing
 /// Add this to your app during development to test purchase events
@@ -11,27 +11,27 @@ class AnalyticsTestWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🧪 Analytics Testing'),
+        title: const Text("🧪 Analytics Testing"),
         backgroundColor: Colors.orange,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: ListView(
-          children: [
+          children: <Widget>[
             const Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
-                      '🧪 Analytics Test Center',
+                      "🧪 Analytics Test Center",
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'Test purchase events without making real purchases. '
-                      'Check your Firebase Analytics and Facebook Events to see the data.',
+                      "Test purchase events without making real purchases. "
+                      "Check your Firebase Analytics and Facebook Events to see the data.",
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -42,29 +42,29 @@ class AnalyticsTestWidget extends StatelessWidget {
             
             // Quick Test Buttons
             _buildTestSection(
-              title: '🚀 Quick Tests',
-              children: [
+              title: "🚀 Quick Tests",
+              children: <Widget>[
                 _buildTestButton(
-                  'Basic Purchase',
-                  'Single item, no discounts',
+                  "Basic Purchase",
+                  "Single item, no discounts",
                   Icons.shopping_cart,
-                  () => AnalyticsTestHelper.sendMockPurchaseEvent(),
+                  AnalyticsTestHelper.sendMockPurchaseEvent,
                 ),
                 _buildTestButton(
-                  'Purchase with Coupon',
-                  'Includes discount code',
+                  "Purchase with Coupon",
+                  "Includes discount code",
                   Icons.local_offer,
                   () => AnalyticsTestHelper.sendMockPurchaseEvent(
-                    couponCode: 'TEST10OFF',
-                    discount: 2.0,
+                    couponCode: "TEST10OFF",
+                    discount: 2,
                   ),
                 ),
                 _buildTestButton(
-                  'Complete Flow',
-                  'Full ecommerce journey',
+                  "Complete Flow",
+                  "Full ecommerce journey",
                   Icons.timeline,
                   () => AnalyticsTestHelper.sendMockPurchaseFlow(
-                    couponCode: 'FLOWTEST',
+                    couponCode: "FLOWTEST",
                   ),
                 ),
               ],
@@ -72,10 +72,10 @@ class AnalyticsTestWidget extends StatelessWidget {
             
             // Scenario Tests
             _buildTestSection(
-              title: '📊 Test Scenarios',
-              children: PurchaseTestScenario.values.map((scenario) =>
+              title: "📊 Test Scenarios",
+              children: PurchaseTestScenario.values.map((PurchaseTestScenario scenario) =>
                 _buildTestButton(
-                  scenario.name.replaceAll(RegExp(r'([A-Z])'), ' \$1').trim(),
+                  scenario.name.replaceAll(RegExp(r"([A-Z])"), r" $1").trim(),
                   scenario.description,
                   _getScenarioIcon(scenario),
                   () => AnalyticsTestHelper.sendMockPurchaseScenario(scenario),
@@ -85,27 +85,26 @@ class AnalyticsTestWidget extends StatelessWidget {
             
             // Custom Test
             _buildTestSection(
-              title: '⚙️ Custom Test',
-              children: [
+              title: "⚙️ Custom Test",
+              children: <Widget>[
                 _buildTestButton(
-                  'High Value + Coupon',
-                  'Premium bundle with discount',
+                  "High Value + Coupon",
+                  "Premium bundle with discount",
                   Icons.diamond,
                   () => AnalyticsTestHelper.sendMockPurchaseEvent(
-                    couponCode: 'VIP50',
-                    customItems: [
+                    couponCode: "VIP50",
+                    customItems: <EcommerceItem>[
                       const EcommerceItem(
-                        id: 'vip-global-001',
-                        name: 'VIP Global Unlimited',
-                        category: 'esim_bundle',
+                        id: "vip-global-001",
+                        name: "VIP Global Unlimited",
+                        category: "esim_bundle",
                         price: 149.99,
-                        quantity: 1,
                       ),
                     ],
-                    shipping: 10.0,
-                    tax: 20.0,
-                    discount: 25.0,
-                    currency: 'USD',
+                    shipping: 10,
+                    tax: 20,
+                    discount: 25,
+                    currency: "USD",
                   ),
                 ),
               ],
@@ -115,13 +114,13 @@ class AnalyticsTestWidget extends StatelessWidget {
             const Card(
               color: Colors.blue,
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16),
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Icon(Icons.info, color: Colors.white, size: 32),
                     SizedBox(height: 8),
                     Text(
-                      'Check Your Analytics',
+                      "Check Your Analytics",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -130,9 +129,9 @@ class AnalyticsTestWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      '• Firebase Analytics: Events appear in real-time\n'
-                      '• Facebook Events Manager: Check recent activity\n'
-                      '• GA4 Debug View: Enable for detailed event data',
+                      "• Firebase Analytics: Events appear in real-time\n"
+                      "• Facebook Events Manager: Check recent activity\n"
+                      "• GA4 Debug View: Enable for detailed event data",
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
@@ -152,9 +151,9 @@ class AnalyticsTestWidget extends StatelessWidget {
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(
             title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -182,9 +181,9 @@ class AnalyticsTestWidget extends StatelessWidget {
           try {
             onPressed();
             // Could show a snackbar here for success feedback
-          } catch (e) {
+          } on Exception catch (e) {
             // Could show error feedback here
-            debugPrint('Test error: $e');
+            debugPrint("Test error: $e");
           }
         },
       ),

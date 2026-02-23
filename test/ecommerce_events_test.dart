@@ -9,7 +9,7 @@ void main() {
 
       expect(event.firebaseEventName, "view_item");
       expect(event.facebookEventName, "ViewContent");
-  expect(event.firebaseParameters["items"], isA<List>());
+  expect(event.firebaseParameters["items"], isA<List<dynamic>>());
       final Map<String, Object?> fbParams = event.facebookParameters;
       expect(fbParams["content_type"], "esim_bundle");
       expect(fbParams["value"], 9.99);

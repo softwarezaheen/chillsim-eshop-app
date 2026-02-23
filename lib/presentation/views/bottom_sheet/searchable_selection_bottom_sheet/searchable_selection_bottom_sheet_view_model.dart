@@ -16,7 +16,7 @@ class SearchableSelectionBottomSheetViewModel<T> extends BaseModel {
   final Function(SheetResponse<T>) completer;
 
   final TextEditingController searchController = TextEditingController();
-  List<T> _filteredItems = [];
+  List<T> _filteredItems = <T>[];
   
   List<T> get filteredItems => _filteredItems;
 
@@ -49,7 +49,7 @@ class SearchableSelectionBottomSheetViewModel<T> extends BaseModel {
   }
 
   void onCloseClick() {
-    completer(SheetResponse<T>(confirmed: false));
+    completer(SheetResponse<T>());
   }
 
   @override

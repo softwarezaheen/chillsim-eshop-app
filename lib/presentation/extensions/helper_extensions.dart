@@ -1,6 +1,7 @@
 import "package:easy_localization/easy_localization.dart" as localization;
 import "package:esim_open_source/presentation/enums/language_enum.dart";
 import "package:flutter/material.dart";
+import "package:vector_math/vector_math_64.dart" show Vector3;
 
 extension EmailValidator on String {
   bool isValidEmail() {
@@ -41,7 +42,7 @@ extension RTLExtension on Widget {
 
     return Transform(
       alignment: Alignment.center,
-      transform: Matrix4.identity()..scale(isRTL ? -1.0 : 1.0, 1),
+      transform: Matrix4.identity()..scaleByVector3(Vector3(isRTL ? -1.0 : 1.0, 1, 1)),
       child: this,
     );
   }

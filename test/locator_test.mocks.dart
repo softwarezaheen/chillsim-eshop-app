@@ -4941,6 +4941,26 @@ class MockAndroidUserGuideViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -5043,11 +5063,15 @@ class MockAndroidUserGuideViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -6519,6 +6543,26 @@ class MockMyESimViewModel extends _i1.Mock implements _i23.MyESimViewModel {
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -6621,11 +6665,15 @@ class MockMyESimViewModel extends _i1.Mock implements _i23.MyESimViewModel {
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -7443,6 +7491,26 @@ class MockProfileViewModel extends _i1.Mock implements _i81.ProfileViewModel {
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -7545,11 +7613,15 @@ class MockProfileViewModel extends _i1.Mock implements _i81.ProfileViewModel {
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -8490,6 +8562,26 @@ class MockDataPlansViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -8592,11 +8684,15 @@ class MockDataPlansViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -9429,6 +9525,26 @@ class MockHomePagerViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -9531,11 +9647,15 @@ class MockHomePagerViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -10362,6 +10482,26 @@ class MockStartUpViewModel extends _i1.Mock implements _i86.StartUpViewModel {
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -10464,11 +10604,15 @@ class MockStartUpViewModel extends _i1.Mock implements _i86.StartUpViewModel {
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -11349,6 +11493,26 @@ class MockContinueWithEmailViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -11451,11 +11615,15 @@ class MockContinueWithEmailViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -12274,6 +12442,26 @@ class MockPurchaseLoadingViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -12376,11 +12564,15 @@ class MockPurchaseLoadingViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -13173,6 +13365,26 @@ class MockDeviceCompabilityCheckViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -13275,11 +13487,15 @@ class MockDeviceCompabilityCheckViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -14154,6 +14370,26 @@ class MockLoginViewModel extends _i1.Mock implements _i90.LoginViewModel {
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -14256,11 +14492,15 @@ class MockLoginViewModel extends _i1.Mock implements _i90.LoginViewModel {
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -15157,6 +15397,26 @@ class MockVerifyLoginViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -15259,11 +15519,15 @@ class MockVerifyLoginViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -16160,6 +16424,26 @@ class MockVerifyPurchaseViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -16262,11 +16546,15 @@ class MockVerifyPurchaseViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -17126,6 +17414,26 @@ class MockSkeletonViewModel extends _i1.Mock implements _i93.SkeletonViewModel {
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -17228,11 +17536,15 @@ class MockSkeletonViewModel extends _i1.Mock implements _i93.SkeletonViewModel {
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
@@ -18062,6 +18374,26 @@ class MockUserGuideDetailedViewModel extends _i1.Mock
       ) as _i20.Future<_i16.DialogResponse<_i77.MainDialogResponse>?>);
 
   @override
+  _i20.Future<void> showErrorDialogWithRetry({
+    required _i15.VoidCallback? onRetry,
+    String? title,
+    String? message,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialogWithRetry,
+          [],
+          {
+            #onRetry: onRetry,
+            #title: title,
+            #message: message,
+          },
+        ),
+        returnValue: _i20.Future<void>.value(),
+        returnValueForMissingStub: _i20.Future<void>.value(),
+      ) as _i20.Future<void>);
+
+  @override
   _i20.Future<void> showNativeErrorMessage(
     String? titleMessage,
     String? contentMessage,
@@ -18164,11 +18496,15 @@ class MockUserGuideDetailedViewModel extends _i1.Mock
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> handleError(_i4.Resource<dynamic>? response) =>
+  _i20.Future<void> handleError(
+    _i4.Resource<dynamic>? response, {
+    _i15.VoidCallback? onRetry,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #handleError,
           [response],
+          {#onRetry: onRetry},
         ),
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),

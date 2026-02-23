@@ -283,7 +283,9 @@ Future<void> main() async {
 
         for (final Widget widget in icons) {
           final Icon icon = widget as Icon;
-          if (icon.icon == Icons.person_outline) personIconCount++;
+          if (icon.icon == Icons.person_outline) {
+            personIconCount++;
+          }
         }
 
         // Person icon should only appear once (reward type icon)

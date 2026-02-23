@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:math" as math;
 
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -66,7 +67,7 @@ class _AnimatedHalfCircularProgressIndicatorState
     );
 
     // Start the animation
-    _controller.forward();
+    unawaited(_controller.forward());
   }
 
   @override
@@ -84,7 +85,7 @@ class _AnimatedHalfCircularProgressIndicatorState
         ),
       );
 
-      _controller.forward(from: 0);
+      unawaited(_controller.forward(from: 0));
     }
   }
 

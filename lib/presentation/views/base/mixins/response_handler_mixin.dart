@@ -33,7 +33,7 @@ mixin ResponseHandlerMixin on BaseViewModel {
     VoidCallback? onRetry,
   }) async {
     if (this is DialogUtilitiesMixin) {
-      final mixin = this as DialogUtilitiesMixin;
+      final DialogUtilitiesMixin mixin = this as DialogUtilitiesMixin;
       
       // Check if this is a retryable network error
       final bool isRetryable = ErrorCodes.isRetryable(response.error?.errorCode);

@@ -423,6 +423,7 @@ class MockDataSource implements DynamicSelectionViewDataSource {
 
   List<String> _data;
   final bool shouldReturnEmptyList;
+  // ignore: unreachable_from_main
   final bool shouldConfirm;
 
   @override

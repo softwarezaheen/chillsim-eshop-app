@@ -12,7 +12,7 @@ class BannersViewModel extends BaseModel {
   int _currentPage = 0;
   PageController bannersPageController = PageController(viewportFraction: 0.9);
   List<BannersViewTypes> banners = BannersViewTypes.values
-      .where((element) {
+      .where((BannersViewTypes element) {
         if (element == BannersViewTypes.bannersReferral) {
           return AppEnvironment.appEnvironmentHelper.enableReferral;
         }

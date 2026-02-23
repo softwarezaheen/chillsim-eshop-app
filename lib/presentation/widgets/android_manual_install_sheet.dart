@@ -3,6 +3,7 @@ import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
 class AndroidManualInstallSheet extends StatelessWidget {
@@ -42,8 +43,8 @@ class AndroidManualInstallSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color? titleColor = mainDarkTextColor(context: context);
-    final Color? subtitleColor = contentTextColor(context: context);
+    final Color titleColor = mainDarkTextColor(context: context);
+    final Color subtitleColor = contentTextColor(context: context);
     final Color cardColor = bodyBackGroundColor(context: context);
     final double maxHeight = MediaQuery.of(context).size.height * 0.9;
 
@@ -196,6 +197,14 @@ class AndroidManualInstallSheet extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(StringProperty("activationLink", activationLink))
+    ..add(ObjectFlagProperty<VoidCallback>.has("onCopy", onCopy))
+    ..add(ObjectFlagProperty<Future<void> Function()?>.has("onOpenSettings", onOpenSettings));
+  }
 }
 
 class _OptionCard extends StatelessWidget {
@@ -253,6 +262,17 @@ class _OptionCard extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty<IconData>("icon", icon))
+    ..add(ColorProperty("backgroundColor", backgroundColor))
+    ..add(StringProperty("title", title))
+    ..add(DiagnosticsProperty<TextStyle>("titleStyle", titleStyle))
+    ..add(StringProperty("description", description))
+    ..add(DiagnosticsProperty<TextStyle>("descriptionStyle", descriptionStyle));
+  }
 }
 
 class _ActivationLinkField extends StatelessWidget {
@@ -293,5 +313,13 @@ class _ActivationLinkField extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(StringProperty("activationLink", activationLink))
+    ..add(ColorProperty("subtitleColor", subtitleColor))
+    ..add(ObjectFlagProperty<VoidCallback>.has("onCopy", onCopy));
   }
 }

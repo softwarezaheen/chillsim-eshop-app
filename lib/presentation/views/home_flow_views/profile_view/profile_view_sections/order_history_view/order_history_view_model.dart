@@ -34,7 +34,7 @@ class OrderHistoryViewModel extends BaseModel {
     super.onViewModelReady();
     try {
       unawaited(getOrderHistory());
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error initializing order history: $e");
     }
   }
@@ -65,7 +65,7 @@ class OrderHistoryViewModel extends BaseModel {
   Future<void> getOrderHistory() async {
     try {
       await getOrderHistoryUseCase.loadNextPage(NoParams());
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error loading order history: $e");
     }
   }
@@ -73,7 +73,7 @@ class OrderHistoryViewModel extends BaseModel {
   Future<void> refreshOrderHistory() async {
     try {
       await getOrderHistoryUseCase.refreshData(NoParams());
-    } catch (e) {
+    } on Exception catch (e) {
       log("Error refreshing order history: $e");
     }
   }

@@ -39,9 +39,9 @@ mixin DialogUtilitiesMixin on BaseViewModel {
   }
 
   Future<void> showErrorDialogWithRetry({
+    required VoidCallback onRetry, 
     String? title,
     String? message,
-    required VoidCallback onRetry,
   }) async {
     final DialogResponse<MainDialogResponse>? result =
         await dialogService.showCustomDialog(
@@ -50,11 +50,9 @@ mixin DialogUtilitiesMixin on BaseViewModel {
       data: MainDialogRequest(
         title: title,
         description: message,
-        iconType: DialogIconType.warning,
         mainButtonTitle: LocaleKeys.action_retry.tr(),
         mainButtonTag: "retry",
         cancelText: LocaleKeys.action_dismiss.tr(),
-        showCancelButton: true,
         dismissibleDialog: true,
       ),
     );

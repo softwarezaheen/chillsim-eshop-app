@@ -146,10 +146,10 @@ class ReferalStoriesView {
                         ),
                         verticalSpaceSmallMedium,
                         Text(
-                          LocaleKeys.storiesView_referralContent2.tr(namedArgs: {
+                          LocaleKeys.storiesView_referralContent2.tr(namedArgs: <String, String>{
                             "referred_discount": locator<AppConfigurationService>()
                                 .referredDiscountPercentage,
-                          }),
+                          },),
                           style: headerFourNormalTextStyle(
                             context: context,
                             fontColor: mainWhiteTextColor(
@@ -201,10 +201,10 @@ class ReferalStoriesView {
                         ),
                         verticalSpaceSmallMedium,
                         Text(
-                          LocaleKeys.storiesView_referralContent3.tr(namedArgs: {
+                          LocaleKeys.storiesView_referralContent3.tr(namedArgs: <String, String>{
                             "referral_amount": locator<AppConfigurationService>()
                                 .referAndEarnAmount,
-                          }),
+                          },),
                           style: headerFourNormalTextStyle(
                             context: context,
                             fontColor: mainWhiteTextColor(

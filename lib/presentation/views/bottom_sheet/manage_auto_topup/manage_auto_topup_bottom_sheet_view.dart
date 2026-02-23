@@ -177,7 +177,9 @@ class ManageAutoTopupBottomSheetView extends StatelessWidget {
                           }
                         }
                       },
-                      activeColor: const Color(0xFFD3DC47),
+                      activeThumbColor: const Color(0xFFD3DC47),
+                      activeTrackColor:
+                          const Color(0xFFD3DC47).withValues(alpha: 0.5),
                       materialTapTargetSize:
                           MaterialTapTargetSize.shrinkWrap,
                     ),
@@ -456,7 +458,8 @@ class ManageAutoTopupBottomSheetView extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<SheetRequest<ManageAutoTopupSheetRequest>>("request", request));
-    properties.add(ObjectFlagProperty<Function(SheetResponse<MainBottomSheetResponse>)>.has("completer", completer));
+    properties
+      ..add(DiagnosticsProperty<SheetRequest<ManageAutoTopupSheetRequest>>("request", request))
+      ..add(ObjectFlagProperty<Function(SheetResponse<MainBottomSheetResponse>)>.has("completer", completer));
   }
 }

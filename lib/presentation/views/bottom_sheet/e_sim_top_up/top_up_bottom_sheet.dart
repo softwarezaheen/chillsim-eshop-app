@@ -92,10 +92,10 @@ class TopUpBottomSheet extends StatelessWidget {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: themeColor.withOpacity(0.08),
+                          color: themeColor.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: themeColor.withOpacity(0.25),
+                            color: themeColor.withValues(alpha: 0.25),
                           ),
                         ),
                         child: Column(
@@ -147,7 +147,7 @@ class TopUpBottomSheet extends StatelessWidget {
                                   context: context,
                                   fontColor: contentTextColor(
                                     context: context,
-                                  ).withOpacity(0.7),
+                                  ).withValues(alpha: 0.7),
                                 ),
                               ),
                             ),
@@ -317,7 +317,7 @@ class EsimBundleTopUpWidget extends StatelessWidget {
           ? (taxes.displayCurrency ?? "")
           : (taxes.displayCurrency ?? "");
       includedItems.add(
-          "$feeAmount $feeCurrency ${LocaleKeys.bundle_processing_fee.tr()}");
+          "$feeAmount $feeCurrency ${LocaleKeys.bundle_processing_fee.tr()}",);
     }
 
     if (showVat) {
@@ -413,10 +413,10 @@ class EsimBundleTopUpWidget extends StatelessWidget {
               ),
             ).applyShimmer(context: context, enable: isLoading),
             const BundleDivider(),
-            if (isTaxesLoading) ...[
+            if (isTaxesLoading) ...<Widget>[
               const SizedBox(height: 8),
               Row(
-                children: [
+                children: <Widget>[
                   const SizedBox(
                     width: 18,
                     height: 18,
@@ -432,7 +432,7 @@ class EsimBundleTopUpWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            ] else if (taxes != null && taxes?.total != null) ...[
+            ] else if (taxes != null && taxes?.total != null) ...<Widget>[
               Text(
                 _buildTaxDisplayText(taxes!),
                 style: captionTwoNormalTextStyle(
@@ -451,15 +451,15 @@ class EsimBundleTopUpWidget extends StatelessWidget {
                   title: (taxes?.currency != taxes?.displayCurrency &&
                           taxes?.exchangeRate != null &&
                           taxes?.exchangeRate != 0)
-                      ? LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
+                      ? LocaleKeys.bundleInfo_priceText.tr(namedArgs: <String, String>{
                           "price":
                               "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.currency ?? ""}",
-                        })
+                        },)
                       : ((taxes != null && taxes?.total != null)
-                          ? LocaleKeys.bundleInfo_priceText.tr(namedArgs: {
+                          ? LocaleKeys.bundleInfo_priceText.tr(namedArgs: <String, String>{
                               "price":
                                   "${((taxes?.total! ?? 0) / 100).toStringAsFixed(2)} ${taxes?.displayCurrency ?? ""}",
-                            })
+                            },)
                           : priceButtonText),
                   themeColor: themeColor,
                   onPressed: isTaxesLoading ? () {} : onPriceButtonClick,
@@ -497,6 +497,8 @@ class EsimBundleTopUpWidget extends StatelessWidget {
       )
       ..add(DiagnosticsProperty<bool>("isLoading", isLoading))
       ..add(StringProperty("icon", icon))
-      ..add(DiagnosticsProperty<bool>("showUnlimitedData", showUnlimitedData));
+      ..add(DiagnosticsProperty<bool>("showUnlimitedData", showUnlimitedData))
+      ..add(DiagnosticsProperty<BundleTaxesResponseModel?>("taxes", taxes))
+      ..add(DiagnosticsProperty<bool>("isTaxesLoading", isTaxesLoading));
   }
 }

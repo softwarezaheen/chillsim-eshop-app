@@ -204,6 +204,7 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
   }
 
   /// Handle marketing consent toggle
+  // ignore: avoid_positional_boolean_parameters
   Future<void> onMarketingConsentToggle(bool value) async {
     if (_state.isUpdatingConsent) {
       return;
@@ -239,7 +240,7 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
           showNativeErrorMessage("", LocaleKeys.marketing_consent_update_failed.tr());
         },
       );
-    } catch (e) {
+    } on Exception {
       showNativeErrorMessage("", LocaleKeys.marketing_consent_update_failed.tr());
     } finally {
       _state.isUpdatingConsent = false;

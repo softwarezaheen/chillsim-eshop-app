@@ -1,18 +1,19 @@
+import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
+import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
+import "package:esim_open_source/presentation/views/bottom_sheet/billing_information_view/billing_info_bottomsheet_view_model.dart";
 import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/presentation/widgets/searchable_dropdown_field.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart";
 import "package:stacked_services/stacked_services.dart";
-import "package:esim_open_source/presentation/views/bottom_sheet/billing_information_view/billing_info_bottomsheet_view_model.dart";
-import 'package:esim_open_source/translations/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:esim_open_source/presentation/shared/shared_styles.dart';
 
 class BillingInfoBottomSheetView extends StatelessWidget {
   const BillingInfoBottomSheetView({
@@ -50,8 +51,6 @@ class BillingInfoBottomSheetView extends StatelessWidget {
                     ),
                   ),
                   PaddingWidget.applySymmetricPadding(
-                    horizontal: 0,
-                    vertical: 0,
                     child: Text(
                       LocaleKeys.billing_details_title.tr(),
                       style: headerThreeBoldTextStyle(
@@ -74,16 +73,16 @@ class BillingInfoBottomSheetView extends StatelessWidget {
                               }
                             },
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: TextStyle(fontSize: 12)),
+                                    title: Text(LocaleKeys.billing_type_individual.tr(), style: const TextStyle(fontSize: 12)),
                                     value: BillingType.individual,
                                   ),
                                 ),
                                 Expanded(
                                   child: RadioListTile<BillingType>(
-                                    title: Text(LocaleKeys.billing_type_company.tr(), style: TextStyle(fontSize: 12)),
+                                    title: Text(LocaleKeys.billing_type_company.tr(), style: const TextStyle(fontSize: 12)),
                                     value: BillingType.business,
                                   ),
                                 ),
@@ -274,6 +273,13 @@ class BillingInfoBottomSheetView extends StatelessWidget {
         );
       },
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty<dynamic>("requestBase", requestBase))
+    ..add(ObjectFlagProperty<Function(SheetResponse<EmptyBottomSheetResponse>)>.has("completer", completer));
   }
 
 }

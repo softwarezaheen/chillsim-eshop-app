@@ -1,15 +1,16 @@
-import 'dart:io';
+import "dart:async";
+import "dart:io";
 
-import 'package:esim_open_source/data/services/analytics_service_impl.dart';
-import 'package:esim_open_source/data/services/consent_initializer.dart';
-import 'package:esim_open_source/data/services/consent_manager_service.dart';
-import 'package:esim_open_source/presentation/shared/shared_styles.dart';
-import 'package:esim_open_source/presentation/shared/ui_helpers.dart';
-import 'package:esim_open_source/presentation/widgets/main_button.dart';
-import 'package:esim_open_source/translations/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/data/services/analytics_service_impl.dart";
+import "package:esim_open_source/data/services/consent_initializer.dart";
+import "package:esim_open_source/data/services/consent_manager_service.dart";
+import "package:esim_open_source/presentation/shared/shared_styles.dart";
+import "package:esim_open_source/presentation/shared/ui_helpers.dart";
+import "package:esim_open_source/presentation/widgets/main_button.dart";
+import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/material.dart";
+import "package:url_launcher/url_launcher.dart";
 
 class ConsentDialog extends StatefulWidget {
   const ConsentDialog({super.key});
@@ -36,7 +37,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
   @override
   void initState() {
     super.initState();
-    _loadCurrentConsentState();
+    unawaited(_loadCurrentConsentState());
   }
 
   Future<void> _loadCurrentConsentState() async {
@@ -75,15 +76,17 @@ class _ConsentDialogState extends State<ConsentDialog> {
       }
 
       return true; // Allow toggle
-    } catch (e) {
-      print('Error checking ATT status: $e');
+    } on Exception catch (e) {
+      debugPrint("Error checking ATT status: $e");
       return true; // Allow toggle on error
     }
   }
 
   /// Show ATT guidance dialog with iOS Settings navigation
   Future<void> _showAttGuidanceDialog() async {
-    if (_isShowingAttGuidance) return; // Prevent multiple dialogs
+    if (_isShowingAttGuidance) {
+      return; // Prevent multiple dialogs
+    }
 
     setState(() {
       _isShowingAttGuidance = true;
@@ -105,7 +108,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Row(
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.privacy_tip_outlined,
                   color: Theme.of(context).primaryColor,
@@ -126,7 +129,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
               message,
               style: const TextStyle(fontSize: 16),
             ),
-            actions: [
+            actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -154,11 +157,11 @@ class _ConsentDialogState extends State<ConsentDialog> {
   /// Open iOS Settings for the app
   Future<void> _openIOSSettings() async {
     try {
-      final Uri settingsUri = Uri.parse('app-settings:');
+      final Uri settingsUri = Uri.parse("app-settings:");
       await launchUrl(settingsUri, mode: LaunchMode.externalApplication);
-      print('📱 Opened iOS Settings');
-    } catch (e) {
-      print('Error opening iOS Settings: $e');
+      debugPrint("📱 Opened iOS Settings");
+    } on Exception catch (e) {
+      debugPrint("Error opening iOS Settings: $e");
     }
   }
 
@@ -168,10 +171,12 @@ class _ConsentDialogState extends State<ConsentDialog> {
       // User is enabling analytics - check ATT
       final bool allowed = await _checkAttStatusForTracking(
         isEnabling: true,
-        trackingType: 'analytics',
+        trackingType: "analytics",
       );
 
-      if (!allowed) return; // ATT guidance was shown
+      if (!allowed) {
+        return; // ATT guidance was shown
+      }
     }
 
     setState(() {
@@ -185,10 +190,12 @@ class _ConsentDialogState extends State<ConsentDialog> {
       // User is enabling advertising - check ATT
       final bool allowed = await _checkAttStatusForTracking(
         isEnabling: true,
-        trackingType: 'advertising',
+        trackingType: "advertising",
       );
 
-      if (!allowed) return; // ATT guidance was shown
+      if (!allowed) {
+        return; // ATT guidance was shown
+      }
     }
 
     setState(() {
@@ -218,7 +225,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
     if (enablingAnalytics || enablingAdvertising) {
       final bool allowed = await _checkAttStatusForTracking(
         isEnabling: true,
-        trackingType: 'all',
+        trackingType: "all",
       );
 
       if (!allowed) {
@@ -266,10 +273,12 @@ class _ConsentDialogState extends State<ConsentDialog> {
     if (enablingAnalytics || enablingAdvertising) {
       final bool allowed = await _checkAttStatusForTracking(
         isEnabling: true,
-        trackingType: 'selected',
+        trackingType: "selected",
       );
 
-      if (!allowed) return; // ATT guidance was shown
+      if (!allowed) {
+        return; // ATT guidance was shown
+      }
     }
 
     // Proceed with Accept Selected
@@ -291,9 +300,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         insetPadding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Container(
+        child: const SizedBox(
           height: 200,
-          child: const Center(
+          child: Center(
             child: CircularProgressIndicator(),
           ),
         ),
@@ -309,23 +318,23 @@ class _ConsentDialogState extends State<ConsentDialog> {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             // Header
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.08),
+                color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
               ),
               child: Row(
-                children: [
+                children: <Widget>[
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.12),
+                      color: Theme.of(context).primaryColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(
@@ -351,7 +360,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     Text(
                       LocaleKeys.consentDialog_description.tr(),
                       style: captionOneMediumTextStyle(
@@ -367,7 +376,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       description:
                           LocaleKeys.consentDialog_analyticsDescription.tr(),
                       value: _analyticsConsent,
-                      onChanged: (value) => _handleAnalyticsToggle(value),
+                      onChanged: _handleAnalyticsToggle,
                       icon: Icons.analytics_outlined,
                     ),
 
@@ -379,7 +388,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                       description:
                           LocaleKeys.consentDialog_advertisingDescription.tr(),
                       value: _advertisingConsent,
-                      onChanged: (value) => _handleAdvertisingToggle(value),
+                      onChanged: _handleAdvertisingToggle,
                       icon: Icons.ads_click_outlined,
                     ),
 
@@ -423,16 +432,16 @@ class _ConsentDialogState extends State<ConsentDialog> {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               decoration: BoxDecoration(
                 color:
-                    lightGreyBackGroundColor(context: context).withOpacity(0.3),
+                    lightGreyBackGroundColor(context: context).withValues(alpha: 0.3),
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
               ),
               child: Column(
-                children: [
+                children: <Widget>[
                   // Smart button logic: Show "Accept Selected" only if user has selected something
-                  if (_shouldShowAcceptSelected) ...[
+                  if (_shouldShowAcceptSelected) ...<Widget>[
                     // Accept Selected (only shown if analytics OR advertising is enabled)
                     MainButton(
                       title: LocaleKeys.consentDialog_acceptSelected.tr(),
@@ -446,7 +455,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
 
                   // Quick options row (always shown)
                   Row(
-                    children: [
+                    children: <Widget>[
                       Expanded(
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
@@ -454,8 +463,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                             side: BorderSide(
                               color: Theme.of(context)
                                   .primaryColor
-                                  .withOpacity(0.3),
-                              width: 1,
+                                  .withValues(alpha: 0.3),
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -479,8 +487,7 @@ class _ConsentDialogState extends State<ConsentDialog> {
                             side: BorderSide(
                               color: Theme.of(context)
                                   .primaryColor
-                                  .withOpacity(0.3),
-                              width: 1,
+                                  .withValues(alpha: 0.3),
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -495,8 +502,8 @@ class _ConsentDialogState extends State<ConsentDialog> {
                             });
 
                             // Wait a moment to show the updated state
-                            await Future.delayed(
-                                const Duration(milliseconds: 300));
+                            await Future<void>.delayed(
+                                const Duration(milliseconds: 300),);
 
                             // Essential only
                             await ConsentManagerService().updateConsent(
@@ -533,32 +540,30 @@ class _ConsentDialogState extends State<ConsentDialog> {
     required String description,
     required bool value,
     required ValueChanged<bool>? onChanged,
-    bool required = false,
-    required IconData icon,
+    required IconData icon, bool required = false,
   }) {
     return Container(
       padding: const EdgeInsets.all(10), // Reduced from 12 to 10
       decoration: BoxDecoration(
         border: Border.all(
           color: value
-              ? Theme.of(context).primaryColor.withOpacity(0.3)
+              ? Theme.of(context).primaryColor.withValues(alpha: 0.3)
               : Theme.of(context).dividerColor,
-          width: 1,
         ),
         borderRadius: BorderRadius.circular(10), // Reduced from 12 to 10
         color: value
-            ? Theme.of(context).primaryColor.withOpacity(0.03)
+            ? Theme.of(context).primaryColor.withValues(alpha: 0.03)
             : Theme.of(context).cardColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(5), // Reduced from 6 to 5
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(7), // Reduced from 8 to 7
                 ),
                 child: Icon(
@@ -577,9 +582,9 @@ class _ConsentDialogState extends State<ConsentDialog> {
               if (required)
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 7, vertical: 2), // Reduced padding
+                      horizontal: 7, vertical: 2,), // Reduced padding
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.15),
+                    color: Theme.of(context).primaryColor.withValues(alpha: 0.15),
                     borderRadius:
                         BorderRadius.circular(5), // Reduced from 6 to 5
                   ),
@@ -597,11 +602,11 @@ class _ConsentDialogState extends State<ConsentDialog> {
                   child: Switch.adaptive(
                     value: value,
                     onChanged: onChanged,
-                    activeColor: Theme.of(context).primaryColor,
+                    activeThumbColor: Theme.of(context).primaryColor,
                     activeTrackColor:
-                        Theme.of(context).primaryColor.withOpacity(0.4),
+                        Theme.of(context).primaryColor.withValues(alpha: 0.4),
                     inactiveThumbColor: Colors.grey,
-                    inactiveTrackColor: Colors.grey.withOpacity(0.3),
+                    inactiveTrackColor: Colors.grey.withValues(alpha: 0.3),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
@@ -630,11 +635,11 @@ Future<void> showConsentDialog(BuildContext context) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (context) {
+      builder: (BuildContext context) {
         return const ConsentDialog();
       },
     );
-  } catch (e) {
+  } on Exception {
     // Handle error silently
   }
 }

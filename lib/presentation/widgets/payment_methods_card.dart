@@ -42,7 +42,6 @@ class PaymentMethodCard extends StatelessWidget {
         child: Padding(
           padding: padding,
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Stack(
                 alignment: Alignment.center,

@@ -228,7 +228,7 @@ class StripePayment {
                 log("❌ Payment failed after 3DS — status: ${actionResult.status}");
                 throw Exception(_safeTranslate(
                     LocaleKeys.payment_error_failed,
-                    "Payment authentication failed. Please try a different card."));
+                    "Payment authentication failed. Please try a different card.",),);
             }
 
           case PaymentIntentsStatus.RequiresConfirmation:

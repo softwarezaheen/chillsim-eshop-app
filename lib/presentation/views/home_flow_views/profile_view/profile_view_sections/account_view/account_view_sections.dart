@@ -58,7 +58,7 @@ enum AccountViewSections {
       case AccountViewSections.privacySettings:
         await ConsentInitializer.showConsentSettings(context);
       case AccountViewSections.logout:
-        SheetResponse? logoutResponse =
+        SheetResponse<dynamic>? logoutResponse =
             await viewModel.bottomSheetService.showCustomSheet(
           enableDrag: false,
           isScrollControlled: true,
@@ -71,7 +71,7 @@ enum AccountViewSections {
           );
         }
       case AccountViewSections.deleteAccount:
-        SheetResponse? deleteAccountResponse =
+        SheetResponse<dynamic>? deleteAccountResponse =
             await viewModel.bottomSheetService.showCustomSheet(
           enableDrag: false,
           isScrollControlled: true,

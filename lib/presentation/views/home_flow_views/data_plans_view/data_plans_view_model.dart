@@ -316,9 +316,9 @@ class DataPlansViewModel extends BaseModel {
     if (priorityCodesStr.isEmpty) {
       // No priority config - return alphabetically sorted list
       log("⚠️ No priority countries configured, sorting alphabetically");
-      final List<CountryResponseModel> sorted = List.from(countryList);
-      sorted.sort((a, b) => 
-        (a.country ?? "").compareTo(b.country ?? "")
+      final List<CountryResponseModel> sorted = List<CountryResponseModel>.from(countryList)
+        ..sort((CountryResponseModel a, CountryResponseModel b) => 
+        (a.country ?? "").compareTo(b.country ?? ""),
       );
       return sorted;
     }
@@ -326,17 +326,17 @@ class DataPlansViewModel extends BaseModel {
     // Parse priority country codes (e.g., "TUR,USA,THA,ARE")
     final List<String> priorityCodes = priorityCodesStr
         .split(",")
-        .map((code) => code.trim().toUpperCase())
-        .where((code) => code.isNotEmpty)
+        .map((String code) => code.trim().toUpperCase())
+        .where((String code) => code.isNotEmpty)
         .toList();
 
     log("🔍 Parsed priority codes: $priorityCodes");
 
     // Split countries into priority and non-priority
-    final List<CountryResponseModel> priorityCountries = [];
-    final List<CountryResponseModel> otherCountries = [];
+    final List<CountryResponseModel> priorityCountries = <CountryResponseModel>[];
+    final List<CountryResponseModel> otherCountries = <CountryResponseModel>[];
 
-    for (final country in countryList) {
+    for (final CountryResponseModel country in countryList) {
       final String? iso3 = country.iso3Code?.toUpperCase();
       if (iso3 != null && priorityCodes.contains(iso3)) {
         priorityCountries.add(country);
@@ -349,22 +349,22 @@ class DataPlansViewModel extends BaseModel {
     log("📊 Priority countries: ${priorityCountries.length}, Other countries: ${otherCountries.length}");
 
     // Sort priority countries by config order
-    priorityCountries.sort((a, b) {
+    priorityCountries.sort((CountryResponseModel a, CountryResponseModel b) {
       final int indexA = priorityCodes.indexOf(a.iso3Code?.toUpperCase() ?? "");
       final int indexB = priorityCodes.indexOf(b.iso3Code?.toUpperCase() ?? "");
       return indexA.compareTo(indexB);
     });
 
     // Sort other countries alphabetically by name
-    otherCountries.sort((a, b) => 
-      (a.country ?? "").compareTo(b.country ?? "")
+    otherCountries.sort((CountryResponseModel a, CountryResponseModel b) => 
+      (a.country ?? "").compareTo(b.country ?? ""),
     );
 
     // Combine: priority first, then alphabetical
-    final List<CountryResponseModel> result = [...priorityCountries, ...otherCountries];
+    final List<CountryResponseModel> result = <CountryResponseModel>[...priorityCountries, ...otherCountries];
     
     if (result.isNotEmpty) {
-      log("📍 First 5 countries after sorting: ${result.take(5).map((c) => '${c.country} (${c.countryCode})').join(', ')}");
+      log("📍 First 5 countries after sorting: ${result.take(5).map((CountryResponseModel c) => '${c.country} (${c.countryCode})').join(', ')}");
     }
     
     return result;

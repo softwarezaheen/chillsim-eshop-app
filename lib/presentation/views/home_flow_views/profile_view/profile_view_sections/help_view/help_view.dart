@@ -107,4 +107,3 @@ class HelpView extends StatelessWidget {
     );
   }
 }
-

@@ -32,10 +32,10 @@ class HomePagerViewModel extends MainBaseModel {
         // Check if this is a pending purchase redirection that needs bundle data
         if (redirection is PendingPurchaseRedirection) {
           log("📦 Detected PendingPurchaseRedirection - fetching bundle data");
-          final pendingRedirection = redirection as PendingPurchaseRedirection;
+          final PendingPurchaseRedirection pendingRedirection = redirection! as PendingPurchaseRedirection;
           
           // Fetch full bundle data from API
-          final fullRedirection = await _reconstructPurchaseRedirection(pendingRedirection);
+          final PurchaseRedirection? fullRedirection = await _reconstructPurchaseRedirection(pendingRedirection);
           
           if (fullRedirection != null) {
             log("✅ Successfully reconstructed PurchaseRedirection");
@@ -54,7 +54,7 @@ class HomePagerViewModel extends MainBaseModel {
         try {
           localStorageService.remove(LocalStorageKeys.pendingRedirection);
           log("🗑️ Cleared pending redirection after successful routing");
-        } catch (e) {
+        } on Exception catch (e) {
           log("⚠️ Failed to clear pending redirection: $e");
         }
       });
@@ -67,7 +67,7 @@ class HomePagerViewModel extends MainBaseModel {
   ) async {
     try {
       // 1. Fetch bundle by code
-      final bundleResource = await getBundleUseCase.execute(
+      final Resource<BundleResponseModel?> bundleResource = await getBundleUseCase.execute(
         BundleParams(code: pendingRedirection.bundleCode),
       );
 
@@ -84,7 +84,7 @@ class HomePagerViewModel extends MainBaseModel {
       if (pendingRedirection.regionCode != null) {
         final RegionsResponseModel? region = regions?.firstWhere(
           (RegionsResponseModel r) => r.regionCode == pendingRedirection.regionCode,
-          orElse: () => RegionsResponseModel(),
+          orElse: RegionsResponseModel.new,
         );
         if (region != null && region.regionCode != null) {
           regionRequestModel = RegionRequestModel(
@@ -102,7 +102,7 @@ class HomePagerViewModel extends MainBaseModel {
             .map((String isoCode) {
               final CountryResponseModel? country = countries?.firstWhere(
                 (CountryResponseModel c) => c.iso3Code == isoCode,
-                orElse: () => CountryResponseModel(),
+                orElse: CountryResponseModel.new,
               );
               if (country != null && country.iso3Code != null) {
                 return CountriesRequestModel(
@@ -126,7 +126,7 @@ class HomePagerViewModel extends MainBaseModel {
 
       // 5. Return full PurchaseRedirection
       return InAppRedirection.purchase(args) as PurchaseRedirection;
-    } catch (e, stackTrace) {
+    } on Exception catch (e, stackTrace) {
       log("❌ Error reconstructing PurchaseRedirection: $e");
       log("Stack trace: $stackTrace");
       return null;

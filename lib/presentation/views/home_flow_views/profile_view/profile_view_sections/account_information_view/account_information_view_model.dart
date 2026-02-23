@@ -111,7 +111,7 @@ class AccountInformationViewModel extends BaseModel {
   Future<void> loadCountries() async {
     final String jsonString = await rootBundle.loadString("assets/data/countries.json");
     final List<dynamic> jsonList = json.decode(jsonString);
-    _countriesList = jsonList.map((e) => Country(
+    _countriesList = jsonList.map((dynamic e) => Country(
       name: e["name"],
       alpha2: e["alpha2"],
       alpha3: e["alpha3"],
@@ -126,7 +126,7 @@ class AccountInformationViewModel extends BaseModel {
     } else {
       // Find the exact instance from the list
       selectedCountry = countriesList.firstWhere(
-        (c) => c.alpha2 == country.alpha2,
+        (Country c) => c.alpha2 == country.alpha2,
         orElse: () => countriesList.first,
       );
       countryController.text = selectedCountry?.alpha2 ?? "";
@@ -137,7 +137,7 @@ class AccountInformationViewModel extends BaseModel {
   Future<void> loadCounties() async {
     final String jsonString = await rootBundle.loadString("assets/data/counties_ro.json");
     final List<dynamic> jsonList = json.decode(jsonString);
-    countiesList = jsonList.map((e) => County(
+    countiesList = jsonList.map((dynamic e) => County(
       name: e["name"],
       alpha3: e["alpha3"],
     ),).toList();
@@ -149,11 +149,11 @@ class AccountInformationViewModel extends BaseModel {
     final String jsonString = await rootBundle.loadString("assets/data/regions_ro.json");
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
     // Find cities for the selected county
-    citiesList = [];
+    citiesList = <String>[];
     if (jsonMap.containsKey(countyName)) {
-      citiesList = (jsonMap[countyName] as List)
-        .map((e) => e["name"] ?? "")
-        .where((name) => name.isNotEmpty)
+      citiesList = (jsonMap[countyName] as List<dynamic>)
+        .map((dynamic e) => e["name"] ?? "")
+        .where((dynamic name) => name.isNotEmpty)
         .cast<String>()
         .toList();
     }
@@ -473,8 +473,8 @@ class AccountInformationViewModel extends BaseModel {
         (_registrationCodeController.text != _originalRegistrationCode) ||
         (billingType != _originalBillingType);
 
-    _saveButtonEnabled = ((personalInfoChanged || contactInfoChanged || billingInfoChanged) && 
-        (AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber ? isValidEmail : isValidPhone));
+    _saveButtonEnabled = (personalInfoChanged || contactInfoChanged || billingInfoChanged) && 
+        (AppEnvironment.appEnvironmentHelper.loginType == LoginType.phoneNumber ? isValidEmail : isValidPhone);
 
     if (isPhoneValid) {
       _validationError = null;

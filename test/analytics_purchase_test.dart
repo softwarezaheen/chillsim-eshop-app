@@ -63,7 +63,7 @@ void main() {
       for (final PurchaseTestScenario scenario in PurchaseTestScenario.values) {
         await AnalyticsTestHelper.sendMockPurchaseScenario(scenario);
         // Small delay between tests to avoid overwhelming analytics
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
       }
     });
   });

@@ -22,6 +22,7 @@ class AutoTopupToggleWidget extends StatelessWidget {
   final bool isEnabled;
   final bool isUpdating;
   final String bundleName;
+  // ignore: avoid_positional_boolean_parameters
   final Function(bool) onToggle;
   final bool showWidget;
 
@@ -138,9 +139,9 @@ class AutoTopupToggleWidget extends StatelessWidget {
                         child: Switch.adaptive(
                           value: isEnabled,
                           onChanged: onToggle,
-                          activeColor: context.appColors.primary_800,
+                          activeThumbColor: context.appColors.primary_800,
                           activeTrackColor:
-                              context.appColors.primary_800!.withOpacity(0.5),
+                              context.appColors.primary_800!.withValues(alpha: 0.5),
                           inactiveThumbColor: Colors.grey.shade400,
                           inactiveTrackColor: Colors.grey.shade300,
                         ),
@@ -165,10 +166,12 @@ class AutoTopupToggleWidget extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<bool>("isEnabled", isEnabled));
-    properties.add(DiagnosticsProperty<bool>("isUpdating", isUpdating));
-    properties.add(StringProperty("bundleName", bundleName));
-    properties.add(ObjectFlagProperty<Function(bool)>.has("onToggle", onToggle));
-    properties.add(DiagnosticsProperty<bool>("showWidget", showWidget));
+    properties
+      ..add(DiagnosticsProperty<bool>("isEnabled", isEnabled))
+      ..add(DiagnosticsProperty<bool>("isUpdating", isUpdating))
+      ..add(StringProperty("bundleName", bundleName))
+      // ignore: avoid_positional_boolean_parameters
+      ..add(ObjectFlagProperty<Function(bool)>.has("onToggle", onToggle))
+      ..add(DiagnosticsProperty<bool>("showWidget", showWidget));
   }
 }

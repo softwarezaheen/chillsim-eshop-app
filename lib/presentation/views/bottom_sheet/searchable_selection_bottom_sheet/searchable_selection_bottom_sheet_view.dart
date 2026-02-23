@@ -8,6 +8,7 @@ import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.
 import "package:esim_open_source/presentation/widgets/main_input_field.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
@@ -122,5 +123,12 @@ class SearchableSelectionBottomSheetView<T> extends StatelessWidget {
         );
       },
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty<SheetRequest<SearchableSelectionSheetRequest<T>>>("request", request))
+    ..add(ObjectFlagProperty<Function(SheetResponse<T>)>.has("completer", completer));
   }
 }

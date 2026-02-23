@@ -142,7 +142,7 @@ class PaymentMethodsView extends StatelessWidget {
             Icon(
               Icons.credit_card_off,
               size: 64,
-              color: contentTextColor(context: context).withOpacity(0.4),
+              color: contentTextColor(context: context).withValues(alpha: 0.4),
             ),
             verticalSpaceMedium,
             Text(

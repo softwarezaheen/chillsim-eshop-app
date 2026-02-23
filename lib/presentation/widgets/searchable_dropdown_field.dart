@@ -1,7 +1,10 @@
+import "dart:async";
+
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/searchable_selection_bottom_sheet/searchable_selection_bottom_sheet_view.dart";
 import "package:esim_open_source/presentation/views/bottom_sheet/searchable_selection_bottom_sheet/searchable_selection_bottom_sheet_view_model.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
 
@@ -28,11 +31,13 @@ class SearchableDropdownField<T extends Object> extends StatelessWidget {
     if (value == null) {
       return "";
     }
-    return displayTextExtractor(value as T);
+    return displayTextExtractor(value!);
   }
 
   Future<void> _showSearchBottomSheet(BuildContext context) async {
-    if (!enabled) return;
+    if (!enabled) {
+      return;
+    }
 
     // Use showModalBottomSheet directly to preserve type safety
     final SheetResponse<T>? result = await showModalBottomSheet<SheetResponse<T>>(
@@ -45,7 +50,7 @@ class SearchableDropdownField<T extends Object> extends StatelessWidget {
           minChildSize: 0.5,
           maxChildSize: 0.9,
           builder: (BuildContext context, ScrollController scrollController) {
-            return Container(
+            return DecoratedBox(
               decoration: BoxDecoration(
                 color: whiteBackGroundColor(context: context),
                 borderRadius: const BorderRadius.only(
@@ -85,9 +90,8 @@ class SearchableDropdownField<T extends Object> extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: enabled
-                ? secondaryTextColor(context: context).withOpacity(0.3)
+                ? secondaryTextColor(context: context).withValues(alpha: 0.3)
                 : Colors.grey[300]!,
-            width: 1,
           ),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -132,6 +136,17 @@ class SearchableDropdownField<T extends Object> extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(StringProperty("labelText", labelText))
+    ..add(IterableProperty<T>("items", items))
+    ..add(DiagnosticsProperty<T?>("value", value))
+    ..add(ObjectFlagProperty<ValueChanged<T?>>.has("onChanged", onChanged))
+    ..add(ObjectFlagProperty<String Function(T item)>.has("displayTextExtractor", displayTextExtractor))
+    ..add(DiagnosticsProperty<bool>("enabled", enabled));
+  }
 }
 
 /// Content widget that maintains type safety
@@ -152,6 +167,15 @@ class SearchableSelectionBottomSheetViewContent<T> extends StatefulWidget {
   @override
   State<SearchableSelectionBottomSheetViewContent<T>> createState() =>
       _SearchableSelectionBottomSheetViewContentState<T>();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(StringProperty("title", title))
+    ..add(IterableProperty<T>("items", items))
+    ..add(ObjectFlagProperty<String Function(T item)>.has("displayTextExtractor", displayTextExtractor))
+    ..add(DiagnosticsProperty<T?>("currentValue", currentValue));
+  }
 }
 
 class _SearchableSelectionBottomSheetViewContentState<T>
@@ -169,7 +193,7 @@ class _SearchableSelectionBottomSheetViewContentState<T>
       },
       currentValue: widget.currentValue,
     );
-    viewModel.onViewModelReady();
+    unawaited(viewModel.onViewModelReady());
   }
 
   @override
@@ -191,5 +215,11 @@ class _SearchableSelectionBottomSheetViewContentState<T>
       ),
       completer: viewModel.completer,
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<SearchableSelectionBottomSheetViewModel<T>>("viewModel", viewModel));
   }
 }

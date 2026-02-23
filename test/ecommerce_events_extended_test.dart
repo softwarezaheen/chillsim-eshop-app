@@ -4,7 +4,7 @@ import "package:flutter_test/flutter_test.dart";
 void main() {
   group("Ecommerce events extended coverage", () {
     test("ViewItemListEvent caps items at 10 and assigns sequential indexes", () {
-      final List<EcommerceItem> items = List.generate(15, (int i) => EcommerceItem(
+      final List<EcommerceItem> items = List<EcommerceItem>.generate(15, (int i) => EcommerceItem(
         id: "id$i",
         name: "Name $i",
         category: "esim_bundle",
@@ -18,13 +18,13 @@ void main() {
         platform: "Android",
         currency: "usd",
       );
-      final List<Map<String, Object?>> firebaseItems = (evt.firebaseParameters["items"]! as List).cast<Map<String,Object?>>();
+      final List<Map<String, Object?>> firebaseItems = (evt.firebaseParameters["items"]! as List<dynamic>).cast<Map<String,Object?>>();
       expect(firebaseItems.length, 10);
       for (int i=0;i<firebaseItems.length;i++) {
         expect(firebaseItems[i]["index"], i+1);
       }
       // Facebook value equals sum of first 10 prices
-      final double expectedValue = List.generate(10, (int i)=>1.0+i).reduce((double a,double b)=>a+b);
+      final double expectedValue = List<double>.generate(10, (int i)=>1.0+i).reduce((double a,double b)=>a+b);
       expect(evt.facebookParameters["value"], double.parse(expectedValue.toStringAsFixed(2)));
       expect(evt.facebookParameters["currency"], "USD");
     });
@@ -89,7 +89,7 @@ void main() {
         platform: "iOS",
         currency: "usd",
       );
-      expect(evt.firebaseParameters["items"], isA<List>());
+      expect(evt.firebaseParameters["items"], isA<List<dynamic>>());
       expect(evt.facebookParameters["value"], 7.77);
       expect(evt.facebookParameters["currency"], "USD");
     });

@@ -79,16 +79,20 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
         );
         // Filter out expired payment methods
         final DateTime now = DateTime.now();
-        all.removeWhere(
+        all..removeWhere(
           (SavedPaymentMethodResponseModel pm) =>
               _isExpired(pm, now),
-        );
+        )
         // Default PM first
-        all.sort(
+        ..sort(
           (SavedPaymentMethodResponseModel a,
-              SavedPaymentMethodResponseModel b) {
-            if (a.isDefault ?? false) return -1;
-            if (b.isDefault ?? false) return 1;
+              SavedPaymentMethodResponseModel b,) {
+            if (a.isDefault ?? false) {
+              return -1;
+            }
+            if (b.isDefault ?? false) {
+              return 1;
+            }
             return 0;
           },
         );
@@ -107,7 +111,9 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
   bool _isExpired(SavedPaymentMethodResponseModel pm, DateTime now) {
     final int? expMonth = pm.expMonth;
     final int? expYear = pm.expYear;
-    if (expMonth == null || expYear == null) return false;
+    if (expMonth == null || expYear == null) {
+      return false;
+    }
     return expYear < now.year ||
         (expYear == now.year && expMonth < now.month);
   }

@@ -43,7 +43,7 @@ class NotificationView extends StatelessWidget {
             ),
           ),
           if (notificationsModel.content != null &&
-              notificationsModel.content!.isNotEmpty) ...[
+              notificationsModel.content!.isNotEmpty) ...<Widget>[
             verticalSpaceSmall,
             Text(
               notificationsModel.content!,
