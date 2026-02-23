@@ -363,6 +363,12 @@ abstract class  LocaleKeys {
   static const noConnection_titleText = 'noConnection_titleText';
   static const noConnection_contentText = 'noConnection_contentText';
   static const noConnection_buttonTitleText = 'noConnection_buttonTitleText';
+  static const action_retry = 'action_retry';
+  static const action_dismiss = 'action_dismiss';
+  static const error_network_connection_lost = 'error_network_connection_lost';
+  static const error_network_timeout = 'error_network_timeout';
+  static const error_network_unavailable = 'error_network_unavailable';
+  static const error_unknown = 'error_unknown';
   static const check_plans_text = 'check_plans_text';
   static const qrcodeDetails_titleText = 'qrcodeDetails_titleText';
   static const qrcodeDetails_checkUserGuideText = 'qrcodeDetails_checkUserGuideText';
