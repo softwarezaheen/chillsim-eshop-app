@@ -59,7 +59,7 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
       ..isAutoTopupEnabled = item?.autoTopupEnabled ?? false
       ..autoTopupBundleName =
           item?.autoTopupBundleName ?? item?.displayTitle
-      ..showAutoTopupWidget = item?.isTopupAllowed ?? false
+      ..showAutoTopupWidget = (item?.isTopupAllowed ?? false) && !isUnlimited
       ..consumptionLoading = !isUnlimited;
 
     if (isUnlimited) {
