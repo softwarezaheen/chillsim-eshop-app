@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/user/saved_payment_method_response_model.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
@@ -249,11 +250,7 @@ class PaymentMethodsView extends StatelessWidget {
             // Card brand + last 4 + action buttons
             Row(
               children: <Widget>[
-                Icon(
-                  _getPaymentMethodIcon(pm.type ?? "card"),
-                  size: 24,
-                  color: context.appColors.primary_800,
-                ),
+                _buildPaymentMethodIcon(pm.type ?? "card", context),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -405,6 +402,32 @@ class PaymentMethodsView extends StatelessWidget {
         (expYear == currentYear && expMonth < currentMonth);
   }
 
+  /// Build the icon widget — uses asset images for wallet types, Icon for others.
+  Widget _buildPaymentMethodIcon(String type, BuildContext context) {
+    switch (type.toLowerCase()) {
+      case "apple_pay":
+        return Image.asset(
+          EnvironmentImages.applePay.fullImagePath,
+          width: 24,
+          height: 24,
+          fit: BoxFit.contain,
+        );
+      case "google_pay":
+        return Image.asset(
+          EnvironmentImages.googlePay.fullImagePath,
+          width: 24,
+          height: 24,
+          fit: BoxFit.contain,
+        );
+      default:
+        return Icon(
+          _getPaymentMethodIcon(type),
+          size: 24,
+          color: context.appColors.primary_800,
+        );
+    }
+  }
+
   /// Get the appropriate icon based on payment method type
   IconData _getPaymentMethodIcon(String type) {
     switch (type.toLowerCase()) {
@@ -437,9 +460,13 @@ class PaymentMethodsView extends StatelessWidget {
             ? "SEPA DEBIT •••• ${pm.last4}"
             : "SEPA DEBIT";
       case "apple_pay":
-        return "APPLE PAY";
+        return pm.last4 != null
+            ? "ApplePay - ${(pm.brand ?? "Card").toUpperCase()} \u2022\u2022\u2022\u2022 ${pm.last4}"
+            : "APPLE PAY";
       case "google_pay":
-        return "GOOGLE PAY";
+        return pm.last4 != null
+            ? "GPay - ${(pm.brand ?? "Card").toUpperCase()} \u2022\u2022\u2022\u2022 ${pm.last4}"
+            : "GOOGLE PAY";
       case "wallet":
         return "WALLET";
       case "card":

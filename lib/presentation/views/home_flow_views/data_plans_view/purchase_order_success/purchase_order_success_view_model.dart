@@ -55,7 +55,8 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
       ..showAutoTopupPrompt =
           isUserLoggedIn &&
           (purchaseESimBundle?.isTopupAllowed ?? false) &&
-          !(purchaseESimBundle?.unlimited ?? false)
+          !(purchaseESimBundle?.unlimited ?? false) &&
+          !(purchaseESimBundle?.autoTopupEnabled ?? false)
       ..autoTopupEnabled = purchaseESimBundle?.autoTopupEnabled ?? false
       ..autoTopupBundleName = purchaseESimBundle?.displayTitle ?? "";
     notifyListeners();

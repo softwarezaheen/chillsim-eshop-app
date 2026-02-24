@@ -539,7 +539,7 @@
   "auto_topup_trigger_point": "Auslösepunkt",
   "auto_topup_at_80_percent": "80% Verbrauch",
   "auto_topup_per_topup": "Pro Aufladung",
-  "auto_topup_checkout_hint": "Das Paket, das Sie kaufen, wird als Ihr Auto-Auflade-Paket verknüpft — es wird automatisch aufgeladen, wenn der Verbrauch 80 % erreicht, über Ihre gespeicherte Zahlungsmethode.",
+  "auto_topup_checkout_hint": "Das Paket, das Sie kaufen, wird als Ihr Auto-Auflade-Paket verknüpft — es wird automatisch aufgeladen, wenn der Verbrauch 80 % erreicht, über Ihre gespeicherte Standard-Zahlungsmethode.",
   "auto_topup_skip_unlimited": "Auto-Aufladung ist für unbegrenzte Pakete nicht verfügbar.",
 
   "payment_methods_title": "Zahlungsmethoden",

@@ -118,6 +118,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   bool promoCodeFieldEnabled = true;
   Color? promoCodeFieldColor;
 
+  // Auto top-up opt-in for new bundle purchases
+  bool enableAutoTopup = false;
+
   IconData get promoCodeFieldIcon {
     if (promoCodeFieldEnabled) {
       return Icons.error_outline;
@@ -364,9 +367,11 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           walletBalance:
               userAuthenticationService.walletAvailableBalance,
           showWallet: paymentTypeList.contains(PaymentType.wallet),
+          showAutoTopupCheckbox: !(bundle?.unlimited ?? true),
         ),
         enableDrag: false,
         isScrollControlled: true,
+        ignoreSafeArea: true,
         variant: BottomSheetType.paymentMethod,
       );
       if (pmResponse?.confirmed ?? false) {
@@ -374,6 +379,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         if (result?.canceled ?? false) {
           return;
         }
+        enableAutoTopup = result?.enableAutoTopup ?? false;
         _triggerAssignFlow(
           paymentType: result?.paymentType ?? PaymentType.card,
           paymentMethodId: result?.paymentMethodId,
@@ -424,6 +430,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
                 .appEnvironmentHelper.defaultPaymentTypeList.first.type,
         paymentMethodId: paymentMethodId,
         bearerToken: bearerToken,
+        enableAutoTopup: enableAutoTopup,
         relatedSearch: RelatedSearchRequestModel(
           region: _region,
           countries: _countries,

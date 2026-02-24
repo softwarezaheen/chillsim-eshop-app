@@ -11,33 +11,59 @@ import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_order_success/purchase_order_success_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
+import "package:flutter/foundation.dart";
 
 class PurchaseLoadingViewModel extends BaseModel {
   String? orderID;
   String? bearerToken;
 
   bool isApiFetched = false;
+  Timer? _timer;
 
   @override
   void onViewModelReady() {
     super.onViewModelReady();
-    unawaited(startTimer());
-  }
-
-  Future<void> startTimer() async {
-    await Future<void>.delayed(const Duration(seconds: 10));
-    // navigationService.back();
-    unawaited(getOrderDetails());
+    _timer = Timer(const Duration(seconds: 10), () {
+      unawaited(getOrderDetails());
+    });
   }
 
   Future<void> getOrderDetails() async {
     if (isApiFetched) {
       return;
     }
+    // Set immediately to prevent duplicate calls from both the FCM
+    // notification handler and the 10-second timer.
+    isApiFetched = true;
+    _timer?.cancel();
+
+    // Guard: orderID may not be set yet if this is triggered by an FCM
+    // notification handler (redirections_handler_service) that fires before
+    // PurchaseLoadingView.build() has assigned it on this singleton.
+    // Retry briefly to allow build() to set orderID.
+    if (orderID == null || orderID!.isEmpty) {
+      for (int i = 0; i < 5; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 500));
+        if (orderID != null && orderID!.isNotEmpty) {
+          break;
+        }
+      }
+      if (orderID == null || orderID!.isEmpty) {
+        debugPrint(
+            "⚠️ PurchaseLoadingViewModel.getOrderDetails: orderID still null/empty after waiting, re-arming timer",);
+        isApiFetched = false; // allow retry
+        // Re-arm the timer so the call is retried once orderID is set
+        _timer = Timer(const Duration(seconds: 5), () {
+          unawaited(getOrderDetails());
+        });
+        return;
+      }
+    }
+
     Resource<PurchaseEsimBundleResponseModel?> response =
         await GetUserPurchasedEsimByOrderIdUseCase(locator()).execute(
       GetUserPurchasedEsimByOrderIdParam(
-        orderID: orderID ?? "",
+        orderID: orderID!,
         bearerToken: bearerToken,
       ),
     );
@@ -105,7 +131,5 @@ class PurchaseLoadingViewModel extends BaseModel {
         navigationService.back();
       },
     );
-
-    isApiFetched = true;
   }
 }

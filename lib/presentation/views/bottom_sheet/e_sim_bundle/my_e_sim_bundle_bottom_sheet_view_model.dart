@@ -1,6 +1,5 @@
 import "dart:async";
 
-import "package:easy_localization/easy_localization.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/user/user_bundle_consumption_response.dart";
 import "package:esim_open_source/di/locator.dart";
@@ -10,9 +9,7 @@ import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
-import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
-import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class MyESimBundleBottomSheetViewModel extends BaseModel {
@@ -115,49 +112,15 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
     );
   }
 
-  // ignore: avoid_positional_boolean_parameters
-  Future<void> onAutoTopupToggle(bool value) async {
-    if (!value) {
-      await _disableAutoTopup();
-    }
-  }
-
-  /// Disables auto top-up. Called after user confirms via the adaptive dialog in the view.
-  Future<void> _disableAutoTopup() async {
-    final String? iccid = _state.item?.iccid;
-    if (iccid == null) {
-      return;
-    }
-
-    _state.isUpdatingAutoTopup = true;
-    notifyListeners();
-
-    final Resource<dynamic> response =
-        await locator<ApiUserRepository>().disableAutoTopup(iccid: iccid);
-
-    await handleResponse(
-      response,
-      onSuccess: (Resource<dynamic> result) async {
-        _state.isAutoTopupEnabled = false;
-        _state.showTopUP = true;
-        _autoTopupWasDisabled = true;
-        await showToast(LocaleKeys.auto_topup_disable_success.tr());
-      },
-      onFailure: (Resource<dynamic> result) async {
-        showNativeErrorMessage("", LocaleKeys.auto_topup_disable_error.tr());
-      },
-    );
-
-    _state.isUpdatingAutoTopup = false;
-    notifyListeners();
-  }
-
   Future<void> onManageAutoTopupClick() async {
     final SheetResponse<MainBottomSheetResponse>? response =
         await locator<BottomSheetService>()
             .showCustomSheet<MainBottomSheetResponse,
                 ManageAutoTopupSheetRequest>(
           variant: BottomSheetType.manageAutoTopup,
+          isScrollControlled: true,
+          ignoreSafeArea: true,
+          enableDrag: false,
           data: ManageAutoTopupSheetRequest(
             iccid: _state.item?.iccid ?? "",
             isAutoTopupEnabled: _state.isAutoTopupEnabled,
@@ -168,6 +131,7 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
         );
     if (response?.data?.canceled == false) {
       _state.isAutoTopupEnabled = false;
+      _state.showTopUP = true;
       _autoTopupWasDisabled = true;
       notifyListeners();
     }
@@ -200,7 +164,6 @@ class MyESimBundleBottomState {
   bool consumptionLoading = true;
   bool showTopUP = true;
   bool isAutoTopupEnabled = false;
-  bool isUpdatingAutoTopup = false;
   String? autoTopupBundleName;
   bool showAutoTopupWidget = false;
 }

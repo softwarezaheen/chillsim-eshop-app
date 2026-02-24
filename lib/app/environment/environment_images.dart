@@ -69,6 +69,8 @@ enum EnvironmentImages {
   wallet,  
   payByCardIcon,
   currency,
+  applePay,
+  googlePay,
   //wallet
   walletCashback,
   walletIcon,
@@ -155,6 +157,8 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.userGuide:
       case EnvironmentImages.wallet:
       case EnvironmentImages.currency:
+      case EnvironmentImages.applePay:
+      case EnvironmentImages.googlePay:
       case EnvironmentImages.walletCashback:
       case EnvironmentImages.walletIcon:
       case EnvironmentImages.walletReferEarn:
@@ -297,6 +301,8 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.wallet:
       case EnvironmentImages.currency:
       case EnvironmentImages.payByCardIcon:
+      case EnvironmentImages.applePay:
+      case EnvironmentImages.googlePay:
         return "profile/$name";
       case EnvironmentImages.walletCashback:
       case EnvironmentImages.walletIcon:

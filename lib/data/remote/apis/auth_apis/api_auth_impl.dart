@@ -47,8 +47,8 @@ class APIAuthImpl extends APIService implements APIAuth {
   }
 
   @override
-  FutureOr<ResponseMain<EmptyResponse>> logout() async {
-    ResponseMain<EmptyResponse> emptyResponse = await sendRequest(
+  FutureOr<ResponseMain<EmptyResponse?>> logout() async {
+    ResponseMain<EmptyResponse?> emptyResponse = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: AuthApis.logout,
       ),
@@ -105,8 +105,8 @@ class APIAuthImpl extends APIService implements APIAuth {
   }
 
   @override
-  FutureOr<ResponseMain<EmptyResponse>> deleteAccount() async {
-    ResponseMain<EmptyResponse> emptyResponse = await sendRequest(
+  FutureOr<ResponseMain<EmptyResponse?>> deleteAccount() async {
+    ResponseMain<EmptyResponse?> emptyResponse = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: AuthApis.deleteAccount,
       ),

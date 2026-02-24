@@ -996,12 +996,14 @@ class SavedPaymentMethodSheetRequest {
     required this.currency,
     this.walletBalance = 0.0,
     this.showWallet = true,
+    this.showAutoTopupCheckbox = false,
   });
 
   final double amount;
   final String currency;
   final double walletBalance;
   final bool showWallet;
+  final bool showAutoTopupCheckbox;
 }
 
 class SavedPaymentMethodSheetResult {
@@ -1009,11 +1011,13 @@ class SavedPaymentMethodSheetResult {
     required this.paymentType,
     this.paymentMethodId,
     this.canceled = false,
+    this.enableAutoTopup = false,
   });
 
   final PaymentType paymentType;
   final String? paymentMethodId;
   final bool canceled;
+  final bool enableAutoTopup;
 }
 //#endregion
 

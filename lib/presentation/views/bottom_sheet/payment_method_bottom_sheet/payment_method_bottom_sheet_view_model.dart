@@ -25,6 +25,7 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
       <SavedPaymentMethodResponseModel>[];
   bool _showAll = false;
   bool isLoadingPaymentMethods = false;
+  bool enableAutoTopup = false;
 
   static const int _initialVisibleCount = 1;
 
@@ -55,6 +56,14 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
 
   bool get showWallet =>
       (request.data?.showWallet ?? true) && isUserLoggedIn;
+
+  bool get showAutoTopupCheckbox =>
+      request.data?.showAutoTopupCheckbox ?? false;
+
+  void toggleAutoTopup(bool value) {
+    enableAutoTopup = value;
+    notifyListeners();
+  }
 
   @override
   void onViewModelReady() {
@@ -126,8 +135,9 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
     completer(
       SheetResponse<SavedPaymentMethodSheetResult>(
         confirmed: true,
-        data: const SavedPaymentMethodSheetResult(
+        data: SavedPaymentMethodSheetResult(
           paymentType: PaymentType.wallet,
+          enableAutoTopup: enableAutoTopup,
         ),
       ),
     );
@@ -140,6 +150,7 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
         data: SavedPaymentMethodSheetResult(
           paymentType: PaymentType.card,
           paymentMethodId: pm.stripePaymentMethodId,
+          enableAutoTopup: enableAutoTopup,
         ),
       ),
     );
@@ -149,8 +160,9 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
     completer(
       SheetResponse<SavedPaymentMethodSheetResult>(
         confirmed: true,
-        data: const SavedPaymentMethodSheetResult(
+        data: SavedPaymentMethodSheetResult(
           paymentType: PaymentType.card,
+          enableAutoTopup: enableAutoTopup,
         ),
       ),
     );

@@ -212,6 +212,8 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           walletBalance:
               userAuthenticationService.walletAvailableBalance,
           showWallet: paymentTypeList.contains(PaymentType.wallet),
+          showAutoTopupCheckbox: !(item.unlimited ?? true) &&
+              !(request.data?.isAutoTopupEnabled ?? false),
         ),
         enableDrag: false,
         isScrollControlled: true,
@@ -222,6 +224,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         if (result?.canceled ?? false) {
           return;
         }
+        autoTopupOptIn = result?.enableAutoTopup ?? false;
         _triggerTopUpFlow(
           item: item,
           paymentType: result?.paymentType ?? PaymentType.card,

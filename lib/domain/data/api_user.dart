@@ -14,6 +14,7 @@ abstract interface class ApiUser {
     required RelatedSearchRequestModel relatedSearch,
     String? bearerToken,
     String? paymentMethodId,
+    bool enableAutoTopup = false,
   });
 
   FutureOr<dynamic> topUpBundle({

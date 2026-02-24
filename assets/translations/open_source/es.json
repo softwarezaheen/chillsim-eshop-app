@@ -539,7 +539,7 @@
   "auto_topup_trigger_point": "Punto de activación",
   "auto_topup_at_80_percent": "80% de consumo",
   "auto_topup_per_topup": "Por recarga",
-  "auto_topup_checkout_hint": "El paquete que compres se vinculará como tu paquete de recarga automática — se recargará automáticamente cuando el uso alcance el 80%, usando tu método de pago guardado.",
+  "auto_topup_checkout_hint": "El paquete que compres se vinculará como tu paquete de recarga automática — se recargará automáticamente cuando el uso alcance el 80%, usando tu método de pago predeterminado guardado.",
   "auto_topup_skip_unlimited": "La recarga automática no está disponible para paquetes ilimitados.",
 
   "payment_methods_title": "Métodos de pago",

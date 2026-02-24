@@ -116,27 +116,6 @@ class MyESimViewModel extends BaseModel {
     await _performTopUp(item);
   }
 
-  Future<void> onManageAutoTopupClick({required int index}) async {
-    final PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
-    final SheetResponse<MainBottomSheetResponse>? sheetResponse =
-        await bottomSheetService.showCustomSheet(
-      isScrollControlled: true,
-      variant: BottomSheetType.manageAutoTopup,
-      data: ManageAutoTopupSheetRequest(
-        iccid: item.iccid ?? "",
-        isAutoTopupEnabled: item.autoTopupEnabled ?? false,
-        labelName: item.labelName as String?,
-        bundleName: item.displayTitle ?? "",
-      ),
-    );
-    // Update just this item in-place when AT was disabled — no API call, scroll preserved
-    if (sheetResponse?.data?.canceled == false) {
-      _state.currentESimList[index] =
-          _state.currentESimList[index].copyWith(autoTopupEnabled: false);
-      notifyListeners();
-    }
-  }
-
   Future<void> onConsumptionClick({required int index}) async {
     PurchaseEsimBundleResponseModel item = _state.currentESimList[index];
     SheetResponse<MainBottomSheetResponse>? sheetResponse =
@@ -218,9 +197,7 @@ class MyESimViewModel extends BaseModel {
       isScrollControlled: true,
       variant: BottomSheetType.bundleEditName,
       data: BundleEditNameRequest(
-        name: (item.labelName as String?)?.isNotEmpty ?? false
-            ? item.labelName as String
-            : item.iccid ?? "",
+        name: item.displayTitle ?? "",
       ),
     );
     if (sheetResponse?.data?.canceled == false &&

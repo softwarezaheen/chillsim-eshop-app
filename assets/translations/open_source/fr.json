@@ -541,7 +541,7 @@
   "auto_topup_trigger_point": "Point de déclenchement",
   "auto_topup_at_80_percent": "80% de consommation",
   "auto_topup_per_topup": "Par recharge",
-  "auto_topup_checkout_hint": "Le forfait que vous achetez sera lié comme votre forfait de recharge automatique — rechargé automatiquement lorsque l'utilisation atteint 80%, en utilisant votre moyen de paiement enregistré.",
+  "auto_topup_checkout_hint": "Le forfait que vous achetez sera lié comme votre forfait de recharge automatique — rechargé automatiquement lorsque l'utilisation atteint 80%, en utilisant votre moyen de paiement enregistré par défaut.",
   "auto_topup_skip_unlimited": "La recharge automatique n'est pas disponible pour les forfaits illimités.",
 
   "payment_methods_title": "Moyens de paiement",

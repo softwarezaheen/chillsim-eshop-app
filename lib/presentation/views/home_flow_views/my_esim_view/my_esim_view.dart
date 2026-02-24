@@ -157,16 +157,12 @@ class MyESimView extends StatelessWidget {
               statusTextColor: item.getStatusTextColor(context),
               statusBgColor: item.getStatusBgColor(context),
               countryCode: "",
-              title: (item.labelName as String?)?.isNotEmpty ?? false
-                  ? item.labelName as String
-                  : item.iccid ?? "",
-              subTitle: item.displaySubtitle ?? "",
+              title: item.displayTitle ?? "",
+              subTitle: item.iccid ?? "",
               dataValue: item.gprsLimitDisplay ?? "",
               showInstallButton: viewModel.state.showInstallButton,
               showTopUpButton: item.isTopupAllowed ?? true,
               isAutoTopupEnabled: item.autoTopupEnabled ?? false,
-              onManageAutoTopupClick: () =>
-                  unawaited(viewModel.onManageAutoTopupClick(index: index)),
               iconPath: item.icon ?? "",
               price: "",
               validity: item.validityDisplay ?? "",
@@ -230,16 +226,14 @@ class MyESimView extends StatelessWidget {
             ESimExpiredPlanItem(
               countryCode: "",
               showUnlimitedData: item.unlimited ?? false,
-              title: (item.labelName as String?)?.isNotEmpty ?? false
-                  ? item.labelName as String
-                  : item.iccid ?? "",
-              subTitle: item.displaySubtitle ?? "",
+              title: item.displayTitle ?? "",
+              subTitle: item.iccid ?? "",
               dataValue: item.gprsLimitDisplay ?? "",
               price: "",
               validity: item.validityDisplay ?? "",
               expiryDate: DateTimeUtils.formatTimestampToDate(
                 timestamp: int.parse(item.paymentDate ?? "0"),
-                format: DateTimeUtils.ddMmYyyy,
+                format: DateTimeUtils.ddMmYyyyHi,
               ),
               isLoading: viewModel.isBusy,
               iconPath: item.icon,

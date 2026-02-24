@@ -49,6 +49,7 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
     required RelatedSearchRequestModel relatedSearch,
     String? bearerToken,
     String? paymentMethodId,
+    bool enableAutoTopup = false,
   }) {
     return responseToResource(
       apiUserBundles.assignBundle(
@@ -60,6 +61,7 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
         bearerToken: bearerToken,
         relatedSearch: relatedSearch,
         paymentMethodId: paymentMethodId,
+        enableAutoTopup: enableAutoTopup,
       ),
     );
   }

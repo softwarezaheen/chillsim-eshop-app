@@ -57,6 +57,7 @@ class APIUserImpl extends APIService implements ApiUser {
     required RelatedSearchRequestModel relatedSearch,
     String? bearerToken,
     String? paymentMethodId,
+    bool enableAutoTopup = false,
   }) async {
     Map<String, dynamic> params = <String, dynamic>{
       "bundle_code": bundleCode,
@@ -65,6 +66,7 @@ class APIUserImpl extends APIService implements ApiUser {
       "affiliate_code": affiliateCode,
       "payment_type": paymentType,
       "related_search": relatedSearch.toJson(),
+      "enable_auto_topup": enableAutoTopup,
     };
     if (paymentMethodId != null && paymentMethodId.isNotEmpty) {
       params["payment_method_id"] = paymentMethodId;
@@ -437,7 +439,7 @@ class APIUserImpl extends APIService implements ApiUser {
   FutureOr<ResponseMain<EmptyResponse?>> disableAutoTopup({
     required String iccid,
   }) async {
-    ResponseMain<EmptyResponse> response = await sendRequest(
+    ResponseMain<EmptyResponse?> response = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: UserApis.disableAutoTopup,
         parameters: <String, dynamic>{
@@ -537,7 +539,7 @@ class APIUserImpl extends APIService implements ApiUser {
   FutureOr<ResponseMain<EmptyResponse?>> deletePaymentMethod({
     required String pmId,
   }) async {
-    ResponseMain<EmptyResponse> response = await sendRequest(
+    ResponseMain<EmptyResponse?> response = await sendRequest(
       endPoint: createAPIEndpoint(
         endPoint: UserApis.deletePaymentMethod,
         paramIDs: <String>[pmId],

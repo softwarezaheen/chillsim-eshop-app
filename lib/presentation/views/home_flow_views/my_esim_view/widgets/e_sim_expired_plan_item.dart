@@ -67,6 +67,12 @@ class ESimExpiredPlanItem extends StatelessWidget {
                 isLoading: isLoading,
                 imagePath: iconPath,
                 showUnlimitedData: showUnlimitedData,
+                contentStyle: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w400,
+                  color: contentTextColor(context: context).withValues(alpha: 0.6),
+                  fontFamily: Theme.of(context).textTheme.labelLarge?.fontFamily,
+                ),
               ),
               const BundleDivider(),
               Align(

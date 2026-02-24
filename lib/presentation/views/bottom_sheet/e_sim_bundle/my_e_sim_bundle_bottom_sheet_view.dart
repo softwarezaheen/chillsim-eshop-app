@@ -12,7 +12,6 @@ import "package:esim_open_source/presentation/views/bottom_sheet/e_sim_bundle_qr
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/bundle_divider_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/widgets/bundle_info_row_view.dart";
 import "package:esim_open_source/presentation/widgets/animated_half_circular_progress_indicator.dart";
-import "package:esim_open_source/presentation/widgets/auto_topup_toggle_widget.dart";
 import "package:esim_open_source/presentation/widgets/bottom_sheet_close_button.dart";
 import "package:esim_open_source/presentation/widgets/bundle_header_view.dart";
 import "package:esim_open_source/presentation/widgets/my_card_wrap.dart";
@@ -96,7 +95,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                                   timestamp: int.parse(
                                     viewModel.state.item?.paymentDate ?? "0",
                                   ),
-                                  format: DateTimeUtils.ddMmYyyy,
+                                  format: DateTimeUtils.ddMmYyyyHi,
                                 ),
                                 isLoading: false,
                               ),
@@ -118,60 +117,8 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                                 viewModel,
                               ),
                               verticalSpaceSmall,
-                              AutoTopupToggleWidget(
-                                isEnabled:
-                                    viewModel.state.isAutoTopupEnabled,
-                                isUpdating:
-                                    viewModel.state.isUpdatingAutoTopup,
-                                bundleName:
-                                    viewModel.state.autoTopupBundleName ?? "",
-                                onToggle: (bool value) async {
-                                  if (!value) {
-                                    final bool? confirmed =
-                                        await showAdaptiveDialog<bool>(
-                                      context: context,
-                                      builder: (BuildContext ctx) =>
-                                          AlertDialog.adaptive(
-                                        title: Text(
-                                          LocaleKeys
-                                              .auto_topup_confirm_disable
-                                              .tr(),
-                                        ),
-                                        content: Text(
-                                          LocaleKeys
-                                              .auto_topup_confirm_disable_description
-                                              .tr(),
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.of(ctx).pop(false),
-                                            child: Text(
-                                                LocaleKeys.cancel.tr(),),
-                                          ),
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.of(ctx).pop(true),
-                                            child: Text(
-                                              LocaleKeys
-                                                  .auto_topup_yes_disable
-                                                  .tr(),
-                                              style: const TextStyle(
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                    if (confirmed ?? false) {
-                                      await viewModel.onAutoTopupToggle(false);
-                                    }
-                                  }
-                                },
-                                showWidget:
-                                    viewModel.state.showAutoTopupWidget,
-                              ),
+                              if (viewModel.state.showAutoTopupWidget)
+                                _buildAutoTopupSection(context, viewModel),
                               verticalSpaceMedium,
                               buildPlanHistory(context, viewModel.state.item),
                             ],
@@ -186,6 +133,103 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildAutoTopupSection(
+    BuildContext context,
+    MyESimBundleBottomSheetViewModel viewModel,
+  ) {
+    final bool isEnabled = viewModel.state.isAutoTopupEnabled;
+
+    return InkWell(
+      onTap: isEnabled ? viewModel.onManageAutoTopupClick : null,
+      borderRadius: BorderRadius.circular(6),
+      child: Card(
+        margin: EdgeInsets.zero,
+        color: lightGreyBackGroundColor(context: context),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Icon(
+                          Icons.bolt,
+                          size: 16,
+                          color: titleTextColor(context: context),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          LocaleKeys.auto_topup_settings_title.tr(),
+                          style: captionOneMediumTextStyle(
+                            context: context,
+                            fontColor: titleTextColor(context: context),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      LocaleKeys.auto_topup_settings_description.tr(),
+                      style: captionTwoNormalTextStyle(
+                        context: context,
+                        fontColor: contentTextColor(context: context),
+                      ).copyWith(fontSize: 11, height: 1.3),
+                    ),
+                    if (isEnabled &&
+                        (viewModel.state.autoTopupBundleName ?? "")
+                            .isNotEmpty) ...<Widget>[
+                      const SizedBox(height: 6),
+                      Text(
+                        "${LocaleKeys.auto_topup_bundle.tr()}: ${viewModel.state.autoTopupBundleName}",
+                        style: captionOneMediumTextStyle(
+                          context: context,
+                          fontColor: titleTextColor(context: context),
+                        ).copyWith(fontSize: 12),
+                      ),
+                    ],
+                    if (!isEnabled) ...<Widget>[
+                      const SizedBox(height: 6),
+                      Text(
+                        LocaleKeys.auto_topup_enable_hint.tr(),
+                        style: captionTwoNormalTextStyle(
+                          context: context,
+                          fontColor: contentTextColor(context: context),
+                        ).copyWith(fontSize: 11, height: 1.3),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              if (isEnabled) ...<Widget>[
+                const SizedBox(width: 16),
+                Icon(
+                  Icons.settings,
+                  size: 18,
+                  color: contentTextColor(context: context),
+                ),
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.chevron_right,
+                  size: 20,
+                  color: contentTextColor(context: context),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
     );
   }
 

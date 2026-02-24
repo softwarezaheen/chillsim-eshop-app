@@ -531,7 +531,7 @@
   "auto_topup_trigger_point": "Punct de declanșare",
   "auto_topup_at_80_percent": "80% consum",
   "auto_topup_per_topup": "Per reîncărcare",
-  "auto_topup_checkout_hint": "Pachetul pe care îl cumperi va fi legat ca pachetul tău de reîncărcare automată — reîncărcat automat când utilizarea ajunge la 80%, folosind metoda de plată salvată.",
+  "auto_topup_checkout_hint": "Pachetul pe care îl cumperi va fi legat ca pachetul tău de reîncărcare automată — reîncărcat automat când utilizarea ajunge la 80%, folosind metoda de plată implicită salvată.",
   "auto_topup_skip_unlimited": "Reîncărcarea automată nu este disponibilă pentru pachetele nelimitate.",
 
   "payment_methods_title": "Metode de plată",

@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/user/saved_payment_method_response_model.dart";
 import "package:esim_open_source/presentation/enums/payment_type.dart";
 import "package:esim_open_source/presentation/extensions/context_extension.dart";
@@ -34,202 +35,283 @@ class PaymentMethodBottomSheetView extends StatelessWidget {
         PaymentMethodBottomSheetViewModel viewModel,
         Widget? childWidget,
         double screenHeight,
-      ) =>
-          Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            // Close button
-            Container(
-              alignment: Alignment.bottomRight,
-              child: CloseButton(
-                onPressed: viewModel.onDismiss,
+      ) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // Close button
+              Container(
+                alignment: Alignment.bottomRight,
+                child: CloseButton(
+                  onPressed: viewModel.onDismiss,
+                ),
               ),
-            ),
-            // Title + items
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                bottom: 16,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    LocaleKeys.paymentSelection_titleText.tr(),
-                    style: headerThreeMediumTextStyle(
-                      context: context,
-                      fontColor: context.appColors.secondary_600,
-                    ),
+              // Title + items (scrollable)
+              Flexible(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
                   ),
-                  const SizedBox(height: 16),
-                  // 1. Wallet option
-                  if (viewModel.showWallet)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: GestureDetector(
-                        onTap: viewModel.onSelectWallet,
-                        child: PaymentMethodCard(
-                          backgroundColor: viewModel.hasSufficientWalletBalance
-                              ? greyBackGroundColor(context: context)
-                              : Colors.grey.withValues(alpha: 0.5),
-                          icon: Icons.account_balance_wallet_outlined,
-                          imagePath: PaymentType.wallet.sectionImagePath,
-                          iconColor: viewModel.hasSufficientWalletBalance
-                              ? Colors.black
-                              : Colors.grey,
-                          iconSize: 50,
-                          circleSize: 50,
-                          text:
-                              "${LocaleKeys.paymentSelection_walletText.tr()} (${viewModel.walletBalance.toStringAsFixed(2)} ${viewModel.currency})",
-                          textStyle: bodyNormalTextStyle(
-                            context: context,
-                            fontColor: viewModel.hasSufficientWalletBalance
-                                ? bubbleCountryTextColor(context: context)
-                                : Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ),
-                  // 2. Saved payment methods (default first, expired filtered out)
-                  if (viewModel.isLoadingPaymentMethods)
-                    ...List<Widget>.generate(
-                      2,
-                      (int _) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: PaymentMethodCard(
-                          backgroundColor: greyBackGroundColor(context: context),
-                          imagePath: PaymentType.card.sectionImagePath,
-                          icon: Icons.credit_card,
-                          iconSize: 50,
-                          circleSize: 50,
-                          text: "\u2022\u2022\u2022\u2022",
-                          textStyle: bodyNormalTextStyle(
-                            context: context,
-                            fontColor: bubbleCountryTextColor(context: context),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ...viewModel.visiblePaymentMethods.map(
-                    (SavedPaymentMethodResponseModel pm) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: GestureDetector(
-                        onTap: () => viewModel.onSelectSavedPm(pm),
-                        child: PaymentMethodCard(
-                          backgroundColor: greyBackGroundColor(context: context),
-                          icon: _getPaymentMethodIcon(pm.type ?? "card"),
-                          imagePath: _getPaymentMethodImagePath(pm.type ?? "card"),
-                          iconColor: bubbleCountryTextColor(context: context),
-                          iconSize: 50,
-                          circleSize: 50,
-                          text: _buildPmDisplayText(pm),
-                          subtitle: _buildPmSubtitle(pm),
-                          trailingChipLabel: (pm.isDefault ?? false)
-                              ? LocaleKeys.paymentSelection_defaultBadge.tr()
-                              : null,
-                          textStyle: bodyNormalTextStyle(
-                            context: context,
-                            fontColor: bubbleCountryTextColor(context: context),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Load more
-                  if (viewModel.hasMore)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: GestureDetector(
-                        onTap: viewModel.onLoadMore,
-                        child: Text(
-                          LocaleKeys.paymentSelection_showMoreCards.tr(
-                            namedArgs: <String, String>{
-                              "count":
-                                  viewModel.hiddenCount.toString(),
-                            },
-                          ),
-                          style: captionTwoNormalTextStyle(
-                            context: context,
-                            fontColor: context.appColors.primary_800,
-                          ),
-                        ),
-                      ),
-                    ),
-                  // Hide saved cards
-                  if (viewModel.isShowingAll &&
-                      viewModel.totalPaymentMethods > 1)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: GestureDetector(
-                        onTap: viewModel.onHideCards,
-                        child: Text(
-                          LocaleKeys.paymentSelection_hideCards.tr(),
-                          style: captionTwoNormalTextStyle(
-                            context: context,
-                            fontColor: context.appColors.primary_800,
-                          ),
-                        ),
-                      ),
-                    ),
-                  // 3. New Credit/Debit Card option
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: GestureDetector(
-                      onTap: viewModel.onSelectNewCard,
-                      child: PaymentMethodCard(
-                        backgroundColor: greyBackGroundColor(context: context),
-                        icon: Icons.credit_card,
-                        imagePath: PaymentType.card.sectionImagePath,
-                        iconSize: 50,
-                        circleSize: 50,
-                        text: LocaleKeys.paymentSelection_newCardText.tr(),
-                        textStyle: bodyNormalTextStyle(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        LocaleKeys.paymentSelection_titleText.tr(),
+                        style: headerThreeMediumTextStyle(
                           context: context,
-                          fontColor: bubbleCountryTextColor(context: context),
+                          fontColor: context.appColors.primary_800,
                         ),
                       ),
-                    ),
-                  ),
-                  // Stripe disclaimer
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade50,
-                      border: Border.all(color: Colors.blue.shade200),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Icon(
-                          Icons.info_outline,
-                          color: Colors.blue.shade700,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            LocaleKeys.paymentSelection_stripeNotice.tr(),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.blue.shade900,
-                              height: 1.4,
+                      const SizedBox(height: 16),
+                      // 1. Wallet option
+                      if (viewModel.showWallet)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: GestureDetector(
+                            onTap: viewModel.onSelectWallet,
+                            child: PaymentMethodCard(
+                              backgroundColor:
+                                  viewModel.hasSufficientWalletBalance
+                                      ? greyBackGroundColor(context: context)
+                                      : Colors.grey.withValues(alpha: 0.5),
+                              icon: Icons.account_balance_wallet_outlined,
+                              imagePath: PaymentType.wallet.sectionImagePath,
+                              iconColor: viewModel.hasSufficientWalletBalance
+                                  ? Colors.black
+                                  : Colors.grey,
+                              iconSize: 50,
+                              circleSize: 50,
+                              text:
+                                  "${LocaleKeys.paymentSelection_walletText.tr()} (${viewModel.walletBalance.toStringAsFixed(2)} ${viewModel.currency})",
+                              textStyle: bodyNormalTextStyle(
+                                context: context,
+                                fontColor: viewModel.hasSufficientWalletBalance
+                                    ? bubbleCountryTextColor(context: context)
+                                    : Colors.grey,
+                              ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      // 2. Saved payment methods (default first, expired filtered out)
+                      if (viewModel.isLoadingPaymentMethods)
+                        ...List<Widget>.generate(
+                          2,
+                          (int _) => Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: PaymentMethodCard(
+                              backgroundColor:
+                                  greyBackGroundColor(context: context),
+                              imagePath: PaymentType.card.sectionImagePath,
+                              icon: Icons.credit_card,
+                              iconSize: 50,
+                              circleSize: 50,
+                              text: "\u2022\u2022\u2022\u2022",
+                              textStyle: bodyNormalTextStyle(
+                                context: context,
+                                fontColor:
+                                    bubbleCountryTextColor(context: context),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ...viewModel.visiblePaymentMethods.map(
+                        (SavedPaymentMethodResponseModel pm) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: GestureDetector(
+                            onTap: () => viewModel.onSelectSavedPm(pm),
+                            child: PaymentMethodCard(
+                              backgroundColor:
+                                  greyBackGroundColor(context: context),
+                              icon: _getPaymentMethodIcon(pm.type ?? "card"),
+                              imagePath:
+                                  _getPaymentMethodImagePath(pm.type ?? "card"),
+                              iconColor:
+                                  bubbleCountryTextColor(context: context),
+                              iconSize: 50,
+                              circleSize: 50,
+                              text: _buildPmDisplayText(pm),
+                              subtitle: _buildPmSubtitle(pm),
+                              trailingChipLabel: (pm.isDefault ?? false)
+                                  ? LocaleKeys.paymentSelection_defaultBadge
+                                      .tr()
+                                  : null,
+                              textStyle: bodyNormalTextStyle(
+                                context: context,
+                                fontColor:
+                                    bubbleCountryTextColor(context: context),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Load more
+                      if (viewModel.hasMore)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: GestureDetector(
+                            onTap: viewModel.onLoadMore,
+                            child: Text(
+                              LocaleKeys.paymentSelection_showMoreCards.tr(
+                                namedArgs: <String, String>{
+                                  "count": viewModel.hiddenCount.toString(),
+                                },
+                              ),
+                              style: captionTwoNormalTextStyle(
+                                context: context,
+                                fontColor: context.appColors.primary_800,
+                              ),
+                            ),
+                          ),
+                        ),
+                      // Hide saved cards
+                      if (viewModel.isShowingAll &&
+                          viewModel.totalPaymentMethods > 1)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: GestureDetector(
+                            onTap: viewModel.onHideCards,
+                            child: Text(
+                              LocaleKeys.paymentSelection_hideCards.tr(),
+                              style: captionTwoNormalTextStyle(
+                                context: context,
+                                fontColor: context.appColors.primary_800,
+                              ),
+                            ),
+                          ),
+                        ),
+                      // 3. New Credit/Debit Card option
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: GestureDetector(
+                          onTap: viewModel.onSelectNewCard,
+                          child: PaymentMethodCard(
+                            backgroundColor:
+                                greyBackGroundColor(context: context),
+                            icon: Icons.credit_card,
+                            imagePath: PaymentType.card.sectionImagePath,
+                            iconSize: 50,
+                            circleSize: 50,
+                            text: LocaleKeys.paymentSelection_newCardText.tr(),
+                            textStyle: bodyNormalTextStyle(
+                              context: context,
+                              fontColor:
+                                  bubbleCountryTextColor(context: context),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Auto-topup opt-in checkbox
+                      if (viewModel.showAutoTopupCheckbox)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: GestureDetector(
+                            onTap: () => viewModel.toggleAutoTopup(
+                              !viewModel.enableAutoTopup,
+                            ),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 14,
+                              ),
+                              decoration: BoxDecoration(
+                                color: viewModel.enableAutoTopup
+                                    ? context.appColors.primary_800
+                                    : context.appColors.primary_800!
+                                        .withValues(alpha: 0.9),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: Checkbox(
+                                      value: viewModel.enableAutoTopup,
+                                      onChanged: (bool? value) =>
+                                          viewModel.toggleAutoTopup(
+                                        value ?? false,
+                                      ),
+                                      activeColor: Colors.white,
+                                      checkColor: context.appColors.primary_800,
+                                      side: const BorderSide(
+                                        color: Colors.white,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          LocaleKeys.auto_topup_enable_button
+                                              .tr(),
+                                          style: bodyNormalTextStyle(
+                                            context: context,
+                                            fontColor: Colors.white,
+                                          ).copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          LocaleKeys.auto_topup_checkout_hint
+                                              .tr(),
+                                          style: captionTwoNormalTextStyle(
+                                            context: context,
+                                            fontColor: Colors.white
+                                                .withValues(alpha: 0.8),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      // Stripe disclaimer
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Icon(
+                              Icons.lock_outline,
+                              size: 14,
+                              color: contentTextColor(context: context),
+                            ),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                LocaleKeys.paymentSelection_stripeNotice.tr(),
+                                style: captionTwoNormalTextStyle(
+                                  context: context,
+                                  fontColor: contentTextColor(context: context),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -258,11 +340,13 @@ class PaymentMethodBottomSheetView extends StatelessWidget {
     switch (type.toLowerCase()) {
       case "card":
         return PaymentType.card.sectionImagePath;
+      case "apple_pay":
+        return EnvironmentImages.applePay.fullImagePath;
+      case "google_pay":
+        return EnvironmentImages.googlePay.fullImagePath;
       case "link":
       case "us_bank_account":
       case "sepa_debit":
-      case "apple_pay":
-      case "google_pay":
       default:
         return null;
     }
@@ -299,9 +383,15 @@ class PaymentMethodBottomSheetView extends StatelessWidget {
             ? "SEPA Debit \u2022\u2022\u2022\u2022 ${pm.last4}"
             : "SEPA Debit";
       case "apple_pay":
-        return "Apple Pay";
+        final String brand = _capitalizeBrand((pm.brand ?? "card").toLowerCase());
+        return pm.last4 != null
+            ? "ApplePay - $brand \u2022\u2022\u2022\u2022 ${pm.last4}"
+            : "Apple Pay";
       case "google_pay":
-        return "Google Pay";
+        final String brand = _capitalizeBrand((pm.brand ?? "card").toLowerCase());
+        return pm.last4 != null
+            ? "GPay - $brand \u2022\u2022\u2022\u2022 ${pm.last4}"
+            : "Google Pay";
       case "card":
       default:
         final String brand = (pm.brand ?? "card").toLowerCase();
@@ -327,8 +417,8 @@ class PaymentMethodBottomSheetView extends StatelessWidget {
       ..add(
         ObjectFlagProperty<
             Function(
-          SheetResponse<SavedPaymentMethodSheetResult> p1,
-        )>.has(
+              SheetResponse<SavedPaymentMethodSheetResult> p1,
+            )>.has(
           "completer",
           completer,
         ),
