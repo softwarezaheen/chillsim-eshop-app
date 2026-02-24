@@ -17,6 +17,15 @@ class CountryFlagImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Local asset path — render directly without network request
+    if (icon.startsWith("assets/")) {
+      return Image.asset(
+        icon,
+        width: width ?? 30,
+        height: height ?? 30,
+      );
+    }
+
     return CachedImage.network(
       imagePath: icon,
       width: width ?? 30,

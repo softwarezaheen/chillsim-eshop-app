@@ -501,6 +501,10 @@
   "marketing_consent_disabled_success": "Notificările promoționale au fost dezactivate",
   "marketing_consent_update_failed": "Actualizarea preferințelor a eșuat. Te rugăm să încerci din nou.",
 
+  "order_type_new_esim": "eSIM nouă",
+  "order_type_topup": "Reîncărcare",
+  "order_type_auto_topup": "Reîncărcare automată",
+
   "auto_topup_badge": "Reîncărcare automată",
   "auto_topup_prompt_title": "Activează reîncărcarea automată",
   "auto_topup_prompt_description": "Nu mai rămâi fără date! Când consumul ajunge la 80%, vom reîncărca automat cu {bundle} folosind cardul salvat.",

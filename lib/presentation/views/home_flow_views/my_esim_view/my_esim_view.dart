@@ -163,7 +163,7 @@ class MyESimView extends StatelessWidget {
               showInstallButton: viewModel.state.showInstallButton,
               showTopUpButton: item.isTopupAllowed ?? true,
               isAutoTopupEnabled: item.autoTopupEnabled ?? false,
-              iconPath: item.icon ?? "",
+              iconPath: EnvironmentImages.tabBarMyEsim.fullImagePath,
               price: "",
               validity: item.validityDisplay ?? "",
               expiryDate: DateTimeUtils.formatTimestampToDate(
@@ -236,7 +236,7 @@ class MyESimView extends StatelessWidget {
                 format: DateTimeUtils.ddMmYyyyHi,
               ),
               isLoading: viewModel.isBusy,
-              iconPath: item.icon,
+              iconPath: EnvironmentImages.tabBarMyEsim.fullImagePath,
               onItemClick: () =>
                   unawaited(viewModel.onExpiredBundleClick(index: index)),
             ),

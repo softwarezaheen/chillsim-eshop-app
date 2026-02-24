@@ -98,6 +98,8 @@ class MyESimViewModel extends BaseModel {
     );
 
     if (!(sheetResponse?.data?.canceled ?? true)) {
+      final bool? atEnabled = sheetResponse?.data?.autoTopupEnabled;
+
       bottomSheetService.showCustomSheet(
         isScrollControlled: true,
         variant: BottomSheetType.successBottomSheet,
@@ -107,7 +109,13 @@ class MyESimViewModel extends BaseModel {
           imagePath: EnvironmentImages.compatibleIcon.fullImagePath,
         ),
       );
-      refreshCurrentPlans();
+      await refreshCurrentPlans();
+
+      // Optimistic update: the backend enables AT during webhook processing
+      // which may not have completed yet when refreshCurrentPlans returns.
+      if (atEnabled == true) {
+        updateAutoTopupStatus(item.iccid ?? "", enabled: true);
+      }
     }
   }
 
@@ -234,12 +242,10 @@ class MyESimViewModel extends BaseModel {
       String tag = sheetResponse?.data?.tag ?? "";
       if (tag == "top_up") {
         await _performTopUp(item);
-      } else if (tag == "auto_topup_disabled") {
-        // Update just this item in-place — no API call, scroll position preserved
-        _state.currentESimList[index] =
-            _state.currentESimList[index].copyWith(autoTopupEnabled: false);
-        notifyListeners();
       }
+      // Note: auto_topup_disabled is handled directly via locator in
+      // MyESimBundleBottomSheetViewModel.onManageAutoTopupClick(), so
+      // no tag-based handling is needed here.
     }
   }
 
@@ -265,7 +271,21 @@ class MyESimViewModel extends BaseModel {
   }
 
   Future<void> refreshCurrentPlans() async {
-    refreshScreen(isSilent: false);
+    await refreshScreen(isSilent: false);
+  }
+
+  /// Optimistically update auto top-up status for a specific eSIM in the
+  /// current list. Used by child bottom sheets that modify AT state so the
+  /// change is reflected immediately without a full API refresh.
+  void updateAutoTopupStatus(String iccid, {required bool enabled}) {
+    final int idx = _state.currentESimList.indexWhere(
+      (PurchaseEsimBundleResponseModel e) => e.iccid == iccid,
+    );
+    if (idx != -1) {
+      _state.currentESimList[idx] =
+          _state.currentESimList[idx].copyWith(autoTopupEnabled: enabled);
+      notifyListeners();
+    }
   }
 
 //#endregion
@@ -308,7 +328,7 @@ class MyESimViewModel extends BaseModel {
     bool isSilent = true,
   }) async {
     handleNotificationBadge();
-    fetchESimData(isSilent: isSilent);
+    await fetchESimData(isSilent: isSilent);
   }
 
   Future<void> fetchESimData({

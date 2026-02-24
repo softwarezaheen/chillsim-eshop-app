@@ -10,6 +10,7 @@ import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/enums/view_state.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
 import "package:stacked_services/stacked_services.dart";
 
 class MyESimBundleBottomSheetViewModel extends BaseModel {
@@ -134,6 +135,14 @@ class MyESimBundleBottomSheetViewModel extends BaseModel {
       _state.showTopUP = true;
       _autoTopupWasDisabled = true;
       notifyListeners();
+
+      // Directly update the parent eSIM list so the change is reflected
+      // immediately regardless of how this sheet is later dismissed
+      // (X button, swipe-down, or back gesture).
+      locator<MyESimViewModel>().updateAutoTopupStatus(
+        _state.item?.iccid ?? "",
+        enabled: false,
+      );
     }
   }
 

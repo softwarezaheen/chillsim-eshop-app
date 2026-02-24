@@ -71,6 +71,10 @@ enum EnvironmentImages {
   currency,
   applePay,
   googlePay,
+  //order history icons
+  esim,
+  esimTopUp,
+  esimAutoTopUp,
   //wallet
   walletCashback,
   walletIcon,
@@ -189,6 +193,9 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.storyBuilding:
       case EnvironmentImages.copyIcon:
       case EnvironmentImages.shareIcon:
+      case EnvironmentImages.esim:
+      case EnvironmentImages.esimTopUp:
+      case EnvironmentImages.esimAutoTopUp:
         return false;
       default:
         return true;
@@ -303,6 +310,9 @@ extension EnvironmentImagesExtension on EnvironmentImages {
       case EnvironmentImages.payByCardIcon:
       case EnvironmentImages.applePay:
       case EnvironmentImages.googlePay:
+      case EnvironmentImages.esim:
+      case EnvironmentImages.esimTopUp:
+      case EnvironmentImages.esimAutoTopUp:
         return "profile/$name";
       case EnvironmentImages.walletCashback:
       case EnvironmentImages.walletIcon:

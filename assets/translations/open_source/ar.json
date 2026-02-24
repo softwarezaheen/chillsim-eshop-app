@@ -509,6 +509,10 @@
   "marketing_consent_disabled_success": "تم إيقاف تشغيل الإشعارات الترويجية",
   "marketing_consent_update_failed": "فشل تحديث التفضيلات. يرجى المحاولة مرة أخرى.",
 
+  "order_type_new_esim": "eSIM جديدة",
+  "order_type_topup": "شحن رصيد",
+  "order_type_auto_topup": "شحن تلقائي",
+
   "auto_topup_badge": "شحن تلقائي",
   "auto_topup_prompt_title": "تفعيل الشحن التلقائي",
   "auto_topup_prompt_description": "لا تنفد بياناتك أبدًا! عندما يصل الاستخدام إلى 80%، سنعيد الشحن تلقائيًا بـ {bundle} باستخدام بطاقتك المحفوظة.",

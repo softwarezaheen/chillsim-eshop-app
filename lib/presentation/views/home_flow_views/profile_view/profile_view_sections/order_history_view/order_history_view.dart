@@ -92,6 +92,18 @@ class OrderHistoryView extends StatelessWidget {
     );
   }
 
+  String _orderTypeIcon(String? orderType) {
+    switch (orderType) {
+      case "Topup":
+        return EnvironmentImages.esimTopUp.fullImagePath;
+      case "AutoTopup":
+        return EnvironmentImages.esimAutoTopUp.fullImagePath;
+      case "Assign":
+      default:
+        return EnvironmentImages.esim.fullImagePath;
+    }
+  }
+
   Widget bundleOrderHistoryView({
     required BuildContext context,
     required OrderHistoryViewModel viewModel,
@@ -118,7 +130,7 @@ class OrderHistoryView extends StatelessWidget {
                 subTitle: bundleOrder.bundleDetails?.displaySubtitle ?? "",
                 dataValue: bundleOrder.bundleDetails?.gprsLimitDisplay ?? "",
                 countryPrice: bundleOrder.bundleDetails?.priceDisplay ?? "",
-                imagePath: bundleOrder.bundleDetails?.icon ?? "",
+                imagePath: _orderTypeIcon(bundleOrder.orderType),
                 isLoading: false,
                 showUnlimitedData:
                     bundleOrder.bundleDetails?.unlimited ?? false,

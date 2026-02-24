@@ -320,10 +320,16 @@ class MainBottomSheetResponse {
   const MainBottomSheetResponse({
     this.tag = "",
     this.canceled = true,
+    this.autoTopupEnabled,
   });
 
   final String tag;
   final bool canceled;
+
+  /// When non-null, indicates the user opted in/out of auto top-up during
+  /// this flow. Callers can use this for optimistic local-state updates
+  /// before the backend webhook has processed.
+  final bool? autoTopupEnabled;
 }
 
 class _FloatingBoxBottomSheet extends StatelessWidget {

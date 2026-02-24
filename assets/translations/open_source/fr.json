@@ -506,6 +506,10 @@
   "marketing_consent_disabled_success": "Les notifications promotionnelles ont été désactivées",
   "marketing_consent_update_failed": "Échec de la mise à jour des préférences. Veuillez réessayer.",
 
+  "order_type_new_esim": "Nouvelle eSIM",
+  "order_type_topup": "Recharge",
+  "order_type_auto_topup": "Recharge auto",
+
   "auto_topup_badge": "Recharge auto",
   "auto_topup_prompt_title": "Activer la recharge automatique",
 

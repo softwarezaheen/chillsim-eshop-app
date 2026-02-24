@@ -510,6 +510,10 @@
   "marketing_consent_disabled_success": "Promotional notifications have been turned off",
   "marketing_consent_update_failed": "Failed to update preferences. Please try again.",
 
+  "order_type_new_esim": "New eSIM",
+  "order_type_topup": "Top Up",
+  "order_type_auto_topup": "Auto Top-Up",
+
   "auto_topup_badge": "Auto Top-Up",
   "auto_topup_prompt_title": "Enable Auto Top-Up",
   "auto_topup_prompt_description": "Never run out of data! When usage reaches 80%, we'll auto-recharge with {bundle} using your saved card.",

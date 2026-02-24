@@ -512,6 +512,9 @@ abstract class  LocaleKeys {
   static const marketing_consent_enabled_success = 'marketing_consent_enabled_success';
   static const marketing_consent_disabled_success = 'marketing_consent_disabled_success';
   static const marketing_consent_update_failed = 'marketing_consent_update_failed';
+  static const order_type_new_esim = 'order_type_new_esim';
+  static const order_type_topup = 'order_type_topup';
+  static const order_type_auto_topup = 'order_type_auto_topup';
   static const auto_topup_badge = 'auto_topup_badge';
   static const auto_topup_prompt_title = 'auto_topup_prompt_title';
   static const auto_topup_prompt_description = 'auto_topup_prompt_description';

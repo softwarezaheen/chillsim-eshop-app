@@ -614,6 +614,7 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         data: MainBottomSheetResponse(
           canceled: false,
           tag: orderID,
+          autoTopupEnabled: autoTopupOptIn && !_pendingBundleUnlimited ? true : null,
         ),
       ),
     );

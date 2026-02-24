@@ -509,6 +509,10 @@
   "marketing_consent_disabled_success": "Las notificaciones promocionales se han desactivado",
   "marketing_consent_update_failed": "Error al actualizar las preferencias. Por favor, inténtalo de nuevo.",
 
+  "order_type_new_esim": "Nueva eSIM",
+  "order_type_topup": "Recarga",
+  "order_type_auto_topup": "Recarga automática",
+
   "auto_topup_badge": "Recarga automática",
   "auto_topup_prompt_title": "Activar recarga automática",
   "auto_topup_prompt_description": "¡No te quedes sin datos! Cuando el consumo alcance el 80 %, recargaremos automáticamente con {bundle} usando tu tarjeta guardada.",

@@ -509,6 +509,10 @@
   "marketing_consent_disabled_success": "Werbebenachrichtigungen wurden deaktiviert",
   "marketing_consent_update_failed": "Fehler beim Aktualisieren der Einstellungen. Bitte versuchen Sie es erneut.",
 
+  "order_type_new_esim": "Neue eSIM",
+  "order_type_topup": "Aufladung",
+  "order_type_auto_topup": "Auto-Aufladung",
+
   "auto_topup_badge": "Auto-Aufladung",
   "auto_topup_prompt_title": "Auto-Aufladung aktivieren",
   "auto_topup_prompt_description": "Nie wieder ohne Daten! Wenn der Verbrauch 80 % erreicht, laden wir automatisch mit {bundle} über Ihre gespeicherte Karte nach.",

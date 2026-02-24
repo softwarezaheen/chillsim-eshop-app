@@ -1,4 +1,5 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/bundles/country_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/purchase_esim_bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/transaction_history_response_model.dart";
@@ -250,7 +251,7 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
           dataValue: item?.gprsLimitDisplay ?? "",
           isLoading: false,
           hasNavArrow: false,
-          imagePath: item?.icon ?? "",
+          imagePath: EnvironmentImages.esim.fullImagePath,
           showUnlimitedData: item?.unlimited ?? false,
         ),
       ],

@@ -506,6 +506,10 @@
   "marketing_consent_disabled_success": "प्रचार सूचनाएं बंद कर दी गई हैं",
   "marketing_consent_update_failed": "प्राथमिकताओं को अपडेट करने में विफल। कृपया पुनः प्रयास करें।",
 
+  "order_type_new_esim": "नई eSIM",
+  "order_type_topup": "टॉप अप",
+  "order_type_auto_topup": "ऑटो टॉप-अप",
+
   "auto_topup_badge": "ऑटो टॉप-अप",
   "auto_topup_prompt_title": "ऑटो टॉप-अप सक्रिय करें",
 

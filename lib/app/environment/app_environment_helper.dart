@@ -90,7 +90,10 @@ class AppEnvironmentHelper {
   }
 
   List<PaymentType> paymentTypeList({required bool isUserLoggedIn}) {
-    List<PaymentType> list = _apiPaymentTypeList ?? defaultPaymentTypeList;
+    // Create a copy so we never mutate the original _apiPaymentTypeList.
+    List<PaymentType> list = List<PaymentType>.from(
+      _apiPaymentTypeList ?? defaultPaymentTypeList,
+    );
     // check if wallet is enabled
     // if not, we should remove it from payment type bottom sheet
     if ((list.contains(PaymentType.wallet) && !enableWalletView) ||

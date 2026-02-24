@@ -1,5 +1,7 @@
 import "package:easy_localization/easy_localization.dart";
+import "package:esim_open_source/app/environment/environment_images.dart";
 import "package:esim_open_source/data/remote/responses/user/order_history_response_model.dart";
+import "package:esim_open_source/presentation/extensions/context_extension.dart";
 import "package:esim_open_source/presentation/shared/shared_styles.dart";
 import "package:esim_open_source/presentation/shared/ui_helpers.dart";
 import "package:esim_open_source/presentation/views/base/base_view.dart";
@@ -9,6 +11,7 @@ import "package:esim_open_source/presentation/widgets/bundle_header_view.dart";
 import "package:esim_open_source/presentation/widgets/bundle_title_content_view.dart";
 import "package:esim_open_source/presentation/widgets/bundle_validity_view.dart";
 import "package:esim_open_source/presentation/widgets/main_button.dart";
+import "package:esim_open_source/presentation/widgets/my_card_wrap.dart";
 import "package:esim_open_source/presentation/widgets/padding_widget.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:esim_open_source/utils/date_time_utils.dart";
@@ -46,10 +49,19 @@ class OrderBottomSheetView extends StatelessWidget {
           horizontal: 15,
           child: Column(
             children: <Widget>[
-              BottomSheetCloseButton(
-                onTap: () => completer(
-                  SheetResponse<OrderHistoryResponseModel>(),
-                ),
+              Row(
+                children: <Widget>[
+                  _orderTypeChip(
+                    context: context,
+                    orderType: viewModel.initBundleOrderModel?.orderType,
+                  ),
+                  const Spacer(),
+                  BottomSheetCloseButton(
+                    onTap: () => completer(
+                      SheetResponse<OrderHistoryResponseModel>(),
+                    ),
+                  ),
+                ],
               ),
               verticalSpaceSmallMedium,
               BundleHeaderView(
@@ -66,8 +78,9 @@ class OrderBottomSheetView extends StatelessWidget {
                 countryPrice: viewModel
                         .initBundleOrderModel?.bundleDetails?.priceDisplay ??
                     "",
-                imagePath:
-                    viewModel.initBundleOrderModel?.bundleDetails?.icon ?? "",
+                imagePath: _orderTypeIcon(
+                  viewModel.initBundleOrderModel?.orderType,
+                ),
                 isLoading: false,
                 showUnlimitedData:
                     viewModel.initBundleOrderModel?.bundleDetails?.unlimited ??
@@ -143,6 +156,49 @@ class OrderBottomSheetView extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  String _orderTypeIcon(String? orderType) {
+    switch (orderType) {
+      case "Topup":
+        return EnvironmentImages.esimTopUp.fullImagePath;
+      case "AutoTopup":
+        return EnvironmentImages.esimAutoTopUp.fullImagePath;
+      case "Assign":
+      default:
+        return EnvironmentImages.esim.fullImagePath;
+    }
+  }
+
+  String _orderTypeLabel(String? orderType) {
+    switch (orderType) {
+      case "Topup":
+        return LocaleKeys.order_type_topup.tr();
+      case "AutoTopup":
+        return LocaleKeys.order_type_auto_topup.tr();
+      case "Assign":
+      default:
+        return LocaleKeys.order_type_new_esim.tr();
+    }
+  }
+
+  Widget _orderTypeChip({
+    required BuildContext context,
+    required String? orderType,
+  }) {
+    return MyCardWrap(
+      borderRadius: 30,
+      enableBorder: false,
+      color: context.appColors.primary_50 ?? Colors.transparent,
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      child: Text(
+        _orderTypeLabel(orderType),
+        style: captionOneMediumTextStyle(context: context).copyWith(
+          color: context.appColors.primary_700 ?? themeColor,
+          fontSize: 11,
         ),
       ),
     );
