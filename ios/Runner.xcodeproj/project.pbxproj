@@ -531,7 +531,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Modify Info.plist based on user-defined build setting\nINFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\necho \"Current build configuration: ${CONFIGURATION}\"\necho \"BRANCH_USE_TEST_MODE setting: ${BRANCH_USE_TEST_MODE}\"\n\n# Use the user-defined variable with default to false when not set\nif [ \"${BRANCH_USE_TEST_MODE}\" = \"true\" ]; then\n    echo \"✅ Setting Branch to TEST mode\"\n    /usr/libexec/PlistBuddy -c \"Set :branch_use_test_instance true\" \"$INFO_PLIST\"\nelse\n    echo \"🚀 Setting Branch to LIVE mode\"\n    /usr/libexec/PlistBuddy -c \"Set :branch_use_test_instance false\" \"$INFO_PLIST\"\nfi\n\n# Verify the setting was applied\nTEST_MODE_VALUE=$(/usr/libexec/PlistBuddy -c \"Print :branch_use_test_instance\" \"$INFO_PLIST\")\necho \"Final branch_use_test_instance value: ${TEST_MODE_VALUE}\"\n";
+			shellScript = "# Modify Info.plist based on user-defined build setting\nINFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\necho \"Current build configuration: ${CONFIGURATION}\"\necho \"BRANCH_USE_TEST_MODE setting: ${BRANCH_USE_TEST_MODE}\"\n\n# Use the user-defined variable with default to false when not set\nif [ \"${BRANCH_USE_TEST_MODE}\" = \"true\" ]; then\n    echo \"âœ… Setting Branch to TEST mode\"\n    /usr/libexec/PlistBuddy -c \"Set :branch_use_test_instance true\" \"$INFO_PLIST\"\nelse\n    echo \"ðŸš€ Setting Branch to LIVE mode\"\n    /usr/libexec/PlistBuddy -c \"Set :branch_use_test_instance false\" \"$INFO_PLIST\"\nfi\n\n# Verify the setting was applied\nTEST_MODE_VALUE=$(/usr/libexec/PlistBuddy -c \"Print :branch_use_test_instance\" \"$INFO_PLIST\")\necho \"Final branch_use_test_instance value: ${TEST_MODE_VALUE}\"\n";
 		};
 		8FE355902DA6D0E000497155 /* Set Status Bar Appearance : UIViewControllerBasedStatusBarAppearance true */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -753,7 +753,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -786,7 +786,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -871,7 +871,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -902,7 +902,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -986,7 +986,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1017,7 +1017,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1095,7 +1095,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1131,7 +1131,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1207,7 +1207,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1241,7 +1241,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1316,7 +1316,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1350,7 +1350,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1425,7 +1425,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1459,7 +1459,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim.test;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1535,7 +1535,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1567,7 +1567,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1642,7 +1642,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -1674,7 +1674,7 @@
 				GOOGLE_SIGN_IN_CLIENT_ID = "845206888977-l726soo28mam56qq1s72oi3clqs4abh6";
 				INFOPLIST_FILE = Runner/Info.plist;
 				IOS_APP_BUNDLE_ID = zaheen.esim.chillsim;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LAUNCH_SCREEN_STORYBOARB = LaunchScreen;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
