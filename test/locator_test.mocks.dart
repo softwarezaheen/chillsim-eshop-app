@@ -2228,6 +2228,7 @@ class MockApiUser extends _i1.Mock implements _i52.ApiUser {
     required _i53.RelatedSearchRequestModel? relatedSearch,
     String? bearerToken,
     String? paymentMethodId,
+    bool? enableAutoTopup = false,
   }) =>
       (super.noSuchMethod(Invocation.method(
         #assignBundle,
@@ -2241,6 +2242,7 @@ class MockApiUser extends _i1.Mock implements _i52.ApiUser {
           #relatedSearch: relatedSearch,
           #bearerToken: bearerToken,
           #paymentMethodId: paymentMethodId,
+          #enableAutoTopup: enableAutoTopup,
         },
       )) as _i20.FutureOr<dynamic>);
 
@@ -2635,6 +2637,7 @@ class MockApiUserRepository extends _i1.Mock implements _i6.ApiUserRepository {
     required _i53.RelatedSearchRequestModel? relatedSearch,
     String? bearerToken,
     String? paymentMethodId,
+    bool? enableAutoTopup = false,
   }) =>
       (super.noSuchMethod(Invocation.method(
         #assignBundle,
@@ -2648,6 +2651,7 @@ class MockApiUserRepository extends _i1.Mock implements _i6.ApiUserRepository {
           #relatedSearch: relatedSearch,
           #bearerToken: bearerToken,
           #paymentMethodId: paymentMethodId,
+          #enableAutoTopup: enableAutoTopup,
         },
       )) as _i20.FutureOr<dynamic>);
 
@@ -6031,18 +6035,6 @@ class MockMyESimViewModel extends _i1.Mock implements _i23.MyESimViewModel {
       ) as _i20.Future<void>);
 
   @override
-  _i20.Future<void> onManageAutoTopupClick({required int? index}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #onManageAutoTopupClick,
-          [],
-          {#index: index},
-        ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
-
-  @override
   _i20.Future<void> onConsumptionClick({required int? index}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -6132,6 +6124,20 @@ class MockMyESimViewModel extends _i1.Mock implements _i23.MyESimViewModel {
         returnValue: _i20.Future<void>.value(),
         returnValueForMissingStub: _i20.Future<void>.value(),
       ) as _i20.Future<void>);
+
+  @override
+  void updateAutoTopupStatus(
+    String? iccid, {
+    required bool? enabled,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #updateAutoTopupStatus,
+          [iccid],
+          {#enabled: enabled},
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   _i20.Future<void> handleNotificationBadge() => (super.noSuchMethod(
@@ -12045,16 +12051,6 @@ class MockPurchaseLoadingViewModel extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
-
-  @override
-  _i20.Future<void> startTimer() => (super.noSuchMethod(
-        Invocation.method(
-          #startTimer,
-          [],
-        ),
-        returnValue: _i20.Future<void>.value(),
-        returnValueForMissingStub: _i20.Future<void>.value(),
-      ) as _i20.Future<void>);
 
   @override
   _i20.Future<void> getOrderDetails() => (super.noSuchMethod(

@@ -113,7 +113,7 @@ class MyESimViewModel extends BaseModel {
 
       // Optimistic update: the backend enables AT during webhook processing
       // which may not have completed yet when refreshCurrentPlans returns.
-      if (atEnabled == true) {
+      if (atEnabled ?? false) {
         updateAutoTopupStatus(item.iccid ?? "", enabled: true);
       }
     }
