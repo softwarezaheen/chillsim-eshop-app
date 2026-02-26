@@ -119,6 +119,8 @@
 	</array>
 	<key>branch_use_test_instance</key>
 	<false/>
+	<key>branch_disable_nativelink</key>
+	<true/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
 	<!-- Apple Pay Configuration -->
