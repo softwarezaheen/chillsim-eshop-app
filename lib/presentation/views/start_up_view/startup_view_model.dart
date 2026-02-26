@@ -70,6 +70,10 @@ class StartUpViewModel extends BaseModel {
 
   //Tested
   Future<bool> checkIfDeviceCompatible(BuildContext context) async {
+    // TODO: TEMPORARY - re-enable device security check before next production release
+    // return false;
+
+    // ignore: dead_code
     DeviceInfoService deviceInfo = locator<DeviceInfoService>();
     if (await deviceInfo.isRooted ||
         await deviceInfo.isDevelopmentModeEnable ||

@@ -125,15 +125,28 @@ class ShareReferralCodeBottomSheet extends StatelessWidget {
                       ],
                     ),
                     verticalSpaceMediumLarge,
-                    MainButton(
-                      title: LocaleKeys.shareReferral_buttonText.tr(),
-                      titleTextStyle: bodyBoldTextStyle(context: context),
-                      onPressed: () async => viewModel.shareButtonTapped(),
-                      themeColor: themeColor,
-                      height: 53,
-                      hideShadows: true,
-                      enabledTextColor:
-                          enabledMainButtonTextColor(context: context),
+                    Builder(
+                      builder: (BuildContext btnContext) {
+                        return MainButton(
+                          title: LocaleKeys.shareReferral_buttonText.tr(),
+                          titleTextStyle: bodyBoldTextStyle(context: context),
+                          onPressed: () async {
+                            final RenderBox box =
+                                btnContext.findRenderObject()! as RenderBox;
+                            final Rect origin =
+                                box.localToGlobal(Offset.zero) & box.size;
+                            await viewModel.shareButtonTapped(
+                              sharePositionOrigin: origin,
+                            );
+                          },
+                          themeColor: themeColor,
+                          height: 53,
+                          hideShadows: true,
+                          isEnabled: !viewModel.isBusy,
+                          enabledTextColor:
+                              enabledMainButtonTextColor(context: context),
+                        );
+                      },
                     ),
                     verticalSpaceMedium,
                   ],
