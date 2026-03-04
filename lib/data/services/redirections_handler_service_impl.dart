@@ -118,6 +118,26 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
     await locator<LocalStorageService>()
         .setString(LocalStorageKeys.utm, uri.path);
 
+    // Capture UTM query parameters for customer source attribution (first-touch)
+    final String? utmSource = uri.queryParameters["utm_source"];
+    final String? utmMedium = uri.queryParameters["utm_medium"];
+    final String? utmCampaign = uri.queryParameters["utm_campaign"];
+    if (utmSource != null && utmSource.isNotEmpty) {
+      final LocalStorageService storage = locator<LocalStorageService>();
+      // First-touch: only store if no existing UTM data
+      final String? existingUtmSource = storage.getString(LocalStorageKeys.utmSource);
+      if (existingUtmSource == null || existingUtmSource.isEmpty) {
+        await storage.setString(LocalStorageKeys.utmSource, utmSource);
+        if (utmMedium != null && utmMedium.isNotEmpty) {
+          await storage.setString(LocalStorageKeys.utmMedium, utmMedium);
+        }
+        if (utmCampaign != null && utmCampaign.isNotEmpty) {
+          await storage.setString(LocalStorageKeys.utmCampaign, utmCampaign);
+        }
+        log("UTM parameters captured: source=$utmSource, medium=$utmMedium, campaign=$utmCampaign");
+      }
+    }
+
     // Check for affiliate tracking parameter (im_ref)
     String? affiliateRef = uri.queryParameters[DeepLinkDecodeKeys.affiliateRef.decodingKey];
     if (affiliateRef != null && affiliateRef.isNotEmpty) {

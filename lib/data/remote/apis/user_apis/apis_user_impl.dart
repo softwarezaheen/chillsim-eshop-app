@@ -58,6 +58,9 @@ class APIUserImpl extends APIService implements ApiUser {
     String? bearerToken,
     String? paymentMethodId,
     bool enableAutoTopup = false,
+    String? utmSource,
+    String? utmMedium,
+    String? utmCampaign,
   }) async {
     Map<String, dynamic> params = <String, dynamic>{
       "bundle_code": bundleCode,
@@ -70,6 +73,15 @@ class APIUserImpl extends APIService implements ApiUser {
     };
     if (paymentMethodId != null && paymentMethodId.isNotEmpty) {
       params["payment_method_id"] = paymentMethodId;
+    }
+    if (utmSource != null && utmSource.isNotEmpty) {
+      params["utm_source"] = utmSource;
+    }
+    if (utmMedium != null && utmMedium.isNotEmpty) {
+      params["utm_medium"] = utmMedium;
+    }
+    if (utmCampaign != null && utmCampaign.isNotEmpty) {
+      params["utm_campaign"] = utmCampaign;
     }
 
     Map<String, String> headers = <String, String>{

@@ -21,6 +21,9 @@ abstract interface class ApiUserRepository {
     String? bearerToken,
     String? paymentMethodId,
     bool enableAutoTopup = false,
+    String? utmSource,
+    String? utmMedium,
+    String? utmCampaign,
   });
 
   FutureOr<dynamic> topUpBundle({

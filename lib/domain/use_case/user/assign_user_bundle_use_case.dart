@@ -27,6 +27,9 @@ class AssignUserBundleUseCase
       relatedSearch: params.relatedSearch,
       paymentMethodId: params.paymentMethodId,
       enableAutoTopup: params.enableAutoTopup,
+      utmSource: params.utmSource,
+      utmMedium: params.utmMedium,
+      utmCampaign: params.utmCampaign,
     );
   }
 }
@@ -42,6 +45,9 @@ class AssignUserBundleParam {
     this.bearerToken,
     this.paymentMethodId,
     this.enableAutoTopup = false,
+    this.utmSource,
+    this.utmMedium,
+    this.utmCampaign,
   });
 
   final String bundleCode;
@@ -53,4 +59,7 @@ class AssignUserBundleParam {
   final bool enableAutoTopup;
   String? bearerToken;
   String? paymentMethodId;
+  final String? utmSource;
+  final String? utmMedium;
+  final String? utmCampaign;
 }

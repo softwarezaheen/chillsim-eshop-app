@@ -435,6 +435,9 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
           region: _region,
           countries: _countries,
         ),
+        utmSource: localStorageService.getString(LocalStorageKeys.utmSource),
+        utmMedium: localStorageService.getString(LocalStorageKeys.utmMedium),
+        utmCampaign: localStorageService.getString(LocalStorageKeys.utmCampaign),
       ),
     );
     handleResponse(

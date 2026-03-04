@@ -10,6 +10,9 @@ enum LocalStorageKeys {
   referralCode("referralCode"),
   appLanguage("appLanguage"),
   utm("utm"),
+  utmSource("utmSource"),
+  utmMedium("utmMedium"),
+  utmCampaign("utmCampaign"),
   affiliateClickId("affiliateClickId"),
   affiliateClickIdExpiry("affiliateClickIdExpiry"),
   pendingRedirection("pendingRedirection");

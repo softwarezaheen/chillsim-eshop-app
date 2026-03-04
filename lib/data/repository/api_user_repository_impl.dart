@@ -50,6 +50,9 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
     String? bearerToken,
     String? paymentMethodId,
     bool enableAutoTopup = false,
+    String? utmSource,
+    String? utmMedium,
+    String? utmCampaign,
   }) {
     return responseToResource(
       apiUserBundles.assignBundle(
@@ -62,6 +65,9 @@ class ApiUserRepositoryImpl implements ApiUserRepository {
         relatedSearch: relatedSearch,
         paymentMethodId: paymentMethodId,
         enableAutoTopup: enableAutoTopup,
+        utmSource: utmSource,
+        utmMedium: utmMedium,
+        utmCampaign: utmCampaign,
       ),
     );
   }
