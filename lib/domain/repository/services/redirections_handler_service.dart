@@ -50,6 +50,10 @@ class WalletTopUpFailed extends RedirectionCategoryType {
   WalletTopUpFailed() : super(<NavigationServiceRoute>[]);
 }
 
+class ReferralInvite extends RedirectionCategoryType {
+  ReferralInvite() : super(<NavigationServiceRoute>[]);
+}
+
 // Deep Links
 class CountriesTap extends RedirectionCategoryType {
   CountriesTap() : super(<NavigationServiceRoute>[]);

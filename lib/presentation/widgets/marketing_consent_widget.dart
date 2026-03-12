@@ -6,13 +6,13 @@ import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
 /// Marketing Consent Widget
-/// 
-/// Displays a compact CTA to enable marketing emails (promotional notifications).
-/// Similar to the web's PromotionsInline component shown after order success.
-/// 
+///
+/// Displays a compact CTA for marketing email consent (opt-out style).
+/// Matches the web's PromotionsInline component shown after order success.
+///
 /// This widget should only be shown when:
 /// - User is authenticated
-/// - User has `should_notify` set to false initially
+/// - User has `should_notify` set to false or null (not yet opted in)
 class MarketingConsentWidget extends StatelessWidget {
   const MarketingConsentWidget({
     required this.shouldNotify,
@@ -56,9 +56,15 @@ class MarketingConsentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          // Title row with toggle inline
+          // Title row with mail icon
           Row(
             children: <Widget>[
+              Icon(
+                Icons.mail_outline,
+                size: 18,
+                color: context.appColors.primary_500,
+              ),
+              const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   LocaleKeys.marketing_consent_title.tr(),
@@ -68,38 +74,6 @@ class MarketingConsentWidget extends StatelessWidget {
                   ).copyWith(fontSize: 14),
                 ),
               ),
-              const SizedBox(width: 12),
-              if (isUpdating)
-                SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      context.appColors.warning_400!,
-                    ),
-                  ),
-                )
-              else
-                Transform.scale(
-                  scale: 0.75,
-                  child: Container(
-                    height: 32,
-                    width: 56,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Switch.adaptive(
-                      value: shouldNotify,
-                      onChanged: onToggle,
-                      activeThumbColor: Colors.white,
-                      activeTrackColor: context.appColors.warning_400,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey.shade300,
-                    ),
-                  ),
-                ),
             ],
           ),
           const SizedBox(height: 6),
@@ -110,6 +84,59 @@ class MarketingConsentWidget extends StatelessWidget {
               context: context,
               fontColor: contentTextColor(context: context),
             ).copyWith(fontSize: 11, height: 1.3),
+          ),
+          const SizedBox(height: 8),
+          // Opt-out checkbox + label (matches web PromotionsInline pattern)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              if (isUpdating)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2, right: 8),
+                  child: SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        context.appColors.warning_400!,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                SizedBox(
+                  width: 22,
+                  height: 22,
+                  child: Checkbox(
+                    value: !shouldNotify,
+                    onChanged: (bool? value) {
+                      if (value != null) {
+                        onToggle(!value);
+                      }
+                    },
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                    activeColor: context.appColors.warning_400,
+                  ),
+                ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: GestureDetector(
+                  onTap: isUpdating ? null : () => onToggle(!shouldNotify),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text(
+                      LocaleKeys.marketing_consent_opt_out_label.tr(),
+                      style: captionTwoNormalTextStyle(
+                        context: context,
+                        fontColor: contentTextColor(context: context),
+                      ).copyWith(fontSize: 10, height: 1.3),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -81,6 +81,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/profile_view
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/rewards_history_view/rewards_history_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/user_guide_view/user_guide_detailed_view/user_guide_detailed_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/profile_view/profile_view_sections/wallet_transactions_view/wallet_transactions_view_model.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/referral_benefits_view/referral_benefits_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/continue_with_email_view/continue_with_email_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/device_compability_check_view/device_compability_check_view_model.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view_model.dart";
@@ -287,6 +288,9 @@ Future<void> viewModelInjectionModules() async {
     )
     ..registerFactory<RewardsHistoryViewModel>(
       RewardsHistoryViewModel.new,
+    )
+    ..registerFactory<ReferralBenefitsViewModel>(
+      ReferralBenefitsViewModel.new,
     )
     ..registerFactory<FaqViewModel>(
       FaqViewModel.new,

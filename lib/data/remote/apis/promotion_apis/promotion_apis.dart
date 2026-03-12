@@ -5,7 +5,8 @@ enum PromotionApis implements URlRequestBuilder {
   redeemVoucher,
   applyReferralCode,
   validatePromoCode,
-  getRewardsHistory;
+  getRewardsHistory,
+  getReferralProgress;
 
   @override
   String get baseURL => "";
@@ -21,6 +22,8 @@ enum PromotionApis implements URlRequestBuilder {
         return "/api/v1/promotion/validation";
       case PromotionApis.getRewardsHistory:
         return "/api/v1/promotion/usage-history"; // Updated to new endpoint
+      case PromotionApis.getReferralProgress:
+        return "/api/v1/promotion/referral-progress";
     }
   }
 
@@ -32,6 +35,7 @@ enum PromotionApis implements URlRequestBuilder {
       case PromotionApis.validatePromoCode:
         return HttpMethod.POST;
       case PromotionApis.getRewardsHistory:
+      case PromotionApis.getReferralProgress:
         return HttpMethod.GET;
     }
   }

@@ -26,6 +26,8 @@ class RedirectionsHelper {
         return WalletTopUpSuccess();
       case "10":
         return WalletTopUpFailed();
+      case "20":
+        return ReferralInvite();
       default:
         return Empty();
     }

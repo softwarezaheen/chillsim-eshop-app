@@ -8,8 +8,8 @@ import "package:esim_open_source/domain/repository/services/app_configuration_se
 import "package:esim_open_source/presentation/reactive_service/user_authentication_service.dart";
 import "package:esim_open_source/presentation/shared/action_helpers.dart";
 import "package:esim_open_source/presentation/shared/in_app_redirection_heper.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/referral_benefits_view/referral_benefits_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
@@ -141,18 +141,15 @@ extension BannersViewTypesExtension on BannersViewTypes {
         }
       case BannersViewTypes.bannersReferral:
         if (locator<UserAuthenticationService>().isUserLoggedIn) {
-            locator<NavigationService>().navigateTo(
-              StoryViewer.routeName,
-              arguments:
-                  ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
-                      .storyViewerArgs,
-            );
-            return;
-          }
           locator<NavigationService>().navigateTo(
-            LoginView.routeName,
-            arguments: InAppRedirection.referral(),
+            ReferralBenefitsView.routeName,
           );
+          return;
+        }
+        locator<NavigationService>().navigateTo(
+          LoginView.routeName,
+          arguments: InAppRedirection.referral(),
+        );
       case BannersViewTypes.bannersCashback:
         if (locator<UserAuthenticationService>().isUserLoggedIn) {
           locator<NavigationService>().navigateTo(

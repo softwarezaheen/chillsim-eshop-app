@@ -25,8 +25,7 @@ import "package:esim_open_source/presentation/views/home_flow_views/data_plans_v
 import "package:esim_open_source/presentation/views/home_flow_views/data_plans_view/purchase_loading_view/purchase_loading_view_model.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/main_page/home_pager_view_model.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";
-import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/my_esim_view/my_esim_view_model.dart";import "package:esim_open_source/presentation/views/home_flow_views/referral_benefits_view/referral_benefits_view.dart";import "package:esim_open_source/presentation/views/pre_sign_in/login_view/login_view.dart";
 import "package:esim_open_source/translations/locale_keys.g.dart";
 import "package:flutter/material.dart";
 import "package:stacked_services/stacked_services.dart";
@@ -327,6 +326,11 @@ class RedirectionsHandlerServiceImpl implements RedirectionsHandlerService {
 
       case CashbackReward():
         showCashbackBottomSheet(cashbackPercent: cashbackPercent);
+
+      case ReferralInvite():
+        unawaited(
+          navigationService.navigateTo(ReferralBenefitsView.routeName),
+        );
 
       case ShareBundleNotification():
       case RewardAvailable():

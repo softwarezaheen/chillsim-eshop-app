@@ -3,10 +3,9 @@ import "dart:convert";
 import "package:esim_open_source/data/remote/request/related_search.dart";
 import "package:esim_open_source/presentation/enums/bottomsheet_type.dart";
 import "package:esim_open_source/presentation/setup_bottom_sheet_ui.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/referral_benefits_view/referral_benefits_view.dart";
 import "package:esim_open_source/presentation/views/home_flow_views/stories_view/cashback_stories_view.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
 import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
-import "package:stacked_services/stacked_services.dart";
 
 sealed class InAppRedirection {
   const InAppRedirection();
@@ -74,12 +73,10 @@ class CashbackRedirection extends InAppRedirection {
 
 class ReferralRedirection extends InAppRedirection {
   @override
-  String get routeName => StoryViewer.routeName;
+  String get routeName => ReferralBenefitsView.routeName;
 
   @override
-  dynamic get arguments =>
-      ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
-          .storyViewerArgs;
+  dynamic get arguments => null;
 
   @override
   BottomSheetType? get variant => null;

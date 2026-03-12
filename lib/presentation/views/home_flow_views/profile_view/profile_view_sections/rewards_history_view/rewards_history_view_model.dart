@@ -7,9 +7,7 @@ import "package:esim_open_source/domain/use_case/base_use_case.dart";
 import "package:esim_open_source/domain/use_case/promotion/get_rewards_history_use_case.dart";
 import "package:esim_open_source/domain/util/resource.dart";
 import "package:esim_open_source/presentation/views/base/base_model.dart";
-import "package:esim_open_source/presentation/views/home_flow_views/stories_view/referal_stories_view.dart";
-import "package:esim_open_source/presentation/widgets/stories_view/story_viewer.dart";
-import "package:stacked_services/stacked_services.dart";
+import "package:esim_open_source/presentation/views/home_flow_views/referral_benefits_view/referral_benefits_view.dart";
 
 // enum RewardHistoryType {
 //   none,
@@ -114,10 +112,7 @@ class RewardsHistoryViewModel extends BaseModel {
 
   Future<void> onEmptyStateTapped() async {
     navigationService.navigateTo(
-      StoryViewer.routeName,
-      arguments:
-          ReferalStoriesView(StackedService.navigatorKey!.currentContext!)
-              .storyViewerArgs,
+      ReferralBenefitsView.routeName,
     );
     // if (selectedType == RewardHistoryType.cashback) {
     //   navigationService.navigateTo(

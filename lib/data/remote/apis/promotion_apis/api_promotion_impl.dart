@@ -5,6 +5,7 @@ import "package:esim_open_source/data/remote/apis/promotion_apis/promotion_apis.
 import "package:esim_open_source/data/remote/responses/base_response_model.dart";
 import "package:esim_open_source/data/remote/responses/bundles/bundle_response_model.dart";
 import "package:esim_open_source/data/remote/responses/empty_response.dart";
+import "package:esim_open_source/data/remote/responses/promotion/referral_progress_response_model.dart";
 import "package:esim_open_source/data/remote/responses/promotion/reward_history_response_model.dart";
 import "package:esim_open_source/domain/data/api_promotion.dart";
 
@@ -83,6 +84,19 @@ class APIPromotionImpl extends APIService implements APIPromotion {
         endPoint: PromotionApis.getRewardsHistory,
       ),
       fromJson: RewardHistoryResponseModel.fromJsonList,
+    );
+    return response;
+  }
+
+  @override
+  FutureOr<ResponseMain<ReferralProgressResponseModel?>>
+      getReferralProgress() async {
+    ResponseMain<ReferralProgressResponseModel?> response = await sendRequest(
+      endPoint: createAPIEndpoint(
+        endPoint: PromotionApis.getReferralProgress,
+      ),
+      fromJson: ({dynamic json}) =>
+          ReferralProgressResponseModel.fromJson(json: json),
     );
     return response;
   }
