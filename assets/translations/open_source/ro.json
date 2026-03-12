@@ -499,7 +499,7 @@
   "android_manual_install_option_qr_steps": "1. Deschide Camera sau scannerul QR.\n2. Îndreaptă-l spre codul primit.\n3. Urmează pașii de instalare.\nPont: unele telefoane ascund scannerul în Cameră > Mai multe sau în comenzi rapide.",
   "marketing_consent_title": "Oferte SIM de călătorie",
   "marketing_consent_description": "Ca client existent al ChillSIM, ești îndreptățit la promoții speciale disponibile exclusiv pentru clienți.",
-  "marketing_consent_opt_out_label": "Nu doresc să primesc e-mailuri despre produse și servicii similare de la ChillSIM.",
+  "marketing_consent_opt_out_label": "Nu doresc să primesc e-mailuri despre produse și servicii similare de la ChillSIM. Vă puteți dezabona oricând, gratuit, prin linkul de dezabonare din fiecare e-mail.",
   "marketing_consent_enabled_success": "Vei primi acum oferte și promoții exclusive!",
   "marketing_consent_disabled_success": "Notificările promoționale au fost dezactivate",
   "marketing_consent_update_failed": "Actualizarea preferințelor a eșuat. Te rugăm să încerci din nou.",

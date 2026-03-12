@@ -508,7 +508,7 @@
   "android_manual_install_option_qr_steps": "1. Open your Camera or device QR scanner.\n2. Point it at the QR code received.\n3. Follow the prompts to install the eSIM.\nTip: Some phones hide the QR scanner inside the Camera > More menu or quick toggles.",
   "marketing_consent_title": "Travel SIM deals",
   "marketing_consent_description": "As an existing customer of ChillSIM, you are entitled to special customer only promotions.",
-  "marketing_consent_opt_out_label": "I do not wish to receive emails about similar products and services from ChillSIM.",
+  "marketing_consent_opt_out_label": "I do not wish to receive emails about similar products and services from ChillSIM. You can also opt out at any time, free of charge, via the unsubscribe link in each email.",
   "marketing_consent_enabled_success": "You'll now receive exclusive offers and promotions!",
   "marketing_consent_disabled_success": "Promotional notifications have been turned off",
   "marketing_consent_update_failed": "Failed to update preferences. Please try again.",

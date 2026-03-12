@@ -507,7 +507,7 @@
   "android_manual_install_option_qr_steps": "1. افتح الكاميرا أو ماسح QR.\n2. وجّهها نحو رمز QR الذي وصلك.\n3. اتبع التعليمات لتثبيت eSIM.\nتلميح: قد يوجد الماسح داخل الكاميرا > المزيد أو لوحة الاختصارات.",
   "marketing_consent_title": "عروض شريحة السفر",
   "marketing_consent_description": "بصفتك عميلاً حالياً لـ ChillSIM، يحق لك الاستفادة من عروض خاصة حصرية للعملاء فقط.",
-  "marketing_consent_opt_out_label": "لا أرغب في تلقي رسائل بريد إلكتروني حول منتجات وخدمات مشابهة من ChillSIM.",
+  "marketing_consent_opt_out_label": "لا أرغب في تلقي رسائل بريد إلكتروني حول منتجات وخدمات مشابهة من ChillSIM. يمكنك أيضًا إلغاء الاشتراك في أي وقت، مجانًا، عبر رابط إلغاء الاشتراك في كل بريد إلكتروني.",
   "marketing_consent_enabled_success": "ستتلقى الآن عروضًا وعروضًا ترويجية حصرية!",
   "marketing_consent_disabled_success": "تم إيقاف تشغيل الإشعارات الترويجية",
   "marketing_consent_update_failed": "فشل تحديث التفضيلات. يرجى المحاولة مرة أخرى.",
