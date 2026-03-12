@@ -51,7 +51,7 @@ class PurchaseOrderSuccessViewModel extends BaseModel {
       ..showInstallButton = await isInstallButtonEnabled()
       ..showGoToMyEsimButton = isUserLoggedIn
       ..isUpdatingConsent = false
-      ..showMarketingWidget = isUserLoggedIn && !isNewsletterSubscribed
+      ..showMarketingWidget = isUserLoggedIn
       ..showAutoTopupPrompt =
           isUserLoggedIn &&
           (purchaseESimBundle?.isTopupAllowed ?? false) &&
