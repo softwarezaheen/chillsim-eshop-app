@@ -446,61 +446,57 @@ class _RewardsCard extends StatelessWidget {
         border: Border.all(color: mainBorderColor(context: context)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                LocaleKeys.referralBenefits_yourRewards.tr(),
-                style: captionOneNormalTextStyle(
-                  context: context,
-                  fontColor: secondaryTextColor(context: context),
-                ),
+          // Earn per friend line
+          RichText(
+            text: TextSpan(
+              style: bodyNormalTextStyle(
+                context: context,
+                fontColor: secondaryTextColor(context: context),
               ),
-              Flexible(
-                child: Text(
-                  LocaleKeys.referralBenefits_perReferral.tr(
-                    namedArgs: <String, String>{
-                      "amount": viewModel.referAndEarnAmount,
-                    },
-                  ),
-                  textAlign: TextAlign.right,
-                  style: headerThreeBoldTextStyle(
-                    context: context,
-                    fontColor: titleTextColor(context: context),
-                  ),
+              children: <InlineSpan>[
+                TextSpan(
+                  text: '${LocaleKeys.referralBenefits_earnLabel.tr()} ',
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Divider(height: 1, color: mainBorderColor(context: context)),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                LocaleKeys.referralBenefits_friendReward.tr(),
-                style: captionOneNormalTextStyle(
-                  context: context,
-                  fontColor: secondaryTextColor(context: context),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  LocaleKeys.referralBenefits_friendDiscount.tr(
-                    namedArgs: <String, String>{
-                      "discount": viewModel.referredDiscountPercentage,
-                    },
-                  ),
-                  textAlign: TextAlign.right,
-                  style: headerThreeBoldTextStyle(
+                TextSpan(
+                  text: viewModel.referAndEarnAmount,
+                  style: headerTwoBoldTextStyle(
                     context: context,
                     fontColor: sectionTitleTextColor(context: context),
                   ),
                 ),
+                TextSpan(
+                  text: ' ${LocaleKeys.referralBenefits_forEveryFriend.tr()}',
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Friend discount line
+          RichText(
+            text: TextSpan(
+              style: bodyNormalTextStyle(
+                context: context,
+                fontColor: secondaryTextColor(context: context),
               ),
-            ],
+              children: <InlineSpan>[
+                TextSpan(
+                  text: '${LocaleKeys.referralBenefits_yourFriendGets.tr()} ',
+                ),
+                TextSpan(
+                  text: LocaleKeys.referralBenefits_friendDiscount.tr(
+                    namedArgs: <String, String>{
+                      'discount': viewModel.referredDiscountPercentage,
+                    },
+                  ),
+                  style: headerTwoBoldTextStyle(
+                    context: context,
+                    fontColor: enabledMainButtonColor(context: context),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -508,9 +504,9 @@ class _RewardsCard extends StatelessWidget {
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 // Bonus milestones section
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 
 class _BonusMilestonesSection extends StatelessWidget {
   const _BonusMilestonesSection({required this.viewModel});
@@ -518,143 +514,237 @@ class _BonusMilestonesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int cycleSize = viewModel.cycleSize;
     final List<ReferralMilestoneModel> milestones =
         viewModel.referralProgress?.milestones ?? <ReferralMilestoneModel>[];
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            titleTextColor(context: context).withValues(alpha: 0.04),
-            sectionTitleTextColor(context: context).withValues(alpha: 0.06),
+    final int milestone1Target =
+        milestones.isNotEmpty ? (milestones.first.target ?? 5) : 5;
+    final double milestone1Bonus =
+        milestones.isNotEmpty ? (milestones.first.bonus ?? 15) : 15;
+    final int milestone2Target =
+        milestones.length > 1 ? (milestones.last.target ?? 10) : 10;
+    final double milestone2Bonus =
+        milestones.length > 1 ? (milestones.last.bonus ?? 20) : 20;
+
+    final double referralAmt = double.tryParse(
+          viewModel.referralProgress?.referralAmount ?? '',
+        ) ??
+        double.tryParse(
+          viewModel.referAndEarnAmount.replaceAll(RegExp(r'[^0-9.]'), ''),
+        ) ??
+        3.0;
+    final int half = cycleSize ~/ 2;
+    final double row1Total = referralAmt * half + milestone1Bonus;
+    final double row2Total = referralAmt * half + milestone2Bonus;
+    final double grandTotal =
+        referralAmt * cycleSize + milestone1Bonus + milestone2Bonus;
+
+    return Column(
+      children: <Widget>[
+        // Two side-by-side milestone boxes
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: _MilestoneBox(
+                icon: Icons.star_rounded,
+                label:
+                    '$milestone1Target ${LocaleKeys.referralBenefits_referralsUnit.tr()}',
+                bonusLabel: LocaleKeys.referralBenefits_bonusLabel.tr(),
+                bonusAmount: milestone1Bonus.toStringAsFixed(0),
+                context: context,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _MilestoneBox(
+                icon: Icons.emoji_events_rounded,
+                label:
+                    '$milestone2Target ${LocaleKeys.referralBenefits_referralsUnit.tr()}',
+                bonusLabel: LocaleKeys.referralBenefits_bonusLabel.tr(),
+                bonusAmount: milestone2Bonus.toStringAsFixed(0),
+                context: context,
+              ),
+            ),
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: mainBorderColor(context: context)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // ðŸŽ– BONUS MILESTONES header
-          Row(
+        const SizedBox(height: 12),
+        // Math breakdown
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: <Color>[
+                sectionTitleTextColor(context: context).withValues(alpha: 0.06),
+                titleTextColor(context: context).withValues(alpha: 0.04),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: mainBorderColor(context: context)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text("🎖", style: TextStyle(fontSize: 13)),
-              const SizedBox(width: 6),
-              Text(
-                LocaleKeys.referralBenefits_bonusMilestones.tr().toUpperCase(),
-                style: captionTwoNormalTextStyle(
-                  context: context,
-                  fontColor: secondaryTextColor(context: context),
-                ).copyWith(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.8,
-                ),
+              // Header
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.emoji_events_rounded,
+                    size: 14,
+                    color: sectionTitleTextColor(context: context),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    LocaleKeys.referralBenefits_doTheMath.tr(),
+                    style: captionOneBoldTextStyle(
+                      context: context,
+                      fontColor: sectionTitleTextColor(context: context),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              // Row 1
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      '◆ ${LocaleKeys.referralBenefits_referNFriends.tr(namedArgs: <String, String>{'count': '$half'})} → ${referralAmt.toStringAsFixed(0)}×$half + €${milestone1Bonus.toStringAsFixed(0)} (${LocaleKeys.referralBenefits_milestoneBonus.tr()})',
+                      style: captionTwoNormalTextStyle(
+                        context: context,
+                        fontColor: secondaryTextColor(context: context),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '= €${row1Total.toStringAsFixed(0)}',
+                    style: captionOneBoldTextStyle(
+                      context: context,
+                      fontColor: sectionTitleTextColor(context: context),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Divider(height: 1, color: mainBorderColor(context: context)),
+              const SizedBox(height: 6),
+              // Row 2
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      '◆ ${LocaleKeys.referralBenefits_referNMoreFriends.tr(namedArgs: <String, String>{'count': '$half'})} → ${referralAmt.toStringAsFixed(0)}×$half + €${milestone2Bonus.toStringAsFixed(0)} (${LocaleKeys.referralBenefits_milestoneBonus.tr()})',
+                      style: captionTwoNormalTextStyle(
+                        context: context,
+                        fontColor: secondaryTextColor(context: context),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '= €${row2Total.toStringAsFixed(0)}',
+                    style: captionOneBoldTextStyle(
+                      context: context,
+                      fontColor: sectionTitleTextColor(context: context),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Divider(height: 1, color: mainBorderColor(context: context)),
+              const SizedBox(height: 8),
+              // Subtotal
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    LocaleKeys.referralBenefits_subtotal.tr(),
+                    style: captionOneNormalTextStyle(
+                      context: context,
+                      fontColor: secondaryTextColor(context: context),
+                    ),
+                  ),
+                  Text(
+                    '= €${grandTotal.toStringAsFixed(0)}',
+                    style: headerThreeBoldTextStyle(
+                      context: context,
+                      fontColor: sectionTitleTextColor(context: context),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          if (milestones.isNotEmpty)
-            ...milestones.asMap().entries.map(
-              (MapEntry<int, ReferralMilestoneModel> entry) {
-                final bool isLast = entry.key == milestones.length - 1;
-                final ReferralMilestoneModel m = entry.value;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        isLast ? Icons.emoji_events_rounded : Icons.star_rounded,
-                        size: 16,
-                        color: m.reached == true
-                            ? enabledMainButtonColor(context: context)
-                            : secondaryTextColor(context: context),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          "${m.target} referrals",
-                          style: captionOneNormalTextStyle(
-                            context: context,
-                            fontColor: m.reached == true
-                                ? mainDarkTextColor(context: context)
-                                : secondaryTextColor(context: context),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "+€${m.bonus?.toStringAsFixed(0) ?? "0"}",
-                        style: captionOneBoldTextStyle(
-                          context: context,
-                          fontColor: sectionTitleTextColor(context: context),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            )
-          else ...<Widget>[
-            _MilestoneFallbackRow(
-              context: context,
-              icon: Icons.star_rounded,
-              label: "5 referrals",
-              bonus: "+€15",
-            ),
-            const SizedBox(height: 8),
-            _MilestoneFallbackRow(
-              context: context,
-              icon: Icons.emoji_events_rounded,
-              label: "10 referrals",
-              bonus: "+€20",
-            ),
-          ],
-        ],
-      ),
+        ),
+      ],
     ).applyShimmer(context: context, enable: viewModel.applyShimmer);
   }
 }
 
-class _MilestoneFallbackRow extends StatelessWidget {
-  const _MilestoneFallbackRow({
-    required this.context,
+class _MilestoneBox extends StatelessWidget {
+  const _MilestoneBox({
     required this.icon,
     required this.label,
-    required this.bonus,
+    required this.bonusLabel,
+    required this.bonusAmount,
+    required this.context,
   });
-  // ignore: diagnostic_describe_all_properties
-  final BuildContext context;
   final IconData icon;
   final String label;
-  final String bonus;
+  final String bonusLabel;
+  final String bonusAmount;
+  // ignore: diagnostic_describe_all_properties
+  final BuildContext context;
 
   @override
   Widget build(BuildContext outerContext) {
-    return Row(
-      children: <Widget>[
-        Icon(icon, size: 16, color: secondaryTextColor(context: context)),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            label,
-            style: captionOneNormalTextStyle(
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: enabledMainButtonColor(context: context),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(
+                icon,
+                size: 12,
+                color: Colors.white.withValues(alpha: 0.8),
+              ),
+              const SizedBox(width: 4),
+              Flexible(
+                child: Text(
+                  '$label $bonusLabel',
+                  style: captionTwoNormalTextStyle(
+                    context: context,
+                    fontColor: Colors.white.withValues(alpha: 0.8),
+                  ),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            '= €$bonusAmount',
+            style: headerThreeBoldTextStyle(
               context: context,
-              fontColor: secondaryTextColor(context: context),
+              fontColor: Colors.white,
             ),
           ),
-        ),
-        Text(
-          bonus,
-          style: captionOneBoldTextStyle(
-            context: context,
-            fontColor: sectionTitleTextColor(context: context),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

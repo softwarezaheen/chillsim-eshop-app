@@ -398,6 +398,16 @@ abstract class  LocaleKeys {
   static const referralBenefits_friendDiscount = 'referralBenefits_friendDiscount';
   static const referralBenefits_progress = 'referralBenefits_progress';
   static const referralBenefits_shareLink = 'referralBenefits_shareLink';
+  static const referralBenefits_earnLabel = 'referralBenefits_earnLabel';
+  static const referralBenefits_forEveryFriend = 'referralBenefits_forEveryFriend';
+  static const referralBenefits_yourFriendGets = 'referralBenefits_yourFriendGets';
+  static const referralBenefits_bonusLabel = 'referralBenefits_bonusLabel';
+  static const referralBenefits_doTheMath = 'referralBenefits_doTheMath';
+  static const referralBenefits_milestoneBonus = 'referralBenefits_milestoneBonus';
+  static const referralBenefits_subtotal = 'referralBenefits_subtotal';
+  static const referralBenefits_referNFriends = 'referralBenefits_referNFriends';
+  static const referralBenefits_referNMoreFriends = 'referralBenefits_referNMoreFriends';
+  static const referralBenefits_referralsUnit = 'referralBenefits_referralsUnit';
   static const profile_currency = 'profile_currency';
   static const confirmation_currencyTitle = 'confirmation_currencyTitle';
   static const confirmation_currencyContent = 'confirmation_currencyContent';
