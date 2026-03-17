@@ -106,7 +106,7 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
   BundleTaxesResponseModel? get taxes => _taxes;
 
   //Promo code sub view
-  bool isPromoCodeExpanded = false;
+  bool isPromoCodeExpanded = true;
 
   String get _referralCode =>
       localStorageService.getString(LocalStorageKeys.referralCode) ?? "";
@@ -152,6 +152,14 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
         );
         notifyListeners(); // <-- This ensures the UI updates after text change
       } else {
+        // Reset field state when input is cleared
+        if (text.isEmpty && (promoCodeFieldColor != null || promoCodeMessage.isNotEmpty)) {
+          _promoCode = null;
+          _bundle = _tempBundle;
+          promoCodeMessage = "";
+          promoCodeFieldColor = null;
+          promoCodeFieldEnabled = true;
+        }
         notifyListeners(); // Still notify on regular changes
       }
     });
@@ -829,17 +837,15 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       onFailure: (Resource<BundleResponseModel?> result) async {
         _bundle = _tempBundle;
         _promoCode = null;
-        isPromoCodeExpanded = false;
+        isPromoCodeExpanded = true;
         _removePromoCodeFromLocalStorage();
-        if (isPromoCodeExpanded) {
-          updatePromoCodeView(
-            message: result.message ?? "Not found",
-            isEnabled: true,
-            fieldColor: Colors.red,
-          );
-        } else {
-          updatePromoCodeView(isEnabled: true);
-        }
+        // Inline field error hidden - bottom sheet below already shows the error
+        // updatePromoCodeView(
+        //   message: result.message ?? "Not found",
+        //   isEnabled: true,
+        //   fieldColor: Colors.red,
+        // );
+        updatePromoCodeView(isEnabled: true, fieldColor: Colors.red, message: " ");
         // Show error bottom sheet
         unawaited(bottomSheetService.showCustomSheet(
           isScrollControlled: true,

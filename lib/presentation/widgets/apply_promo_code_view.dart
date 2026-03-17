@@ -79,7 +79,7 @@ class ApplyPromoCode extends StatelessWidget {
                           enabled: isFieldEnabled,
                           controller: controller,
                           themeColor: themeColor,
-                          hintText: LocaleKeys.promoCodeView_titleText.tr(),
+                          hintText: "- - - - - - - - - -",
                           hintLabelStyle: captionOneNormalTextStyle(
                             context: context,
                             fontColor: secondaryTextColor(context: context),
@@ -91,22 +91,37 @@ class ApplyPromoCode extends StatelessWidget {
                           color: textFieldBorderColor,
                         ),
                         //verticalSpaceSmall,
-                        MainButton(
-                          height: 38,
-                          hideShadows: true,
-                          title: buttonText,
-                          onPressed: () => callback.call(controller.text),
-                          isEnabled: !isFieldEnabled || controller.text.trim().isNotEmpty,
-                          themeColor: themeColor,
-                          enabledTextColor:
-                              mainWhiteTextColor(context: context),
-                          disabledTextColor:
-                              disabledMainButtonTextColor(context: context),
-                          disabledBackgroundColor:
-                              disabledMainButtonColor(context: context),
-                          enabledBackgroundColor:
-                              promoCodeButtonColor(context: context),
-                        ),
+                        if (isFieldEnabled)
+                          MainButton(
+                            height: 38,
+                            hideShadows: true,
+                            title: buttonText,
+                            onPressed: () => callback.call(controller.text),
+                            isEnabled: controller.text.trim().isNotEmpty,
+                            themeColor: themeColor,
+                            enabledTextColor:
+                                mainWhiteTextColor(context: context),
+                            disabledTextColor:
+                                disabledMainButtonTextColor(context: context),
+                            disabledBackgroundColor:
+                                disabledMainButtonColor(context: context),
+                            enabledBackgroundColor:
+                                promoCodeButtonColor(context: context),
+                          ),
+                        // Remove promo code button - hidden
+                        // if (!isFieldEnabled)
+                        //   MainButton(
+                        //     height: 38,
+                        //     hideShadows: true,
+                        //     title: buttonText,
+                        //     onPressed: () => callback.call(controller.text),
+                        //     isEnabled: true,
+                        //     themeColor: themeColor,
+                        //     enabledTextColor: mainWhiteTextColor(context: context),
+                        //     disabledTextColor: disabledMainButtonTextColor(context: context),
+                        //     disabledBackgroundColor: disabledMainButtonColor(context: context),
+                        //     enabledBackgroundColor: promoCodeButtonColor(context: context),
+                        //   ),
                       ],
                     )
                   : const SizedBox.shrink(),
