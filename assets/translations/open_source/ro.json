@@ -529,6 +529,8 @@
   "auto_topup_disable_success": "Reîncărcarea automată a fost dezactivată.",
   "auto_topup_disable_error": "Dezactivarea reîncărcării automate a eșuat.",
   "auto_topup_settings_title": "Setări reîncărcare automată",
+  "auto_topup_info_title": "Info reîncărcare automată",
+  "auto_topup_info_description": "Poți activa reîncărcarea automată doar la finalizarea comenzii următorului tău abonament.",
   "auto_topup_settings_description": "Reîncarcă automat când consumul de date ajunge la 80%.",
   "auto_topup_enabled": "Activată",
   "auto_topup_disabled": "Dezactivată",

@@ -538,6 +538,8 @@
   "auto_topup_disable_success": "Auto top-up has been disabled.",
   "auto_topup_disable_error": "Failed to disable auto top-up.",
   "auto_topup_settings_title": "Auto Top-Up Settings",
+  "auto_topup_info_title": "Auto Top-Up Info",
+  "auto_topup_info_description": "You can enable auto top-up only at checkout when placing your next order.",
   "auto_topup_settings_description": "Automatically recharge when data usage reaches 80%.",
   "auto_topup_enabled": "Enabled",
   "auto_topup_disabled": "Disabled",

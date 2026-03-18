@@ -172,7 +172,9 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          LocaleKeys.auto_topup_settings_title.tr(),
+                          isEnabled
+                              ? LocaleKeys.auto_topup_settings_title.tr()
+                              : LocaleKeys.auto_topup_info_title.tr(),
                           style: captionOneMediumTextStyle(
                             context: context,
                             fontColor: titleTextColor(context: context),
@@ -181,29 +183,28 @@ class MyESimBundleBottomSheetView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      LocaleKeys.auto_topup_settings_description.tr(),
-                      style: captionTwoNormalTextStyle(
-                        context: context,
-                        fontColor: contentTextColor(context: context),
-                      ).copyWith(fontSize: 11, height: 1.3),
-                    ),
-                    if (isEnabled &&
-                        (viewModel.state.autoTopupBundleName ?? "")
-                            .isNotEmpty) ...<Widget>[
-                      const SizedBox(height: 6),
+                    if (isEnabled) ...<Widget>[
                       Text(
-                        "${LocaleKeys.auto_topup_bundle.tr()}: ${viewModel.state.autoTopupBundleName}",
-                        style: captionOneMediumTextStyle(
+                        LocaleKeys.auto_topup_settings_description.tr(),
+                        style: captionTwoNormalTextStyle(
                           context: context,
-                          fontColor: titleTextColor(context: context),
-                        ).copyWith(fontSize: 12),
+                          fontColor: contentTextColor(context: context),
+                        ).copyWith(fontSize: 11, height: 1.3),
                       ),
-                    ],
-                    if (!isEnabled) ...<Widget>[
-                      const SizedBox(height: 6),
+                      if ((viewModel.state.autoTopupBundleName ?? "")
+                              .isNotEmpty) ...<Widget>[
+                        const SizedBox(height: 6),
+                        Text(
+                          "${LocaleKeys.auto_topup_bundle.tr()}: ${viewModel.state.autoTopupBundleName}",
+                          style: captionOneMediumTextStyle(
+                            context: context,
+                            fontColor: titleTextColor(context: context),
+                          ).copyWith(fontSize: 12),
+                        ),
+                      ],
+                    ] else ...<Widget>[
                       Text(
-                        LocaleKeys.auto_topup_enable_hint.tr(),
+                        LocaleKeys.auto_topup_info_description.tr(),
                         style: captionTwoNormalTextStyle(
                           context: context,
                           fontColor: contentTextColor(context: context),

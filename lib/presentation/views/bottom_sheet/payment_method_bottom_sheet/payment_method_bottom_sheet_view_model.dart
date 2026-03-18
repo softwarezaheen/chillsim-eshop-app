@@ -55,7 +55,7 @@ class PaymentMethodBottomSheetViewModel extends BaseModel {
   bool get hasSufficientWalletBalance => walletBalance >= amount;
 
   bool get showWallet =>
-      (request.data?.showWallet ?? true) && isUserLoggedIn;
+      (request.data?.showWallet ?? true) && isUserLoggedIn && !enableAutoTopup;
 
   bool get showAutoTopupCheckbox =>
       request.data?.showAutoTopupCheckbox ?? false;

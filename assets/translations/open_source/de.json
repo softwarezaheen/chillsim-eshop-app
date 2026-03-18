@@ -537,6 +537,8 @@
   "auto_topup_disable_success": "Auto-Aufladung wurde deaktiviert.",
   "auto_topup_disable_error": "Auto-Aufladung konnte nicht deaktiviert werden.",
   "auto_topup_settings_title": "Auto-Aufladung Einstellungen",
+  "auto_topup_info_title": "Auto-Aufladung Info",
+  "auto_topup_info_description": "Sie können die automatische Aufladung nur beim Checkout Ihrer nächsten Bestellung aktivieren.",
   "auto_topup_settings_description": "Automatisch aufladen, wenn der Datenverbrauch 80 % erreicht.",
   "auto_topup_enabled": "Aktiviert",
   "auto_topup_disabled": "Deaktiviert",

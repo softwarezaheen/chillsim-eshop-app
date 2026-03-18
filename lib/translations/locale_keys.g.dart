@@ -539,6 +539,8 @@ abstract class  LocaleKeys {
   static const auto_topup_disable_success = 'auto_topup_disable_success';
   static const auto_topup_disable_error = 'auto_topup_disable_error';
   static const auto_topup_settings_title = 'auto_topup_settings_title';
+  static const auto_topup_info_title = 'auto_topup_info_title';
+  static const auto_topup_info_description = 'auto_topup_info_description';
   static const auto_topup_settings_description = 'auto_topup_settings_description';
   static const auto_topup_enabled = 'auto_topup_enabled';
   static const auto_topup_disabled = 'auto_topup_disabled';

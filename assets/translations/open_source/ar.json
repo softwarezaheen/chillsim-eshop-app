@@ -537,6 +537,8 @@
   "auto_topup_disable_success": "تم إلغاء تفعيل الشحن التلقائي.",
   "auto_topup_disable_error": "فشل إلغاء تفعيل الشحن التلقائي.",
   "auto_topup_settings_title": "إعدادات الشحن التلقائي",
+  "auto_topup_info_title": "معلومات الشحن التلقائي",
+  "auto_topup_info_description": "يمكنك تفعيل الشحن التلقائي فقط عند إتمام الدفع أثناء تقديم طلبك التالي.",
   "auto_topup_settings_description": "إعادة الشحن تلقائيًا عندما يصل استخدام البيانات إلى 80%.",
   "auto_topup_enabled": "مفعّل",
   "auto_topup_disabled": "معطّل",

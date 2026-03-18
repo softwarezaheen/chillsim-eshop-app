@@ -537,6 +537,8 @@
   "auto_topup_disable_success": "La recarga automática ha sido desactivada.",
   "auto_topup_disable_error": "Error al desactivar la recarga automática.",
   "auto_topup_settings_title": "Ajustes de recarga automática",
+  "auto_topup_info_title": "Info de recarga automática",
+  "auto_topup_info_description": "Solo puedes activar la recarga automática en el pago al realizar tu próximo pedido.",
   "auto_topup_settings_description": "Recargar automáticamente cuando el consumo de datos alcance el 80 %.",
   "auto_topup_enabled": "Activada",
   "auto_topup_disabled": "Desactivada",

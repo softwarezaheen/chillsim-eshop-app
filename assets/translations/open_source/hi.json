@@ -539,6 +539,8 @@
   "auto_topup_disable_success": "ऑटो टॉप-अप निष्क्रिय कर दिया गया।",
   "auto_topup_disable_error": "ऑटो टॉप-अप निष्क्रिय करने में विफल।",
   "auto_topup_settings_title": "ऑटो टॉप-अप सेटिंग्स",
+  "auto_topup_info_title": "ऑटो टॉप-अप जानकारी",
+  "auto_topup_info_description": "आप ऑटो टॉप-अप केवल अपने अगले ऑर्डर के चेकआउट पर ही सक्षम कर सकते हैं.",
   "auto_topup_settings_description": "डेटा उपयोग 80% तक पहुंचने पर स्वचालित रूप से रिचार्ज करें।",
   "auto_topup_enabled": "सक्रिय",
   "auto_topup_disabled": "निष्क्रिय",
