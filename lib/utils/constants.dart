@@ -8,6 +8,9 @@ const String MAIN_DOMAIN_AUTH_URL = "mm-omni-software-vip-qa.montylocal.net";
 const String TERMS_AND_CONDITIONS_URL =
     "https://mm-omni-software-vip-qa.montylocal.net/tc?lang=en";
 
+// iOS App Store numeric ID for ChillSIM (from App Store Connect → App Information → Apple ID)
+const String IOS_APP_STORE_ID = "6747967151";
+
 //Pagination
 const int PAGE_SIZE = 10;
 const int PAGE_INDEX_START = 1;

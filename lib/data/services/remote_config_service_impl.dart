@@ -29,6 +29,20 @@ class RemoteConfigServiceImpl implements RemoteConfigService {
         false;
   }
 
+  @override
+  Future<String> get minimumRequiredVersion async {
+    await _remoteConfigCompleter?.future;
+    await remoteConfig?.fetchAndActivate();
+    return remoteConfig?.getString(RemoteConfigKey.minimumVersion.name) ?? "";
+  }
+
+  @override
+  Future<int> get minimumRequiredBuildNumber async {
+    await _remoteConfigCompleter?.future;
+    await remoteConfig?.fetchAndActivate();
+    return remoteConfig?.getInt(RemoteConfigKey.minimumBuildNumber.name) ?? 0;
+  }
+
   Future<void> initializeRemoteConfig() async {
     _remoteConfigCompleter = Completer<void>();
 
