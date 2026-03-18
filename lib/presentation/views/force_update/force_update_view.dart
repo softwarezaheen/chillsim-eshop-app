@@ -108,7 +108,7 @@ class ForceUpdateView extends StatelessWidget {
       }
       // Fallback for simulator / edge cases — opens in browser
       await launchUrl(
-        Uri.parse("https://apps.apple.com/app/id$IOS_APP_STORE_ID"),
+        Uri.parse("https://apps.apple.com/us/app/id$IOS_APP_STORE_ID"),
         mode: LaunchMode.externalApplication,
       );
     } else {
