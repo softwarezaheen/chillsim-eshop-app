@@ -99,7 +99,7 @@ class ForceUpdateView extends StatelessWidget {
 
   void _openStore() {
     final Uri storeUri = Platform.isIOS
-        ? Uri.parse("https://apps.apple.com/app/id$IOS_APP_STORE_ID")
+        ? Uri.parse("itms-apps://itunes.apple.com/app/id$IOS_APP_STORE_ID")
         : Uri.parse(
             "https://play.google.com/store/apps/details?id=$packageName",
           );
