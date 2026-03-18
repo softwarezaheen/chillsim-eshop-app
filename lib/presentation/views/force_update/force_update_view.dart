@@ -85,7 +85,7 @@ class ForceUpdateView extends StatelessWidget {
                   themeColor: enabledMainButtonColor(context: context),
                   enabledBackgroundColor: enabledMainButtonColor(context: context),
                   enabledTextColor: mainWhiteTextColor(context: context),
-                  onPressed: () => _openStore(),
+                  onPressed: () async => _openStore(),
                 ),
 
                 verticalSpaceMedium,
@@ -97,12 +97,27 @@ class ForceUpdateView extends StatelessWidget {
     );
   }
 
-  void _openStore() {
-    final Uri storeUri = Platform.isIOS
-        ? Uri.parse("itms-apps://itunes.apple.com/app/id$IOS_APP_STORE_ID")
-        : Uri.parse(
-            "https://play.google.com/store/apps/details?id=$packageName",
-          );
-    launchUrl(storeUri, mode: LaunchMode.externalApplication);
+  Future<void> _openStore() async {
+    if (Platform.isIOS) {
+      // Try native App Store scheme first (works on real device)
+      final Uri nativeUri =
+          Uri.parse("itms-apps://itunes.apple.com/app/id$IOS_APP_STORE_ID");
+      if (await canLaunchUrl(nativeUri)) {
+        await launchUrl(nativeUri, mode: LaunchMode.externalApplication);
+        return;
+      }
+      // Fallback for simulator / edge cases — opens in browser
+      await launchUrl(
+        Uri.parse("https://apps.apple.com/app/id$IOS_APP_STORE_ID"),
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      await launchUrl(
+        Uri.parse(
+          "https://play.google.com/store/apps/details?id=$packageName",
+        ),
+        mode: LaunchMode.externalApplication,
+      );
+    }
   }
 }
