@@ -62,6 +62,12 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
   /// Guards against double-invocation of the payment flow (e.g. rapid double-tap on "Buy").
   bool _isProcessingPayment = false;
 
+  /// Pending purchase analytics data — stored when the API response arrives,
+  /// consumed by _handleSuccessfulPayment (which may fire later after 3DS/OTP).
+  EcommerceItem? _pendingPurchaseItem;
+  int _pendingPurchaseFee = 0;
+  int _pendingPurchaseVat = 0;
+
   //#endregion
 
   //#region Functions
@@ -454,7 +460,33 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
           handleError(response);
           return;
         }
-        
+
+        // Log begin_checkout event for topup
+        final BundleResponseModel? matchedBundle = bundleItems
+            .cast<BundleResponseModel?>()
+            .firstWhere((BundleResponseModel? b) => b?.bundleCode == bundleCode, orElse: () => null);
+        final EcommerceItem ecomItem = EcommerceItem(
+          id: bundleCode,
+          name: matchedBundle?.displayTitle ?? matchedBundle?.bundleName ?? bundleCode,
+          category: "topup",
+          price: matchedBundle?.price ?? 0,
+        );
+        await analyticsService.logEvent(
+          event: BeginCheckoutEvent(
+            items: <EcommerceItem>[ecomItem],
+            platform: Platform.isIOS ? "iOS" : "Android",
+            currency: bundleCurrency.isNotEmpty ? bundleCurrency : "EUR",
+            shipping: 0,
+            tax: 0,
+            coupon: null,
+          ),
+        );
+
+        // Store analytics data for purchase event (fired in _handleSuccessfulPayment)
+        _pendingPurchaseItem = ecomItem;
+        _pendingPurchaseFee = result.data?.fee ?? 0;
+        _pendingPurchaseVat = result.data?.vat ?? 0;
+
         // Check if payment was completed immediately (e.g., wallet payment)
         PaymentStatus paymentStatus =
             PaymentStatus.fromString(result.data?.paymentStatus);
@@ -609,6 +641,22 @@ class TopUpBottomSheetViewModel extends EsimBaseModel {
         currency: bundleCurrency,
       ),
     ),);
+
+    // Log GA4 purchase event
+    if (_pendingPurchaseItem != null) {
+      unawaited(analyticsService.logEvent(
+        event: PurchaseEvent(
+          items: <EcommerceItem>[_pendingPurchaseItem!],
+          platform: Platform.isIOS ? "iOS" : "Android",
+          currency: bundleCurrency.isNotEmpty ? bundleCurrency : "EUR",
+          transactionId: orderID,
+          purchaseType: "topup",
+          shipping: _pendingPurchaseFee / 100,
+          tax: _pendingPurchaseVat / 100,
+        ),
+      ),);
+      _pendingPurchaseItem = null;
+    }
     completer(
       SheetResponse<MainBottomSheetResponse>(
         data: MainBottomSheetResponse(

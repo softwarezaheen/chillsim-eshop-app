@@ -649,6 +649,10 @@ class BundleDetailBottomSheetViewModel extends BaseModel {
       ),
     );
 
+    // NOTE: PurchaseEvent is fired by PurchaseLoadingViewModel after it fetches
+    // the full order details from the API (amount, fee, tax, promo, etc.).
+    // Do NOT fire it here to avoid duplicate purchase events.
+
     // Dismiss the bundle details bottom sheet instantly using completer
     _completer?.call(SheetResponse<EmptyBottomSheetResponse>(confirmed: true));
 
